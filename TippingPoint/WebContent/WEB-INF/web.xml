@@ -16,7 +16,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springDispatcherServlet</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>*.pt</url-pattern>
 	</servlet-mapping>
 	
 	
@@ -33,7 +33,7 @@
   </filter>
   <filter-mapping>
   	<filter-name>encoding</filter-name>
-  	<url-pattern>*.do</url-pattern>
+  	<url-pattern>*.pt</url-pattern>
   </filter-mapping>
   
 </web-app>

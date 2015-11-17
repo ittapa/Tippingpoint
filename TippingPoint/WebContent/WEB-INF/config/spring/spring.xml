@@ -19,6 +19,7 @@
 		<property name="dataSource" ref="BasicDataSourceclass" />
 	</bean>
 
+
 	<!-- basic data source BEAN 객 -->
 	<bean name="BasicDataSourceclass" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
