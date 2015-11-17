@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+
+
+	<bean name="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"
+		c:sqlSessionFactory-ref="SqlSessionFactoryBean" />
+
+	<!-- sqlsessionFactroybean 설정 -->
+	<bean name="SqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:kr/pe/tippingpoint/mybatis/mybatis-config.xml" />
+		<property name="dataSource" ref="BasicDataSourceclass" />
+	</bean>
+
+	<!-- basic data source BEAN 객 -->
+	<bean name="BasicDataSourceclass" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE" />
+		<property name="username" value="tippingpoint" />
+		<property name="password" value="1592" />
+		<property name="maxTotal" value="50" />
+	</bean>
+
+
+
+
+	<!-- 게시글 등록페이지로 이동 -->
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="kr.pe.tippingpoint" />
+	<mvc:view-controller path="/submitProject.do" view-name="/WEB-INF/Project/submitProject.jsp" />
+	<mvc:view-controller path="/main.do" view-name="/main.jsp" />
+
+	<!-- 파일 업로드 -->
+
+	<context:component-scan base-package="spring.fileup.controller"></context:component-scan>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+	
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
+		p:order="1" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="2" />
+
+
+</beans>
