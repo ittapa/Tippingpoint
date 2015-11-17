@@ -38,11 +38,10 @@
 	<context:component-scan base-package="kr.pe.tippingpoint" />
 	
 	
-	<mvc:view-controller path="/main.pt" view-name="/WEB-INF/view/main.jsp" />
+	<mvc:view-controller path="/main.tp" view-name="/WEB-INF/view/main.jsp" />
 	
 	<!-- 프로젝트 관련 view 설정  -->
-	<mvc:view-controller path="/submitProject.pt" view-name="/WEB-INF/view/body/tpproject/submitProject.jsp" />
-	<mvc:view-controller path= "/projectRequestSuccess.pt" view-name="/WEB-INF/view/body/tpproject/projectRequestSuccess.jsp"/>
+	<mvc:view-controller path="/submitProject.tp" view-name="/WEB-INF/view/body/tpproject/submitProject.jsp" />
 	
 
 	<!-- 파일 자원 관련 패스 설정 -->

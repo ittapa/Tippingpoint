@@ -331,9 +331,10 @@
      * @return
      */
     function html5Upload() {	
-    	var tempFile, 
+    	alert("메롱 55577899 업데이터");
+    	var tempFile, sUploadURL;
     	
-    	sUploadURL= '/tpTeam1/file_uploader_html5.tp'; 	//upload URL
+    	sUploadURL= '/TippingPoint/fuh5.tp';	//upload URL
     	
     	//파일을 하나씩 보내고, 결과를 받음.
     	for(var j=0, k=0; j < nImageInfoCnt; j++) {
@@ -476,10 +477,12 @@
  	 * jindo에 파일 업로드 사용.(iframe에 Form을 Submit하여 리프레시없이 파일을 업로드하는 컴포넌트)
  	 */
  	function callFileUploader (){
+ 		alert("메롱 그냥 업데이터");
  		oFileUploader = new jindo.FileUploader(jindo.$("uploadInputBox"),{
  			//sUrl  : location.href.replace(/\/[^\/]*$/, '') + '/file_uploader.php',	//샘플 URL입니다.
  	        //sCallback : location.href.replace(/\/[^\/]*$/, '') + '/callback.html',	//업로드 이후에 iframe이 redirect될 콜백페이지의 주소
- 	    	surl :  'file_uploader.tp',
+ 	    	
+ 			surl :  '/TippingPoint/file_uploader.tp',
  	    	sCallback : '/se2/photo_uploader/callback.html' ,
  			sFiletype : "*.jpg;*.png;*.bmp;*.gif",						//허용할 파일의 형식. ex) "*", "*.*", "*.jpg", 구분자(;)	
  	    	sMsgNotAllowedExt : 'JPG, GIF, PNG, BMP 확장자만 가능합니다',	//허용할 파일의 형식이 아닌경우에 띄워주는 경고창의 문구

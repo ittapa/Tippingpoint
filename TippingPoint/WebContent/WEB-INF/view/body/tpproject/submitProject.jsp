@@ -67,7 +67,7 @@ $(function(){
 
 	<h2>프로젝트 등록</h2>
 	<br />
-	<form action="test.pt" method="post" id ="reproform"
+	<form action="test.tp" method="post" id ="reproform"
 		enctype="multipart/form-data">
 		<label>프로젝트 ADMIN  : <input type="text" name="tpid" /></label>
 		<br /> <br/>

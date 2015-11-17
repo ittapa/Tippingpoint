@@ -36,7 +36,7 @@ public class TpProjectController {
 	private TpProjectService service;
 
 	//전송
-	@RequestMapping("/test.pt")
+	@RequestMapping("/test.tp")
 	public String submit(@RequestParam String tppProjectContent){
 	    System.out.println("내용"+tppProjectContent);
 	    System.out.println();
@@ -44,11 +44,11 @@ public class TpProjectController {
 	
 
 	    
-	    return "/test/ProjectResult.jsp";	
+	    return "/WEB-INF/view/bodytpproject/projectRequestSuccess.jsp";	
 	}
 	
 	
-	 @RequestMapping("/file_uploader")
+	 @RequestMapping("/file_uploader.tp")
 	 public String file_uploader(HttpServletRequest request, HttpServletResponse response, Editor editor){
 		 String return1=request.getParameter("callback");
 		 String return2="?callback_func=" + request.getParameter("callback_func");
@@ -88,7 +88,7 @@ public class TpProjectController {
 					///////////////// 서버에 파일쓰기 /////////////////
 		    		return3 += "&bNewLine=true";
 		    		return3 += "&sFileName="+ name;
-		    		return3 += "&sFileURL=/resources/editor/upload/"+realFileNm;
+		    		return3 += "&sFileURL=/TippingPoint/resources/editor/upload/"+realFileNm;
 			   	}
 			}else {
 				  return3 += "&errstr=error";
@@ -99,7 +99,7 @@ public class TpProjectController {
 		 return "redirect:"+return1+return2+return3;
 	 }
 	 
-	 @RequestMapping("/file_uploader_html5.tp")
+	 @RequestMapping("/fuh5.tp")
 	 public void file_uploader_html5(HttpServletRequest request, HttpServletResponse response){
 		System.out.println("왜안오니");
 		 try {
@@ -167,7 +167,7 @@ public class TpProjectController {
 			 sFileInfo += "&bNewLine=true";
 			 // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			 sFileInfo += "&sFileName="+ filename;;
-			 sFileInfo += "&sFileURL="+"/tpTeam1/resources/editor/multiupload/"+realFileNm;
+			 sFileInfo += "&sFileURL="+"/TippingPoint/resources/editor/multiupload/"+realFileNm;
 			 PrintWriter print = response.getWriter();
 			 print.print(sFileInfo);
 			 print.flush();
@@ -237,7 +237,7 @@ public class TpProjectController {
 			}
 		}
 
-		return "/projectRequestSuccess.pt";
+		return "/projectRequestSuccess.tp";
 	}
 
 	/////////////////////////////////////////////////////////////////////
