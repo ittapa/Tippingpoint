@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="mapper">
+
+
+	<resultMap type="tpProject" id="tpProject-resultmap">
+		<id property="tppId" column="tpp_Id"/>
+		<result property="tppTitle" column="tpp_Title"/>
+		<result property="tppProjectContent" column="tpp_ProjectContent"/>
+		<result property="tppWriter" column="tpp_Writer"/>
+		<result property="tppWriteDate" column="tpp_WriteDate"/>
+		<result property="tppTotalAmount" column="tpp_TotalAmount"/>
+		<result property="tppTargetAmount" column="tpp_TargetAmount"/>
+		<result property="tppTotalAmount" column="tp_pTotalAmount"/>
+		<result property="tppFundingStartDate" column="tpp_FundingStartDate"/>
+		<result property="tppFundingLastDate" column="tpp_FundingLastDate"/>
+		<result property="tppFunderNum" column="tpp_FunderNum"/>
+		<result property="tppState" column="tpp_State"/>
+		<result property="tppAdminMessage" column="tpp_AdminMessage"/>
+	</resultMap>
+	
+
+	<resultMap type="tpProject" id="tpProject-controller-resultmap">
+		<constructor>
+			<idArg column="tpp_Id" javaType="string"/>
+			<arg column="tpp_Title" javaType="string"/>
+			<arg column="tpp_ProjectContent" javaType="string"/>
+			<arg column="tpp_Writer" javaType="string"/>
+			<arg column="tpp_WriteDate" javaType="_int"/>
+			<arg column="tpp_TotalAmount" javaType="_int"/>
+			<arg column="tpp_TargetAmount" javaType="_int"/>
+			<arg column="tpp_TotalAmount" javaType="_int"/>
+			<arg column="tpp_FundingStartDate" javaType="_int"/>
+			<arg column="tpp_FundingLastDate" javaType="_int"/>
+			<arg column="tpp_FunderNum" javaType="_int"/>
+			<arg column="tpp_State" javaType="string"/>
+			<arg column="tpp_AdminMessage" javaType="string"/>
+		</constructor>
+	</resultMap>
+	
+								
+	<sql id = "select-column-sql">
+		select tpp_Id, tpp_Title, tpp_PrijectContent, tpp_Writer, tpp_WriteDate, tpp_TotalAmount,
+				 tpp_TargetAmount, tpp_FundingStartDate, tpp_FundingLastDate, 
+				 tpp_FunderNum, tpp_State, tpp_AdminMessage
+	</sql>
+	
+
+	<insert id = "insertTpProject" parameterType = "tpProject">
+		insert into tpproject values (#{tppId}, #{tppTitle}, #{tppProjectContent}, #{tppWriter}, 
+												  #{tppWriteDate}, #{tppTotalAmount}, #{tppTargetAmount}, 
+												  #{tppFundingStartDate}, #{tppFundingLastDate}, #{tppFunderNum},
+		 										  #{tppState}, #{tppAdminMessage})
+	</insert>
+
+	<delete id="deleteById" parameterType = "String">
+		delete from tpproject where tpp_Id=#{tppId}
+	</delete>
+	
+	<select id = "selectAllListTpProject" resultType = "list">
+		<include refid = "select-column-sql"/>
+	</select> 
+	
+	<select id = "selectTpProjectById" parameterType = "string" resultType = "tpProject">
+		<include refid = "select-column-sql"/>
+		where tpp_Id = #{tppId}
+	</select>
+	
+	<update id="updateById" parameterType = "tpProject">
+		update tpproject set 	tpp_Title = #{tppTitle}, tpp_ProjectContent = #{tppProjectContent},
+										tpp_Writer = #{tppWriter}, tppWriteDate = #{tppWriteDate},
+										tpp_TotalAmount = #{tppTotalAmount},
+										tpp_TargetAmount = #{tppTargetAmount},
+										tpp_FundingStartDate = #{tppFundingStartDate},
+										tpp_FundingLastDate = #{tppFundingLastDate},
+										tpp_FunderNum = #{tppFunderNum},
+										tpp_State = #{tppState},
+										tpp_AdminMessage = #{tppAdminMessage}
+		where tpp_Id = #{tppId}
+	</update>
+		
+		
+	<!-- 전체고객조회 pading처리 select문 -->
+	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-controller-resultmap">
+	 	select tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 			from(
+	 				select tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 				from tpproject
+	 				order by tpp_FundingLastDate
+	 			)
+	 		) 
+	 	where page = #{pageNo}
+	 </select>
+	 
+	 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
