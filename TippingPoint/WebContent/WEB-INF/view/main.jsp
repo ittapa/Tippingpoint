@@ -9,8 +9,8 @@
 	<!-- 메인페이지 -->
 	
 	
-	<a href="/TippingPoint/submitProject.do"> 게시글 등록</a>
-	<a href="/TippingPoint/tpProjectBoard.do"> 게시글 목록</a>
+	<a href="/TippingPoint/submitProject.pt"> 게시글 등록</a>
+	<a href="/TippingPoint/tpProjectBoard.pt"> 게시글 목록</a>
 
 
 

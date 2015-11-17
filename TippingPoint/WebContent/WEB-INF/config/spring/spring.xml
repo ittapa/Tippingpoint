@@ -34,12 +34,23 @@
 
 	<!-- 게시글 등록페이지로 이동 -->
 	<mvc:annotation-driven />
-
+	
 	<context:component-scan base-package="kr.pe.tippingpoint" />
-	<mvc:view-controller path="/submitProject.do" view-name="/WEB-INF/Project/submitProject.jsp" />
-	<mvc:view-controller path="/main.do" view-name="/main.jsp" />
-
+	
+	
+	<mvc:view-controller path="/main.pt" view-name="/WEB-INF/view/main.jsp" />
+	
+	<!-- 프로젝트 관련 view 설정  -->
+	<mvc:view-controller path="/submitProject.pt" view-name="/WEB-INF/view/body/tpproject/submitProject.jsp" />
+	<mvc:view-controller path= "/projectRequestSuccess.pt" view-name="/WEB-INF/view/body/tpproject/projectRequestSuccess.jsp"/>
+	
+	<mvc:view-controller path= "/test.pt" view-name="/test/tpproject/ProjectResult.jsp"/>
+	<!-- 파일 자원 관련 패스 설정 -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	
 	<!-- 파일 업로드 -->
+	
 
 	<context:component-scan base-package="spring.fileup.controller"></context:component-scan>
 
