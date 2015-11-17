@@ -44,7 +44,7 @@
 	<mvc:view-controller path="/submitProject.pt" view-name="/WEB-INF/view/body/tpproject/submitProject.jsp" />
 	<mvc:view-controller path= "/projectRequestSuccess.pt" view-name="/WEB-INF/view/body/tpproject/projectRequestSuccess.jsp"/>
 	
-	<mvc:view-controller path= "/test.pt" view-name="/test/tpproject/ProjectResult.jsp"/>
+
 	<!-- 파일 자원 관련 패스 설정 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	

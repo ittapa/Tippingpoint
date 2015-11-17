@@ -11,51 +11,52 @@
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
   
-<script type="text/javascript">
-
-$(document).ready(function(){
-		/* 게시판 에디터 실행 */
-		$(function() {
-			var oEditors = [];
-			nhn.husky.EZCreator.createInIFrame({
-				oAppRef : oEditors,
-				elPlaceHolder : "tppProjectContent",
-				sSkinURI : "se2/SmartEditor2Skin.html",
-				htParams : {
-					// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseToolbar : true,
-					// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseVerticalResizer : true,
-					// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseModeChanger : true
-				},
-				fCreator : "createSEditor2"
-
-			});
-		})
-		
-		//날짜 깞 처리 
-		
-		  $(function() {
-		    $("#date1, #date2").datepicker({
-		      changeMonth: true,
-		      changeYear: true
-		    });
-		  });
-		  
-	});
-	
-	
-	$("#ResultOut").click(function() {
+   <script type="text/javascript">
+$(function(){
+	 var oEditors = [];
+	 nhn.husky.EZCreator.createInIFrame({
+	  oAppRef: oEditors,
+	  elPlaceHolder: "tppProjectContent",
+	  sSkinURI: "se2/SmartEditor2Skin.html",
+	  htParams : {
+          // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+          bUseToolbar : true,             
+          // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+          bUseVerticalResizer : true,     
+          // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+          bUseModeChanger : true },
+	  fCreator: "createSEditor2"
+	  
+	 });
+	 
+	 $("#ResultOut").click(function(){
 		//id가 smarteditor인 textarea에 에디터에서 대입
-		oEditors.getById["projectText"].exec("UPDATE_CONTENTS_FIELD", []);
+	        oEditors.getById["tppProjectContent"].exec("UPDATE_CONTENTS_FIELD", []);
+	         
+	        // 이부분에 에디터 validation 검증
+	        alert(document.getElementById("tppProjectContent").value); 
 
-		// 이부분에 에디터 validation 검증
-		alert(document.getElementById("projectText").value); //지울것.
+	        //폼 submit
+	        $("#reproform").submit();
 
-		//폼 submit
-		$("#boradForm").submit();
-	});
+		 
+	 });
+	 
+	 
+ 
+	
+		//날짜 깞 처리 
+	  $(function() {
+			    $("#date1, #date2").datepicker({
+			      changeMonth: true,
+			      changeYear: true
+			    });
+			  });
+	
+	}); //document.ready
+
+	
+	
 </script>
 
 <title>Insert title here</title>
@@ -66,7 +67,7 @@ $(document).ready(function(){
 
 	<h2>프로젝트 등록</h2>
 	<br />
-	<form action="/test.pt" method="post"
+	<form action="test.pt" method="post" id ="reproform"
 		enctype="multipart/form-data">
 		<label>프로젝트 ADMIN  : <input type="text" name="tpid" /></label>
 		<br /> <br/>
@@ -83,7 +84,7 @@ $(document).ready(function(){
 			<br> 
 			
 			프로젝트 내용<br/>
-			<textarea name="tppProjectContent" id="tppProjectContent" rows="10"cols="100" style="width: 766px; height: 412px; display: none;">
+			<textarea name="tppProjectContent" id="tppProjectContent" rows="10" cols="100" style="width: 766px; height: 412px; display: none;">
 			에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면됩니다.
 	  		</textarea>
 

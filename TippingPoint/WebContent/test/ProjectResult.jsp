@@ -9,7 +9,9 @@
 <body>
 <h2>전송 받은 값</h2>
 
-${requestScope.projectText }
+${requestScope.tppProjectContent }
+${requestScope.upfile }
+
 
 <br/>
 <%
@@ -17,10 +19,9 @@ request.setCharacterEncoding("utf-8");
 out.println("<br>에디터 결과<br>");  
 
 
-out.println(request.getParameter("projectText"));
+out.println(request.getParameter("tppProjectContent"));
 out.println("<br><br>");  
 
-out.println(request.getParameter("text"));
 %>
 </body>
 </html>
