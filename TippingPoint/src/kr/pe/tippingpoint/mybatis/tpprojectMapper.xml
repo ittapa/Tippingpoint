@@ -67,7 +67,11 @@
 				 tppFunderNum, tppState, tppAdminMessage from tpproject where tppId = #{tppId}
 	</select>
 	
-	 
+	 	<update id="adminProjectUpdate" parameterType= "tpProject">
+		UPDATE tpproject SET tppId=#{tppId}, tppState=#{tppState},
+							  tppAdminMessage=#{tppAdminMessage}
+		WHERE tppId=#{tppId}
+	</update>
 	 
 </mapper>
 

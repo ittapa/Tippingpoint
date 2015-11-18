@@ -32,7 +32,9 @@ insert into tpproject values('id2','title','2','내용', 20121212, 10000, 999999
 insert into tpproject values('id3','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 insert into tpproject values('id4','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 
-
+UPDATE tpproject SET tppId='id1', tppState='x',
+							  tppAdminMessage='안되이시키야'
+		WHERE tppId='id1'
 
 select rownum, tppTitle, tppWriter from tpproject
 select tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
