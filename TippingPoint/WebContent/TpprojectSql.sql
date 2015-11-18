@@ -1,5 +1,8 @@
 drop table tpproject
 
+select * from TPPROJECT
+
+
 create table tpproject(
 	tppId varchar2(100) primary key,
 	tppTitle varchar2(200) not null,
@@ -8,57 +11,28 @@ create table tpproject(
 	tppWriteDate number(20) not null,
 	tppTotalAmount number(20) default(0),
 	tppTargetAmount number(20),
-	tppFundingStartDate number(20),
-	tppFundingLastDate number(20),
+	tppFundingStartDate varchar2(10),
+	tppFundingLastDate varchar2(10),
 	tppFunderNum number(20) default(0),
-	tppState varchar2(10) default('s'),
-	tppAdminMessage varchar2(200)
+	tppState varchar2(4) default('a'),
+	tppAdminMessage varchar2(200),
+	tppMainImg varchar2(100)
 	
 );
 
 select * from TPPROJECT
 
-insert into tpproject values(100, '홍대리', 'aa@ss.com', '회장', 90000000, '20001212', 1);
-insert into tpproject values('56','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('57','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('58','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('59','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('50','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('71','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('72','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('73','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('74','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('72','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('76','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('78','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
 
 
-insert into tpproject values('156','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('157','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('158','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('159','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('150','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('171','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('172','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('173','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('174','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('172','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('176','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('178','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
 
 
-insert into tpproject values('256','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('257','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('258','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('259','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('250','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('271','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('272','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('273','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('274','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('272','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('276','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
-insert into tpproject values('278','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
+insert into tpproject values('id1','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'a', 'message','메인이미지경로');
+insert into tpproject values('id2','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'a', 'message','메인이미지경로');
+insert into tpproject values('id3','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로');
+insert into tpproject values('id4','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로');
+insert into tpproject values('id','title','2','내용', 20121212, 10000, 999999, '20121212시작날짜', '20121212끝나는날자', 1, '2', 'message','메인이미지경로');
+
+
 
 select rownum, tppTitle, tppWriter from tpproject
 select tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount

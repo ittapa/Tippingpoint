@@ -37,7 +37,6 @@ public class TpProjectController {
 	
 	
 	
-	
 	// 전송TEST 지울것..
 	@RequestMapping("/test.tp")
 	public String submit(@RequestParam String tppProjectContent) {
@@ -49,7 +48,7 @@ public class TpProjectController {
 	}
 	
 	// 프로젝트등록 컨트롤러
-		@RequestMapping("/submitTpProject")
+		@RequestMapping("/submitTpProject.tp")
 		public String registerTpProject(HttpServletRequest request, HttpServletResponse response, ModelMap map)
 				throws IOException {
 			System.out.println("1. 와썹");
@@ -57,25 +56,25 @@ public class TpProjectController {
 			// 1. 요청파라미터 조회
 			
 			TpProject tpvo = new TpProject();
+			tpvo.setTppProjectContent(request.getParameter("imageInfo"));
+			String tppid = request.getParameter("tppId");
+			tpvo.setTppId(tppid);
 			
-			
-			tpvo.setTppTitle(request.getParameter("title"));
-
-			String startDate = request.getParameter("FundingStartDate");
-			int FundingStartDate = Integer.parseInt(startDate);
+			tpvo.setTppTitle(request.getParameter("tppTitle"));
+			String FundingStartDate = request.getParameter("tpFundingStartDate");
 			tpvo.setTppFundingStartDate(FundingStartDate);
 
-			String lastDate = request.getParameter("FundingLastDate");
-			int FundingLastDate = Integer.parseInt(lastDate);
+			String FundingLastDate = request.getParameter("tpFundingLastDate");
 			tpvo.setTppFundingLastDate(FundingLastDate);
 
-			String amount = request.getParameter("targetAmount");
+			String amount = request.getParameter("tpTargetAmount");
 			int targetAmount = Integer.parseInt(amount);
 			tpvo.setTppTargetAmount(targetAmount);
+			
+			
+			tpvo.setTppState("o");
 
-			tpvo.setTppProjectContent(request.getParameter("imageInfo"));
-			String tpid = request.getParameter("tpid");
-			tpvo.setTppId(tpid);
+			
 			/////////////////// 여기까지 고객이 입력한
 			/////////////////// 정보///////////////////////////////////////
 

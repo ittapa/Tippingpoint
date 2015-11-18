@@ -49,7 +49,9 @@ $(function(){
 	  $(function() {
 			    $("#date1, #date2").datepicker({
 			      changeMonth: true,
-			      changeYear: true
+			      changeYear: true,
+			      dateFormat : "yy-mm-dd",
+			      yearRange : "1900:c"
 			    });
 			  });
 	
@@ -67,17 +69,17 @@ $(function(){
 
 	<h2>프로젝트 등록</h2>
 	<br />
-	<form action="/submitTpProject.pt" method="post" id ="reproform"
+	<form action="submitTpProject.tp" method="post" id ="reproform"
 		enctype="multipart/form-data">
-		<label>프로젝트 ADMIN  : <input type="text" name="tpid" /></label>
+		<label>프로젝트 ADMIN  : <input type="text" name="tppId" /></label>
 		<br /> <br/>
-			<label>프로젝트 제목 : <input type="text" name="title" /></label>
+			<label>프로젝트 제목 : <input type="text" name="tppTitle" /></label>
 			<br /><br/>
 			썸네일 사진	: <input type="file" name="upfile"><br /> 
 			<br/>
-			<p>프로젝트 시작일 :  <input type="number" id="date1" name="FundingStartDate" >       프로젝트 마감일 : <input type="number" id="date2" name="FundingLastDate" /></p>
+			<p>프로젝트 시작일 :  <input type="text" id="date1" name="tpFundingStartDate" >       프로젝트 마감일 : <input type="text" id="date2" name="tpFundingLastDate" /></p>
 			<br/> 
-			<label>목표 후원 금액 : <input type="number" name="targetAmount" /></label>
+			<label>목표 후원 금액 : <input type="number" name="tpTargetAmount" /></label>
 
 			<br /> 
 			

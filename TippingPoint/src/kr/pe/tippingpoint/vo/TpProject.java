@@ -10,21 +10,21 @@ public class TpProject {
 	private int tppWriteDate;
 	private int tppTotalAmount;
 	private int tppTargetAmount;
-	private int tppFundingStartDate;
-	private int tppFundingLastDate;
+	private String tppFundingStartDate;
+	private String tppFundingLastDate;
 	private int tppFunderNum;
 	private String tppState;
 	private String tppAdminMessage;
+	private String tppMainImg; //fdfdfd
 	
+	
+	//노아규 생성자
 	public TpProject(){}
 
-	public String getTppId() {
-		return tppId;
-	}
-
+	//전체 생성자
 	public TpProject(String tppId, String tppTitle, String tppProjectContent, String tppWriter, int tppWriteDate,
-			int tppTotalAmount, int tppTargetAmount, int tppFundingStartDate, int tppFundingLastDate, int tppFunderNum,
-			String tppState, String tppAdminMessage) {
+			int tppTotalAmount, int tppTargetAmount, String tppFundingStartDate, String tppFundingLastDate,
+			int tppFunderNum, String tppState, String tppAdminMessage, String tppMainImg) {
 		super();
 		this.tppId = tppId;
 		this.tppTitle = tppTitle;
@@ -38,6 +38,15 @@ public class TpProject {
 		this.tppFunderNum = tppFunderNum;
 		this.tppState = tppState;
 		this.tppAdminMessage = tppAdminMessage;
+		this.tppMainImg = tppMainImg;
+	}
+
+	public String getTppId() {
+		return tppId;
+	}
+
+	public void setTppId(String tppId) {
+		this.tppId = tppId;
 	}
 
 	public String getTppTitle() {
@@ -88,19 +97,19 @@ public class TpProject {
 		this.tppTargetAmount = tppTargetAmount;
 	}
 
-	public int getTppFundingStartDate() {
+	public String getTppFundingStartDate() {
 		return tppFundingStartDate;
 	}
 
-	public void setTppFundingStartDate(int tppFundingStartDate) {
+	public void setTppFundingStartDate(String tppFundingStartDate) {
 		this.tppFundingStartDate = tppFundingStartDate;
 	}
 
-	public int getTppFundingLastDate() {
+	public String getTppFundingLastDate() {
 		return tppFundingLastDate;
 	}
 
-	public void setTppFundingLastDate(int tppFundingLastDate) {
+	public void setTppFundingLastDate(String tppFundingLastDate) {
 		this.tppFundingLastDate = tppFundingLastDate;
 	}
 
@@ -128,8 +137,12 @@ public class TpProject {
 		this.tppAdminMessage = tppAdminMessage;
 	}
 
-	public void setTppId(String tppId) {
-		this.tppId = tppId;
+	public String getTppMainImg() {
+		return tppMainImg;
+	}
+
+	public void setTppMainImg(String tppMainImg) {
+		this.tppMainImg = tppMainImg;
 	}
 
 	@Override
@@ -138,7 +151,7 @@ public class TpProject {
 				+ ", tppWriter=" + tppWriter + ", tppWriteDate=" + tppWriteDate + ", tppTotalAmount=" + tppTotalAmount
 				+ ", tppTargetAmount=" + tppTargetAmount + ", tppFundingStartDate=" + tppFundingStartDate
 				+ ", tppFundingLastDate=" + tppFundingLastDate + ", tppFunderNum=" + tppFunderNum + ", tppState="
-				+ tppState + ", tppAdminMessage=" + tppAdminMessage + "]";
+				+ tppState + ", tppAdminMessage=" + tppAdminMessage + ", tppMainImg=" + tppMainImg + "]";
 	}
 
 	@Override
@@ -147,9 +160,10 @@ public class TpProject {
 		int result = 1;
 		result = prime * result + ((tppAdminMessage == null) ? 0 : tppAdminMessage.hashCode());
 		result = prime * result + tppFunderNum;
-		result = prime * result + tppFundingLastDate;
-		result = prime * result + tppFundingStartDate;
+		result = prime * result + ((tppFundingLastDate == null) ? 0 : tppFundingLastDate.hashCode());
+		result = prime * result + ((tppFundingStartDate == null) ? 0 : tppFundingStartDate.hashCode());
 		result = prime * result + ((tppId == null) ? 0 : tppId.hashCode());
+		result = prime * result + ((tppMainImg == null) ? 0 : tppMainImg.hashCode());
 		result = prime * result + ((tppProjectContent == null) ? 0 : tppProjectContent.hashCode());
 		result = prime * result + ((tppState == null) ? 0 : tppState.hashCode());
 		result = prime * result + tppTargetAmount;
@@ -176,14 +190,25 @@ public class TpProject {
 			return false;
 		if (tppFunderNum != other.tppFunderNum)
 			return false;
-		if (tppFundingLastDate != other.tppFundingLastDate)
+		if (tppFundingLastDate == null) {
+			if (other.tppFundingLastDate != null)
+				return false;
+		} else if (!tppFundingLastDate.equals(other.tppFundingLastDate))
 			return false;
-		if (tppFundingStartDate != other.tppFundingStartDate)
+		if (tppFundingStartDate == null) {
+			if (other.tppFundingStartDate != null)
+				return false;
+		} else if (!tppFundingStartDate.equals(other.tppFundingStartDate))
 			return false;
 		if (tppId == null) {
 			if (other.tppId != null)
 				return false;
 		} else if (!tppId.equals(other.tppId))
+			return false;
+		if (tppMainImg == null) {
+			if (other.tppMainImg != null)
+				return false;
+		} else if (!tppMainImg.equals(other.tppMainImg))
 			return false;
 		if (tppProjectContent == null) {
 			if (other.tppProjectContent != null)
@@ -213,6 +238,11 @@ public class TpProject {
 			return false;
 		return true;
 	}
+	
+	//세터겟터 tosring 및 해쉬/이큐얼
+	
+	
+	
 	
 	
 	
