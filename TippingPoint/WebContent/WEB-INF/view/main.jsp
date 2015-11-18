@@ -11,10 +11,14 @@
 
 
 	<a href="/TippingPoint/tpProjectRegister.tp"> 게시글 등록</a>
-	<a href="/TippingPoint/tpProjectBoard.tp?pageNo=${param.pageNo }">
-		게시글 목록</a>
-
-
+	<br/>
+	<br/>
+	<a href="/TippingPoint/tpProjectBoard.tp?pageNo=${param.pageNo }">게시글 목록</a>
+	<br/>
+	<br/>
+	<a href = "/TippingPoint/tpAdminAccess.tp">관리자 로그인</a>
+	<br/>
+	<br/>
 
 </body>
 </html>
