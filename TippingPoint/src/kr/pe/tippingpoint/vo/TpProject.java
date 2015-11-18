@@ -15,8 +15,8 @@ public class TpProject {
 	private int tppFunderNum;
 	private String tppState;
 	private String tppAdminMessage;
-	private String tppMainImg; //fdfdfd
-	
+	private String tppMainImg; //이미지 경로 
+	private String tppCategroy; //카테고리 지정
 	
 	//노아규 생성자
 	public TpProject(){}

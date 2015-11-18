@@ -19,6 +19,4 @@ public interface TpProjectDao {
 	public int deleteById(String tppId);
 	
 	public int updateById(TpProject tpproject);
-	
-	public void adminUpById(TpProject adminProject);
 }

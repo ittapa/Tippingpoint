@@ -21,17 +21,17 @@ public class TpProjectDaoImpl implements TpProjectDao{
 		HashMap<String, Integer> parameter = new HashMap<String, Integer>();
 		parameter.put("contentPerPage", PagingBean.CONTENT_PER_PAGE);
 		parameter.put("pageNo", pageNo);
-		return session.selectList("mapper.selectTpProjectPaging", parameter);
+		return session.selectList("tpProjectMapper.selectTpProjectPaging", parameter);
 	}
 
 	@Override
 	public int selectCountProject() {
-		return session.selectOne("mapper.selectCountProject");
+		return session.selectOne("tpProjectMapper.selectCountProject");
 	}
 
 	@Override
 	public TpProject selectTpProjectById(String tppId) {
-		return session.selectOne("mapper.selectTpProjectById", tppId);
+		return session.selectOne("tpProjectMapper.selectTpProjectById", tppId);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class TpProjectDaoImpl implements TpProjectDao{
 
 	@Override
 	public int insertTpProject(TpProject tpproject) {
-		return 0;
+		return session.insert("tpProjectMapper.insertTpProject",tpproject);
 	}
 
 	@Override
@@ -53,13 +53,6 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	public int updateById(TpProject tpproject) {
 		return 0;
 	}
-
-	@Override
-	public void adminUpById(TpProject adminProjecte) {
-		session.update("mapper.adminProjectUpdate",adminProjecte);
-	}
-	
-	
 	
 	
 }

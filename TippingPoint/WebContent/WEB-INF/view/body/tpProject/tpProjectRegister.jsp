@@ -75,12 +75,25 @@ $(function(){
 		<br /> <br/>
 			<label>프로젝트 제목 : <input type="text" name="tppTitle" /></label>
 			<br /><br/>
+			<label>카테고리 : 
+			<select name="tppCategroy" >
+			<option  value= "game">게임</option>
+			<option  value= "startup">창업</option>
+			<option  value= "donation">기부</option>
+			<option  value= "business">사업</option>
+			<option  value= "publish">출판</option>
+			<option  value= "etc">기타</option>
+			</select>
+			
+			<br/>
+			<br/>
 			썸네일 사진	: <input type="file" name="upfile"><br /> 
 			<br/>
-			<p>프로젝트 시작일 :  <input type="text" id="date1" name="tpFundingStartDate" >       프로젝트 마감일 : <input type="text" id="date2" name="tpFundingLastDate" /></p>
+			<p>프로젝트 시작일 :  <input type="text" id="date1" name="tppFundingStartDate" >       
+				프로젝트 마감일 : <input type="text" id="date2" name="tppFundingLastDate" /></p>
 			<br/> 
-			<label>목표 후원 금액 : <input type="number" name="tpTargetAmount" /></label>
-
+			<label>목표 후원 금액 : <input type="number" name="tppTargetAmount" /></label>
+		
 			<br /> 
 			
 			<br> 

@@ -49,43 +49,83 @@ public class TpProjectController {
 	
 	// 프로젝트등록 컨트롤러
 		@RequestMapping("/submitTpProject.tp")
-		public String registerTpProject(HttpServletRequest request, HttpServletResponse response, ModelMap map)
+		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, HttpServletRequest request, ModelMap map)
 				throws IOException {
-			System.out.println("1. 와썹");
-
-			// 1. 요청파라미터 조회
 			
-			TpProject tpvo = new TpProject();
-			tpvo.setTppProjectContent(request.getParameter("imageInfo"));
-			String tppid = request.getParameter("tppId");
-			tpvo.setTppId(tppid);
+			System.out.println("라인1"+tpvo);
 			
-			tpvo.setTppTitle(request.getParameter("tppTitle"));
-			String FundingStartDate = request.getParameter("tpFundingStartDate");
-			tpvo.setTppFundingStartDate(FundingStartDate);
-
-			String FundingLastDate = request.getParameter("tpFundingLastDate");
-			tpvo.setTppFundingLastDate(FundingLastDate);
-
-			String amount = request.getParameter("tpTargetAmount");
-			int targetAmount = Integer.parseInt(amount);
-			tpvo.setTppTargetAmount(targetAmount);
+			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부
+			tpvo.setTppState("b"); 
 			
+			tpvo.setTppWriter("작성자ID"); //session ID추출해서넣기
 			
-			tpvo.setTppState("o");
-
-			
-			/////////////////// 여기까지 고객이 입력한
-			/////////////////// 정보///////////////////////////////////////
-
-			tpvo.setTppWriter("작성자1");
+			//작성일자
 			Date date = new Date();
-
 			String day = date.getYear() - 100 + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours();
 			int days = Integer.parseInt(day);
+			
+			//작성일자 vo에 넣기
 			tpvo.setTppWriteDate(days);
+	
+			/////////////////// 정보 입력 끝 이미지 경로 빼고///////////////////////////////////////
+			
+			
+			////////// main image 처리////////////////////
+			
+			// null : upImage name의 요청파라미터가 아야 없는 경우.
+			// isEmpty -true: 사용자가 파일을 전송하지 않은 경우.
+			
+			if (upfile != null && !upfile.isEmpty()) { // 업로드된 파일이 있다.
+				// 업로드 된 파일으 ㅣ정보를 조회
+				// 파일을 임시저장경로에서 최종 저장경로로 이동.
+			
+				String mainImgName = upfile.getOriginalFilename(); //이미지 원래 이름
+				long fileSize = upfile.getSize();
+				System.out.println(mainImgName + " - " + fileSize);
 
-			System.out.println("2.==" + tpvo.toString());
+				
+		
+				// 이미지이므로 신규 파일로 디렉토리 설정 및 업로드
+				// 파일 기본경로
+				String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+				
+				// 파일 기본경로 _ 상세경로
+				String filePath_A = "resources" + File.separator + "project" + File.separator + "mainImage"
+						+ File.separator;
+				// 파일 기본경로 _ 상세경로
+				String filePath = dftFilePath + filePath_A;
+				
+	
+				System.out.println("메인이미지 저장경로"+filePath);
+				File file = new File(filePath);
+				//메인 이미지 저장경로 설정....
+				
+				//있는지 확인하고 만들기
+				if (!file.exists()) {
+					file.mkdirs();
+				}
+				
+				long timeMilis = System.currentTimeMillis(); // 현재 시간
+				
+				String realMainImgName = tpvo.getTppId()+timeMilis+mainImgName;
+				System.out.println("miain이미지 이름 저장되는 이름"+realMainImgName);
+ 
+				//저장설정
+				File upImg = new File(filePath, realMainImgName);
+
+				// 임시경로에서 레알로 저장하기
+				upfile.transferTo(upImg);
+				//메인이미지 경로 저장
+				tpvo.setTppMainImg("/TippingPoint/"+filePath_A+realMainImgName); //upfile
+			}else{
+				//이미지 안넣었을때 디폴트 이미지
+				tpvo.setTppMainImg("/TippingPoint/test/Desert.jpg");
+			}
+			
+
+			System.out.println("-----------------------------------------------");
+			System.out.println(tpvo);
+			//비즈니스 로직 처리하기 서비스
 			service.registerTpProject(tpvo);
 
 			return "/WEB-INF/view/body/tpProject/tpProjectRequestSuccess.jsp"; //성공페이지
@@ -195,8 +235,11 @@ public class TpProjectController {
 				}
 				String realFileNm = "";
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-				String today = formatter.format(new java.util.Date());
+				
+				String today = formatter.format(new java.util.Date()); //현재 날자 시간을  네임에 담기
+				
 				realFileNm = today + UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
+			
 				String rlFileNm = filePath + realFileNm;
 				///////////////// 서버에 파일쓰기 /////////////////
 				InputStream is = request.getInputStream();

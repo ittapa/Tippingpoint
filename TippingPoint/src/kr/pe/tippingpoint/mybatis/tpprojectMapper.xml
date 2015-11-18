@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="mapper">
+<mapper namespace="tpProjectMapper">
 
-
+	<!-- tpProject 모든 값 -->
 	<resultMap type="tpProject" id="tpProject-resultmap">
 		<result property="tppId" column="tppId"/>
 		<result property="tppTitle" column="tppTitle"/>
@@ -18,10 +18,12 @@
 		<result property="tppFunderNum" column="tppFunderNum"/>
 		<result property="tppState" column="tppState"/>
 		<result property="tppAdminMessage" column="tppAdminMessage"/>
+		<result property="tppMainImg" column ="tppMainImg" />
+		<result property= "tppCategroy" column = "tppCategroy"/>
+		
 	</resultMap>
 	
-
-
+	<!-- 뭐징뭐징 -->
 	<resultMap type="tpProject" id="tpProject-resultmap2">
 		<result property="tppId" column="tppId"/>
 		<result property="tppTitle" column="tppTitle"/>
@@ -35,11 +37,11 @@
 		insert into tpproject values (#{tppId}, #{tppTitle}, #{tppProjectContent}, #{tppWriter}, 
 												  #{tppWriteDate}, #{tppTotalAmount}, #{tppTargetAmount}, 
 												  #{tppFundingStartDate}, #{tppFundingLastDate}, #{tppFunderNum},
-		 										  #{tppState}, #{tppAdminMessage})
+		 										  #{tppState}, #{tppAdminMessage}, #{tppMainImg}, #{tppCategroy})
 	</insert>
 
 		
-	<!-- 전체고객조회 pading처리 select문 -->
+	<!-- 전체고객조회 paging처리 select문 -->
 	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap2">
 	 	select tppId, tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 		from(
@@ -53,10 +55,11 @@
 	 	where page = #{pageNo}
 	 </select>
 	 
-	 <!-- 총 프로젝트수 조회 -->
+	 <!-- 총 프로젝트수 조회 paging 처리 할때 -->
 	<select id="selectCountProject" resultType="int">
 		select count(tppId) from tpproject 
 	</select>
+	
 	
 	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
 		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
@@ -65,13 +68,6 @@
 	</select>
 	
 	 
-	 
-	 
-	<update id="adminProjectUpdate" parameterType= "tpProject">
-		UPDATE tpproject SET tppId=#{tppId}, tppState=#{tppState},
-							  tppAdminMessage=#{tppAdminMessage}
-		WHERE tppId=#{tppId}
-	</update>
 	 
 </mapper>
 
