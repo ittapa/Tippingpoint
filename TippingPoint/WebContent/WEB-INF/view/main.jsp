@@ -11,7 +11,7 @@
 
 
 	<a href="/TippingPoint/tpProjectSubmit.tp"> 게시글 등록</a>
-	<a href="/TippingPoint/tpProjectBoard.tp">
+	<a href="/TippingPoint/tpProjectBoard.tp?pageNo=${param.pageNo }">
 		게시글 목록</a>
 
 

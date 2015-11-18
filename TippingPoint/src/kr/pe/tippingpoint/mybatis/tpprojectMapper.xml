@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="mapper">
+
+
+	<resultMap type="tpProject" id="tpProject-resultmap">
+		<result property="tppId" column="tpp_Id"/>
+		<result property="tppTitle" column="tpp_Title"/>
+		<result property="tppProjectContent" column="tpp_ProjectContent"/>
+		<result property="tppWriter" column="tpp_Writer"/>
+		<result property="tppWriteDate" column="tpp_WriteDate"/>
+		<result property="tppTotalAmount" column="tpp_TotalAmount"/>
+		<result property="tppTargetAmount" column="tpp_TargetAmount"/>
+		<result property="tppTotalAmount" column="tp_pTotalAmount"/>
+		<result property="tppFundingStartDate" column="tpp_FundingStartDate"/>
+		<result property="tppFundingLastDate" column="tpp_FundingLastDate"/>
+		<result property="tppFunderNum" column="tpp_FunderNum"/>
+		<result property="tppState" column="tpp_State"/>
+		<result property="tppAdminMessage" column="tpp_AdminMessage"/>
+	</resultMap>
+	
+
+
+	<resultMap type="tpProject" id="tpProject-resultmap2">
+		<result property="tppId" column="tpp_Id"/>
+		<result property="tppTitle" column="tpp_Title"/>
+		<result property="tppWriter" column="tpp_Writer"/>
+		<result property="tppFundingLastDate" column="tpp_FundingLastDate"/>
+		<result property="tppTargetAmount" column="tpp_TargetAmount"/>
+	</resultMap>
+
+	<!-- 프로젝트 추가 쿼리문 -->
+	<insert id = "insertTpProject" parameterType = "tpProject">
+		insert into tpproject values (#{tppId}, #{tppTitle}, #{tppProjectContent}, #{tppWriter}, 
+												  #{tppWriteDate}, #{tppTotalAmount}, #{tppTargetAmount}, 
+												  #{tppFundingStartDate}, #{tppFundingLastDate}, #{tppFunderNum},
+		 										  #{tppState}, #{tppAdminMessage})
+	</insert>
+
+		
+	<!-- 전체고객조회 pading처리 select문 -->
+	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap2">
+	 	select tpp_Id, tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tpp_Id, tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 			from(
+	 				select tpp_Id, tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 				from tpproject
+	 				order by tpp_FundingLastDate
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+	 
+	 <!-- 총 프로젝트수 조회 -->
+	<select id="selectCountProject" resultType="int">
+		select count(tpp_Id) from tpproject 
+	</select>
+	
+	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
+		select tpp_Id, tpp_Title, tpp_ProjectContent, tpp_Writer, tpp_WriteDate, tpp_TotalAmount,
+				 tpp_TargetAmount, tpp_FundingStartDate, tpp_FundingLastDate, 
+				 tpp_FunderNum, tpp_State, tpp_AdminMessage from tpproject where tpp_Id = #{tppId}
+	</select>
+	
+	 
+	 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

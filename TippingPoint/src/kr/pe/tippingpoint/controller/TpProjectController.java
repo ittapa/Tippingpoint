@@ -243,7 +243,7 @@ public class TpProjectController {
 
 		Map map = service.allListTpProject(pageNo);
 
-		return new ModelAndView("/WEB-INF/view/body/tpproject/tpProjectRequestSuccess.jsp", map);
+		return new ModelAndView("/WEB-INF/view/body/tpproject/tpProjectBoard.jsp", map);
 	}
 	
 	

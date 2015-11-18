@@ -43,7 +43,7 @@
 	
 	<!-- 프로젝트 관련 view 설정  -->
 	<mvc:view-controller path="/tpProjectSubmit.tp" view-name="/WEB-INF/view/body/tpproject/tpProjectSubmit.jsp" />
-	<mvc:view-controller path="/tpProjectBoardjsp.tp" view-name="/WEB-INF/view/body/tpproject/tpProjectBoard.jsp" />
+	<!-- <mvc:view-controller path="/tpProjectBoardjsp.tp" view-name="/WEB-INF/view/body/tpproject/tpProjectBoard.jsp" /> -->
 	
 	<!-- 파일 자원 관련 패스 설정 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
