@@ -45,8 +45,7 @@ public class TpProjectController {
 		return "/WEB-INF/view/body/tpproject/tpProjectRequestSuccess.jsp";
 	}
 
-	
-	//사진 첨부하기 (html5가 아닐경우)
+	// 사진 첨부하기 (html5가 아닐경우)
 	@RequestMapping("/file_uploader.tp")
 	public String file_uploader(HttpServletRequest request, HttpServletResponse response, Editor editor) {
 		String return1 = request.getParameter("callback");
@@ -101,8 +100,7 @@ public class TpProjectController {
 		return "redirect:" + return1 + return2 + return3;
 	}
 
-	
-	//사진 첨부하기html5
+	// 사진 첨부하기html5
 	@RequestMapping("/fuh5.tp")
 	public void file_uploader_html5(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("왜안오니");
@@ -183,9 +181,7 @@ public class TpProjectController {
 		}
 	}
 
-
-	
-	//프로젝트등록 컨트롤러
+	// 프로젝트등록 컨트롤러
 	@RequestMapping("/registerTpProject")
 	public String registerTpProject(HttpServletRequest request, HttpServletResponse response, ModelMap map)
 			throws IOException {
@@ -228,27 +224,24 @@ public class TpProjectController {
 
 	// 프로젝트 전체보기
 	@RequestMapping("/tpProjectBoard")
-	public ModelAndView tpProjectBoard(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		/*if(pageNo == 0){
-			pageNo = 1;
-		}*/
-		int pageNo = 1;
+	public ModelAndView tpProjectBoard(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("메롱");
+		int pageNo = 1;
 		try {
 			pageNo = Integer.parseInt(request.getParameter("pageNo"));
-
+			
 		} catch (Exception e) {
 		}
 
 		Map map = service.allListTpProject(pageNo);
+		System.out.println("메롱2");
+		
 
 		return new ModelAndView("/WEB-INF/view/body/tpproject/tpProjectBoard.jsp", map);
 	}
-	
-	
-	//단일 프로젝트 조회하기
-	@RequestMapping("/TpProject.tp")
+
+	// 단일 프로젝트 조회하기
+	@RequestMapping("/tpProject.tp")
 	public ModelAndView findTpProject(HttpServletRequest request, HttpServletResponse response) {
 
 		// 1.요청파라미터 조회
