@@ -53,6 +53,13 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	public int updateById(TpProject tpproject) {
 		return 0;
 	}
+
+	@Override
+	public void adminUpById(TpProject adminProjecte) {
+		session.update("mapper.adminProjectUpdate",adminProjecte);
+	}
+	
+	
 	
 	
 }
