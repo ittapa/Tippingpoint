@@ -27,7 +27,7 @@
 				<c:forEach items="${requestScope.list }" var="tpProject">
 					<tr>
 						<td>${tpProject.tppWriter }</td>
-						<td><a href="/TippingPoint/TpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></td>
+						<td><a href="/TippingPoint/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></td>
 						<td>${tpProject.tppFundingLastDate }</td>
 						<td>${tpProject.tppTotalAmount }</td>
 					<tr>

@@ -42,7 +42,7 @@ public class TpProjectController {
 		System.out.println();
 		System.out.println();
 
-		return "/WEB-INF/view/body/tpproject/tpProjectRequestSuccess.jsp";
+		return "/WEB-INF/view/body/tpProject/tpProjectRequestSuccess.jsp";
 	}
 
 	// 사진 첨부하기 (html5가 아닐경우)
@@ -237,7 +237,7 @@ public class TpProjectController {
 		System.out.println("메롱2");
 		
 
-		return new ModelAndView("/WEB-INF/view/body/tpproject/tpProjectBoard.jsp", map);
+		return new ModelAndView("/WEB-INF/view/body/tpProject/tpProjectBoard.jsp", map);
 	}
 
 	// 단일 프로젝트 조회하기
@@ -249,6 +249,6 @@ public class TpProjectController {
 		String tppId = request.getParameter("tppId");
 		TpProject polist = service.findTpProjectById(tppId);
 
-		return new ModelAndView("/WEB-INF/view/body/tpproject/tpProject.jsp", "polist", polist);
+		return new ModelAndView("/WEB-INF/view/body/tpProject/tpProject.jsp", "polist", polist);
 	}
 }
