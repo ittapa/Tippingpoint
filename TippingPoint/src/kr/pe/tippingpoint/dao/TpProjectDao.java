@@ -8,6 +8,8 @@ public interface TpProjectDao {
 
 	public List<TpProject> selectAllTpProject(int pageNo);
 	
+	public int selectCountProject();
+	
 	public TpProject selectTpProjectById(String tppId);
 	
 	public List<TpProject> selectByCategory(String tppCategory);

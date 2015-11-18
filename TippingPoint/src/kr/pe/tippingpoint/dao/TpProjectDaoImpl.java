@@ -25,8 +25,13 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	}
 
 	@Override
+	public int selectCountProject() {
+		return session.selectOne("mapper.selectCountProject");
+	}
+
+	@Override
 	public TpProject selectTpProjectById(String tppId) {
-		return null;
+		return session.selectOne("mapper.selectTpProjectById", tppId);
 	}
 
 	@Override
@@ -36,7 +41,7 @@ public class TpProjectDaoImpl implements TpProjectDao{
 
 	@Override
 	public int insertTpProject(TpProject tpproject) {
-		return session.insert("mapper.insertTpProject", tpproject);
+		return 0;
 	}
 
 	@Override

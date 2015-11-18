@@ -1,1 +1,10 @@
 /kr/
+/controller/
+/dao/
+/download/
+/mapper/
+/mybatis/
+/service/
+/upload/
+/util/
+/vo/

@@ -1,12 +1,13 @@
 package kr.pe.tippingpoint.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.pe.tippingpoint.vo.TpProject;
 
 public interface TpProjectService {
 
-	public List<TpProject> allListTpProject(int pageNo);
+	public Map allListTpProject(int pageNo);
 	
 	public TpProject findTpProjectById(String tppId);
 	

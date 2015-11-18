@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,11 +6,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- 메인페이지 -->
+	<h2>프로젝트팀 임시 메인페이지</h2>
 	
-	
-	<a href="/TippingPoint/submitProject.tp"> 게시글 등록</a>
-	<a href="/TippingPoint/tpProjectBoard.tp"> 게시글 목록</a>
+
+
+	<a href="/TippingPoint/tpProjectSubmit.tp"> 게시글 등록</a>
+	<a href="/TippingPoint/tpProjectBoard.tp">
+		게시글 목록</a>
 
 
 

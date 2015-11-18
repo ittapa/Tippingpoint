@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>제휸제휸</h2>
+<h2>제휸제휸 프로젝트 등록 신청 성공했쪄</h2>
 </body>
 </html>

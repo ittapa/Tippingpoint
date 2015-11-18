@@ -6,9 +6,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
-
-
-
+		
+		<!-- mybtis 및 DB 설정 -->
+		
 	<bean name="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"
 		c:sqlSessionFactory-ref="SqlSessionFactoryBean" />
 
@@ -35,34 +35,27 @@
 	<!-- 게시글 등록페이지로 이동 -->
 	<mvc:annotation-driven />
 	
+	<!-- bean anotation -->
 	<context:component-scan base-package="kr.pe.tippingpoint" />
 	
 	
 	<mvc:view-controller path="/main.tp" view-name="/WEB-INF/view/main.jsp" />
 	
 	<!-- 프로젝트 관련 view 설정  -->
-	<mvc:view-controller path="/submitProject.tp" view-name="/WEB-INF/view/body/tpproject/submitProject.jsp" />
+	<mvc:view-controller path="/tpProjectSubmit.tp" view-name="/WEB-INF/view/body/tpproject/tpProjectSubmit.jsp" />
+	<mvc:view-controller path="/tpProjectBoardjsp.tp" view-name="/WEB-INF/view/body/tpproject/tpProjectBoard.jsp" />
 	
-
 	<!-- 파일 자원 관련 패스 설정 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
-	
 	<!-- 파일 업로드 -->
-	
-
 	<context:component-scan base-package="spring.fileup.controller"></context:component-scan>
-
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
-	
-	
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
 		p:order="1" />
-
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:order="2" />
-
 
 </beans>
