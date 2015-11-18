@@ -34,7 +34,10 @@ public class TpProjectController {
 
 	@Autowired
 	private TpProjectService service;
-
+	
+	
+	
+	
 	// 전송TEST 지울것..
 	@RequestMapping("/test.tp")
 	public String submit(@RequestParam String tppProjectContent) {
@@ -44,6 +47,52 @@ public class TpProjectController {
 
 		return "/WEB-INF/view/body/tpProject/tpProjectRequestSuccess.jsp";
 	}
+	
+	// 프로젝트등록 컨트롤러
+		@RequestMapping("/submitTpProject")
+		public String registerTpProject(HttpServletRequest request, HttpServletResponse response, ModelMap map)
+				throws IOException {
+			System.out.println("1. 와썹");
+
+			// 1. 요청파라미터 조회
+			
+			TpProject tpvo = new TpProject();
+			
+			
+			tpvo.setTppTitle(request.getParameter("title"));
+
+			String startDate = request.getParameter("FundingStartDate");
+			int FundingStartDate = Integer.parseInt(startDate);
+			tpvo.setTppFundingStartDate(FundingStartDate);
+
+			String lastDate = request.getParameter("FundingLastDate");
+			int FundingLastDate = Integer.parseInt(lastDate);
+			tpvo.setTppFundingLastDate(FundingLastDate);
+
+			String amount = request.getParameter("targetAmount");
+			int targetAmount = Integer.parseInt(amount);
+			tpvo.setTppTargetAmount(targetAmount);
+
+			tpvo.setTppProjectContent(request.getParameter("imageInfo"));
+			String tpid = request.getParameter("tpid");
+			tpvo.setTppId(tpid);
+			/////////////////// 여기까지 고객이 입력한
+			/////////////////// 정보///////////////////////////////////////
+
+			tpvo.setTppWriter("작성자1");
+			Date date = new Date();
+
+			String day = date.getYear() - 100 + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours();
+			int days = Integer.parseInt(day);
+			tpvo.setTppWriteDate(days);
+
+			System.out.println("2.==" + tpvo.toString());
+			service.registerTpProject(tpvo);
+
+			return "/WEB-INF/view/body/tpProject/tpProjectRequestSuccess.jsp"; //성공페이지
+		}
+	
+	
 
 	// 사진 첨부하기 (html5가 아닐경우)
 	@RequestMapping("/file_uploader.tp")
@@ -181,46 +230,7 @@ public class TpProjectController {
 		}
 	}
 
-	// 프로젝트등록 컨트롤러
-	@RequestMapping("/registerTpProject")
-	public String registerTpProject(HttpServletRequest request, HttpServletResponse response, ModelMap map)
-			throws IOException {
-		System.out.println("1. 와썹");
-
-		// 1. 요청파라미터 조회
-		TpProject tpvo = new TpProject();
-		tpvo.setTppTitle(request.getParameter("title"));
-
-		String startDate = request.getParameter("FundingStartDate");
-		int FundingStartDate = Integer.parseInt(startDate);
-		tpvo.setTppFundingStartDate(FundingStartDate);
-
-		String lastDate = request.getParameter("FundingLastDate");
-		int FundingLastDate = Integer.parseInt(lastDate);
-		tpvo.setTppFundingLastDate(FundingLastDate);
-
-		String amount = request.getParameter("targetAmount");
-		int targetAmount = Integer.parseInt(amount);
-		tpvo.setTppTargetAmount(targetAmount);
-
-		tpvo.setTppProjectContent(request.getParameter("imageInfo"));
-		String tpid = request.getParameter("tpid");
-		tpvo.setTppId(tpid);
-		/////////////////// 여기까지 고객이 입력한
-		/////////////////// 정보///////////////////////////////////////
-
-		tpvo.setTppWriter("작성자1");
-		Date date = new Date();
-
-		String day = date.getYear() - 100 + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours();
-		int days = Integer.parseInt(day);
-		tpvo.setTppWriteDate(days);
-
-		System.out.println("2.==" + tpvo.toString());
-		service.registerTpProject(tpvo);
-
-		return "/main.jsp";
-	}
+	
 
 	// 프로젝트 전체보기
 	@RequestMapping("/tpProjectBoard")

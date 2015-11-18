@@ -5,29 +5,29 @@
 
 
 	<resultMap type="tpProject" id="tpProject-resultmap">
-		<result property="tppId" column="tpp_Id"/>
-		<result property="tppTitle" column="tpp_Title"/>
-		<result property="tppProjectContent" column="tpp_ProjectContent"/>
-		<result property="tppWriter" column="tpp_Writer"/>
-		<result property="tppWriteDate" column="tpp_WriteDate"/>
-		<result property="tppTotalAmount" column="tpp_TotalAmount"/>
-		<result property="tppTargetAmount" column="tpp_TargetAmount"/>
-		<result property="tppTotalAmount" column="tp_pTotalAmount"/>
-		<result property="tppFundingStartDate" column="tpp_FundingStartDate"/>
-		<result property="tppFundingLastDate" column="tpp_FundingLastDate"/>
-		<result property="tppFunderNum" column="tpp_FunderNum"/>
-		<result property="tppState" column="tpp_State"/>
-		<result property="tppAdminMessage" column="tpp_AdminMessage"/>
+		<result property="tppId" column="tppId"/>
+		<result property="tppTitle" column="tppTitle"/>
+		<result property="tppProjectContent" column="tppProjectContent"/>
+		<result property="tppWriter" column="tppWriter"/>
+		<result property="tppWriteDate" column="tppWriteDate"/>
+		<result property="tppTotalAmount" column="tppTotalAmount"/>
+		<result property="tppTargetAmount" column="tppTargetAmount"/>
+		<result property="tppTotalAmount" column="tppTotalAmount"/>
+		<result property="tppFundingStartDate" column="tppFundingStartDate"/>
+		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
+		<result property="tppFunderNum" column="tppFunderNum"/>
+		<result property="tppState" column="tppState"/>
+		<result property="tppAdminMessage" column="tppAdminMessage"/>
 	</resultMap>
 	
 
 
 	<resultMap type="tpProject" id="tpProject-resultmap2">
-		<result property="tppId" column="tpp_Id"/>
-		<result property="tppTitle" column="tpp_Title"/>
-		<result property="tppWriter" column="tpp_Writer"/>
-		<result property="tppFundingLastDate" column="tpp_FundingLastDate"/>
-		<result property="tppTargetAmount" column="tpp_TargetAmount"/>
+		<result property="tppId" column="tppId"/>
+		<result property="tppTitle" column="tppTitle"/>
+		<result property="tppWriter" column="tppWriter"/>
+		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
+		<result property="tppTargetAmount" column="tppTargetAmount"/>
 	</resultMap>
 
 	<!-- 프로젝트 추가 쿼리문 -->
@@ -41,13 +41,13 @@
 		
 	<!-- 전체고객조회 pading처리 select문 -->
 	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap2">
-	 	select tpp_Id, tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 	select tppId, tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 		from(
-	 			select ceil(rownum/#{contentPerPage}) page, tpp_Id, tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 			from(
-	 				select tpp_Id, tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 				select tppId, tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 				from tpproject
-	 				order by tpp_FundingLastDate
+	 				order by tppFundingLastDate
 	 			)
 	 		)
 	 	where page = #{pageNo}
@@ -55,13 +55,13 @@
 	 
 	 <!-- 총 프로젝트수 조회 -->
 	<select id="selectCountProject" resultType="int">
-		select count(tpp_Id) from tpproject 
+		select count(tppId) from tpproject 
 	</select>
 	
 	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
-		select tpp_Id, tpp_Title, tpp_ProjectContent, tpp_Writer, tpp_WriteDate, tpp_TotalAmount,
-				 tpp_TargetAmount, tpp_FundingStartDate, tpp_FundingLastDate, 
-				 tpp_FunderNum, tpp_State, tpp_AdminMessage from tpproject where tpp_Id = #{tppId}
+		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage from tpproject where tppId = #{tppId}
 	</select>
 	
 	 

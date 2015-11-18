@@ -1,18 +1,19 @@
 drop table tpproject
 
 create table tpproject(
-	tpp_Id varchar2(100) primary key,
-	tpp_Title varchar2(200) not null,
-	tpp_ProjectContent varchar2(2000) not null,
-	tpp_Writer varchar2(100) not null,
-	tpp_WriteDate number(20) not null,
-	tpp_TotalAmount number(20) default(0),
-	tpp_TargetAmount number(20),
-	tpp_FundingStartDate number(20),
-	tpp_FundingLastDate number(20),
-	tpp_FunderNum number(20) default(0),
-	tpp_State varchar2(10) default('s'),
-	tpp_AdminMessage varchar2(200)
+	tppId varchar2(100) primary key,
+	tppTitle varchar2(200) not null,
+	tppProjectContent varchar2(2000) not null,
+	tppWriter varchar2(100) not null,
+	tppWriteDate number(20) not null,
+	tppTotalAmount number(20) default(0),
+	tppTargetAmount number(20),
+	tppFundingStartDate number(20),
+	tppFundingLastDate number(20),
+	tppFunderNum number(20) default(0),
+	tppState varchar2(10) default('s'),
+	tppAdminMessage varchar2(200)
+	
 );
 
 select * from TPPROJECT
@@ -59,26 +60,26 @@ insert into tpproject values('272','2','2','2', 20121212, 1, 1, 20121212, 201212
 insert into tpproject values('276','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
 insert into tpproject values('278','2','2','2', 20121212, 1, 1, 20121212, 20121212, 1, '2', '3');
 
-select rownum, tpp_Title, tpp_Writer from tpproject
-select tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+select rownum, tppTitle, tppWriter from tpproject
+select tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 		from(
-	 			select ceil(rownum/10) page, tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 			select ceil(rownum/10) page, tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 			from(
-	 				select tpp_Title, tpp_Writer, tpp_FundingLastDate, tpp_TotalAmount
+	 				select tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 				from tpproject
-	 				order by tpp_FundingLastDate
+	 				order by tppFundingLastDate
 	 			)
 	 		) 
 		where page = 1
 	 	
 	 	
-select count(tpp_Id) from tpproject
+select count(tppId) from tpproject
 
 
 
-select tpp_Id, tpp_Title, tpp_ProjectContent, tpp_Writer, tpp_WriteDate, tpp_TotalAmount,
-				 tpp_TargetAmount, tpp_FundingStartDate, tpp_FundingLastDate, 
-				 tpp_FunderNum, tpp_State, tpp_AdminMessage from tpproject where tpp_Id = '2'
+select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage from tpproject where tppId = '2'
 
 
 
