@@ -45,7 +45,7 @@
 	
 	<!-- 등록 페이지 연결 -->
 	<mvc:view-controller path="/tpProjectRegister.tp" view-name="/WEB-INF/view/body/tpProject/tpProjectRegister.jsp" />
-	
+	<mvc:view-controller path="/tpAdminAccess.tp" view-name ="/WEB-INF/view/body/tpAdministrator/tpAdminAccess.jsp"/>
 	<!-- 파일 자원 관련 패스 설정 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	

@@ -16,7 +16,7 @@ import kr.pe.tippingpoint.service.TpProjectService;
 import kr.pe.tippingpoint.vo.TpProject;
 
 @Controller
-public class AdministratorController {
+public class TpAdministratorController {
 
 	
 	@Autowired
@@ -30,14 +30,14 @@ public class AdministratorController {
 		String adminPw = request.getParameter("adminPw");
 		
 		if(!id.equals(adminId)){
-			return "/admincheck.jsp";
+			return "/tpAdminCheck.jsp";
 		}
 		
 		if(!pw.equals(adminPw)){
-			return "/admincheck.jsp";
+			return "/tpAdminCheck.jsp";
 		}
 		
-		return "/WEB-INF/view/body/tpAdministrator/adminmain.jsp";
+		return "/WEB-INF/view/body/tpAdministrator/tpAdminMain.jsp";
 		
 	}
 	
@@ -56,7 +56,7 @@ public class AdministratorController {
 		System.out.println("메롱2");
 		
 
-		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/adminProjectList.jsp", map);
+		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectList.jsp", map);
 	}
 	
 
@@ -69,12 +69,12 @@ public class AdministratorController {
 		String tppId = request.getParameter("tppId");
 		TpProject polist = adminservice.adminFindTpProjectById(tppId);
 
-		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/adminview.jsp", "polist", polist);
+		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProject.jsp", "polist", polist);
 	}
 	
 	
 	//프로젝트 승인
-	@RequestMapping("tpAdminUp")
+	@RequestMapping("tpAdminProjectStateConvert")
 	public String tpAdminUp(HttpServletRequest request, HttpServletResponse response){
 		String id = request.getParameter("tppId");
 		String tppState = request.getParameter("tppState");
@@ -86,6 +86,6 @@ public class AdministratorController {
 		
 		adminservice.adminProjectUp(adminProject);
 		
-		return "/WEB-INF/view/body/tpAdministrator/adminProjectList.jsp";
+		return "/tpAdminProjectBoard.tp";
 	}
 }
