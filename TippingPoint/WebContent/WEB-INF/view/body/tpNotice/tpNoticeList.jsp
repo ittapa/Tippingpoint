@@ -8,31 +8,33 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 게시판 목록 게시판 -->
+
+	<h2>공지사항 목록</h2>
 	
-	<h2>프로젝트 목록</h2>
 
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">
 		등록된 글이 없습니다.
 		</c:when>
 		<c:otherwise>
-			
-		
-				<c:forEach items="${requestScope.list }" var="tpProject">
-					<div>
-						<p>
-						<div><img src="${tpProject.tppMainImg }" ></div>
-						<div>${tpProject.tppWriter }</div>
-						<div><a href="/TippingPoint/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
-						<div>${tpProject.tppFundingLastDate }</div>
-						<div>${tpProject.tppTotalAmount }</div>
-						</p>
-					</div>
+			<table style="width: 500px" border="1" >
+				<tr>
+					<th>번호</th>
+					<th>작성일</th>
+					<th>제목</th>
+				</tr>
+				<c:forEach items="${requestScope.list }" var="tpNotice">
+					<tr>
+						<td>${tpNotice.tpNoticeNum }</td>
+						<td><a href="/TippingPoint/findTpNotice.tp?tpNoticeNum=${tpNotice.tpNoticeNum }">${tpNotice.tpNoticeTitle }</a></td>
+						<td>${tpNotice.tpNoticeDate }</td>
+						
+					<tr>
 				</c:forEach>
-			<br/>
-			<div>총 게시글수 : ${fn:length(requestScope.list) }</div>
-					
+				<tr>
+					<td colspan="3">총 게시글수 : ${fn:length(requestScope.list) }</td>
+				</tr>
+			</table>
 		</c:otherwise>
 	</c:choose>
 	
@@ -76,6 +78,7 @@
 	 </c:choose>
 	 
 		
+
 
 
 </body>

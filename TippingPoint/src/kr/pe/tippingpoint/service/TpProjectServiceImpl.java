@@ -16,7 +16,7 @@ public class TpProjectServiceImpl implements TpProjectService {
 
 	@Autowired
 	private TpProjectDao dao;
-	
+
 	@Override
 	public Map allListTpProject(int pageNo) {
 			HashMap map = new HashMap();
@@ -24,6 +24,7 @@ public class TpProjectServiceImpl implements TpProjectService {
 			TpProjectBoardPagingBean pagingBean = new TpProjectBoardPagingBean(dao.selectCountProject(), pageNo);
 			map.put("list", list); //목록에 뿌려질 고객들 정보
 			map.put("pagingBean", pagingBean); //페이징 처리위한 pagingBean
+
 		return map;
 	}
 
@@ -42,6 +43,4 @@ public class TpProjectServiceImpl implements TpProjectService {
 		dao.insertTpProject(tpvo);
 	}
 
-	
-	
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="tpNoticeMapper">
+
+	<!-- tpnoticeMapper 모든 값 -->
+	<resultMap type="tpNotice" id="tpNotice-resultmap">
+		<result property="tpNoticeNum" column="tpNoticeNum"/>
+		<result property="tpNoticeDate" column="tpNoticeDate"/>
+		<result property="tpNoticeTitle" column="tpNoticeTitle"/>
+		<result property="tpNoticeContents" column="tpNoticeContents"/>
+	</resultMap>
+	
+		
+	<!-- 공지글 조회 paging처리 select문 -->
+	 <select id="selectTpNoticePaging" parameterType="int" resultMap="tpNotice-resultmap">
+	 	select TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
+	 			from(
+	 				select TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
+	 				from tpnotice
+	 				order by TpNoticeNum
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+	 
+	 <!-- 총 프로젝트수 조회 paging 처리 할때 -->
+	<select id="selectCountTpNotice" resultType="int">
+		select count(TpNoticeNum) from tpnotice 
+	</select>
+	
+	<!-- num으로 고객조회 -->
+	<select id = "selectTpNoticeByNum" parameterType = "int" resultMap ="tpNotice-resultmap">
+		select TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
+				 from tpnotice where TpNoticeNum = #{TpNoticeNum}
+	</select>
+	
+	 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

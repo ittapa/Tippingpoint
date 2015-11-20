@@ -1,0 +1,36 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8 ">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 공지사항 상세보기 -->
+
+
+	 
+	<h2> 공지사항 상세보기 </h2>
+		<table border="1" style="width: 300px">
+			<tr>
+				<th>작성일</th>
+				<td>${requestScope.noticeList.tpNoticeDate }</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td>${requestScope.noticeList.tpNoticeTitle }</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>${requestScope.noticeList.tpNoticeContents }</td>
+			</tr>
+		</table>
+		
+
+   <form name = "noticeList" action="/TippingPoint/tpNoticeBoard.tp" method="post">
+      <input type="submit" value="목록으로">
+   </form>
+
+
+</body>
+</html>
