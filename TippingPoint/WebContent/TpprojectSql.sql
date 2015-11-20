@@ -1,8 +1,43 @@
 drop table tpproject
+drop table tpnotice
 
 select * from TPPROJECT
 
 
+-- 공지
+create table tpnotice(
+	tpNoticeNum number(20) primary key,
+	tpNoticeDate varchar2(10),
+	tpNoticeTitle varchar2(200) not null,
+	tpNoticeContents varchar2(2000) not null
+);
+
+
+insert into tpnotice values(1,'20151120', '첫번째 공지', '첫번째 공지사항입니다 ㅎㅎㅎㅎㅎㅎㅎ');
+insert into tpnotice values(2,'20151120', '두번째 공지', '두번째 공지사항입니다 ㅎㅎㅎㅎㅎㅎㅎ');
+insert into tpnotice values(3,'20151120', '세번째 공지', '세번째 공지사항입니다 ㅎㅎㅎㅎㅎㅎㅎ');
+
+ 	select TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
+	 		from(
+	 			select ceil(rownum/10) page, TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
+	 			from(
+	 				select TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
+	 				from tpnotice
+	 				order by TpNoticeNum
+	 			)
+	 		)
+	 	where page = 1
+
+
+select TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
+				 from tpnotice where TpNoticeNum = 1
+
+
+
+
+
+
+-- 게시판
 create table tpproject(
 	tppId varchar2(100) primary key,
 	tppTitle varchar2(200) not null,
@@ -20,6 +55,8 @@ create table tpproject(
 	tppCategroy varchar2(20)
 	
 );
+
+
 
 select * from TPPROJECT
 select tppProjectContent from TPPROJECT

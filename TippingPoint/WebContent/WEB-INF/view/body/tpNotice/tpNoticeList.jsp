@@ -8,28 +8,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 게시판 목록 게시판 -->
+
+	<h2>공지사항 목록</h2>
 	
-	<h2>프로젝트 목록</h2>
 
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">
 		등록된 글이 없습니다.
 		</c:when>
 		<c:otherwise>
-			<table style="width: 500px" border="1">
+			<table style="width: 500px" border="1" >
 				<tr>
-					<th>작성자</th>
+					<th>번호</th>
+					<th>작성일</th>
 					<th>제목</th>
-					<th>마감일</th>
-					<th>모인금액</th>
 				</tr>
-				<c:forEach items="${requestScope.list }" var="tpProject">
+				<c:forEach items="${requestScope.list }" var="tpNotice">
 					<tr>
-						<td>${tpProject.tppWriter }</td>
-						<td><a href="/TippingPoint/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></td>
-						<td>${tpProject.tppFundingLastDate }</td>
-						<td>${tpProject.tppTotalAmount }</td>
+						<td>${tpNotice.tpNoticeNum }</td>
+						<td><a href="/TippingPoint/findTpNotice.tp?tpNoticeNum=${tpNotice.tpNoticeNum }">${tpNotice.tpNoticeTitle }</a></td>
+						<td>${tpNotice.tpNoticeDate }</td>
+						
 					<tr>
 				</c:forEach>
 				<tr>
@@ -79,6 +78,7 @@
 	 </c:choose>
 	 
 		
+
 
 
 </body>

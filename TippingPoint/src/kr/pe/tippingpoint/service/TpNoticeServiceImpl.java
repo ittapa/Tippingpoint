@@ -7,29 +7,30 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.pe.tippingpoint.dao.TpProjectDao;
+import kr.pe.tippingpoint.dao.TpNoticeDao;
 import kr.pe.tippingpoint.util.PagingBean;
+import kr.pe.tippingpoint.vo.TpNotice;
 import kr.pe.tippingpoint.vo.TpProject;
 
 @Service
-public class TpProjectServiceImpl implements TpProjectService {
+public class TpNoticeServiceImpl implements TpNoticeService {
 
 	@Autowired
-	private TpProjectDao dao;
+	private TpNoticeDao dao;
 
 	@Override
-	public Map allListTpProject(int pageNo) {
+	public Map allListTpNotice(int pageNo) {
 		HashMap map = new HashMap();
-		List<TpProject> list = dao.selectAllTpProject(pageNo);
-		PagingBean pagingBean = new PagingBean(dao.selectCountProject(), pageNo);
+		List<TpProject> list = dao.selectAllTpNotice(pageNo);
+		PagingBean pagingBean = new PagingBean(dao.selectCountTpNotice(), pageNo);
 		map.put("list", list); // 목록에 뿌려질 고객들 정보
 		map.put("pagingBean", pagingBean); // 페이징 처리위한 pagingBean
 		return map;
 	}
 
 	@Override
-	public TpProject findTpProjectById(String tppId) {
-		return dao.selectTpProjectById(tppId);
+	public TpNotice findTpNoticeNum(int tpNoticeNum) {
+		return dao.selectTpNoticeNum(tpNoticeNum);
 	}
 
 	@Override
@@ -38,8 +39,8 @@ public class TpProjectServiceImpl implements TpProjectService {
 	}
 
 	@Override
-	public void registerTpProject(TpProject tpvo) {
-		dao.insertTpProject(tpvo);
+	public void registerTpProject(TpProject tpproject) {
+
 	}
 
 }

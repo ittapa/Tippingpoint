@@ -16,6 +16,7 @@
 	<!-- mapper 설정 -->
 	<mappers>
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpprojectMapper.xml" />
+		<mapper resource="kr/pe/tippingpoint/mybatis/tpnoticeMapper.xml" />
 	</mappers>
 
 </configuration>
