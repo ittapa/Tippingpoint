@@ -47,10 +47,10 @@
 	<mvc:view-controller path="/tpProjectRegister.tp" view-name="/WEB-INF/view/body/tpProject/tpProjectRegister.jsp" />
 	<mvc:view-controller path="/tpAdminAccess.tp" view-name ="/WEB-INF/view/body/tpAdministrator/tpAdminAccess.jsp"/>
 	
-	<mvc:view-controller path="/main.tp" view-name="/WEB-INF/view/main.jsp" />
+	<!-- <mvc:view-controller path="/main.tp" view-name="/WEB-INF/view/main.jsp" /> -->
 	
 	<!-- 메인페이지준영 혜진.... -->
-	<mvc:view-controller path="/index.tp" view-name="index.index" />
+	<mvc:view-controller path="/main.tp" view-name="main.tiles" />
 	<!-- 회원가입 페이지 -->
 	<mvc:view-controller path="/tpfunder/register_form.tp" view-name="tpfunder/register_member.tiles"/>
 	<!-- 회원가입 성공페이지 -->

@@ -27,7 +27,7 @@
 		</table>
 		
 
-   <form name = "noticeList" action="/TippingPoint/tpNoticeBoard.tp" method="post">
+   <form name = "noticeList" action="${initParam.rootPath }/tpNoticeBoard.tp" method="post">
       <input type="submit" value="목록으로">
    </form>
 

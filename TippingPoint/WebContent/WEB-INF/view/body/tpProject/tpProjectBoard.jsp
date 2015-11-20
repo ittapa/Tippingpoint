@@ -23,7 +23,7 @@
 						<p>
 						<div><img src="${tpProject.tppMainImg }" ></div>
 						<div>${tpProject.tppWriter }</div>
-						<div><a href="/TippingPoint/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
+						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
 						<div>${tpProject.tppFundingLastDate }</div>
 						<div>${tpProject.tppTotalAmount }</div>
 						</p>
@@ -43,7 +43,7 @@
 	 -->
 	 <c:choose>
 	 	<c:when test="${requestScope.pagingBean.previousPageGroup }">
-	 		<a href="/TippingPoint/tpProjectBoard.tp?pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">◀</a>
+	 		<a href="${initParam.rootPath }/tpProjectBoard.tp?pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">◀</a>
 	 	</c:when>
 	 	<c:otherwise>
 	 	◀
@@ -59,7 +59,7 @@
 	 				[${page}]&nbsp;
 	 			</c:when>
 			<c:otherwise>
-	 			<a href="/TippingPoint/tpProjectBoard.tp?pageNo=${page }">${page }</a>&nbsp;&nbsp;
+	 			<a href="${initParam.rootPath }/tpProjectBoard.tp?pageNo=${page }">${page }</a>&nbsp;&nbsp;
 	 		</c:otherwise>
 	 		</c:choose>
 	 </c:forEach>
@@ -67,7 +67,7 @@
 	 <!-- Paging 처리2 -->
 	  <c:choose>
 	 	<c:when test="${requestScope.pagingBean.nextPageGroup }">
-	 		<a href="/TippingPoint/tpProjectBoard.tp?pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">▶</a>
+	 		<a href="${initParam.rootPath }/tpProjectBoard.tp?pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">▶</a>
 	 	</c:when>
 	 	<c:otherwise>
 	 		▶

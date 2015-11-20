@@ -54,9 +54,9 @@ nav.template{
 	text-align:center;
 	border-bottom:1px solid gray;
 }
-nav.template a:link {text-decoration: none; color: white;}
-nav.template a:visited {text-decoration: none; color: white;}
-nav.template a:active {text-decoration: none; color: white;}
+nav.template a:link {text-decoration: none; color: black;}
+nav.template a:visited {text-decoration: none; color: black;}
+nav.template a:active {text-decoration: none; color: black;}
 nav.template a:hover {text-decoration: underline; color: blue;}
 
 section.template{
@@ -67,9 +67,23 @@ section.template{
 </style>
 </head>
 <body>
-<div class="template">
-	<nav class="template"><tiles:insertAttribute name="menu"/></nav>
-	<section class="template"><tiles:insertAttribute name="body"/></section>
-</div>
+
+	<header>
+		<tiles:insertAttribute name ="header"/>
+	</header>
+	
+	
+	<section>
+	바디영역
+		<tiles:insertAttribute name = "body"/>
+	</section>
+	
+	
+	<footer>
+		<tiles:insertAttribute name = "footer"/>
+	</footer>
+
+
+
 </body>
 </html>

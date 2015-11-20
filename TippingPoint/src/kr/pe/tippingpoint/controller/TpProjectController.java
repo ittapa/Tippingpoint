@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -66,6 +68,11 @@ public class TpProjectController {
 			// null : upImage name의 요청파라미터가 아야 없는 경우.
 			// isEmpty -true: 사용자가 파일을 전송하지 않은 경우.
 			
+			//패스 및 경로 호출
+			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+			String rootPath = request.getSession().getServletContext().getInitParameter("rootPath");
+			
+			
 			if (upfile != null && !upfile.isEmpty()) { // 업로드된 파일이 있다.
 				// 업로드 된 파일으 ㅣ정보를 조회
 				// 파일을 임시저장경로에서 최종 저장경로로 이동.
@@ -78,7 +85,6 @@ public class TpProjectController {
 		
 				// 이미지이므로 신규 파일로 디렉토리 설정 및 업로드
 				// 파일 기본경로
-				String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 				
 				// 파일 기본경로 _ 상세경로
 				String filePath_A = "resources" + File.separator + "project" + File.separator + "mainImage"
@@ -107,10 +113,11 @@ public class TpProjectController {
 				// 임시경로에서 레알로 저장하기
 				upfile.transferTo(upImg);
 				//메인이미지 경로 저장
-				tpvo.setTppMainImg("/TippingPoint/"+filePath_A+realMainImgName); //upfile
+			
+				tpvo.setTppMainImg(rootPath+filePath_A+realMainImgName); //upfile
 			}else{
 				//이미지 안넣었을때 디폴트 이미지
-				tpvo.setTppMainImg("/TippingPoint/test/Desert.jpg");
+				tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
 			}
 			
 

@@ -3,11 +3,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="jquery/jquery.js"></script>
+<script type="text/javascript" src="script/jquery.js"></script>
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script>  jqeury 중복확인-->
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
   

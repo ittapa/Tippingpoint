@@ -1,7 +1,7 @@
 package kr.pe.tippingpoint.vo;
 
+//고객 vo
 public class TpFunder {
-	
 	private String tpfId;
 	private String tpfName;
 	private String tpfPassword;
@@ -12,7 +12,7 @@ public class TpFunder {
 	private String tpfAddress;
 	private String tpfAddressD;
 	private String tpfPhoneNum;
-	private String tpfQualifyTpProposer;
+	private String tpfQualifyTpProposer;// funder / proposer / 
 	private String tpfAccountType;
 	
 	public TpFunder(String tpfId, String tpfName, String tpfPassword, String tpfBirth, String tpfGender, String tpfEmail,

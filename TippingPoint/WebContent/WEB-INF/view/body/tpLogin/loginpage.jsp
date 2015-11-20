@@ -10,7 +10,7 @@ table.login {
     margin-right: auto;
 }
 </style>
-<script type="text/javascript" src="/TippingPoint/script/jquery.js"></script>
+<script type="text/javascript" src="${initParam.rootPath }/script/jquery.js"></script>
 <script type="text/javascript">
 
 function loginSuccess(){

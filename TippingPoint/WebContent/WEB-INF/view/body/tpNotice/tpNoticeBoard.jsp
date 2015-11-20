@@ -26,7 +26,7 @@
 				<c:forEach items="${requestScope.list }" var="tpNotice">
 					<tr>
 						<td>${tpNotice.tpNoticeNum }</td>
-						<td><a href="/TippingPoint/findTpNotice.tp?tpNoticeNum=${tpNotice.tpNoticeNum }">${tpNotice.tpNoticeTitle }</a></td>
+						<td><a href="${initParam.rootPath }/findTpNotice.tp?tpNoticeNum=${tpNotice.tpNoticeNum }">${tpNotice.tpNoticeTitle }</a></td>
 						<td>${tpNotice.tpNoticeDate }</td>
 						
 					<tr>
@@ -46,7 +46,7 @@
 	 -->
 	 <c:choose>
 	 	<c:when test="${requestScope.pagingBean.previousPageGroup }">
-	 		<a href="/TippingPoint/tpAdminProjectBoard.tp?pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">◀</a>
+	 		<a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">◀</a>
 	 	</c:when>
 	 	<c:otherwise>
 	 	◀
@@ -62,7 +62,7 @@
 	 				[${page}]&nbsp;
 	 			</c:when>
 			<c:otherwise>
-	 			<a href="/TippingPoint/tpAdminProjectBoard.tp?pageNo=${page }">${page }</a>&nbsp;&nbsp;
+	 			<a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${page }">${page }</a>&nbsp;&nbsp;
 	 		</c:otherwise>
 	 		</c:choose>
 	 </c:forEach>
@@ -70,7 +70,7 @@
 	 <!-- Paging 처리2 -->
 	  <c:choose>
 	 	<c:when test="${requestScope.pagingBean.nextPageGroup }">
-	 		<a href="/TippingPoint/tpAdminProjectBoard.tp?pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">▶</a>
+	 		<a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">▶</a>
 	 	</c:when>
 	 	<c:otherwise>
 	 		▶

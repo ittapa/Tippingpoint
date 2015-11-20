@@ -58,7 +58,7 @@ public class TpAdministratorController {
 		System.out.println("메롱2");
 		
 
-		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectList.jsp", map);
+		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectBoard.jsp", map);
 	}
 	
 
