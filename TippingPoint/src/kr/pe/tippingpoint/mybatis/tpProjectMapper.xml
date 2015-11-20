@@ -64,7 +64,9 @@
 	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
 		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage from tpproject where tppId = #{tppId}
+				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+
+				 from tpproject where tppId = #{tppId}
 	</select>
 	
 	 	<update id="adminProjectUpdate" parameterType= "tpProject">

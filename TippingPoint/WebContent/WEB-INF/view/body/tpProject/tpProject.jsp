@@ -19,6 +19,7 @@
 			
 			<div>
 			메인 이미지<br/>
+			${requestScope.polist.tppMainImg }
 			<img src = "${requestScope.polist.tppMainImg }">
 			</div>
 			<br/>

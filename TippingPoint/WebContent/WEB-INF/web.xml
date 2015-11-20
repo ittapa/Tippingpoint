@@ -4,6 +4,15 @@
   <welcome-file-list>
     <welcome-file>main.tp</welcome-file>
   </welcome-file-list>
+   <welcome-file-list>
+    <welcome-file>index.tp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 루트 패스 -->
+    <context-param>
+		<param-name>rootPath</param-name>
+		<param-value>/TippingPoint</param-value>
+	</context-param>
   
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>

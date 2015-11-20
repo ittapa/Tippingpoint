@@ -17,25 +17,21 @@
 		등록된 글이 없습니다.
 	</c:when>
 		<c:otherwise>
-			<table style="width: 500px" border="1">
-				<tr>
-					<th>작성자</th>
-					<th>제목</th>
-					<th>마감일</th>
-					<th>모인금액</th>
-				</tr>
-				<c:forEach items="${requestScope.list }" var="tpProject">
-					<tr>
-						<td>${tpProject.tppWriter }</td>
-						<td><a href="/TippingPoint/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></td>
-						<td>${tpProject.tppFundingLastDate }</td>
-						<td>${tpProject.tppTotalAmount }</td>
-					<tr>
+	
+			<c:forEach items="${requestScope.list }" var="tpProject">
+					<div>
+						<p>
+						<div><img src="${tpProject.tppMainImg }" ></div>
+						<div>${tpProject.tppWriter }</div>
+						<div><a href="/TippingPoint/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
+						<div>${tpProject.tppFundingLastDate }</div>
+						<div>${tpProject.tppTotalAmount }</div>
+						</p>
+					</div>
 				</c:forEach>
-				<tr>
-					<td colspan="3">총 게시글수 : ${fn:length(requestScope.list) }</td>
-				</tr>
-			</table>
+			<br/>
+			<div>총 게시글수 : ${fn:length(requestScope.list) }</div>
+					
 		</c:otherwise>
 	</c:choose>
 	
