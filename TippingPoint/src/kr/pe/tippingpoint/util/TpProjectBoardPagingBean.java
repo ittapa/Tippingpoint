@@ -7,7 +7,9 @@ package kr.pe.tippingpoint.util;
  * @author kgmyh
  *
  */
-public class PagingBean {
+
+//어드민 프로젝트 뷰 페이지 전용
+public class TpProjectBoardPagingBean {
 	/**
 	 * 총 데이터(내용들:rows)의 개수
 	 */
@@ -30,7 +32,7 @@ public class PagingBean {
 	 * @param totalContent
 	 * @param currentPage
 	 */
-	public PagingBean(int totalContent, int currentPage){
+	public TpProjectBoardPagingBean(int totalContent, int currentPage){
 		this.totalContent = totalContent;
 		this.currentPage = currentPage;
 	}
@@ -145,7 +147,7 @@ public class PagingBean {
 		return flag;
 	}
 	public static void main(String[] args) {
-		PagingBean d = new PagingBean(201, 5);//총 201개 row, 현재page : 5
+		TpProjectBoardPagingBean d = new TpProjectBoardPagingBean(201, 5);//총 201개 row, 현재page : 5
 		//page내 보여질 내용의 개수 - 5
 		//page그룹내 page수 - 10
 		System.out.println("총 page 수 : "+d.getTotalPage()); //41

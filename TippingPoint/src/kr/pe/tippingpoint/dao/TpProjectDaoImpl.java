@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.pe.tippingpoint.util.PagingBean;
+import kr.pe.tippingpoint.util.TpProjectBoardPagingBean;
 import kr.pe.tippingpoint.vo.TpProject;
 
 @Repository
@@ -19,7 +19,7 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	@Override
 	public List<TpProject> selectAllTpProject(int pageNo) {
 		HashMap<String, Integer> parameter = new HashMap<String, Integer>();
-		parameter.put("contentPerPage", PagingBean.CONTENT_PER_PAGE);
+		parameter.put("contentPerPage", TpProjectBoardPagingBean.CONTENT_PER_PAGE);
 		parameter.put("pageNo", pageNo);
 		return session.selectList("tpProjectMapper.selectTpProjectPaging", parameter);
 	}

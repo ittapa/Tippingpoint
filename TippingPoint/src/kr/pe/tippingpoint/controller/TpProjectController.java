@@ -36,17 +36,6 @@ public class TpProjectController {
 	private TpProjectService service;
 	
 	
-	
-	// 전송TEST 지울것..
-	@RequestMapping("/test.tp")
-	public String submit(@RequestParam String tppProjectContent) {
-		System.out.println("내용" + tppProjectContent);
-		System.out.println();
-		System.out.println();
-
-		return "/WEB-INF/view/body/tpProject/tpProjectRequestSuccess.jsp";
-	}
-	
 	// 프로젝트등록 컨트롤러
 		@RequestMapping("/submitTpProject.tp")
 		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, HttpServletRequest request, ModelMap map)
@@ -276,7 +265,7 @@ public class TpProjectController {
 
 	// 프로젝트 전체보기
 	@RequestMapping("/tpProjectBoard")
-	public ModelAndView tpProjectBoard(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView tpProjectBoard(HttpServletRequest request) throws Exception{
 		System.out.println("메롱");
 		int pageNo = 1;
 		try {
@@ -288,13 +277,12 @@ public class TpProjectController {
 		Map map = service.allListTpProject(pageNo);
 		System.out.println("메롱2");
 		
-
 		return new ModelAndView("/WEB-INF/view/body/tpProject/tpProjectBoard.jsp", map);
 	}
 
 	// 단일 프로젝트 조회하기
 	@RequestMapping("/tpProject.tp")
-	public ModelAndView findTpProject(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView findTpProject(HttpServletRequest request) {
 
 		// 1.요청파라미터 조회
 
