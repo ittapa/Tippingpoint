@@ -17,25 +17,20 @@
 		등록된 글이 없습니다.
 	</c:when>
 		<c:otherwise>
-			<table style="width: 500px" border="1">
-				<tr>
-					<th>작성자</th>
-					<th>제목</th>
-					<th>마감일</th>
-					<th>모인금액</th>
-				</tr>
+			
+		
 				<c:forEach items="${requestScope.list }" var="tpProject">
-					<tr>
-						<td>${tpProject.tppWriter }</td>
-						<td><a href="/TippingPoint/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></td>
-						<td>${tpProject.tppFundingLastDate }</td>
-						<td>${tpProject.tppTotalAmount }</td>
-					<tr>
+					<div>
+						<div>${tpProject.tppWriter }</div>
+						<div><a href="/TippingPoint/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
+						<div>${tpProject.tppFundingLastDate }</div>
+						<div>${tpProject.tppTotalAmount }</div>
+					</div>
 				</c:forEach>
-				<tr>
-					<td colspan="3">총 게시글수 : ${fn:length(requestScope.list) }</td>
-				</tr>
-			</table>
+			<br/>
+					총 게시글수 : ${fn:length(requestScope.list) }
+				
+		
 		</c:otherwise>
 	</c:choose>
 	

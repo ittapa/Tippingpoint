@@ -23,7 +23,7 @@ public class TpAdministratorServiceImpl implements TpAdministratorService {
 	public Map adminAllListTpProject(int pageNo) {
 		HashMap map = new HashMap();
 		List<TpProject> list = dao.selectAllTpProject(pageNo);
-		TpAdminProjectBoardPagingBean pagingBean = new TpProjectBoardPagingBean(dao.selectCountProject(), pageNo);
+		TpAdminProjectBoardPagingBean pagingBean = new TpAdminProjectBoardPagingBean(dao.selectCountProject(), pageNo);
 		map.put("list", list); //목록에 뿌려질 고객들 정보
 		map.put("pagingBean", pagingBean); //페이징 처리위한 pagingBean
 	return map;
