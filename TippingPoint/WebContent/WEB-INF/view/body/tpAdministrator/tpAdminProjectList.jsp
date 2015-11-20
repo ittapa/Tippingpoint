@@ -21,16 +21,18 @@
 		
 				<c:forEach items="${requestScope.list }" var="tpProject">
 					<div>
+						<p>
+						<div><img src="${tpProject.tppMainImg }" ></div>
 						<div>${tpProject.tppWriter }</div>
 						<div><a href="/TippingPoint/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
 						<div>${tpProject.tppFundingLastDate }</div>
 						<div>${tpProject.tppTotalAmount }</div>
+						</p>
 					</div>
 				</c:forEach>
 			<br/>
-					총 게시글수 : ${fn:length(requestScope.list) }
-				
-		
+			<div>총 게시글수 : ${fn:length(requestScope.list) }</div>
+					
 		</c:otherwise>
 	</c:choose>
 	

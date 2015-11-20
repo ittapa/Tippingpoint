@@ -23,8 +23,7 @@
 			<br/>
 			
 			<div>
-				작성자
-				${requestScope.polist.tppWriter }
+				작성자 : ${requestScope.polist.tppWriter }
 			</div>
 			<br/>
 			
