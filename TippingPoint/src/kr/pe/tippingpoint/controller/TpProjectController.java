@@ -287,18 +287,30 @@ public class TpProjectController {
 		Map map = service.allListTpProject(pageNo);
 		System.out.println("메롱2");
 		
-		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);///WEB-INF/view/body/
+		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 	}
 
 	// 단일 프로젝트 조회하기
 	@RequestMapping("/tpProject.tp")
-	public ModelAndView findTpProject(HttpServletRequest request) {
+	public ModelAndView findTpProject(@RequestParam String tppId) {
 
-		// 1.요청파라미터 조회
-
-		String tppId = request.getParameter("tppId");
+		//to.do 검증 추가해야됨.
 		TpProject polist = service.findTpProjectById(tppId);
 
-		return new ModelAndView("tpProject/tpProject.tiles", "polist", polist); ///WEB-INF/view/body/
+		return new ModelAndView("tpProject/tpProject.tiles", "polist", polist); 
+	}
+	
+	//프로젝트 검색하기
+	@RequestMapping("/tpProjectSerching")
+	public ModelAndView serchTpProject(@RequestParam String keyWord){
+		
+		if(keyWord == null||keyWord.trim().length()==0){
+			//todo처리
+		}
+		
+		Map<String, Object> map = service.serchTpProjectByKeyWord(keyWord);
+		map.put("keyWord", keyWord);
+		
+		return new ModelAndView("tpProject/tpProjectSerchingList.tiles", map);
 	}
 }

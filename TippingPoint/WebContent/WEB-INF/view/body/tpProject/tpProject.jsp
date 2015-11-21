@@ -22,7 +22,7 @@
 			<div>
 			메인 이미지<br/>
 			${requestScope.polist.tppMainImg }
-			<img src = "${requestScope.polist.tppMainImg }">
+			<img src = "${requestScope.polist.tppMainImg }" width = '300' height="300">
 			</div>
 			<br/>
 			<div>

@@ -31,6 +31,16 @@
 		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
 		<result property="tppTargetAmount" column="tppTargetAmount"/>
 	</resultMap>
+	
+	<sql id = "selectAllProjectDB">
+		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+
+				 from tpproject 
+	</sql>
+	
+	
 
 	<!-- 프로젝트 추가 쿼리문 -->
 	<insert id = "insertTpProject" parameterType = "tpProject">
@@ -42,13 +52,16 @@
 
 		
 	<!-- 전체고객조회 paging처리 select문 -->
-	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap2">
-	 	select tppId, tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
+	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
 	 		from(
-	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
 	 			from(
-	 				select tppId, tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
-	 				from tpproject
+	 				<include refid="selectAllProjectDB"/>
 	 				order by tppFundingLastDate
 	 			)
 	 		)
@@ -61,19 +74,33 @@
 	</select>
 	
 	
+	
+		<!-- 단일 프로젝트 조회하기 -->
 	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
-		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
-
-				 from tpproject where tppId = #{tppId}
+	<include refid="selectAllProjectDB"></include>
+	where tppId = #{value}
 	</select>
 	
+		
+	<!-- 프로젝트 승인/거부-->
 	 	<update id="adminProjectUpdate" parameterType= "tpProject">
 		UPDATE tpproject SET tppId=#{tppId}, tppState=#{tppState},
 							  tppAdminMessage=#{tppAdminMessage}
 		WHERE tppId=#{tppId}
 	</update>
+	
+	<!-- 프로젝트 검색하기 -->
+	<select id="serchProjectByKeyWord" parameterType ="string" resultMap="tpProject-resultmap">
+		<include refid="selectAllProjectDB"></include>
+			WHERE tppId like '%'||#{value}||'%'
+			union
+		<include refid="selectAllProjectDB"></include>
+			WHERE tppTitle like '%'||#{value}||'%'
+			union
+		<include refid="selectAllProjectDB"></include>
+			WHERE tppProjectContent like '%'||#{value}||'%'
+	</select>
+	
 	 
 </mapper>
 

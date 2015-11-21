@@ -92,9 +92,14 @@ select count(tppId) from tpproject
 
 select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage from tpproject where tppId = '2'
+				 tppFunderNum, tppState, tppAdminMessage from tpproject 
+				 where tppId like %'2'%
+				 
+	union
+select * from tpproject 
+				 where tppId like '%'||'d'||'%'
+				 
 
-
-
+	select * from tpproject 
 
 

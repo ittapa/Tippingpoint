@@ -7,11 +7,13 @@
 &nbsp;
 <a href="${initParam.rootPath}/tpLogin/tpLoginPage.tp"> LOGIN </a>
 
-<br />
 
 <br />
 &nbsp;
-<a href="${initParam.rootPath}/아직한발남았따"> 검색하기 </a>
+	<form action = "${initParam.rootPath}/tpProjectSerching.tp" method = "post">
+		<input type ="text" name = "keyWord">
+		<input type = "submit" value = "Serch">
+	</form>
 &nbsp;
 <a href="/TippingPoint/tpProjectRegister.tp"> 프로젝트 등록하기</a>&nbsp;
 <a href="/TippingPoint/tpProjectBoard.tp?pageNo=${param.pageNo }">프로젝트 둘러보기</a>&nbsp;

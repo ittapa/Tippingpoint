@@ -1,15 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8 ">
-<title>Insert title here</title>
-</head>
-<body>
+
 <!-- 게시판 목록 게시판 -->
-	
 		<P ><!-- align="center" -->
 			<FONT size="5"><B>프로젝트 둘러보기</B></FONT>
 		</P>
@@ -23,7 +16,7 @@
 			<c:forEach items="${requestScope.list }" var="tpProject">
 					<div>
 						<p>
-						<div><img src="${tpProject.tppMainImg }" ></div>
+						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="200" height="200"></a></div>
 						<div>${tpProject.tppWriter }</div>
 						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
 						<div>${tpProject.tppFundingLastDate }</div>
@@ -75,9 +68,3 @@
 	 		▶
 	 	</c:otherwise>
 	 </c:choose>
-	 
-		
-
-
-</body>
-</html>

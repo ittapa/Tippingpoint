@@ -21,4 +21,7 @@ public interface TpProjectDao {
 	public int updateById(TpProject tpproject);
 	
 	public void adminUpById(TpProject adminProject);
+	
+	public List<TpProject> serchTpProjectByKeyWord(String keyWord);
+	
 }

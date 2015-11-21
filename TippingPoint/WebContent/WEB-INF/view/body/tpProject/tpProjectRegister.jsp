@@ -21,6 +21,7 @@ $(function(){
           bUseModeChanger : true },
 	  fCreator: "createSEditor2"
 	  
+	  
 	 });
 	 
 	 $("#ResultOut").click(function(){
