@@ -56,13 +56,6 @@
 <form action="${initParam.rootPath }/modifyRegister.tp" method="post">
 <table border="1" style="width:500px">
 	<tr>
-		<td>ID</td>
-		<td>
-			<input type="hidden" name="tpfId" id="tpfId"
-			value="${requestScope.tpFunder.tpfId }">
-		</td>
-	</tr>
-	<tr>
 		<td>이름</td>
 		<td>
 			<input type="hidden" name="tpfName" id="tpfName"
@@ -97,8 +90,8 @@
 				<option value="011">011</option>
 			</select>
 			-
-			<input type="text" name="tpfPhoneNum2" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum2 }">
-			<input type="text" name="tpfPhoneNum3" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum3 }">
+			<input type="text" name="tpfPhoneNum2" maxlength="4" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum2 }">
+			<input type="text" name="tpfPhoneNum3" maxlength="4" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum3 }">
 			<input type="hidden" name="tpfPhoneNum"/>
 		</td>
 	</tr>

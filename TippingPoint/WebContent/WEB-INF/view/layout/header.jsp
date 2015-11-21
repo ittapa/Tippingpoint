@@ -16,7 +16,7 @@
 &nbsp;
 <a href="${initParam.rootPath}/main.tp"> MAIN </a>
 &nbsp;
-<a href="${initParam.rootPath}/tpMypage/ex.tp"> My Page </a>
+<a href="${initParam.rootPath}/tpMyPage/modifyRegister.tp"> My Page </a>
 &nbsp;
 <a href="${initParam.rootPath}/logout.tp"> LOGOUT </a>
 </c:if>

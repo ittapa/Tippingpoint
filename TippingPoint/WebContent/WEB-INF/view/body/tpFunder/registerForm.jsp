@@ -194,8 +194,8 @@ table.register {
 					<option value="011">011</option>
 				</select>
 				-
-				<input type="text" name="tpfPhoneNum2" style="width:50px; height:15px;"/>
-				<input type="text" name="tpfPhoneNum3" style="width:50px; height:15px;"/>
+				<input type="text" name="tpfPhoneNum2" maxlength="4" style="width:50px; height:15px;"/>
+				<input type="text" name="tpfPhoneNum3" maxlength="4" style="width:50px; height:15px;"/>
 				<input type="hidden" name="tpfPhoneNum"/>
 			</td>
 		</tr>

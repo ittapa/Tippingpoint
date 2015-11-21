@@ -67,6 +67,7 @@
 				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
 
 				 from tpproject where tppId = #{tppId}
+				 where like %'#{value}'%;
 	</select>
 	
 	 	<update id="adminProjectUpdate" parameterType= "tpProject">

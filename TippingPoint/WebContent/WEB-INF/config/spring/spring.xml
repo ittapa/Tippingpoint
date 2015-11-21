@@ -58,8 +58,6 @@
 	<mvc:view-controller path="/tpMyPage/modifyRegister.tp" view-name="tpMyPage/modifyRegister.tiles"/>
 	<!-- 로그인 페이지 -->
 	<mvc:view-controller path="/tpLogin/tpLoginPage.tp" view-name="tpLogin/tpLoginPage.tiles"/> 
-	<!-- 로그인 체크 -->
-	<mvc:view-controller path="/loginSucces.tp" view-name="classpath:"/>
 	
 	<mvc:view-controller path="/page1.tp" view-name="tpLogin/page1.tiles"/> <!-- test용  -->
 	<mvc:view-controller path="/page2.tp" view-name="tpLogin/page2.tiles"/><!-- test용  -->
