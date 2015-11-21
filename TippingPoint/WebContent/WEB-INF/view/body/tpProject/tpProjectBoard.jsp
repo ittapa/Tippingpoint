@@ -10,7 +10,9 @@
 <body>
 <!-- 게시판 목록 게시판 -->
 	
-	<h2>프로젝트 목록</h2>
+		<P ><!-- align="center" -->
+			<FONT size="5"><B>프로젝트 둘러보기</B></FONT>
+		</P>
 
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">

@@ -44,23 +44,23 @@
 	<!-- bean anotation 스캔 -->
 	<context:component-scan base-package="kr.pe.tippingpoint" />
 	<!-- 등록 페이지 연결 -->
-	<mvc:view-controller path="/tpProjectRegister.tp" view-name="/WEB-INF/view/body/tpProject/tpProjectRegister.jsp" />
+	<mvc:view-controller path="/tpProjectRegister.tp" view-name="tpProject/tpProjectRegister.tiles" />
+	
 	<mvc:view-controller path="/tpAdminAccess.tp" view-name ="/WEB-INF/view/body/tpAdministrator/tpAdminAccess.jsp"/>
 	
-	<!-- <mvc:view-controller path="/main.tp" view-name="/WEB-INF/view/main.jsp" /> -->
-	
-	<!-- 메인페이지준영 혜진.... -->
+	<!-- 메인 페이지 연결 -->
 	<mvc:view-controller path="/main.tp" view-name="main.tiles" />
 	<!-- 회원가입 페이지 -->
-	<mvc:view-controller path="/tpfunder/register_form.tp" view-name="tpfunder/register_member.tiles"/>
+	<mvc:view-controller path="/tpfunder/registerForm.tp" view-name="tpFunder/registerForm.tiles"/>
 	<!-- 회원가입 성공페이지 -->
-	<mvc:view-controller path="/tpfunder/registerSuccess.tp" view-name="tpfunder/registerSuccess.tiles" />
+	<mvc:view-controller path="/tpfunder/registerSuccess.tp" view-name="tpFunder/registerSuccess.tiles" />
 	<!-- 로그인 페이지 -->
-	<mvc:view-controller path="/login/login.tp" view-name="login/loginpage.tiles"/> 
+	<mvc:view-controller path="/tpLogin/tpLoginPage.tp" view-name="tpLogin/tpLoginPage.tiles"/> 
 	<!-- 로그인 체크 -->
 	<mvc:view-controller path="/loginSucces.tp" view-name="classpath:"/>
-	<mvc:view-controller path="/page1.tp" view-name="login/page1.tiles"/> <!-- test용  -->
-	<mvc:view-controller path="/page2.tp" view-name="login/page2.tiles"/><!-- test용  -->
+	
+	<mvc:view-controller path="/page1.tp" view-name="tpLogin/page1.tiles"/> <!-- test용  -->
+	<mvc:view-controller path="/page2.tp" view-name="tpLogin/page2.tiles"/><!-- test용  -->
 	
 	<!-- 관리자 페이지  --> 
 	<mvc:view-controller path="/admin/list.tp" view-name="administrator/admin_funderList.tiles"/>

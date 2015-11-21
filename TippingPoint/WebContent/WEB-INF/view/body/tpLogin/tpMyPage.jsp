@@ -1,12 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%> 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
 
-<title>Insert title here</title>
-<script type="text/javascript" src="${initParam.rootPath }/script/jquery.js"></script>
-<script type="text/javascript">
 
 
 $(document).ready(function goLogout(){//
@@ -21,13 +14,12 @@ $(document).ready(function goLogout(){//
 	});
 });
 </script>
-</head>
-<body>
-	<br>
-	<form id ="mypage" method ="post" action = "">
-		<P align="center">
+
+	<P align="left">
 			<FONT size="6"><B>My 페이지</B></FONT>
-		</P>
+	</P>
+	<form id ="mypage" method ="post" action = "">
+	
 		<table class="login" border="1">
 			<tr align="center">
 				<td colspan="2"	align="center" height="30">
@@ -46,5 +38,3 @@ $(document).ready(function goLogout(){//
 			</tr>
 		</table>
 	</form> 
-</body>
-</html>

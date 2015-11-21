@@ -10,7 +10,9 @@
 
 
 
-	<h2>프로젝트 상세보기</h2>
+	<P ><!-- align="center" -->
+			<FONT size="5"><B>프로젝트 상세보기</B></FONT>
+		</P>
 
 			<div>
 				프로젝트ID : ${requestScope.polist.tppId }

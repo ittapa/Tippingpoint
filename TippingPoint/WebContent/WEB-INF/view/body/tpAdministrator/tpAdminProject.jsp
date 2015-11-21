@@ -1,16 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8 ">
-<title>Insert title here</title>
-</head>
-<body>
+
+
 	<!-- 게시판 상세보기 -->
 
 
 	 
-	<h2>프로젝트 상세보기</h2>
+		<P ><!-- align="center" -->
+			<FONT size="5"><B>프로젝트 상세보기</B></FONT>
+		</P>
 	
 			<div>
 				프로젝트ID : ${requestScope.polist.tppId }
@@ -77,6 +74,3 @@
       <input type="submit" value="요청거부">
    </form>
 
-
-</body>
-</html>

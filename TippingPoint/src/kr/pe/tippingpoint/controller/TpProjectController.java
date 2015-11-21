@@ -113,8 +113,9 @@ public class TpProjectController {
 				// 임시경로에서 레알로 저장하기
 				upfile.transferTo(upImg);
 				//메인이미지 경로 저장
-			
-				tpvo.setTppMainImg(rootPath+filePath_A+realMainImgName); //upfile
+				
+				//vo에 이미지 경로 저장
+				tpvo.setTppMainImg(rootPath+"/"+filePath_A+realMainImgName); //upfile
 			}else{
 				//이미지 안넣었을때 디폴트 이미지
 				tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
@@ -126,7 +127,7 @@ public class TpProjectController {
 			//비즈니스 로직 처리하기 서비스
 			service.registerTpProject(tpvo);
 
-			return "/WEB-INF/view/body/tpProject/tpProjectRequestSuccess.jsp"; //성공페이지
+			return "tpProject/tpProjectRequestSuccess.tiles"; //성공페이지 /WEB-INF/view/body/
 		}
 	
 	
@@ -286,7 +287,7 @@ public class TpProjectController {
 		Map map = service.allListTpProject(pageNo);
 		System.out.println("메롱2");
 		
-		return new ModelAndView("/WEB-INF/view/body/tpProject/tpProjectBoard.jsp", map);
+		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);///WEB-INF/view/body/
 	}
 
 	// 단일 프로젝트 조회하기
@@ -298,6 +299,6 @@ public class TpProjectController {
 		String tppId = request.getParameter("tppId");
 		TpProject polist = service.findTpProjectById(tppId);
 
-		return new ModelAndView("/WEB-INF/view/body/tpProject/tpProject.jsp", "polist", polist);
+		return new ModelAndView("tpProject/tpProject.tiles", "polist", polist); ///WEB-INF/view/body/
 	}
 }

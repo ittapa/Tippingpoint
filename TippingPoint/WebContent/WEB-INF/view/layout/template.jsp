@@ -8,6 +8,7 @@
 <!-- jQuery Library import -->
 <script type="text/javascript" src="${initParam.rootPath }/script/jquery.js"></script>
 
+
 <style type="text/css">
 /*메세지 스타일*/
 .errorMessage{
@@ -69,18 +70,24 @@ section.template{
 <body>
 
 	<header>
+	<font color="red">헤더영역</font><br/>
 		<tiles:insertAttribute name ="header"/>
+		<br/>
 	</header>
 	
 	
 	<section>
-	바디영역
+	<font color="red">바디영역</font><br/>
 		<tiles:insertAttribute name = "body"/>
+		<br/>
+		<br/>
 	</section>
 	
 	
 	<footer>
+	<font color="red">푸터영역</font><br/>
 		<tiles:insertAttribute name = "footer"/>
+		<br/>
 	</footer>
 
 

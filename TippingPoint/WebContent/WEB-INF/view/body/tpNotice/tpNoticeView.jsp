@@ -10,7 +10,9 @@
 
 
 	 
-	<h2> 공지사항 상세보기 </h2>
+	<P ><!-- align="center" -->
+			<FONT size="5"><B>공지사항 상세보기</B></FONT>
+		</P>
 		<table border="1" style="width: 300px">
 			<tr>
 				<th>작성일</th>

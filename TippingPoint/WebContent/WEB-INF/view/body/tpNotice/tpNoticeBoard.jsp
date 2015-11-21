@@ -9,7 +9,9 @@
 </head>
 <body>
 
-	<h2>공지사항 목록</h2>
+		<P ><!-- align="center" -->
+			<FONT size="5"><B>공지사항 목록</B></FONT>
+		</P>
 	
 
 	<c:choose>

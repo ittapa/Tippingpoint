@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<h2>회원 목록</h2>
+	<P ><!-- align="center" -->
+			<FONT size="5"><B>회원목록</B></FONT>
+		</P>
 <c:choose>
 	<c:when test="${fn:length(requestScope.list)==0 }">
 		등록된 회원이 없습니다.

@@ -33,7 +33,7 @@ public class TpNoticeController {
 
 		Map map = service.allListTpNotice(pageNo);
 		
-		return new ModelAndView("/WEB-INF/view/body/tpNotice/tpNoticeBoard.jsp", map);
+		return new ModelAndView("tpNotice/tpNoticeBoard.tiles", map);
 	}
 	
 	
@@ -49,7 +49,7 @@ public class TpNoticeController {
 		int tpNoticeNum = Integer.parseInt(num);
 		TpNotice noticeList = service.findTpNoticeNum(tpNoticeNum);
 
-		return new ModelAndView("/WEB-INF/view/body/tpNotice/tpNoticeView.jsp", "noticeList", noticeList);
+		return new ModelAndView("tpNotice/tpNoticeView.tiles", "noticeList", noticeList);
 	}
 
 

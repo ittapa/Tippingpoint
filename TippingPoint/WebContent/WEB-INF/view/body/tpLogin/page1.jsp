@@ -6,7 +6,9 @@
 	<title>Session 사용</title>
 </head>
 <body>
-<h2>Session 사용</h2>
+	<P ><!-- align="center" -->
+			<FONT size="5"><B> session 사용</B></FONT>
+		</P>
 <p>세션에 추가됨 로그인한 ID는<b>${sessionScope.userLoginInfo}</b> 입니다.</p>
 </body>
 </html>

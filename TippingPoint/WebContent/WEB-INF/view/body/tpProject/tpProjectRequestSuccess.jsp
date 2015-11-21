@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2>제휸제휸 프로젝트 등록 신청 성공했쪄</h2>
+	<P ><!-- align="center" -->
+			<FONT size="5"><B>프로젝트 등록에 성공하였습니다.</B></FONT>
+		</P>
 </body>
 </html>
