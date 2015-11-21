@@ -59,21 +59,26 @@ public class TpFunderAccountAccessController {
 
 	}
 	/**
-	 * 
+	 * 로그인 하는 컨트롤러
 	 */
 	@RequestMapping(value = "loginProcess", method = RequestMethod.POST)
 	public ModelAndView loginProcess(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/page1.tp");
+		mav.setViewName("/page1.tp");
 		return mav;
 	}
-
+	/**
+	 *누가봐도 로그아웃 
+	 */
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
-		session.setAttribute("userLoginInfo", null);
-		return "redirect:index.tp";
+		session.invalidate(); // 세션 삭제
+		return "/page1.tp";
 	}
-
+	
+	/**
+	 * 관리자 전체 회원 조회 메소드 
+	 */
 	@RequestMapping("/findByTpfId")
 	public String findById(@RequestParam String tpfId, ModelMap model) {
 		TpFunder tpFunder = service.findTpFunderById(tpfId);
