@@ -79,6 +79,8 @@
 	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
 	<include refid="selectAllProjectDB"></include>
 	where tppId = #{value}
+				 where like %'#{value}'%;
+				 where like %'#{value}'%;
 	</select>
 	
 		
