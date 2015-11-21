@@ -97,8 +97,8 @@
 				<option value="011">011</option>
 			</select>
 			-
-			<input type="text" name="tpfPhoneNum2" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum2 }">
-			<input type="text" name="tpfPhoneNum3" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum3 }">
+			<input type="text" name="tpfPhoneNum2" maxlength="4" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum2 }">
+			<input type="text" name="tpfPhoneNum3" maxlength="4" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum3 }">
 			<input type="hidden" name="tpfPhoneNum"/>
 		</td>
 	</tr>
