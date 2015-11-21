@@ -55,13 +55,14 @@
 	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
 	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
 	 		from(
 	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
 				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
+	 				
 	 				order by tppFundingLastDate
 	 			)
 	 		)
@@ -78,8 +79,7 @@
 		<!-- 단일 프로젝트 조회하기 -->
 	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
 	<include refid="selectAllProjectDB"></include>
-	where tppId = #{value}
-				 where like %'#{value}'%;
+		 where tppId = #{value}
 				 where like %'#{value}'%;
 	</select>
 	

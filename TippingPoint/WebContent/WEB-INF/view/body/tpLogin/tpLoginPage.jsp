@@ -9,14 +9,13 @@
 
 /* to.do  로그인 테이블 위치 보류*/
 table.login {
-/*     margin-left: auto;
-    margin-right: auto;
- */}
+ }
 </style>
 
 <script type="text/javascript">
 
 function loginSuccess(){
+	
 			$("#form").submit();
 		}
 		
