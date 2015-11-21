@@ -113,7 +113,7 @@ public class TpFunderAccountAccessController {
 		validate.validate(tpfunder, errors); // ★
 
 		if (errors.hasErrors()) {
-			return "/tpfunder/register_form.tp";
+			return "/tpfunder/registerForm.tp";
 		}
 
 		service.addTpFunder(tpfunder);
@@ -141,4 +141,20 @@ public class TpFunderAccountAccessController {
 		return String.valueOf(tpfunder != null);
 	}
 
+	/**
+	 * 회원 수정
+	 * @param tpfId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("modifyRegister")
+	public String modify(@ModelAttribute TpFunder tpfunder, Errors errors, @RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
+		new TpFunderValidator().validate(tpfunder, errors);
+		if(errors.hasErrors()){
+			return "tpMyPage/modifyRegister.tiles";
+		}
+		service.updateTpFunder(tpfunder);
+		model.addAttribute("tpfId", tpfunder.getTpfId());		
+		return "redirect:/tpfunder/findByTpfId.tp";
+	}
 }
