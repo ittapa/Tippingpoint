@@ -59,7 +59,7 @@
 	 		from(
 	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
 	 				
@@ -80,7 +80,6 @@
 	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
 	<include refid="selectAllProjectDB"></include>
 		 where tppId = #{value}
-				 where like %'#{value}'%;
 	</select>
 	
 		
