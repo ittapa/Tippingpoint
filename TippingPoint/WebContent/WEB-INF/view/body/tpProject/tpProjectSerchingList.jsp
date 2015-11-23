@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 	<P><!-- align="center" -->
-			<FONT size="5"><B>'${requestScope.tppWriter }' 로 검색 한 결과</B></FONT>
+			<FONT size="5"><B>'${requestScope.keyWord}' 로 검색 한 결과</B></FONT>
 	</P>
 
 <br/>
