@@ -5,21 +5,23 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import kr.pe.tippingpoint.vo.TpFunder;
+import kr.pe.tippingpoint.vo.TpProject;
 
-public class TpFunderValidator implements Validator {
+public class TpProjectValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
 		// TODO Auto-generated method stub
-		return clazz.isAssignableFrom(TpFunder.class);
+		return clazz.isAssignableFrom(TpProject.class);
 	}
+	//클래스 맞는지 확인하기
 	
 	@Override
 	//등록/수정 공통 체크.
 	public void validate(Object target, Errors errors) {
 		
 		if(!supports(target.getClass())){
-			errors.reject("notsupport","에러");
+			errors.reject("notsupport","TpProject Propety값 불일치");
 			return;
 		}
 		
@@ -34,9 +36,7 @@ public class TpFunderValidator implements Validator {
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfName", "requried", new Object[]{"이름"}, "필수입력사항입니다.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfEmail", "requried", new Object[]{"이메일"}, "필수입력사항입니다.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfZipcode", "required", new Object[]{"우편번호"}, "필수입력사항입니다.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfAddress", "required", new Object[]{"주소"}, "필수입력사항입니다.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfAddressD", "required", new Object[]{"상세주소"}, "필수입력사항입니다.");
+	
 	}
 	
 }

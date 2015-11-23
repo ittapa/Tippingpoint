@@ -28,6 +28,7 @@
 			<br/>
 			<div>총 등록한 프로젝트 수  : ${fn:length(requestScope.list) }</div>
 					
+		<input type="submit" value="수정" />
 		</c:otherwise>
 	</c:choose>
 	

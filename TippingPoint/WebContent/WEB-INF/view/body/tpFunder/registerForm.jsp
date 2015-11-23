@@ -19,13 +19,6 @@ $(document).ready(function(){
 					$("#tpfId").focus();
 					return false;
 				}
-				/* 구현이 안되서 주석처리함. 핸드폰번호를 3~4자리 이상으로 입력할경우 alert창이 뜨게 하는것
-				if ($("#tpfPhoneNum2").val().length<3 & $("#tpfPhoneNum3").val().length>4 ) {
-					alert("잘못된 번호를 입력하셨습니다");
-					$("#tpfPhoneNum2").focus();
-					return false;
-				}
-				*/
 			},
 			success:function(txt){
 				if(txt==false){
@@ -90,6 +83,7 @@ $(document).ready(function(){
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script>
 $(function() { //생년월일 찾기
 	   $("#tpfBirth").datepicker({
@@ -106,6 +100,10 @@ $(function() { //생년월일 찾기
 $(document).ready(function() { //핸드폰번호 3개를 입력받아 db한컬럼에 넣기
 	$("#register").on("click",function(){
 		tpfunder = document.tpFunder;
+		if(tpfunder.tpfPhoneNum2.value.length<3 || tpfunder.tpfPhoneNum3.value.length<4){
+			alert("핸드폰번호를 입력하세요");
+			$("#tpfPhoneNum2").focus();
+		}
 		tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
 		tpfunder.submit();
 	});
@@ -114,7 +112,7 @@ $(document).ready(function() { //핸드폰번호 3개를 입력받아 db한컬�
 
 <style type="text/css">
 table{
-	width: 550px;
+	width: 700px;
 }
 table, td{
 	border: 1px solid black;
@@ -133,7 +131,7 @@ table.register {
 <form action="${initParam.rootPath}/registerTpFunder.tp" method="post" name="tpFunder">
 	<table class="register">
 		<tr>
-			<td width="100px">ID</td>
+			<td width="150px">ID</td>
 			<td><input type="text" name="tpfId" id="tpfId" style="width:150px; height:15px;" value="${requestScope.tpFunder.tpfId }">
 			<input type="button" value="중복확인" id="idcheck"/>
 			<span class="error"><form:errors path="tpFunder.tpfId" delimiter=" | "/></span>
@@ -176,15 +174,22 @@ table.register {
 		</tr>
 		<tr>
 			<td>우편번호</td>
-			<td><input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" style="width:50px; height:15px;"> <input type="button" onclick="button()" value="우편번호 찾기"></td>
+			<td><input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfZipcode }"> 
+				<input type="button" onclick="button()" value="우편번호 찾기">
+				<form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
+			</td>
 		</tr>
 		<tr>
 			<td>주소</td>
-			<td><input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" style="width:200px; height:15px;"></td>
+			<td><input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" style="width:200px; height:15px;" value="${requestScope.tpFunder.tpfAddress }">
+				<form:errors path="tpFunder.tpfAddress" delimiter=" | "/>
+			</td>
 		</tr>
 		<tr>
 			<td>상세주소</td>
-			<td><input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" style="width:200px; height:15px;"></td>
+			<td><input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" style="width:200px; height:15px;" value="${requestScope.tpFunder.tpfAddressD }">
+				<form:errors path="tpFunder.tpfAddressD" delimiter=" | "/>
+			</td>
 		</tr>
 		<tr>
 			<td>휴대폰번호</td>
@@ -194,8 +199,8 @@ table.register {
 					<option value="011">011</option>
 				</select>
 				-
-				<input type="text" name="tpfPhoneNum2" maxlength="4" style="width:50px; height:15px;"/>
-				<input type="text" name="tpfPhoneNum3" maxlength="4" style="width:50px; height:15px;"/>
+				<input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" style="width:50px; height:15px;"/>
+				<input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" style="width:50px; height:15px;"/>
 				<input type="hidden" name="tpfPhoneNum"/>
 			</td>
 		</tr>

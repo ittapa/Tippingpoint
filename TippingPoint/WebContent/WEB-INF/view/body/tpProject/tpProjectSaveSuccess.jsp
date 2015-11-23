@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 	<P ><!-- align="center" -->
-			<FONT size="5"><B>프로젝트 승인요청이 완료되었습니다.</B></FONT>
+			<FONT size="5"><B>프로젝트가 성공적으로 저장되었습니다.</B></FONT>
 		</P>
 </body>
 </html>
