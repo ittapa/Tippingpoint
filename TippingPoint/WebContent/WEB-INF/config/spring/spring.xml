@@ -44,7 +44,8 @@
 	<!-- bean anotation 스캔 -->
 	<context:component-scan base-package="kr.pe.tippingpoint" />
 	<!-- 등록 페이지 연결 -->
-	<mvc:view-controller path="/tpProjectRegister.tp" view-name="tpProject/tpProjectRegister.tiles" />
+	<!-- <mvc:view-controller path="/tpProjectRegister.tp" view-name="tpProject/tpProjectRegister.tiles" /> 
+			컨트롤러로 연결해서 로그인 체크및 Proposal 체크-->
 	
 	<mvc:view-controller path="/tpAdminAccess.tp" view-name ="/WEB-INF/view/body/tpAdministrator/tpAdminAccess.jsp"/>
 	
