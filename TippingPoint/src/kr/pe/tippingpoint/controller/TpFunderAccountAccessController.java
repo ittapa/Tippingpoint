@@ -156,14 +156,16 @@ public class TpFunderAccountAccessController {
 	 * @param model
 	 * @return
 	 */
-
+	
+	
+/*	todo: 
 	@RequestMapping("findByTpfId")
 	public String findById(HttpSession session, ModelMap model) {
 		TpFunder tpFunder = service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo"))));
 		model.addAttribute("tpFunder", tpFunder);
 		return "tpMyPage/modifyRegister.tiles";
 	}
-	
+	*/
 	/**
 	 * 회원수정폼 조회
 	 * @param tpfId
