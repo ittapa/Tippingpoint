@@ -1,14 +1,55 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<!DOCTYPE html>
+<%
+
+//"https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+
+
+ 
+%>
+<!DOCTYPE HTML>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- jQuery Library import -->
-<script type="text/javascript" src="${initParam.rootPath }/script/jquery.js"></script>
-
-
+	<head>
+		<title>Tipping Point</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="TippingPoint" />
+		<meta property="og:url" content="<%=request.getScheme() + "://" + request.getServerName() + ((request.getServerPort() != 80) ? ":" : "") + request.getServerPort() + request.getContextPath() + "/"%>" />
+<c:choose>
+	<c:when test="not empty ${requestScope.ogTitle}">
+		<meta property="og:title" id="og_title" content="${requestScope.ogTitle}" />
+		<meta property="og:description" id="${requestScope.ogDescription}" content="" />
+		<meta property="og:image" id="${requestScope.ogImage}" content="" />
+	</c:when>
+	<c:otherwise>
+		<meta property="og:title" content="Tippoing Point" />
+		<meta property="og:description" content="티핑 포인트!" />
+		<meta property="og:image" content="https://fbcdn-photos-h-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-0/p526x296/12239489_112859812414625_165558607748774912_n.jpg?oh=6e027fd597778b14a9f82ba16511a58d&oe=56AF9E94&__gda__=1459245757_f6e1c1e33d67e01011fcff0817bf01dd" />
+	</c:otherwise>
+</c:choose>
+		
+		
+		<!--[if lte IE 8]><script src="${initParam.rootPath}/css/ie/html5shiv.js"></script><![endif]-->
+		<script src="${initParam.rootPath}/js/jquery.min.js"></script>
+		<script src="${initParam.rootPath}/js/jquery.dropotron.min.js"></script>
+		<script src="${initParam.rootPath}/js/jquery.scrolly.min.js"></script>
+		<script src="${initParam.rootPath}/js/jquery.onvisible.min.js"></script>
+		<script src="${initParam.rootPath}/js/skel.min.js"></script>
+		<script src="${initParam.rootPath}/js/skel-layers.min.js"></script>
+		<script src="${initParam.rootPath}/js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="${initParam.rootPath}/css/skel.css" />
+			<link rel="stylesheet" href="${initParam.rootPath}/css/style.css" />
+			<link rel="stylesheet" href="${initParam.rootPath}/css/style-desktop.css" />
+			<link rel="stylesheet" href="${initParam.rootPath}/css/style-noscript.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="${initParam.rootPath}/css/ie/v8.css" /><![endif]-->
+		
+		
 <style type="text/css">
 /*메세지 스타일*/
 .errorMessage{
@@ -66,31 +107,57 @@ section.template{
 	height: auto; overflow:auto;/*hight를 500px에 내용이 늘어나면 늘어나도록 처리*/
 }
 </style>
-</head>
-<body>
+	</head>
+	<body class="no-sidebar">
+	<div id="page-wrapper">
 
-	<header>
-	<font color="red">헤더영역</font><br/>
-		<tiles:insertAttribute name ="header"/>
-		<br/>
-	</header>
+		
+	<tiles:insertAttribute name ="header"/>
+	
+<!-- Main -->
+		<div class="wrapper style1">
+
+			<div class="container">
+				<article id="main" class="special">
+
+
+
+					<section>
+
+				<tiles:insertAttribute name = "body"/>
+				
+				
+			</section>						
+		</article>
+			</div>
+
+		</div>
+		<!--// Main -->
 	
 	
-	<section>
-	<font color="red">바디영역</font><br/>
-		<tiles:insertAttribute name = "body"/>
-		<br/>
-		<br/>
-	</section>
+	<!-- <footer> -->
 	
-	
-	<footer>
-	<font color="red">푸터영역</font><br/>
 		<tiles:insertAttribute name = "footer"/>
-		<br/>
-	</footer>
+	
+	<!-- </footer> -->
 
 
+	</div>
 
+	<!-- Scripts -->
+	<script src="${initParam.rootPath}/js/jquery.min.js"></script>
+	<script src="${initParam.rootPath}/js/jquery.dropotron.min.js"></script>
+	<script src="${initParam.rootPath}/js/jquery.scrolly.min.js"></script>
+	<script src="${initParam.rootPath}/js/jquery.onvisible.min.js"></script>
+	<script src="${initParam.rootPath}/js/skel.min.js"></script>
+	<script src="${initParam.rootPath}/js/util.js"></script>
+	<!--[if lte IE 8]><script src="${initParam.rootPath}/assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="${initParam.rootPath}/js/main.js"></script>
+	
 </body>
+<!--
+	Helios by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 </html>
