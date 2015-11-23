@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.pe.tippingpoint.vo.TpFunder;
+import kr.pe.tippingpoint.vo.TpProposer;
 
 
 public interface TpFunderAccountAccessService {
@@ -57,4 +58,7 @@ public interface TpFunderAccountAccessService {
 	 * @throws TpFunderNotFoundException 수정할 회원이 DB에 없으면 발생
 	 */
 	void updateTpFunder(TpFunder newTpFunder) throws Exception;
+	
+	
+	void addProposerInfo(TpProposer tposer) throws Exception;
 }

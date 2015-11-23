@@ -1,12 +1,9 @@
 package kr.pe.tippingpoint.controller;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -21,6 +18,7 @@ import kr.pe.tippingpoint.exception.DuplicatedIdException;
 import kr.pe.tippingpoint.service.TpFunderAccountAccessServiceImpl;
 import kr.pe.tippingpoint.validator.TpFunderValidator;
 import kr.pe.tippingpoint.vo.TpFunder;
+import kr.pe.tippingpoint.vo.TpProposer;
 
 /**
  * 회원 로그인 작업을 처리하는 Controller
@@ -30,7 +28,7 @@ public class TpFunderAccountAccessController {
 
 	@Autowired
 	private TpFunderAccountAccessServiceImpl service;
-
+	
 	/**
 	 * 로그인체크 컨트롤러
 	 * 
@@ -132,11 +130,6 @@ public class TpFunderAccountAccessController {
 	 * @param model
 	 * @return
 	 */
-//	@RequestMapping("modifyRegister")
-//	public String modify(HttpSession session, @ModelAttribute TpFunder tpfunder, ModelMap model) throws Exception{
-//		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));		
-//		return "tpMyPage/tpMyPageRegister.tiles";
-//	}
 	
 	
 	//마이페이지 메인
@@ -146,15 +139,32 @@ public class TpFunderAccountAccessController {
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 	
-//	
-//	@RequestMapping("modifyRegister")
-//	   public String modify(@ModelAttribute TpFunder tpfunder, Errors errors, @RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
-//	      new TpFunderValidator().validate(tpfunder, errors);
-//	      if(errors.hasErrors()){
-//	         return "tpMyPage/modifyRegister.tiles";
-//	      }
-//	      service.updateTpFunder(tpfunder);
-//	      model.addAttribute("tpfId", tpfunder.getTpfId());      
-//	      return "redirect:/tpfunder/findByTpfId.tp";
-//	   }
+	
+	//회원정보 추가 
+	@RequestMapping("addInfo")
+	public String adddInfo(HttpSession session, HttpServletRequest request) throws Exception{
+		//세션에서 아이디 불러옴
+		String writer = (String) session.getAttribute("userLoginInfo");
+		System.out.println(writer);
+		int residentRegistrationFirstNum = Integer.parseInt(request.getParameter("residentRegistrationFirstNum"));
+		int residentRegistrationLastNum = Integer.parseInt(request.getParameter("residentRegistrationLastNum"));
+		int corporateRegistrationNumber = Integer.parseInt(request.getParameter("corporateRegistrationNumber"));
+		//값 넣어주기
+		TpProposer tposer = new TpProposer();
+		tposer.setTpfId(writer);//아이디
+		tposer.setAccount(request.getParameter("account"));//계좌
+		tposer.setProposerType(request.getParameter("proposerType"));//일반개인or법인or개인사업자
+		tposer.setCertification("F");
+		tposer.setResidentRegistrationFirstNum(residentRegistrationFirstNum);//주민번호 앞자리
+		tposer.setResidentRegistrationLastNum(residentRegistrationLastNum);//주민번호 뒷자리
+		tposer.setCorporateRegistrationNumber(corporateRegistrationNumber);//사업자번호
+		System.out.println(tposer.toString());
+		
+		
+		service.addProposerInfo(tposer);
+		
+			
+		return "tpMyPage/tpMyPageMain.tiles";
+	}
+	
 }
