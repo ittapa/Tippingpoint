@@ -60,7 +60,7 @@
 			<br/>
 
    <form name = "confirm" action="/TippingPoint/tpAdminProjectStateConvert.tp" method="post">
-      <input type = "hidden" name ="tppId" value = '${requestScope.polist.tppId }''>
+      <input type = "hidden" name ="tppId" value = '${requestScope.polist.tppId }'>
       <input type = "hidden" name = "tppState" value = "o">
       <label>프로젝트 승인메세지 : <input type = "text" name = "tppAdminMessage" /></label>
       <input type="submit" value="요청승인">
@@ -68,7 +68,7 @@
 	
 
   <form name = "reject" action="/TippingPoint/tpAdminProjectStateConvert.tp" method="post">
-       <input type = "hidden" name ="tppId" value = '${requestScope.polist.tppId }''>
+       <input type = "hidden" name ="tppId" value = '${requestScope.polist.tppId }'>
       <input type = "hidden" name = "tppState" value = "x">
       <label>프로젝트 거부메세지 : <input type = "text" name = "tppAdminMessage" /></label>
       <input type="submit" value="요청거부">

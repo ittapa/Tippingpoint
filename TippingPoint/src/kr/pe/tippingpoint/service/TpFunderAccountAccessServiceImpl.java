@@ -8,15 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.pe.tippingpoint.dao.TpFunderDaoImpl;
+import kr.pe.tippingpoint.dao.TpProposerDao;
 import kr.pe.tippingpoint.exception.DuplicatedIdException;
 import kr.pe.tippingpoint.exception.TpFunderNotFoundException;
 import kr.pe.tippingpoint.util.TpFunderPagingBean;
 import kr.pe.tippingpoint.vo.TpFunder;
+import kr.pe.tippingpoint.vo.TpProposer;
+
+
 @Service
 public class TpFunderAccountAccessServiceImpl implements TpFunderAccountAccessService{
 	
 	@Autowired
 	private TpFunderDaoImpl dao;
+	
+	@Autowired
+	private TpProposerDao pdao;
 	
 	private TpFunderAccountAccessServiceImpl(TpFunderDaoImpl dao) {
 		this.dao = dao;
@@ -76,6 +83,13 @@ public class TpFunderAccountAccessServiceImpl implements TpFunderAccountAccessSe
 		}
 		dao.updateTpFunder(newTpFunder);
 	}
+
+	@Override
+	public void addProposerInfo(TpProposer tposer) throws Exception{
+		pdao.insertInfo(tposer);
+	}
+	
+	
 	
 	
 }

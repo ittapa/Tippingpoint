@@ -28,7 +28,7 @@ public class TpFunderAccountAccessController {
 
 	@Autowired
 	private TpFunderAccountAccessServiceImpl service;
-
+	
 	/**
 	 * 로그인체크 컨트롤러
 	 * 
@@ -73,20 +73,21 @@ public class TpFunderAccountAccessController {
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate(); // 세션 삭제
-		return "/page1.tp";
+		return "/main.tp";
 	}
 	
+
 	/**
 	 * 관리자 전체 회원 조회 메소드 
 	 */
-	/*
-	@RequestMapping("/findByTpfId")
+
+/*	@RequestMapping("/findByTpfId")
 	public String findById(@RequestParam String tpfId, ModelMap model) {
 		TpFunder tpFunder = service.findTpFunderById(tpfId);
 		model.addAttribute("tpFunder", tpFunder);
 		return "admin/tpFunder_info.tiles";
-	}
-	*/
+	}*/
+
 
 //	@RequestMapping("/findAllTpFunderList")
 //	public String list(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
@@ -147,6 +148,7 @@ public class TpFunderAccountAccessController {
 		TpFunder tpfunder = service.findTpFunderById(tpfId);
 		return String.valueOf(tpfunder != null);
 	}
+	
 
 	/**
 	 * ID로 찾기
@@ -154,6 +156,7 @@ public class TpFunderAccountAccessController {
 	 * @param model
 	 * @return
 	 */
+
 	@RequestMapping("findByTpfId")
 	public String findById(HttpSession session, ModelMap model) {
 		TpFunder tpFunder = service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo"))));
@@ -191,7 +194,7 @@ public class TpFunderAccountAccessController {
 		service.updateTpFunder(tpfunder);
 		model.addAttribute("tpfId", tpfunder.getTpfId());
 		return "redirect:/findByTpfId.tp";
-	
+	}
 	
 	//마이페이지 메인
 	@RequestMapping("myPageMain")
@@ -199,6 +202,11 @@ public class TpFunderAccountAccessController {
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
+	
+	
+
+	
+
 	
 	
 	//회원정보 추가 
@@ -227,4 +235,5 @@ public class TpFunderAccountAccessController {
 			
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
+	
 }

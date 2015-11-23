@@ -19,6 +19,11 @@ select * from TPFUNDER
 INSERT INTO TPFUNDER VALUES ('admin', 'loginuser', 'admin', '19910707', 'F', '123', '122030',
 		        'asd', 'asd', '01000000', '0', 'd');
 
+INSERT INTO TPFUNDER VALUES ('1', '1', '1', '19910707', 'F', '123', '122030',
+		        'asd', 'asd', '01000000', '0', 'd');
+INSERT INTO TPFUNDER VALUES ('2', '2', '2', '19910707', 'F', '123', '122030',
+		        'asd', 'asd', '01000000', '0', 'd');
+
 		        
 SELECT		TPFQUALIFYTPPROPOSER
 			FROM	tpFunder

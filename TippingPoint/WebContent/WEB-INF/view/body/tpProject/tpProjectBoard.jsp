@@ -16,11 +16,12 @@
 			<c:forEach items="${requestScope.list }" var="tpProject">
 					<div>
 						<p>
+						<br/>
 						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="200" height="200"></a></div>
-						<div>${tpProject.tppWriter }</div>
 						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
-						<div>${tpProject.tppFundingLastDate }</div>
-						<div>${tpProject.tppTotalAmount }</div>
+						<div>Projector : ${tpProject.tppWriter }</div>
+						<div>Funding Money : ${tpProject.tppTotalAmount }</div>
+						<br/>
 						</p>
 					</div>
 				</c:forEach>
