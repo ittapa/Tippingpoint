@@ -18,7 +18,6 @@ function loginSuccess(){
 	
 			$("#form").submit();
 		}
-		
 		$(document).ready(function loginCheck(){
 			$("#loginBtn").on("click", function(){
 				var param = "tpfId" + "=" + $("#id").val() + "&" +"tpfPw" + "="+ $("#pw").val();
@@ -52,7 +51,7 @@ function loginSuccess(){
 							alert("잘못된 접근입니다."); 
 					}
 		
-				})
+				});
 			});
 		});	
 		$(document).ready(function goRegister(){//
@@ -60,6 +59,7 @@ function loginSuccess(){
 				location.href="/TippingPoint/tpfunder/registerForm.tp"  // 페이지 이동...
 			});
 		});
+		
 </script>
 			<P ><!-- align="center" -->
 			<FONT size="5"><B>로그인 페이지</B></FONT>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.pe.tippingpoint.dao.TpFunderDaoImpl;
 import kr.pe.tippingpoint.exception.DuplicatedIdException;
+import kr.pe.tippingpoint.exception.TpFunderNotFoundException;
 import kr.pe.tippingpoint.util.TpFunderPagingBean;
 import kr.pe.tippingpoint.vo.TpFunder;
 @Service
@@ -71,7 +72,7 @@ public class TpFunderAccountAccessServiceImpl implements TpFunderAccountAccessSe
 	public void updateTpFunder(TpFunder newTpFunder) throws Exception {
 		TpFunder tpfr = dao.selectTpFunderById(newTpFunder.getTpfId());
 		if(tpfr==null){
-//			throw new TpFunderNotFoundException(newTpFunder.getTpfId()+"는 없는 ID이므로 수정할 수 없습니다.");
+			throw new TpFunderNotFoundException(newTpFunder.getTpfId()+"는 없는 ID이므로 수정할 수 없습니다.");
 		}
 		dao.updateTpFunder(newTpFunder);
 	}
