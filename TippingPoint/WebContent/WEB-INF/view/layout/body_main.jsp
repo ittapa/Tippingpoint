@@ -1,4 +1,5 @@
-		<!-- Main -->
+<%@ page contentType="text/html;charset=UTF-8"%>
+<!-- Main -->
 		<div class="wrapper style1">
 
 			<div class="container">
