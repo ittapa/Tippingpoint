@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<%
-
-//"https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
- 
-%>
 <!DOCTYPE HTML>
 <html>
 	<head>
 		<title>Tipping Point</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--[if lte IE 8]><script src="${initParam.rootPath}/assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="${initParam.rootPath}/assets/css/main.css">
+		<!--[if lte IE 8]><link rel="stylesheet" href="${initParam.rootPath}/assets/css/ie8.css" /><![endif]-->
+		
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		
@@ -29,23 +29,6 @@
 		<meta property="og:image" content="https://fbcdn-photos-h-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-0/p526x296/12239489_112859812414625_165558607748774912_n.jpg?oh=6e027fd597778b14a9f82ba16511a58d&oe=56AF9E94&__gda__=1459245757_f6e1c1e33d67e01011fcff0817bf01dd" />
 	</c:otherwise>
 </c:choose>
-		
-		
-		<!--[if lte IE 8]><script src="${initParam.rootPath}/css/ie/html5shiv.js"></script><![endif]-->
-		<script src="${initParam.rootPath}/js/jquery.min.js"></script>
-		<script src="${initParam.rootPath}/js/jquery.dropotron.min.js"></script>
-		<script src="${initParam.rootPath}/js/jquery.scrolly.min.js"></script>
-		<script src="${initParam.rootPath}/js/jquery.onvisible.min.js"></script>
-		<script src="${initParam.rootPath}/js/skel.min.js"></script>
-		<script src="${initParam.rootPath}/js/skel-layers.min.js"></script>
-		<script src="${initParam.rootPath}/js/init.js"></script>
-		<noscript>
-			<link rel="stylesheet" href="${initParam.rootPath}/css/skel.css" />
-			<link rel="stylesheet" href="${initParam.rootPath}/css/style.css" />
-			<link rel="stylesheet" href="${initParam.rootPath}/css/style-desktop.css" />
-			<link rel="stylesheet" href="${initParam.rootPath}/css/style-noscript.css" />
-		</noscript>
-		<!--[if lte IE 8]><link rel="stylesheet" href="${initParam.rootPath}/css/ie/v8.css" /><![endif]-->
 		
 		
 <style type="text/css">
@@ -105,6 +88,7 @@ section.template{
 	height: auto; overflow:auto;/*hight를 500px에 내용이 늘어나면 늘어나도록 처리*/
 }
 </style>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	</head>
 	<body class="no-sidebar">
 	<div id="page-wrapper">
@@ -142,15 +126,15 @@ section.template{
 
 	</div>
 
-	<!-- Scripts -->
-	<script src="${initParam.rootPath}/js/jquery.min.js"></script>
-	<script src="${initParam.rootPath}/js/jquery.dropotron.min.js"></script>
-	<script src="${initParam.rootPath}/js/jquery.scrolly.min.js"></script>
-	<script src="${initParam.rootPath}/js/jquery.onvisible.min.js"></script>
-	<script src="${initParam.rootPath}/js/skel.min.js"></script>
-	<script src="${initParam.rootPath}/js/util.js"></script>
-	<!--[if lte IE 8]><script src="${initParam.rootPath}/assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="${initParam.rootPath}/js/main.js"></script>
+	<!-- scripts -->
+			<script src="${initParam.rootPath}/assets/js/jquery.dropotron.min.js"></script>
+			<script src="${initParam.rootPath}/assets/js/jquery.scrolly.min.js"></script>
+			<script src="${initParam.rootPath}/assets/js/jquery.onvisible.min.js"></script>
+			<script src="${initParam.rootPath}/assets/js/skel.min.js"></script>
+			<script src="${initParam.rootPath}/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="${initParam.rootPath}/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="${initParam.rootPath}/assets/js/main.js"></script>
+	<!--// scripts -->
 	
 </body>
 <!--
