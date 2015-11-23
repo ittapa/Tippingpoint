@@ -57,4 +57,3 @@ var snsShare = {
 	
 };
 </script>
-
