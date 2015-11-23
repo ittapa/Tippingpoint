@@ -4,8 +4,6 @@
 			<div class="container">
 				<article id="main" class="special">
 
-
-
 					<section>
 						<header>
 							<h3>Tipping Point는...</h3>

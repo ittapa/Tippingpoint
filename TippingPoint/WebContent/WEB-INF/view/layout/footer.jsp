@@ -38,6 +38,7 @@
 	<script src="${initParam.rootPath}/static/js/util.js"></script>
 	<!--[if lte IE 8]><script src="${initParam.rootPath}/static/js/ie/respond.min.js"></script><![endif]-->
 	<script src="${initParam.rootPath}/static/js/main.js"></script>
+	<!--// Scripts -->
 </body>
 <!--
 	Helios by HTML5 UP
