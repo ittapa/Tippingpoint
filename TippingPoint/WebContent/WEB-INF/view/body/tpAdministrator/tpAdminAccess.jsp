@@ -28,7 +28,7 @@
    
    <form name = "tp1" action="/TippingPoint/tpAdminLogin.tp" method="post" onsubmit="return check();">
   
-      <label>아이디 : <input type = "text" name = "adminId" /></label><p>
+      <label>아이디 : <input type  "text" name = "adminId" /></label><p>
       <label>비밀번호: <input type = "password" name = "adminPw"/></label><p>
    
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

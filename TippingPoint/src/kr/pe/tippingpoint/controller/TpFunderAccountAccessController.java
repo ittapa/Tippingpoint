@@ -2,9 +2,11 @@ package kr.pe.tippingpoint.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -73,32 +75,9 @@ public class TpFunderAccountAccessController {
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate(); // 세션 삭제
-		return "/page1.tp";
+		return "/main.tp";
 	}
 	
-	/**
-	 * 관리자 전체 회원 조회 메소드 
-	 */
-	@RequestMapping("/findByTpfId")
-	public String findById(@RequestParam String tpfId, ModelMap model) {
-		TpFunder tpFunder = service.findTpFunderById(tpfId);
-		model.addAttribute("tpFunder", tpFunder);
-		return "admin/tpFunder_info.tiles";
-	}
-
-	@RequestMapping("/findAllTpFunderList")
-	public String list(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
-		int page = 1;
-		try {
-			page = Integer.parseInt(pageNo); // null일 경우 예외처리를 통해 page를 1로
-												// 처리한다..
-		} catch (NumberFormatException e) {
-		}
-		Map attributes = service.getAllTpFundersPaging(page);
-		model.addAllAttributes(attributes);
-		return "administrator/admin_funderList.tiles";
-	}
-
 	/**
 	 * 회원가입
 	 * 
@@ -145,6 +124,7 @@ public class TpFunderAccountAccessController {
 		TpFunder tpfunder = service.findTpFunderById(tpfId);
 		return String.valueOf(tpfunder != null);
 	}
+	
 
 	/**
 	 * 회원 수정
@@ -152,14 +132,29 @@ public class TpFunderAccountAccessController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("modifyRegister")
-	public String modify(@ModelAttribute TpFunder tpfunder, Errors errors, @RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
-		new TpFunderValidator().validate(tpfunder, errors);
-		if(errors.hasErrors()){
-			return "tpMyPage/modifyRegister.tiles";
-		}
-		service.updateTpFunder(tpfunder);
-		model.addAttribute("tpfId", tpfunder.getTpfId());		
-		return "redirect:/tpfunder/findByTpfId.tp";
+//	@RequestMapping("modifyRegister")
+//	public String modify(HttpSession session, @ModelAttribute TpFunder tpfunder, ModelMap model) throws Exception{
+//		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));		
+//		return "tpMyPage/tpMyPageRegister.tiles";
+//	}
+	
+	
+	//마이페이지 메인
+	@RequestMapping("myPageMain")
+	public String myPageMain(HttpSession session, @ModelAttribute TpFunder tpfunder, ModelMap model) throws Exception{
+		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
+		return "tpMyPage/tpMyPageMain.tiles";
 	}
+	
+//	
+//	@RequestMapping("modifyRegister")
+//	   public String modify(@ModelAttribute TpFunder tpfunder, Errors errors, @RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
+//	      new TpFunderValidator().validate(tpfunder, errors);
+//	      if(errors.hasErrors()){
+//	         return "tpMyPage/modifyRegister.tiles";
+//	      }
+//	      service.updateTpFunder(tpfunder);
+//	      model.addAttribute("tpfId", tpfunder.getTpfId());      
+//	      return "redirect:/tpfunder/findByTpfId.tp";
+//	   }
 }

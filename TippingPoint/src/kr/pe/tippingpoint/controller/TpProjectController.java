@@ -290,7 +290,8 @@ public class TpProjectController {
 		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 	}
 
-	// 단일 프로젝트 조회하기
+	
+	//	단일 프로젝트 조회하기(관리자)
 	@RequestMapping("/tpProject.tp")
 	public ModelAndView findTpProject(@RequestParam String tppId) {
 
@@ -312,5 +313,18 @@ public class TpProjectController {
 		map.put("keyWord", keyWord);
 		
 		return new ModelAndView("tpProject/tpProjectSerchingList.tiles", map);
+	}
+	
+	
+	
+	@RequestMapping("/searchByWriterProject")
+	public ModelAndView searchByWriterProject(HttpSession session , HttpServletRequest request){
+		int pageNo = 1;
+		String writer = (String) session.getAttribute("userLoginInfo");
+		System.out.println(writer);
+		Map map = service.findTpProjectByWriter(writer);
+		map.put("writer", writer);
+		
+		return new ModelAndView("tpMyPage/tpMyPageProjectList.tiles",map);
 	}
 }

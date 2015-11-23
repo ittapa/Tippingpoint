@@ -68,6 +68,7 @@ insert into tpproject values('id1','title','2','내용', 20121212, 10000, 999999
 insert into tpproject values('id2','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'a', 'message','메인이미지경로','game');
 insert into tpproject values('id3','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 insert into tpproject values('id4','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
+insert into tpproject values('아이디','제목','이게내용이지','1', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 
 UPDATE tpproject SET tppId='id1', tppState='x',
 							  tppAdminMessage='안되이시키야'
@@ -102,4 +103,21 @@ select * from tpproject
 
 	select * from tpproject 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+
+				 from tpproject where tppWriter = '1'
 
