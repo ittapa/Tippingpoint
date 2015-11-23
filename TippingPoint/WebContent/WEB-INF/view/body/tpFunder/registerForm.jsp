@@ -3,38 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- <title>Insert title here</title> -->
 
-<script>
-$(document).ready(function(){
-	$("#idcheck").on("click",function(){ //아이디 중복확인
-		$.ajax({
-			url:"${initParam.rootPath}/idDuplicatedCheck.tp",
-			type:"GET",
-			data:{tpfId:$("#tpfId").val()},
-			dataType:"JSON",
-			beforeSend:function(){
-				if(!$("#tpfId").val()){
-					alert("id를 입력하세요");
-					$("#tpfId").focus();
-					return false;
-				}
-			},
-			success:function(txt){
-				if(txt==false){
-					alert("가능한 아이디입니다.");
-				}else{
-					alert("중복입니다.");
-				}
-			
-			},
-			error: function(){
-				alert("에러");
-			}
-		});
-	});
-});
-</script>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 
 <script>
@@ -81,7 +51,7 @@ $(document).ready(function(){
 </script>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script> -->
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script>
@@ -110,9 +80,41 @@ $(document).ready(function() { //핸드폰번호 3개를 입력받아 db한컬�
 });
 </script>
 
+
+<script>
+$(document).ready(function(){
+	$("#idcheck").on("click",function(){ //아이디 중복확인
+		$.ajax({
+			url:"${initParam.rootPath}/idDuplicatedCheck.tp",
+			type:"GET",
+			data:{tpfId:$("#tpfId").val()},
+			dataType:"JSON",
+			beforeSend:function(){
+				if(!$("#tpfId").val()){
+					alert("id를 입력하세요");
+					$("#tpfId").focus();
+					return false;
+				}
+			},
+			success:function(txt){
+				if(txt==false){
+					alert("가능한 아이디입니다.");
+				}else{
+					alert("중복입니다.");
+				}
+			
+			},
+			error: function(){
+				alert("에러");
+			}
+		});
+	});
+});
+</script>
+
 <style type="text/css">
 table{
-	width: 700px;
+	/* width: 700px; */
 }
 table, td{
 	border: 1px solid black;
