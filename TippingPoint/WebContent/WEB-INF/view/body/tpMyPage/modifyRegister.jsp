@@ -1,4 +1,7 @@
+<%@ page import="java.util.Enumeration" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -51,13 +54,32 @@
     }
 </script>
 
+<script>
+$(document).ready(function() {
+	$("#modify").on("click",function(){
+		tpfunder = document.tpFunder;
+		if(tpfunder.tpfPhoneNum2.value.length<3 || tpfunder.tpfPhoneNum3.value.length<4){
+			alert("핸드폰번호를 입력하세요");
+			$("#tpfPhoneNum2").focus();
+		}
+		tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
+		tpfunder.submit();
+	});
+});
+</script>
+
 <body>
+
+${sessionScope.userLoginInfo}
 <h2>회원정보수정</h2>
-<form action="${initParam.rootPath }/modifyRegister.tp" method="post">
-<table border="1" style="width:500px">
+<spring:hasBindErrors name="tpFunder"/>
+<form action="${initParam.rootPath }/tpMyPage/modifyRegister.tp" method="post" name="tpFunder">
+<table border="1" style="width:700px">
+
 	<tr>
 		<td>이름</td>
 		<td>
+			${requestScope.tpFunder.tpfName }
 			<input type="hidden" name="tpfName" id="tpfName"
 			value="${requestScope.tpFunder.tpfName }">
 		</td>
@@ -79,7 +101,7 @@
 		<td>이메일</td>
 		<td>
 			<input type="text" id="tpfEmail" name="tpfEmail" value="${requestScope.tpFunder.tpfEmail }">
-			<span class="errorMessage"><form:errors path="tpFunder.tpfEmail" delimiter=" | "/></span>
+			<form:errors path="tpFunder.tpfEmail" delimiter=" | "/>
 		</td>
 	</tr>
 	<tr>
@@ -90,27 +112,32 @@
 				<option value="011">011</option>
 			</select>
 			-
-			<input type="text" name="tpfPhoneNum2" maxlength="4" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum2 }">
-			<input type="text" name="tpfPhoneNum3" maxlength="4" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfPhoneNum3 }">
+			<input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" style="width:50px; height:15px;">
+			<input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" style="width:50px; height:15px;">
 			<input type="hidden" name="tpfPhoneNum"/>
 		</td>
 	</tr>
 	<tr>
 		<td>우편번호</td>
 		<td>
-		<input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfZipcode }"> <input type="button" onclick="button()" value="우편번호 찾기">
+		<input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfZipcode }"> 
+		<input type="button" onclick="button()" value="우편번호 찾기">
+		<form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
 		</td>
 	</tr>
 	<tr>
 		<td>주소</td>
 		<td>
 		<input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" style="width:200px; height:15px;" value="${requestScope.tpFunder.tpfAddress }">
+		<form:errors path="tpFunder.tpfAddress" delimiter=" | "/>
 		</td>
 	</tr>
 	<tr>
 		<td>상세주소</td>
 		<td>
-		<input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" style="width:200px; height:15px;" value="${requestScope.tpFunder.tpfAddressD }"></td>
+		<input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" style="width:200px; height:15px;" value="${requestScope.tpFunder.tpfAddressD }">
+		<form:errors path="tpFunder.tpfAddressD" delimiter=" | "/>
+		</td>
 	</tr>
 	<tr>
 		<td colspan="2" align="center">

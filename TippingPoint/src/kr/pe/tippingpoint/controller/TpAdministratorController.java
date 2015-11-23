@@ -55,7 +55,6 @@ public class TpAdministratorController {
 		}
 
 		Map map = adminservice.adminAllListTpProject(pageNo);
-		System.out.println("메롱2");
 		
 
 		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectBoard.jsp", map);

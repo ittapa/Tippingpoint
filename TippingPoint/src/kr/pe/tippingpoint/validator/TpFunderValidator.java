@@ -19,7 +19,7 @@ public class TpFunderValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		
 		if(!supports(target.getClass())){
-			errors.reject("notsupport","우어엉");
+			errors.reject("notsupport","에러");
 			return;
 		}
 		
@@ -34,7 +34,9 @@ public class TpFunderValidator implements Validator {
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfName", "requried", new Object[]{"이름"}, "필수입력사항입니다.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfEmail", "requried", new Object[]{"이메일"}, "필수입력사항입니다.");
-	
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfZipcode", "required", new Object[]{"우편번호"}, "필수입력사항입니다.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfAddress", "required", new Object[]{"주소"}, "필수입력사항입니다.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfAddressD", "required", new Object[]{"상세주소"}, "필수입력사항입니다.");
 	}
 	
 }

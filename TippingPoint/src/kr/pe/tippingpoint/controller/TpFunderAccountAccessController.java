@@ -79,12 +79,14 @@ public class TpFunderAccountAccessController {
 	/**
 	 * 관리자 전체 회원 조회 메소드 
 	 */
+	/*
 	@RequestMapping("/findByTpfId")
 	public String findById(@RequestParam String tpfId, ModelMap model) {
 		TpFunder tpFunder = service.findTpFunderById(tpfId);
 		model.addAttribute("tpFunder", tpFunder);
 		return "admin/tpFunder_info.tiles";
 	}
+	*/
 
 	@RequestMapping("/findAllTpFunderList")
 	public String list(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
@@ -147,19 +149,47 @@ public class TpFunderAccountAccessController {
 	}
 
 	/**
-	 * 회원 수정
+	 * ID로 찾기
 	 * @param tpfId
 	 * @param model
 	 * @return
 	 */
+	@RequestMapping("findByTpfId")
+	public String findById(HttpSession session, ModelMap model) {
+		TpFunder tpFunder = service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo"))));
+		model.addAttribute("tpFunder", tpFunder);
+		return "tpMyPage/modifyRegister.tiles";
+	}
+	
+	/**
+	 * 회원수정폼 조회
+	 * @param tpfId
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("modifyForm")
+	public String modifyForm(@RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
+		model.addAttribute("tpfunder", service.findTpFunderById(tpfId));		
+		return "tpMyPage/modifyRegister.tiles";
+	}
+	
+	/**
+	 * 회원수정
+	 * @param tpfunder
+	 * @param errors
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("modifyRegister")
-	public String modify(@ModelAttribute TpFunder tpfunder, Errors errors, @RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
+	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model) throws Exception{
 		new TpFunderValidator().validate(tpfunder, errors);
-		if(errors.hasErrors()){
+		if (errors.hasErrors()) {
 			return "tpMyPage/modifyRegister.tiles";
 		}
 		service.updateTpFunder(tpfunder);
-		model.addAttribute("tpfId", tpfunder.getTpfId());		
-		return "redirect:/tpfunder/findByTpfId.tp";
+		model.addAttribute("tpfId", tpfunder.getTpfId());
+		return "redirect:/findByTpfId.tp";
 	}
 }
