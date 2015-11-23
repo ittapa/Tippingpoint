@@ -1,16 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script type="text/javascript" src="jquery/jquery.js"></script>
+
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
-  
    <script type="text/javascript">
 $(function(){
 	 var oEditors = [];
@@ -26,6 +20,7 @@ $(function(){
           // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
           bUseModeChanger : true },
 	  fCreator: "createSEditor2"
+	  
 	  
 	 });
 	 
@@ -66,9 +61,9 @@ $(function(){
 <body>
 	<!-- 프로젝트 등록  -->
 
-
-	<h2>프로젝트 등록</h2>
-	<br />
+	<P align="left">
+			<FONT size="5"><B>프로젝트 등록</B></FONT>
+	</P>
 	<form action="submitTpProject.tp" method="post" id ="reproform"
 		enctype="multipart/form-data">
 		<label>프로젝트 ADMIN  : <input type="text" name="tppId" /></label>

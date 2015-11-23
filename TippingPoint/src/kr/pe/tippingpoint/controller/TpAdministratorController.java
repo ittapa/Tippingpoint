@@ -21,7 +21,9 @@ public class TpAdministratorController {
 	
 	@Autowired
 	private TpAdministratorService adminservice;
-
+	
+	
+	//관리자 로그인..
 	@RequestMapping("/tpAdminLogin")
 	public String tpAdminLogin(HttpServletRequest request, HttpServletResponse response){
 		String id = "id";
@@ -56,16 +58,15 @@ public class TpAdministratorController {
 		System.out.println("메롱2");
 		
 
-		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectList.jsp", map);
+		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectBoard.jsp", map);
 	}
 	
 
 	// 단일 프로젝트 조회하기
 	@RequestMapping("/tpAdminFindTpProject")
-	public ModelAndView tpAdminFindTpProject(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView tpAdminFindTpProject(HttpServletRequest request) {
 
 		// 1.요청파라미터 조회
-
 		String tppId = request.getParameter("tppId");
 		TpProject polist = adminservice.adminFindTpProjectById(tppId);
 
@@ -75,7 +76,7 @@ public class TpAdministratorController {
 	
 	//프로젝트 승인
 	@RequestMapping("tpAdminProjectStateConvert")
-	public String tpAdminUp(HttpServletRequest request, HttpServletResponse response){
+	public String tpAdminUp(HttpServletRequest request){
 		String id = request.getParameter("tppId");
 		String tppState = request.getParameter("tppState");
 		String tppAdminMessage = request.getParameter("tppAdminMessage");		

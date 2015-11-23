@@ -1,9 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8 ">
-<title>Insert title here</title>
+
 
 </script>
 </head>
@@ -11,10 +7,9 @@
 
 <!-- 프로젝트 등록  -->
 
-	<center>
-   <h2>관리자 메인페이지</h2>
+   	<P ><!-- align="center" -->
+			<FONT size="5"><B>관리자 메인 페이지</B></FONT>
+		</P>
    <a href="/TippingPoint/tpAdminProjectBoard.tp">등록 신청한 목록 조회</a>
    
-   </center>
-</body>
-</html>
+

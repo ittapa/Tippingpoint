@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8 ">
-<title>Insert title here</title>
     <script type = "text/javascript">
    
       function check() {
@@ -20,15 +17,14 @@
           }
       }
    
-
 </script>
-</head>
-<body>
+
 
 <!-- 프로젝트 등록  -->
 
-	<center>
-   <h2>관리자 로그인페이지</h2>
+   	<P ><!-- align="center" -->
+			<FONT size="5"><B>관리자 로그인 페이지</B></FONT>
+		</P>
    
    <form name = "tp1" action="/TippingPoint/tpAdminLogin.tp" method="post" onsubmit="return check();">
   
@@ -39,6 +35,6 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type = "submit" value = "로그인">
    </form>
-  </center>
-</body>
+
+  
 </html>

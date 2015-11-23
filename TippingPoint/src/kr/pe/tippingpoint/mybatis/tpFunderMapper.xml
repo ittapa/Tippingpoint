@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tpFunderMapper">
+   <resultMap type="tpFunder" id="tpFunder-resultmap">
+      <id property="tpfId" column="TPFID"/>
+      <result property="tpfName" column="TPFNAME"/>
+      <result property="tpfPassword" column="TPFPASSWORD"/>
+      <result property="tpfBirth" column="TPFBIRTH"/>
+      <result property="tpfGender" column="TPFGENDER"/>
+      <result property="tpfEmail" column="TPFEMAIL"/>
+      <result property="tpfZipcode" column="TPFZIPCODE"/>
+      <result property="tpfAddress" column="TPFADDRESS"/>
+      <result property="tpfAddressD" column="TPFADDRESS_D"/>
+      <result property="tpfPhoneNum" column="TPFPHONENUM"/>
+      <result property="tpfQualifyTpProposer" column="TPFQUALIFYTPPROPOSER"/>
+      <result property="tpfAccountType" column="TPFACCOUNTTYPE"/>
+   </resultMap>
+   
+   <resultMap type="tpFunder" id="tpFunder-constructor-resultmap">
+   <!-- 생성자로 조회컬럼값 대입시에 javaType 지정 안할시 Object 타입 생성자를 호출함 -->
+      <constructor>
+         <idArg column="TPFID" javaType="string"/>
+         <arg column="TPFNAME" javaType="string"/>
+         <arg column="TPFPASSWORD" javaType="string"/>
+         <arg column="TPFBIRTH" javaType="string"/>
+         <arg column="TPFGENDER" javaType="string"/>
+         <arg column="TPFEMAIL" javaType="string"/>
+         <arg column="TPFZIPCODE" javaType="string"/>
+         <arg column="TPFADDRESS" javaType="string"/>
+         <arg column="TPFADDRESS_D" javaType="string"/>
+         <arg column="TPFPHONENUM" javaType="string"/>
+         <arg column="TPFQUALIFYTPPROPOSER" javaType="string"/>
+         <arg column="TPFACCOUNTTYPE" javaType="string"/>
+      </constructor>
+   </resultMap>
+   
+   <sql id="select-sql">
+      SELECT TPFID,
+               TPFNAME,
+               TPFPASSWORD,
+               TPFBIRTH,
+               TPFGENDER,
+               TPFEMAIL,
+               TPFZIPCODE,
+               TPFADDRESS,
+               TPFADDRESS_D,
+               TPFPHONENUM,
+               TPFQUALIFYTPPROPOSER,
+               TPFACCOUNTTYPE
+      FROM   tpFunder
+   </sql>
+   <sql id="select-column-sql">
+      TPFID,
+        TPFNAME,
+        TPFPASSWORD,
+        TPFBIRTH,
+        TPFGENDER,
+        TPFEMAIL,
+        TPFZIPCODE,
+        TPFADDRESS,
+        TPFADDRESS_D,
+        TPFPHONENUM,
+        TPFQUALIFYTPPROPOSER,
+        TPFACCOUNTTYPE
+   </sql>
+   
+   <select id="selectTpFunderById" parameterType="string" resultMap="tpFunder-resultmap">
+      <include refid="select-sql"/>
+      WHERE      TPFID=#{tpfId}
+   </select>
+   
+   <!-- 회원 ID abc순서대로 정렬! -->
+   <select id="selectTpFunders" parameterType="string" resultMap="tpFunder-resultmap">
+      <include refid="select-sql"/>
+      order by TPFID    asc
+   </select>
+   
+   <!--  전체 고객 조회 - paging처리 select문  -->
+   <select id="selectTpFundersPaging" parameterType="hashmap" resultMap="tpFunder-constructor-resultmap">
+      select <include refid="select-column-sql"/>
+      from (
+         select <include refid="select-column-sql"/>, ceil(rownum/#{contentsPerPage}) page
+         from(
+            select <include refid="select-column-sql"/>
+            from TPFUNDER
+            order by TPFID
+         )
+      )
+      where page = #{pageNo}
+   
+   </select>
+   
+   <!--  총 고객 수 조회   -->
+   <select id="selectCountTpFunders" resultType="_int">
+      select count(TPFID) from TPFUNDER   
+   </select>
+   
+   <!-- SELECT문 끝 -->
+   
+   <insert id="insertTpFunder" parameterType="tpfunder">
+      INSERT INTO TPFUNDER (TPFID, TPFNAME, TPFPASSWORD, TPFBIRTH, TPFGENDER, TPFEMAIL,
+                       TPFZIPCODE, TPFADDRESS, TPFADDRESS_D, TPFPHONENUM, TPFQUALIFYTPPROPOSER, TPFACCOUNTTYPE)
+      VALUES (#{tpfId}, #{tpfName}, #{tpfPassword}, #{tpfBirth}, #{tpfGender}, #{tpfEmail}, #{tpfZipcode},
+              #{tpfAddress}, #{tpfAddressD}, #{tpfPhoneNum}, #{tpfQualifyTpProposer}, #{tpfAccountType})
+   </insert>
+   
+   <delete id="deleteTpFunderById" parameterType="string">
+      DELETE FROM TPFUNDER WHERE TPFID=#{tpfId}
+   </delete>
+   
+   <update id="updateTpFunder" parameterType="tpFunder">
+      UPDATE TPFUNDER SET TPFNAME=#{tpfName}, TPFPASSWORD=#{tpfPassword}, TPFBIRTH=#{tpfBirth}, 
+                     TPFGENDER=#{tpfGender}, TPFEMAIL=#{tpfEmail},    TPFZIPCODE=#{tpfZipcode}, TPFADDRESS=#{tpfAddress}, 
+                     TPFADDRESS_D=#{tpfAddressD}, TPFPHONENUM=#{tpfPhoneNum}, TPFQUALIFYTPPROPOSER=#{tpfQualifyTpProposer},  
+                     TPFACCOUNTTYPE=#{tpfAccountType}
+      WHERE TPFID=#{tpfId}
+   </update>
+   
+   
+   
+</mapper>

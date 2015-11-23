@@ -9,52 +9,67 @@
 	<!-- 게시판 상세보기 -->
 
 
-	<center>
-	<h2>프로젝트 상세보기</h2>
-		<table border="1" style="width: 300px">
-			<tr>
-				<th>도메인아이디</th>
-				<td>${requestScope.polist.tppId }</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td>${requestScope.polist.tppTitle }</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td>${requestScope.polist.tppProjectContent }</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td>${requestScope.polist.tppWriter }</td>
-			</tr>
-			<tr>
-				<th>작성일자</th>
-				<td>${requestScope.polist.tppWriteDate}</td>
-			</tr>
 
+	<P ><!-- align="center" -->
+			<FONT size="5"><B>프로젝트 상세보기</B></FONT>
+		</P>
 
-			<tr>
-				<th>모인 금액</th>
-				<td>${requestScope.polist.tppTotalAmount }</td>
-			</tr>
-			<tr>
-				<th>목표 금액</th>
-				<td>${requestScope.polist.tppTargetAmount }</td>
-			</tr>
-			<tr>
-				<th>시작일</th>
-				<td>${requestScope.polist.tppFundingStartDate }</td>
-			</tr>
-			<tr>
-				<th>마감일</th>
-				<td>${requestScope.polist.tppFundingLastDate}</td>
-			</tr>
-			<tr>
-				<th>후원자수</th>
-				<td>${requestScope.polist.tppFunderNum}</td>
-			</tr>
-		</table>
-	</center>
+			<div>
+				프로젝트ID : ${requestScope.polist.tppId }
+			</div>
+			<br/>
+			
+			<div>
+			메인 이미지<br/>
+			${requestScope.polist.tppMainImg }
+			<img src = "${requestScope.polist.tppMainImg }" width = '300' height="300">
+			</div>
+			<br/>
+			<div>
+				제목 : ${requestScope.polist.tppTitle }
+			</div>
+			<br/>
+			
+			<div>
+				작성자 : ${requestScope.polist.tppWriter }
+			</div>
+			<br/>
+			
+			<div>
+				작성일자 : ${requestScope.polist.tppWriteDate}
+			</div>
+			<br/>
+			
+			<div>
+				모인 금액 : ${requestScope.polist.tppTotalAmount }
+			</div>
+			<br/>
+			
+			<div>
+				목표 금액 : ${requestScope.polist.tppTargetAmount }
+			</div>
+			<br/>
+			
+			<div>
+				시작일 : ${requestScope.polist.tppFundingStartDate }
+			</div>
+			<br/>
+			
+			<div>
+				마감일 : ${requestScope.polist.tppFundingLastDate}
+			</div>
+			<br/>
+			
+			<div>
+				후원자수 : ${requestScope.polist.tppFunderNum}
+			</div>
+			<br/>
+			
+			<div>
+				설명문 : ${requestScope.polist.tppProjectContent }
+			</div>
+			<br/>
+		
+
 </body>
 </html>

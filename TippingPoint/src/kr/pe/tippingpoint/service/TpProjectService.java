@@ -15,4 +15,5 @@ public interface TpProjectService {
 	
 	public void registerTpProject(TpProject tpproject);
 	
+	public Map<String, Object> serchTpProjectByKeyWord(String keyWord);
 }

@@ -13,8 +13,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,17 +39,6 @@ public class TpProjectController {
 	@Autowired
 	private TpProjectService service;
 	
-	
-	
-	// 전송TEST 지울것..
-	@RequestMapping("/test.tp")
-	public String submit(@RequestParam String tppProjectContent) {
-		System.out.println("내용" + tppProjectContent);
-		System.out.println();
-		System.out.println();
-
-		return "/WEB-INF/view/body/tpProject/tpProjectRequestSuccess.jsp";
-	}
 	
 	// 프로젝트등록 컨트롤러
 		@RequestMapping("/submitTpProject.tp")
@@ -75,6 +68,11 @@ public class TpProjectController {
 			// null : upImage name의 요청파라미터가 아야 없는 경우.
 			// isEmpty -true: 사용자가 파일을 전송하지 않은 경우.
 			
+			//패스 및 경로 호출
+			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+			String rootPath = request.getSession().getServletContext().getInitParameter("rootPath");
+			
+			
 			if (upfile != null && !upfile.isEmpty()) { // 업로드된 파일이 있다.
 				// 업로드 된 파일으 ㅣ정보를 조회
 				// 파일을 임시저장경로에서 최종 저장경로로 이동.
@@ -87,7 +85,6 @@ public class TpProjectController {
 		
 				// 이미지이므로 신규 파일로 디렉토리 설정 및 업로드
 				// 파일 기본경로
-				String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 				
 				// 파일 기본경로 _ 상세경로
 				String filePath_A = "resources" + File.separator + "project" + File.separator + "mainImage"
@@ -116,10 +113,12 @@ public class TpProjectController {
 				// 임시경로에서 레알로 저장하기
 				upfile.transferTo(upImg);
 				//메인이미지 경로 저장
-				tpvo.setTppMainImg("/TippingPoint/"+filePath_A+realMainImgName); //upfile
+				
+				//vo에 이미지 경로 저장
+				tpvo.setTppMainImg(rootPath+"/"+filePath_A+realMainImgName); //upfile
 			}else{
 				//이미지 안넣었을때 디폴트 이미지
-				tpvo.setTppMainImg("/TippingPoint/test/Desert.jpg");
+				tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
 			}
 			
 
@@ -128,7 +127,7 @@ public class TpProjectController {
 			//비즈니스 로직 처리하기 서비스
 			service.registerTpProject(tpvo);
 
-			return "/WEB-INF/view/body/tpProject/tpProjectRequestSuccess.jsp"; //성공페이지
+			return "tpProject/tpProjectRequestSuccess.tiles"; //성공페이지 /WEB-INF/view/body/
 		}
 	
 	
@@ -276,7 +275,7 @@ public class TpProjectController {
 
 	// 프로젝트 전체보기
 	@RequestMapping("/tpProjectBoard")
-	public ModelAndView tpProjectBoard(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView tpProjectBoard(HttpServletRequest request) throws Exception{
 		System.out.println("메롱");
 		int pageNo = 1;
 		try {
@@ -288,19 +287,30 @@ public class TpProjectController {
 		Map map = service.allListTpProject(pageNo);
 		System.out.println("메롱2");
 		
-
-		return new ModelAndView("/WEB-INF/view/body/tpProject/tpProjectBoard.jsp", map);
+		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 	}
 
 	// 단일 프로젝트 조회하기
 	@RequestMapping("/tpProject.tp")
-	public ModelAndView findTpProject(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView findTpProject(@RequestParam String tppId) {
 
-		// 1.요청파라미터 조회
-
-		String tppId = request.getParameter("tppId");
+		//to.do 검증 추가해야됨.
 		TpProject polist = service.findTpProjectById(tppId);
 
-		return new ModelAndView("/WEB-INF/view/body/tpProject/tpProject.jsp", "polist", polist);
+		return new ModelAndView("tpProject/tpProject.tiles", "polist", polist); 
+	}
+	
+	//프로젝트 검색하기
+	@RequestMapping("/tpProjectSerching")
+	public ModelAndView serchTpProject(@RequestParam String keyWord){
+		
+		if(keyWord == null||keyWord.trim().length()==0){
+			//todo처리
+		}
+		
+		Map<String, Object> map = service.serchTpProjectByKeyWord(keyWord);
+		map.put("keyWord", keyWord);
+		
+		return new ModelAndView("tpProject/tpProjectSerchingList.tiles", map);
 	}
 }
