@@ -55,96 +55,109 @@
 </script>
 
 <script>
+function checkPwd(){ //비밀번호 확인
+	var tpfPassword = document.tpFunder.tpfPassword.value; //비밀번호입력
+	var passwordConfirm = document.tpFunder.passwordConfirm.value; //비밀번호확인
+	if(tpfPassword!=passwordConfirm){
+		document.getElementById('checkPwd').innerHTML = "동일한 암호를 입력하세요.";
+	}else{
+		document.getElementById('checkPwd').innerHTML = "확인되었습니다.";
+	}
+}
+</script>
+
+<script>
 $(document).ready(function() {
-	$("#modify").on("click",function(){
-		tpfunder = document.tpFunder;
-		if(tpfunder.tpfPhoneNum2.value.length<3 || tpfunder.tpfPhoneNum3.value.length<4){
-			alert("핸드폰번호를 입력하세요");
-			$("#tpfPhoneNum2").focus();
-			return false;
-		}
-		tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
-		tpfunder.submit();
-	});
+   $("#modify").on("click",function(){
+      tpfunder = document.tpFunder;
+      if(tpfunder.tpfPhoneNum2.value.length<3 || tpfunder.tpfPhoneNum3.value.length<4){
+         alert("핸드폰번호를 입력하세요");
+         $("#tpfPhoneNum2").focus();
+         return false;
+      }
+      tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
+      tpfunder.submit();
+   });
 });
 </script>
 
 <body>
 
-${sessionScope.userLoginInfo}
 <h2>회원정보수정</h2>
 <spring:hasBindErrors name="tpFunder"/>
 <form action="${initParam.rootPath }/tpMyPage/modifyRegister.tp" method="post" name="tpFunder">
 <table border="1" style="width:700px">
+   <tr>
+      <td>이름</td>
+      <td>
+         ${requestScope.tpFunder.tpfName }
+         <input type="hidden" name="tpfName" id="tpfName"
+         value="${requestScope.tpFunder.tpfName }">
+      </td>
+   </tr>
+   <tr>
+      <td>비밀번호</td>
+      <td>
+         <input type="password" id="tpfPassword" name="tpfPassword" size="20" value="${requestScope.tpFunder.tpfPassword }">
+         <span class="error"><form:errors path="tpFunder.tpfPassword" delimiter=" | "/></span>
+      </td>
+   </tr>
+   <tr>
+      <td>비밀번호 확인</td>
+      <td>
+         <input type="password" name="passwordConfirm" onkeyup="checkPwd()">
+		<div id="checkPwd">동일한 암호를 입력하세요.</div>        
+      </td>
+   </tr>
+   <tr>
+      <td>이메일</td>
+      <td>
+         <input type="text" id="tpfEmail" name="tpfEmail" value="${requestScope.tpFunder.tpfEmail }">
+         <form:errors path="tpFunder.tpfEmail" delimiter=" | "/>
+      </td>
+   </tr>
+   <tr>
+      <td>휴대폰번호</td>
+      <td>
 
-	<tr>
-		<td>이름</td>
-		<td>
-			${requestScope.tpFunder.tpfName }
-			<input type="hidden" name="tpfName" id="tpfName"
-			value="${requestScope.tpFunder.tpfName }">
-		</td>
-	</tr>
-	<tr>
-		<td>비밀번호</td>
-		<td>
-			<input type="password" id="tpfPassword" name="tpfPassword" size="20" value="${requestScope.tpFunder.tpfPassword }">
-			<span class="error"><form:errors path="tpFunder.tpfPassword" delimiter=" | "/></span>
-		</td>
-	</tr>
-	<tr>
-		<td>비밀번호 확인</td>
-		<td>
-			<input type="password" id="passwordConfirm" name="passwordConfirm" size="20">			
-		</td>
-	</tr>
-	<tr>
-		<td>이메일</td>
-		<td>
-			<input type="text" id="tpfEmail" name="tpfEmail" value="${requestScope.tpFunder.tpfEmail }">
-			<form:errors path="tpFunder.tpfEmail" delimiter=" | "/>
-		</td>
-	</tr>
-	<tr>
-		<td>휴대폰번호</td>
-		<td>
-			<select name="tpfPhoneNum1">
-				<option value="010">010</option>
-				<option value="011">011</option>
-			</select>
-			-
-			<input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4">
-			<input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4">
-			<input type="hidden" name="tpfPhoneNum"/>
-		</td>
-	</tr>
-	<tr>
-		<td>우편번호</td>
-		<td>
-		<input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" value="${requestScope.tpFunder.tpfZipcode }"> 
-		<input type="button" onclick="button()" value="우편번호 찾기">
-		<form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
-		</td>
-	</tr>
-	<tr>
-		<td>주소</td>
-		<td>
-		<input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" value="${requestScope.tpFunder.tpfAddress }">
-		<form:errors path="tpFunder.tpfAddress" delimiter=" | "/>
-		</td>
-	</tr>
-	<tr>
-		<td>상세주소</td>
-		<td>
-		<input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" value="${requestScope.tpFunder.tpfAddressD }">
-		<form:errors path="tpFunder.tpfAddressD" delimiter=" | "/>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" align="center">
-			<input type="submit" value="등록" id="modify">
-		</td>
-	</tr>
+         <select name="tpfPhoneNum1">
+            <option value="010">010</option>
+            <option value="011">011</option>
+         </select>
+         -
+         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4">
+         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4">
+         
+         <input type="hidden" name="tpfPhoneNum"/>
+      </td>
+   </tr>
+   <tr>
+      <td>우편번호</td>
+      <td>
+      <input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" value="${requestScope.tpFunder.tpfZipcode }"> 
+      <input type="button" onclick="button()" value="우편번호 찾기">
+      <form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
+      </td>
+   </tr>
+   <tr>
+      <td>주소</td>
+      <td>
+      <input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" value="${requestScope.tpFunder.tpfAddress }">
+      <form:errors path="tpFunder.tpfAddress" delimiter=" | "/>
+      </td>
+   </tr>
+   <tr>
+      <td>상세주소</td>
+      <td>
+      <input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" value="${requestScope.tpFunder.tpfAddressD }">
+      <form:errors path="tpFunder.tpfAddressD" delimiter=" | "/>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="2" align="center">
+         <input type="submit" value="등록" id="modify">
+      </td>
+   </tr>
 </table>
 </form>
 </body>

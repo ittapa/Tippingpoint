@@ -69,6 +69,7 @@ insert into tpproject values('id2','title','2','내용', 20121212, 10000, 999999
 insert into tpproject values('id3','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 insert into tpproject values('id4','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 insert into tpproject values('아이디','제목','이게내용이지','1', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
+insert into tpproject values('아이디2','제목2','이게내용이지2','2', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 
 UPDATE tpproject SET tppId='id1', tppState='x',
 							  tppAdminMessage='안되이시키야'
@@ -85,6 +86,26 @@ select tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 			)
 	 		) 
 		where page = 1
+		
+
+	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 		from(
+	 			select ceil(rownum/10) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 			from(
+	 				select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+					tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 	tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+				 	from tpproject 
+				 	where tppState like 'o'
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = 1
+	
 	 	
 	 	
 select count(tppId) from tpproject
@@ -110,6 +131,16 @@ select * from tpproject
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 -- 추가정보 입력 DB
 drop table tpProposer
 drop table tpProposer
@@ -121,12 +152,12 @@ create table tpProposer (
    certification varchar2(10),
    residentRegistrationFirstNum number(10) not null,
    residentRegistrationLastNum number(10) not null,
-   corporateRegistrationNumber number(15)
+   corporateRegistrationNumber varchar2(15)
 );
 
-insert into tpProposer values ('1', '1002-141-587466', '개인사업자', 't', 920119, 2222222, 11111111);
+insert into tpProposer values ('1', '1002-141-587466', '개인사업자', 't', 920119, 2222222, '11111111');
 
-insert into tpProposer values ('3', '1002-141-587466', '개인사업자', null, 920119, 2222222, 11111111);
+insert into tpProposer values ('3', '1002-141-587466', '개인사업자', null, 920119, 2222222, '11111111');
 
 insert into tpProposer values (#{tpfId}, #{account}, #{proposerType}, #{certification}, 
 			 #{residentRegistrationFirstNum}, #{residentRegistrationLastNum}, #{corporateRegistrationNumber})

@@ -1,4 +1,4 @@
-create table TPFUNDER(
+ㅋㅋcreate table TPFUNDER(
    TPFID varchar2(20) primary key,
    TPFNAME varchar2(15) not null,
    TPFPASSWORD varchar2(15) not null,
@@ -43,3 +43,5 @@ SELECT		TPFQUALIFYTPPROPOSER
 			)
 		)
 		where page = 1
+		
+		

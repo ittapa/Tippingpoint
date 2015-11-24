@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%> 
+<%@ page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,16 +11,15 @@
 table.login {
  }
 </style>
-
 <script type="text/javascript">
-
+history.go(1);
+var referrer = document.referrer;
 function loginSuccess(){
-	
-			$("#form").submit();
+			location.href = document.referrer;
 		}
-		
 		$(document).ready(function loginCheck(){
 			$("#loginBtn").on("click", function(){
+				
 				var param = "tpfId" + "=" + $("#id").val() + "&" +"tpfPw" + "="+ $("#pw").val();
 				$.ajax({
 					"url" : "/TippingPoint/loginCheck.tp", //로그인 체크 컨트롤러
@@ -52,7 +51,7 @@ function loginSuccess(){
 							alert("잘못된 접근입니다."); 
 					}
 		
-				})
+				});
 			});
 		});	
 		$(document).ready(function goRegister(){//
@@ -60,8 +59,16 @@ function loginSuccess(){
 				location.href="/TippingPoint/tpfunder/registerForm.tp"  // 페이지 이동...
 			});
 		});
+		$(document).ready(function goRegister2(){//
+			$("#passwordCheckBtn").on("click", function(){
+				location.href="/TippingPoint/tpLogin/findPassword.tp"  // 페이지 이동...
+			});
+		});
+
+		
 </script>
-			<P ><!-- align="center" -->
+
+			<P><!-- align="center" -->
 			<FONT size="5"><B>로그인 페이지</B></FONT>
 		</P>
 	<form name="form" id = "form" method="post" action ="${initParam.rootPath }/loginProcess.tp">

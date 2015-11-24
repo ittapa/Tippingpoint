@@ -19,7 +19,7 @@ public class TpAdministratorServiceImpl implements TpAdministratorService {
 	private TpProjectDao dao;
 	
 	@Override
-	//모든 프로젝트 조회
+	//모든 프로젝트 조회(o)
 	public Map adminAllListTpProject(int pageNo) {
 		HashMap map = new HashMap();
 		List<TpProject> list = dao.selectAllTpProject(pageNo);
@@ -29,9 +29,8 @@ public class TpAdministratorServiceImpl implements TpAdministratorService {
 	return map;
 	}
 
-	@Override
 	//조회
-	
+	@Override
 	public TpProject adminFindTpProjectById(String tppId) {
 		return dao.selectTpProjectById(tppId);
 	}
