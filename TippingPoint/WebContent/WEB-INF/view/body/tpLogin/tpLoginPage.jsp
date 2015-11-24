@@ -59,9 +59,14 @@ function loginSuccess(){
 				location.href="/TippingPoint/tpfunder/registerForm.tp"  // 페이지 이동...
 			});
 		});
+		$(document).ready(function goRegister2(){//
+			$("#passwordCheckBtn").on("click", function(){
+				location.href="/TippingPoint/tpLogin/findPassword.tp"  // 페이지 이동...
+			});
+		});
 		
 </script>
-			<P ><!-- align="center" -->
+			<P><!-- align="center" -->
 			<FONT size="5"><B>로그인 페이지</B></FONT>
 		</P>
 	<form name="form" id = "form" method="post" action ="${initParam.rootPath }/loginProcess.tp">

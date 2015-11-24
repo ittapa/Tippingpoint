@@ -1,7 +1,6 @@
 package kr.pe.tippingpoint.controller;
 
-import java.util.Map;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.pe.tippingpoint.email.Email;
+import kr.pe.tippingpoint.email.EmailSender;
 import kr.pe.tippingpoint.exception.DuplicatedIdException;
 import kr.pe.tippingpoint.service.TpFunderAccountAccessServiceImpl;
 import kr.pe.tippingpoint.validator.TpFunderValidator;
@@ -73,13 +74,13 @@ public class TpFunderAccountAccessController {
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate(); // 세션 삭제
-		return "/page1.tp";
+		return "/main.tp";
 	}
 	
 	/**
 	 * 관리자 전체 회원 조회 메소드 
 	 */
-	@RequestMapping("/findByTpfId")
+/*	@RequestMapping("/findByTpfId")
 	public String findById(@RequestParam String tpfId, ModelMap model) {
 		TpFunder tpFunder = service.findTpFunderById(tpfId);
 		model.addAttribute("tpFunder", tpFunder);
@@ -97,7 +98,7 @@ public class TpFunderAccountAccessController {
 		Map attributes = service.getAllTpFundersPaging(page);
 		model.addAllAttributes(attributes);
 		return "administrator/admin_funderList.tiles";
-	}
+	}*/
 
 	/**
 	 * 회원가입
@@ -201,7 +202,6 @@ public class TpFunderAccountAccessController {
 			String TpFunderId = (service.findTpFunderById(Id)).getTpfId();
 			String TpFunderPwd = (service.findTpFunderById(Id)).getTpfPassword();
 			if (Id.equals(TpFunderId) && Pwd.equals(TpFunderPwd)) { // 로그인 및 ID 비밀번호확인
-				session.invalidate();//세션 삭제
 				txt =  "success";//입력한 ID와 비밀번호가 맞았음
 			} else {// 비밀번호가 틀렸을경우
 				txt = "비밀번호가 틀렸습니다";
@@ -211,4 +211,41 @@ public class TpFunderAccountAccessController {
 		}
 		return txt;
 	}
+	
+	
+	/**
+	 * 회원 비밀번호 찾기
+	 */
+	@Autowired
+	private EmailSender emailSender;
+	@Autowired
+	private Email email;
+	@RequestMapping("sendpw")
+	@ResponseBody
+	public String sendEmailAction (@RequestParam String findId,@RequestParam String findEmail) throws Exception {
+		String txt = null;
+	    String id= findId;
+	    String e_mail= findEmail;
+	    
+	    try {
+	    	String tpfId = (service.findTpFunderById(findId)).getTpfId();
+	    	String tpfEmail = (service.findTpFunderById(findId)).getTpfEmail();
+		    String pw = (service.findTpFunderById(findId)).getTpfPassword();
+		    System.out.println(pw);
+	    	if(id.equals(tpfId) && e_mail.equals(tpfEmail)){
+	    		if(pw!=null) {
+	 	 	       email.setContent("비밀번호는 "+pw+" 입니다.");
+	 	 	       email.setReceiver(e_mail);
+	 	 	       email.setSubject(id+"님 TppingPoint 비밀번호 찾기 메일입니다.");
+	 	 	       emailSender.SendEmail(email);
+	 	 	       txt = "success";
+	 	 	    } else {
+	 	 	       txt = "아이디와 이메일주소가 맞지 않습니다.";
+	 	 	    }
+	    	}
+		} catch (NullPointerException e) {
+			txt = "등록된 ID가 아닙니다.";
+		}
+	    return txt;
+	 }
 }
