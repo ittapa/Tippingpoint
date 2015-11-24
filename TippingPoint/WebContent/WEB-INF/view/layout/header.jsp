@@ -17,8 +17,8 @@
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/logout.tp">LOGOUT</a></li>
 </c:if>
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpProjectRegisterForm.tp">프로젝트 등록하기</a></li>
-					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpProjectBoard.tp?pageNo=${param.pageNo }">프로젝트 둘러보기</a></li>
-					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpNoticeBoard.tp?pageNo=${param.pageNo }">NOITCE</a></li>
+					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpProjectBoard.tp">프로젝트 둘러보기</a></li>
+					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpNoticeBoard.tp">NOITCE</a></li>
 					<!-- 검색 -->
 					<!-- @TODO: 적절한 CSS를 적용할 예정입니다. -->
 					<!-- li style="white-space: nowrap;">

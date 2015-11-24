@@ -127,7 +127,7 @@ select * from tpproject
 	
 	
 	
-	
+	select count(tppState) from tpproject where tppState like 'o'
 	
 	
 	

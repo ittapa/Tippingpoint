@@ -45,18 +45,27 @@ public class TpProjectDaoImpl implements TpProjectDao{
 		return session.selectList("tpProjectMapper.selectATpProjectPaging", parameter);
 	}
 
-
 	@Override
 	public int selectCountProject() {
 		return session.selectOne("tpProjectMapper.selectCountProject");
 	}
+	
+	@Override
+	public int selectOCountProject() {
+		return session.selectOne("tpProjectMapper.selectOCountProject");
+	}
+
+	@Override
+	public int selectACountProject() {
+		return session.selectOne("tpProjectMapper.selectACountProject");
+	}
+
 
 	@Override
 	public TpProject selectTpProjectById(String tppId) {
 		return session.selectOne("tpProjectMapper.selectTpProjectById", tppId);
 	}
 
-	
 	//todo : 카테고리 검색 햐야함
 	@Override
 	public List<TpProject> selectByCategory(String tppCategory) {
