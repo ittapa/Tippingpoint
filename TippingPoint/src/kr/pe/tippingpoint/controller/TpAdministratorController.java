@@ -116,6 +116,10 @@ public class TpAdministratorController {
 		return "tpAdminProjectBoard.tp";
 	}
 
+
+//////////////////////////////////////////////////회원관리처리////////////////////////////////////////////////////////////////	
+	
+	
 	// 관리자 전체회원조회
 	@RequestMapping("/findAllTpFunderList")
 	public String findAllTpFunderList(@RequestParam(defaultValue = "1") String pageNo, ModelMap model, HttpSession session) {
