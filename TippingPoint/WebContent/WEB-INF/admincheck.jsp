@@ -27,7 +27,6 @@
 
 <!-- 프로젝트 등록  -->
 
-	<center>
    <h2>관리자 로그인페이지</h2>
    
    <form name = "tp1" action="/TippingPoint/tpAdminLogin.tp" method="post" onsubmit="return check();">
@@ -39,6 +38,5 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type = "submit" value = "로그인">
    </form>
-  </center>
 </body>
 </html>

@@ -1,4 +1,6 @@
+
 package kr.pe.tippingpoint.controller;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.pe.tippingpoint.email.Email;
-import kr.pe.tippingpoint.email.EmailSender;
 import kr.pe.tippingpoint.exception.DuplicatedIdException;
 import kr.pe.tippingpoint.service.TpFunderAccountAccessServiceImpl;
 import kr.pe.tippingpoint.validator.TpFunderValidator;
 import kr.pe.tippingpoint.vo.TpFunder;
+import kr.pe.tippingpoint.vo.TpProposer;
 
 /**
  * 회원 로그인 작업을 처리하는 Controller
@@ -29,7 +30,7 @@ public class TpFunderAccountAccessController {
 
 	@Autowired
 	private TpFunderAccountAccessServiceImpl service;
-
+	
 	/**
 	 * 로그인체크 컨트롤러
 	 * 
@@ -77,28 +78,31 @@ public class TpFunderAccountAccessController {
 		return "/main.tp";
 	}
 	
+
 	/**
 	 * 관리자 전체 회원 조회 메소드 
 	 */
+
 /*	@RequestMapping("/findByTpfId")
 	public String findById(@RequestParam String tpfId, ModelMap model) {
 		TpFunder tpFunder = service.findTpFunderById(tpfId);
 		model.addAttribute("tpFunder", tpFunder);
 		return "admin/tpFunder_info.tiles";
-	}
-
-	@RequestMapping("/findAllTpFunderList")
-	public String list(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
-		int page = 1;
-		try {
-			page = Integer.parseInt(pageNo); // null일 경우 예외처리를 통해 page를 1로
-												// 처리한다..
-		} catch (NumberFormatException e) {
-		}
-		Map attributes = service.getAllTpFundersPaging(page);
-		model.addAllAttributes(attributes);
-		return "administrator/admin_funderList.tiles";
 	}*/
+
+
+//	@RequestMapping("/findAllTpFunderList")
+//	public String list(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
+//		int page = 1;
+//		try {
+//			page = Integer.parseInt(pageNo); // null일 경우 예외처리를 통해 page를 1로
+//												// 처리한다..
+//		} catch (NumberFormatException e) {
+//		}
+//		Map attributes = service.getAllTpFundersPaging(page);
+//		model.addAllAttributes(attributes);
+//		return "administrator/admin_funderList.tiles";
+//	}
 
 	/**
 	 * 회원가입
@@ -146,106 +150,95 @@ public class TpFunderAccountAccessController {
 		TpFunder tpfunder = service.findTpFunderById(tpfId);
 		return String.valueOf(tpfunder != null);
 	}
+	
 
 	/**
-	 * 회원 수정
+	 * ID로 찾기
 	 * @param tpfId
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("modifyRegister")
-	public String modify(@ModelAttribute TpFunder tpfunder, Errors errors, @RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
-		new TpFunderValidator().validate(tpfunder, errors);
-		if(errors.hasErrors()){
-			return "tpMyPage/modifyRegister.tiles";
-		}
-		service.updateTpFunder(tpfunder);
-		model.addAttribute("tpfId", tpfunder.getTpfId());		
-		return "redirect:/tpfunder/findByTpfId.tp";
-	}
 	
+	
+/*	todo: 
+	@RequestMapping("findByTpfId")
+	public String findById(HttpSession session, ModelMap model) {
+		TpFunder tpFunder = service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo"))));
+		model.addAttribute("tpFunder", tpFunder);
+		return "tpMyPage/modifyRegister.tiles";
+	}
+	*/
 	/**
-	 * 회원탈퇴완료
-	 * @param session
+	 * 회원수정폼 조회
+	 * @param tpfId
+	 * @param model
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("removeFunder")
-	public String dropOutFunder(HttpSession session) throws Exception{
-		System.out.println(session.getAttribute("userLoginInfo"));
-		String dropOutId = String.valueOf(session.getAttribute("userLoginInfo"));
-		service.removeTpFunder(dropOutId);
-		session.invalidate();  // 세션 삭제
-		return "/main.tp";
+	@RequestMapping("modifyForm")
+	public String modifyForm(@RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
+		model.addAttribute("tpfunder", service.findTpFunderById(tpfId));		
+		return "tpMyPage/modifyRegister.tiles";
 	}
 	
 	/**
-	 * 회원 탈퇴하기전 ID 및 비밀번호 체크
-	 * @param dropOutId
-	 * @param dropOutPwd
-	 * @param session
+	 * 회원수정
+	 * @param tpfunder
+	 * @param errors
+	 * @param model
 	 * @return
+	 * @throws Exception
 	 */
-	@RequestMapping(value = "dropOutFunder", method = RequestMethod.POST)
-	@ResponseBody
-	public String dropIdCheck(@RequestParam String dropOutId, @RequestParam String dropOutPwd, HttpSession session) {
-		String txt = null;
-		
-		String Id = dropOutId;
-		String Pwd = dropOutPwd;
-		
-		
-		if (Id == null || Id.trim().length() == 0) {// 로그인 Id가 값이없을때
-			txt =  "잘못된 입력입니다";
+	@RequestMapping("modifyRegister")
+	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model) throws Exception{
+		new TpFunderValidator().validate(tpfunder, errors);
+		if (errors.hasErrors()) {
+			return "tpMyPage/modifyRegister.tiles";
 		}
-		try {// 로그인 ID가 DB에 존재 유무 확인
-			String TpFunderId = (service.findTpFunderById(Id)).getTpfId();
-			String TpFunderPwd = (service.findTpFunderById(Id)).getTpfPassword();
-			if (Id.equals(TpFunderId) && Pwd.equals(TpFunderPwd)) { // 로그인 및 ID 비밀번호확인
-				txt =  "success";//입력한 ID와 비밀번호가 맞았음
-			} else {// 비밀번호가 틀렸을경우
-				txt = "비밀번호가 틀렸습니다";
-			}
-		}catch (NullPointerException e){
-			txt = "ID를 잘못 입력하셨습니다" ;		
-		}
-		return txt;
+		service.updateTpFunder(tpfunder);
+		model.addAttribute("tpfId", tpfunder.getTpfId());
+		return "redirect:/findByTpfId.tp";
+	}
+	
+	//마이페이지 메인
+	@RequestMapping("myPageMain")
+	public String myPageMain(HttpSession session, @ModelAttribute TpFunder tpfunder, ModelMap model) throws Exception{
+		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
+		return "tpMyPage/tpMyPageMain.tiles";
 	}
 	
 	
-	/**
-	 * 회원 비밀번호 찾기
-	 */
-	@Autowired
-	private EmailSender emailSender;
-	@Autowired
-	private Email email;
-	@RequestMapping("sendpw")
-	@ResponseBody
-	public String sendEmailAction (@RequestParam String findId,@RequestParam String findEmail) throws Exception {
-		String txt = null;
-	    String id= findId;
-	    String e_mail= findEmail;
-	    
-	    try {
-	    	String tpfId = (service.findTpFunderById(findId)).getTpfId();
-	    	String tpfEmail = (service.findTpFunderById(findId)).getTpfEmail();
-		    String pw = (service.findTpFunderById(findId)).getTpfPassword();
-		    System.out.println(pw);
-	    	if(id.equals(tpfId) && e_mail.equals(tpfEmail)){
-	    		if(pw!=null) {
-	 	 	       email.setContent("비밀번호는 "+pw+" 입니다.");
-	 	 	       email.setReceiver(e_mail);
-	 	 	       email.setSubject(id+"님 TppingPoint 비밀번호 찾기 메일입니다.");
-	 	 	       emailSender.SendEmail(email);
-	 	 	       txt = "success";
-	 	 	    } else {
-	 	 	       txt = "아이디와 이메일주소가 맞지 않습니다.";
-	 	 	    }
-	    	}
-		} catch (NullPointerException e) {
-			txt = "등록된 ID가 아닙니다.";
-		}
-	    return txt;
-	 }
+
+	
+
+	
+	
+	//회원정보 추가 
+	@RequestMapping("addInfo")
+	public String adddInfo(HttpSession session, HttpServletRequest request) throws Exception{
+		//세션에서 아이디 불러옴
+		String writer = (String) session.getAttribute("userLoginInfo");
+		System.out.println(writer);
+		int residentRegistrationFirstNum = Integer.parseInt(request.getParameter("residentRegistrationFirstNum"));
+		int residentRegistrationLastNum = Integer.parseInt(request.getParameter("residentRegistrationLastNum"));
+		int corporateRegistrationNumber = Integer.parseInt(request.getParameter("corporateRegistrationNumber"));
+		//값 넣어주기
+		TpProposer tposer = new TpProposer();
+		tposer.setTpfId(writer);//아이디
+		tposer.setAccount(request.getParameter("account"));//계좌
+		tposer.setProposerType(request.getParameter("proposerType"));//일반개인or법인or개인사업자
+		tposer.setCertification("F");
+		tposer.setResidentRegistrationFirstNum(residentRegistrationFirstNum);//주민번호 앞자리
+		tposer.setResidentRegistrationLastNum(residentRegistrationLastNum);//주민번호 뒷자리
+		tposer.setCorporateRegistrationNumber(corporateRegistrationNumber);//사업자번호
+		System.out.println(tposer.toString());
+		
+		
+		service.addProposerInfo(tposer);
+		
+			
+		return "tpMyPage/tpMyPageMain.tiles";
+	}
+	
 }
+

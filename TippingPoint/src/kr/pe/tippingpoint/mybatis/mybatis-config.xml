@@ -18,6 +18,7 @@
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpProjectMapper.xml" />
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpNoticeMapper.xml" />
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpFunderMapper.xml"/>
+		<mapper resource="kr/pe/tippingpoint/mybatis/tpProposerMapper.xml"/>
 	</mappers>
 
 </configuration>

@@ -24,4 +24,6 @@ public interface TpProjectDao {
 	
 	public List<TpProject> serchTpProjectByKeyWord(String keyWord);
 	
+	public List<TpProject> selectTpProjectByWriter(String writer);
+	
 }

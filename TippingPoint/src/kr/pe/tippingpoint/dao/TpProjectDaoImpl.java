@@ -70,6 +70,13 @@ public class TpProjectDaoImpl implements TpProjectDao{
 		return session.selectList("tpProjectMapper.serchProjectByKeyWord", keyWord);
 	
 	}
+
+	@Override
+	public List<TpProject> selectTpProjectByWriter(String writer) {
+		return session.selectList("tpProjectMapper.selectTpProjectByWriter", writer);
+	}
+	
+	
 	
 	
 }

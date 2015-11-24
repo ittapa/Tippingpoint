@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 
-</script>
 </head>
 <body>
 
@@ -11,5 +10,6 @@
 			<FONT size="5"><B>관리자 메인 페이지</B></FONT>
 		</P>
    <a href="/TippingPoint/tpAdminProjectBoard.tp">등록 신청한 목록 조회</a>
+   <a href="/TippingPoint/findAllTpFunderList.tp">회원 목록 조회</a>
    
 

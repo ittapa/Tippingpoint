@@ -25,12 +25,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.pe.tippingpoint.service.TpProjectService;
 import kr.pe.tippingpoint.vo.Editor;
+import kr.pe.tippingpoint.vo.TpFunder;
 import kr.pe.tippingpoint.vo.TpProject;
 
 @Controller
@@ -38,17 +40,25 @@ public class TpProjectController {
 
 	@Autowired
 	private TpProjectService service;
+	//프로젝트 등록 폼 컨트롤러
+	@RequestMapping("/tpProjectRegisterForm")
+	public String tpProjectForm(){
+		//to.do id 체크, 권한 체크
+		return "tpProject/tpProjectRegisterForm.tiles";
+	}
 	
 	
 	// 프로젝트등록 컨트롤러
-		@RequestMapping("/submitTpProject.tp")
+		@RequestMapping("/submitTpProject")
 		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, HttpServletRequest request, ModelMap map)
 				throws IOException {
+			System.out.println("저장 및 승인요청");
 			
 			System.out.println("라인1"+tpvo);
+			System.out.println(tpvo.getTppState());
 			
-			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부
-			tpvo.setTppState("b"); 
+			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 jsp단에서 받아서 들어감깔꺼ㅏㄹ
+			
 			
 			tpvo.setTppWriter("작성자ID"); //session ID추출해서넣기
 			
@@ -126,8 +136,12 @@ public class TpProjectController {
 			System.out.println(tpvo);
 			//비즈니스 로직 처리하기 서비스
 			service.registerTpProject(tpvo);
-
-			return "tpProject/tpProjectRequestSuccess.tiles"; //성공페이지 /WEB-INF/view/body/
+			
+			if(tpvo.getTppState()=="b"){ //승인요청 성공페이지
+			return "tpProject/tpProjectRequestSuccess.tiles";
+			}
+			
+			return "tpProject/tpProjectSaveSuccess.tiles";	
 		}
 	
 	
@@ -271,8 +285,6 @@ public class TpProjectController {
 		}
 	}
 
-	
-
 	// 프로젝트 전체보기
 	@RequestMapping("/tpProjectBoard")
 	public ModelAndView tpProjectBoard(HttpServletRequest request) throws Exception{
@@ -290,7 +302,8 @@ public class TpProjectController {
 		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 	}
 
-	// 단일 프로젝트 조회하기
+	
+	//	단일 프로젝트 조회하기(관리자)
 	@RequestMapping("/tpProject.tp")
 	public ModelAndView findTpProject(@RequestParam String tppId) {
 
@@ -301,7 +314,7 @@ public class TpProjectController {
 	}
 	
 	//프로젝트 검색하기
-	@RequestMapping("/tpProjectSerching")
+	@RequestMapping("/tpProjectSearching")
 	public ModelAndView serchTpProject(@RequestParam String keyWord){
 		
 		if(keyWord == null||keyWord.trim().length()==0){
@@ -311,6 +324,34 @@ public class TpProjectController {
 		Map<String, Object> map = service.serchTpProjectByKeyWord(keyWord);
 		map.put("keyWord", keyWord);
 		
-		return new ModelAndView("tpProject/tpProjectSerchingList.tiles", map);
+		return new ModelAndView("tpProject/tpProjectSearchingList.tiles", map);
 	}
+	
+	//프로젝트 ID 중복 조회
+	@RequestMapping("tppIdDuplicatedCheck")
+	@ResponseBody
+	public String tppIdDuplicatedCheck(@RequestParam String tppId){
+		TpProject tpproject = service.findTpProjectById(tppId);
+		return String.valueOf(tpproject != null);
+	}
+	
+	
+	
+	
+	
+	
+	@RequestMapping("/searchByWriterProject")
+	public ModelAndView searchByWriterProject(HttpSession session , HttpServletRequest request){
+		int pageNo = 1;
+		String writer = (String) session.getAttribute("userLoginInfo");
+		System.out.println(writer);
+		Map map = service.findTpProjectByWriter(writer);
+		map.put("writer", writer);
+		
+		return new ModelAndView("tpMyPage/tpMyPageProjectList.tiles",map);
+	}
+	
+	
+	
+
 }
