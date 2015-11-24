@@ -61,6 +61,7 @@ $(document).ready(function() {
 		if(tpfunder.tpfPhoneNum2.value.length<3 || tpfunder.tpfPhoneNum3.value.length<4){
 			alert("핸드폰번호를 입력하세요");
 			$("#tpfPhoneNum2").focus();
+			return false;
 		}
 		tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
 		tpfunder.submit();
@@ -112,15 +113,15 @@ ${sessionScope.userLoginInfo}
 				<option value="011">011</option>
 			</select>
 			-
-			<input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" style="width:50px; height:15px;">
-			<input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" style="width:50px; height:15px;">
+			<input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4">
+			<input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4">
 			<input type="hidden" name="tpfPhoneNum"/>
 		</td>
 	</tr>
 	<tr>
 		<td>우편번호</td>
 		<td>
-		<input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" style="width:50px; height:15px;" value="${requestScope.tpFunder.tpfZipcode }"> 
+		<input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" value="${requestScope.tpFunder.tpfZipcode }"> 
 		<input type="button" onclick="button()" value="우편번호 찾기">
 		<form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
 		</td>
@@ -128,14 +129,14 @@ ${sessionScope.userLoginInfo}
 	<tr>
 		<td>주소</td>
 		<td>
-		<input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" style="width:200px; height:15px;" value="${requestScope.tpFunder.tpfAddress }">
+		<input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" value="${requestScope.tpFunder.tpfAddress }">
 		<form:errors path="tpFunder.tpfAddress" delimiter=" | "/>
 		</td>
 	</tr>
 	<tr>
 		<td>상세주소</td>
 		<td>
-		<input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" style="width:200px; height:15px;" value="${requestScope.tpFunder.tpfAddressD }">
+		<input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" value="${requestScope.tpFunder.tpfAddressD }">
 		<form:errors path="tpFunder.tpfAddressD" delimiter=" | "/>
 		</td>
 	</tr>

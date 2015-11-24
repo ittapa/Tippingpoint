@@ -5,7 +5,7 @@
 	<FONT size="6"><B>${requestScope.tpfId } 님의 My 페이지</B></FONT>
 </P>
 
-<a href="${initParam.rootPath}/modifyRegister.tp">회원정보 수정 </a>
+<a href="${initParam.rootPath}/modifyForm.tp">회원정보 수정 </a>
 <br />
 
 <a href="${initParam.rootPath}/logout.tp"> LOGOUT </a>
