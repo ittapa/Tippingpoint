@@ -50,6 +50,18 @@
     }
 </script>
 
+<script>
+function checkPwd(){ //비밀번호 확인
+	var tpfPassword = document.tpFunder.tpfPassword.value; //비밀번호입력
+	var passwordConfirm = document.tpFunder.passwordConfirm.value; //비밀번호확인
+	if(tpfPassword!=passwordConfirm){
+		document.getElementById('checkPwd').innerHTML = "동일한 암호를 입력하세요.";
+	}else{
+		document.getElementById('checkPwd').innerHTML = "확인되었습니다.";
+	}
+}
+</script>
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <!-- <script src="//code.jquery.com/jquery-1.10.2.js"></script> -->
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -116,18 +128,6 @@ $(document).ready(function(){
 		});
 	});
 });
-</script>
-
-<script>
-function checkPwd(){
-	var tpfPassword = document.tpFunder.tpfPassword.value;
-	var passwordConfirm = document.tpFunder.passwordConfirm.value;
-	if(tpfPassword!=passwordConfirm){
-		document.getElementById("checkPwd").innerHTML = "동일한 암호를 입력하세요.";
-	}else{
-		document.getElementById("checkPwd").innerHTML = "확인되었습니다.";
-	}
-}
 </script>
 
 <style type="text/css">
