@@ -194,7 +194,7 @@ public class TpFunderAccountAccessController {
 	public String modifyRegister(@ModelAttribute TpFunder tpFunder, Errors errors, ModelMap model) throws Exception{
 		new TpFunderValidator().validate(tpFunder, errors);
 		if (errors.hasErrors()) {
-			return "tpMyPage/modifyRegister.tiles";
+			return "tpMyPage/modifyForm.tiles";
 		}
 		service.updateTpFunder(tpFunder);
 		model.addAttribute("tpFunder", service.findTpFunderById(tpFunder.getTpfId()));

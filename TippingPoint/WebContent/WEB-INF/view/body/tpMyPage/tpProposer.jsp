@@ -3,9 +3,9 @@
    
    <h2>PROPOSER 가입 양식</h2>
    <form action="/TippingPoint/addInfo.tp" method="post">
-      <label>계좌 번호 : <input type = "text" name = "account"/></label><p>
-      <label>주민 번호 : <input type = "text" name = "residentRegistrationFirstNum"/> - 
-      <input type = "text" name = "residentRegistrationLastNum"/></label><p>
+      <label>계좌 번호 : <input type = "text" name = "account" maxlength="20"/></label><p>
+      <label>주민 번호 : <input type = "text" name = "residentRegistrationFirstNum" maxlength="6"/> - 
+      <input type = "text" name = "residentRegistrationLastNum" maxlength="7"/></label><p>
       <label>제안자 형태 : 
          <label>
             <select name = "proposerType">
@@ -14,7 +14,7 @@
                <option value = "corporate">법인 사업자</option>
             </select>
          </label><p>
-      <label>사업자 번호 : <input type = "number" name = "corporateRegistrationNumber"/></label><p>
+      <label>사업자 번호 : <input type = "number" name = "corporateRegistrationNumber" maxlength="10"/></label><p>
       <p>
 	<input type="submit" value="등록" />
    </form>
