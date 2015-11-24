@@ -17,8 +17,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 		HttpSession session = request.getSession();
 		if(session.getAttribute("userLoginInfo")==null){
 			//안한경우 - ModelAndViewDefiningException 발생
-			throw new ModelAndViewDefiningException(new ModelAndView("/login/login.tp", "message", "로그인이 필요한 서비스입니다."));
-		}
+			throw new ModelAndViewDefiningException(new ModelAndView("/tpLogin/tpLoginPage.tp"));
+		} 
 		//로그인한 사용자. ->handler(컨트롤러) 호출
 		return true;
 	}

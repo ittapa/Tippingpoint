@@ -11,11 +11,14 @@
 table.login {
  }
 </style>
+
 <script type="text/javascript">
 history.go(1);
+<%session.setAttribute("backpage", request.getHeader("referer"));%>
 var referrer = document.referrer;
 function loginSuccess(){
-			location.href = document.referrer;
+			//location.href = document.referrer;
+			$("#form").submit();
 		}
 		$(document).ready(function loginCheck(){
 			$("#loginBtn").on("click", function(){

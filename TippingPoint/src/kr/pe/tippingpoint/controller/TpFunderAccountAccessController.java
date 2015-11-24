@@ -2,7 +2,9 @@
 package kr.pe.tippingpoint.controller;
 
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,14 +70,14 @@ public class TpFunderAccountAccessController {
 		ModelAndView mav = new ModelAndView();
 		String  backpage = String.valueOf(session.getAttribute("backpage"));
 		System.out.println(backpage);
-		mav.setViewName(backpage);
+		mav.setViewName("redirect:"+backpage);
 		return mav;
 	}
 	/**
 	 *누가봐도 로그아웃 
 	 */
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
 		session.invalidate(); // 세션 삭제
 		return "/main.tp";
 	}
