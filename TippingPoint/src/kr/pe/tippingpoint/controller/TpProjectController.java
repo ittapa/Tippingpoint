@@ -288,7 +288,6 @@ public class TpProjectController {
 	// 프로젝트 전체보기(o)것만
 	@RequestMapping("/tpProjectBoard")
 	public ModelAndView tpProjectBoard(HttpServletRequest request) throws Exception{
-		System.out.println("메롱");
 		int pageNo = 1;
 		try {
 			pageNo = Integer.parseInt(request.getParameter("pageNo"));
@@ -297,7 +296,6 @@ public class TpProjectController {
 		}
 
 		Map map = service.allListTpProject(pageNo);
-		System.out.println("메롱2");
 		
 		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 	}

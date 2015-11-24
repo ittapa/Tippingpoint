@@ -153,14 +153,10 @@ public class TpFunderAccountAccessController {
 	@RequestMapping("funderModifyRegister")
 	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model, HttpSession session,
 			HttpServletRequest request) throws Exception {
-		System.out.println("와써");
 		String tpfId = (String) session.getAttribute("userLoginInfo");
-		System.out.println(tpfId);
 
 		TpFunder funder = service.findTpFunderById(tpfId);
-		System.out.println(funder.toString());
 
-		System.out.println("와써??");
 		String p1 = request.getParameter("tpfPhoneNum1");
 		String p2 = request.getParameter("tpfPhoneNum2");
 		String p3 = request.getParameter("tpfPhoneNum3");
@@ -174,8 +170,6 @@ public class TpFunderAccountAccessController {
 		funder.setTpfZipcode(request.getParameter("tpfZipcode"));
 		funder.setTpfAddress(request.getParameter("tpfAddress"));
 		funder.setTpfAddressD(request.getParameter("tpfAddressD"));
-
-		System.out.println(funder.toString());
 
 		service.updateTpFunder(funder);
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));

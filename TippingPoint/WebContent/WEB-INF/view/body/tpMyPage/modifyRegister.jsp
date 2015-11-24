@@ -125,7 +125,7 @@ $(document).ready(function() {
             <option value="011">011</option>
          </select>
          -
-         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4">
+         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" placeholder="${requestScope.tpFunder.tpfPhoneNum }">
          <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4">
          
          <input type="hidden" name="tpfPhoneNum"/>
