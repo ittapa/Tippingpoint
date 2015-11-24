@@ -58,6 +58,11 @@
 				설명문 : ${requestScope.polist.tppProjectContent }
 			</div>
 			<br/>
+			
+			<div>
+				프로젝트 대기상태 : ${requestScope.polist.tppState }
+			</div>
+			<br/>
 
    <form name = "confirm" action="/TippingPoint/tpAdminProjectStateConvert.tp" method="post">
       <input type = "hidden" name ="tppId" value = '${requestScope.polist.tppId }'>
