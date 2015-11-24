@@ -51,7 +51,7 @@
 	</insert>
 
 		
-	<!-- 전체고객조회 paging처리 select문 -->
+	<!-- 전체프로젝트 조회 paging처리 select문 -->
 	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
 	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
@@ -68,6 +68,48 @@
 	 		)
 	 	where page = #{pageNo}
 	 </select>
+	 
+	 <!-- 전체프로젝트 조회'o'인거 찾기 paging처리 select문 -->
+	 <select id="selectOTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 			from(
+	 				<include refid="selectAllProjectDB"/>
+	 				
+				 	where tppState like 'o'
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+	 
+	 <!-- 전체프로젝트 조회'a'인거 찾기 paging처리 select문 -->
+	  <select id="selectATpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 			from(
+	 				<include refid="selectAllProjectDB"/>
+	 				
+				 	where tppState like 'a'
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+	 
+	 
+	 
+	 
 	 
 	 <!-- 총 프로젝트수 조회 paging 처리 할때 -->
 	<select id="selectCountProject" resultType="int">

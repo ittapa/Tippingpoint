@@ -50,7 +50,7 @@ public class TpProjectController {
 	
 	// 프로젝트등록 컨트롤러
 		@RequestMapping("/submitTpProject")
-		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, HttpServletRequest request, ModelMap map)
+		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, HttpServletRequest request, ModelMap map,HttpSession session)
 				throws IOException {
 			System.out.println("저장 및 승인요청");
 			
@@ -59,8 +59,8 @@ public class TpProjectController {
 			
 			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 jsp단에서 받아서 들어감깔꺼ㅏㄹ
 			
-			
-			tpvo.setTppWriter("작성자ID"); //session ID추출해서넣기
+			String userId = (String) session.getAttribute("userLoginInfo");
+			tpvo.setTppWriter(userId); //session ID추출해서넣기
 			
 			//작성일자
 			Date date = new Date();
@@ -285,7 +285,7 @@ public class TpProjectController {
 		}
 	}
 
-	// 프로젝트 전체보기
+	// 프로젝트 전체보기(o)것만
 	@RequestMapping("/tpProjectBoard")
 	public ModelAndView tpProjectBoard(HttpServletRequest request) throws Exception{
 		System.out.println("메롱");
@@ -339,7 +339,7 @@ public class TpProjectController {
 	
 	
 	
-	
+	//작성자 아이디로 프로젝트 검색
 	@RequestMapping("/searchByWriterProject")
 	public ModelAndView searchByWriterProject(HttpSession session , HttpServletRequest request){
 		int pageNo = 1;
