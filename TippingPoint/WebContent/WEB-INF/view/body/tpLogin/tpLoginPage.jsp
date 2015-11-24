@@ -13,9 +13,9 @@ table.login {
 </style>
 
 <script type="text/javascript">
-history.go(1);
 <%session.setAttribute("backpage", request.getHeader("referer"));%>
 var referrer = document.referrer;
+history.go(1)
 function loginSuccess(){
 			//location.href = document.referrer;
 			$("#form").submit();
