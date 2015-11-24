@@ -170,7 +170,7 @@ public class TpFunderAccountAccessController {
 		funder.setTpfPassword(request.getParameter("tpfPassword"));
 
 		funder.setTpfEmail(request.getParameter("tpfEmail"));
-		funder.setTpfPhoneNum(p1 + p2 + p3);
+		funder.setTpfPhoneNum(p1+ "-" + p2+ "-" + p3);
 		funder.setTpfZipcode(request.getParameter("tpfZipcode"));
 		funder.setTpfAddress(request.getParameter("tpfAddress"));
 		funder.setTpfAddressD(request.getParameter("tpfAddressD"));
