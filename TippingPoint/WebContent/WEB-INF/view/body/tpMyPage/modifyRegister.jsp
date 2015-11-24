@@ -85,7 +85,7 @@ $(document).ready(function() {
 
 <h2>회원정보수정</h2>
 <spring:hasBindErrors name="tpFunder"/>
-<form action="${initParam.rootPath }/tpMyPage/modifyRegister.tp" method="post" name="tpFunder">
+<form action="${initParam.rootPath }/funderModifyRegister.tp" method="post" name="tpFunder">
 <table border="1" style="width:700px">
    <tr>
       <td>이름</td>

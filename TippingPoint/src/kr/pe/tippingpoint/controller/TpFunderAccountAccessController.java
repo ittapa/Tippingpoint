@@ -82,31 +82,6 @@ public class TpFunderAccountAccessController {
 	
 
 	/**
-	 * 관리자 전체 회원 조회 메소드 
-	 */
-
-/*	@RequestMapping("/findByTpfId")
-	public String findById(@RequestParam String tpfId, ModelMap model) {
-		TpFunder tpFunder = service.findTpFunderById(tpfId);
-		model.addAttribute("tpFunder", tpFunder);
-		return "admin/tpFunder_info.tiles";
-	}*/
-
-
-//	@RequestMapping("/findAllTpFunderList")
-//	public String list(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
-//		int page = 1;
-//		try {
-//			page = Integer.parseInt(pageNo); // null일 경우 예외처리를 통해 page를 1로
-//												// 처리한다..
-//		} catch (NumberFormatException e) {
-//		}
-//		Map attributes = service.getAllTpFundersPaging(page);
-//		model.addAllAttributes(attributes);
-//		return "administrator/admin_funderList.tiles";
-//	}
-
-	/**
 	 * 회원가입
 	 * 
 	 * @param tpfunder
@@ -153,22 +128,7 @@ public class TpFunderAccountAccessController {
 		return String.valueOf(tpfunder != null);
 	}
 	
-
-	/**
-	 * ID로 찾기
-	 * @param tpfId
-	 * @param model
-	 * @return
-	 */
 	
-/*	todo: 
-	@RequestMapping("findByTpfId")
-	public String findById(HttpSession session, ModelMap model) {
-		TpFunder tpFunder = service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo"))));
-		model.addAttribute("tpFunder", tpFunder);
-		return "tpMyPage/modifyRegister.tiles";
-	}
-	*/
 	/**
 	 * 회원수정폼 조회
 	 * @param tpfId
@@ -190,15 +150,37 @@ public class TpFunderAccountAccessController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("modifyRegister")
-	public String modifyRegister(@ModelAttribute TpFunder tpFunder, Errors errors, ModelMap model) throws Exception{
-		new TpFunderValidator().validate(tpFunder, errors);
-		if (errors.hasErrors()) {
-			return "tpMyPage/modifyForm.tiles";
-		}
-		service.updateTpFunder(tpFunder);
-		model.addAttribute("tpFunder", service.findTpFunderById(tpFunder.getTpfId()));
-		return "tpMyPage/modifyRegister.tiles";
+	@RequestMapping("funderModifyRegister")
+	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model, HttpSession session,
+			HttpServletRequest request) throws Exception {
+		System.out.println("와써");
+		String tpfId = (String) session.getAttribute("userLoginInfo");
+		System.out.println(tpfId);
+
+		TpFunder funder = service.findTpFunderById(tpfId);
+		System.out.println(funder.toString());
+
+		System.out.println("와써??");
+		String p1 = request.getParameter("tpfPhoneNum1");
+		String p2 = request.getParameter("tpfPhoneNum2");
+		String p3 = request.getParameter("tpfPhoneNum3");
+
+		funder.setTpfId(tpfId);
+		funder.setTpfName(request.getParameter("tpfName"));
+		funder.setTpfPassword(request.getParameter("tpfPassword"));
+
+		funder.setTpfEmail(request.getParameter("tpfEmail"));
+		funder.setTpfPhoneNum(p1 + p2 + p3);
+		funder.setTpfZipcode(request.getParameter("tpfZipcode"));
+		funder.setTpfAddress(request.getParameter("tpfAddress"));
+		funder.setTpfAddressD(request.getParameter("tpfAddressD"));
+
+		System.out.println(funder.toString());
+
+		service.updateTpFunder(funder);
+		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
+		return "tpMyPage/tpMyPageMain.tiles";
+
 	}
 	
 	//마이페이지 메인
