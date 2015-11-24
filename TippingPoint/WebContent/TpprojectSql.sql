@@ -86,6 +86,26 @@ select tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 			)
 	 		) 
 		where page = 1
+		
+
+	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 		from(
+	 			select ceil(rownum/10) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 			from(
+	 				select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+					tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 	tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+				 	from tpproject 
+				 	where tppState like 'o'
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = 1
+	
 	 	
 	 	
 select count(tppId) from tpproject
@@ -104,6 +124,16 @@ select * from tpproject
 
 	select * from tpproject 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
