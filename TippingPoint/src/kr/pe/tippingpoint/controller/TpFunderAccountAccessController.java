@@ -1,3 +1,4 @@
+
 package kr.pe.tippingpoint.controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +77,32 @@ public class TpFunderAccountAccessController {
 		return "/main.tp";
 	}
 	
+
+	/**
+	 * 관리자 전체 회원 조회 메소드 
+	 */
+
+/*	@RequestMapping("/findByTpfId")
+	public String findById(@RequestParam String tpfId, ModelMap model) {
+		TpFunder tpFunder = service.findTpFunderById(tpfId);
+		model.addAttribute("tpFunder", tpFunder);
+		return "admin/tpFunder_info.tiles";
+	}*/
+
+
+//	@RequestMapping("/findAllTpFunderList")
+//	public String list(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
+//		int page = 1;
+//		try {
+//			page = Integer.parseInt(pageNo); // null일 경우 예외처리를 통해 page를 1로
+//												// 처리한다..
+//		} catch (NumberFormatException e) {
+//		}
+//		Map attributes = service.getAllTpFundersPaging(page);
+//		model.addAllAttributes(attributes);
+//		return "administrator/admin_funderList.tiles";
+//	}
+
 	/**
 	 * 회원가입
 	 * 
@@ -125,12 +152,52 @@ public class TpFunderAccountAccessController {
 	
 
 	/**
-	 * 회원 수정
+	 * ID로 찾기
 	 * @param tpfId
 	 * @param model
 	 * @return
 	 */
 	
+	
+/*	todo: 
+	@RequestMapping("findByTpfId")
+	public String findById(HttpSession session, ModelMap model) {
+		TpFunder tpFunder = service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo"))));
+		model.addAttribute("tpFunder", tpFunder);
+		return "tpMyPage/modifyRegister.tiles";
+	}
+	*/
+	/**
+	 * 회원수정폼 조회
+	 * @param tpfId
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("modifyForm")
+	public String modifyForm(@RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
+		model.addAttribute("tpfunder", service.findTpFunderById(tpfId));		
+		return "tpMyPage/modifyRegister.tiles";
+	}
+	
+	/**
+	 * 회원수정
+	 * @param tpfunder
+	 * @param errors
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("modifyRegister")
+	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model) throws Exception{
+		new TpFunderValidator().validate(tpfunder, errors);
+		if (errors.hasErrors()) {
+			return "tpMyPage/modifyRegister.tiles";
+		}
+		service.updateTpFunder(tpfunder);
+		model.addAttribute("tpfId", tpfunder.getTpfId());
+		return "redirect:/findByTpfId.tp";
+	}
 	
 	//마이페이지 메인
 	@RequestMapping("myPageMain")
@@ -138,6 +205,11 @@ public class TpFunderAccountAccessController {
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
+	
+	
+
+	
+
 	
 	
 	//회원정보 추가 
@@ -148,6 +220,7 @@ public class TpFunderAccountAccessController {
 		System.out.println(writer);
 		int residentRegistrationFirstNum = Integer.parseInt(request.getParameter("residentRegistrationFirstNum"));
 		int residentRegistrationLastNum = Integer.parseInt(request.getParameter("residentRegistrationLastNum"));
+		int corporateRegistrationNumber = Integer.parseInt(request.getParameter("corporateRegistrationNumber"));
 		//값 넣어주기
 		TpProposer tposer = new TpProposer();
 		tposer.setTpfId(writer);//아이디
@@ -156,7 +229,7 @@ public class TpFunderAccountAccessController {
 		tposer.setCertification("F");
 		tposer.setResidentRegistrationFirstNum(residentRegistrationFirstNum);//주민번호 앞자리
 		tposer.setResidentRegistrationLastNum(residentRegistrationLastNum);//주민번호 뒷자리
-		tposer.setCorporateRegistrationNumber(request.getParameter("corporateRegistrationNumber"));//사업자번호
+		tposer.setCorporateRegistrationNumber(corporateRegistrationNumber);//사업자번호
 		System.out.println(tposer.toString());
 		
 		

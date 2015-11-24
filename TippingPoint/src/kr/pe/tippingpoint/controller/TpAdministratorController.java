@@ -1,3 +1,4 @@
+
 package kr.pe.tippingpoint.controller;
 
 import java.util.Map;
@@ -42,7 +43,7 @@ public class TpAdministratorController {
 			return "/tpAdminCheck.jsp";
 		}
 
-		return "tpAdministrator/tpAdminMain.tiles";
+		return "/WEB-INF/view/body/tpAdministrator/tpAdminMain.jsp";
 
 	}
 
@@ -57,9 +58,8 @@ public class TpAdministratorController {
 		}
 
 		Map map = adminservice.adminAllListTpProject(pageNo);
-		System.out.println("메롱2");
 
-		return new ModelAndView("tpAdministrator/tpAdminProjectBoard.tiles", map);
+		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectBoard.jsp", map);
 	}
 
 	// 단일 프로젝트 조회하기
@@ -112,3 +112,4 @@ public class TpAdministratorController {
 	}
 	
 }
+
