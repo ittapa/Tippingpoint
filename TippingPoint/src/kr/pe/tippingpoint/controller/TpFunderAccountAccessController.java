@@ -42,7 +42,7 @@ public class TpFunderAccountAccessController {
 	public String loginProcess(@RequestParam String tpfId, @RequestParam String tpfPw, HttpSession session) {
 		String loginId = tpfId;
 		String loginPwd = tpfPw;
-
+		
 		if (loginId == null || loginId.trim().length() == 0) {// 로그인 Id가 값이없을때
 			return "잘못된 입력입니다";
 		}
@@ -66,7 +66,9 @@ public class TpFunderAccountAccessController {
 	@RequestMapping(value = "loginProcess", method = RequestMethod.POST)
 	public ModelAndView loginProcess(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/page1.tp");
+		String  backpage = String.valueOf(session.getAttribute("backpage"));
+		System.out.println(backpage);
+		mav.setViewName(backpage);
 		return mav;
 	}
 	/**
@@ -205,6 +207,7 @@ public class TpFunderAccountAccessController {
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
+
 	
 	
 	//회원정보 추가 

@@ -11,15 +11,15 @@
 table.login {
  }
 </style>
-
 <script type="text/javascript">
 history.go(1);
+var referrer = document.referrer;
 function loginSuccess(){
-	
-			$("#form").submit();
+			location.href = document.referrer;
 		}
 		$(document).ready(function loginCheck(){
 			$("#loginBtn").on("click", function(){
+				
 				var param = "tpfId" + "=" + $("#id").val() + "&" +"tpfPw" + "="+ $("#pw").val();
 				$.ajax({
 					"url" : "/TippingPoint/loginCheck.tp", //로그인 체크 컨트롤러
