@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="tpProjectMapper">
+
+	<!-- tpProject 모든 값 -->
+	<resultMap type="tpProject" id="tpProject-resultmap">
+		<result property="tppId" column="tppId"/>
+		<result property="tppTitle" column="tppTitle"/>
+		<result property="tppProjectContent" column="tppProjectContent"/>
+		<result property="tppWriter" column="tppWriter"/>
+		<result property="tppWriteDate" column="tppWriteDate"/>
+		<result property="tppTotalAmount" column="tppTotalAmount"/>
+		<result property="tppTargetAmount" column="tppTargetAmount"/>
+		<result property="tppTotalAmount" column="tppTotalAmount"/>
+		<result property="tppFundingStartDate" column="tppFundingStartDate"/>
+		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
+		<result property="tppFunderNum" column="tppFunderNum"/>
+		<result property="tppState" column="tppState"/>
+		<result property="tppAdminMessage" column="tppAdminMessage"/>
+		<result property="tppMainImg" column ="tppMainImg" />
+		<result property= "tppCategroy" column = "tppCategroy"/>
+		
+	</resultMap>
+	
+	<!-- 뭐징뭐징 -->
+	<resultMap type="tpProject" id="tpProject-resultmap2">
+		<result property="tppId" column="tppId"/>
+		<result property="tppTitle" column="tppTitle"/>
+		<result property="tppWriter" column="tppWriter"/>
+		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
+		<result property="tppTargetAmount" column="tppTargetAmount"/>
+	</resultMap>
+	
+	<sql id = "selectAllProjectDB">
+		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+
+				 from tpproject 
+	</sql>
+	
+	
+
+	<!-- 프로젝트 추가 쿼리문 -->
+	<insert id = "insertTpProject" parameterType = "tpProject">
+		insert into tpproject values (#{tppId}, #{tppTitle}, #{tppProjectContent}, #{tppWriter}, 
+												  #{tppWriteDate}, #{tppTotalAmount}, #{tppTargetAmount}, 
+												  #{tppFundingStartDate}, #{tppFundingLastDate}, #{tppFunderNum},
+		 										  #{tppState}, #{tppAdminMessage}, #{tppMainImg}, #{tppCategroy})
+	</insert>
+
+		
+	<!-- 전체고객조회 paging처리 select문 -->
+	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 			from(
+	 				<include refid="selectAllProjectDB"/>
+	 				
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+	 
+	 <!-- 총 프로젝트수 조회 paging 처리 할때 -->
+	<select id="selectCountProject" resultType="int">
+		select count(tppId) from tpproject 
+	</select>
+	
+	
+	
+	<!-- 단일 프로젝트 조회하기 -->
+	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
+	<include refid="selectAllProjectDB"></include>
+		 where tppId = #{value}
+	</select>
+	
+		
+	<!-- 프로젝트 승인/거부-->
+	 	<update id="adminProjectUpdate" parameterType= "tpProject">
+		UPDATE tpproject SET tppId=#{tppId}, tppState=#{tppState},
+							  tppAdminMessage=#{tppAdminMessage}
+		WHERE tppId=#{tppId}
+	</update>
+	
+	<!-- 프로젝트 검색하기 -->
+	<select id="serchProjectByKeyWord" parameterType ="string" resultMap="tpProject-resultmap">
+		<include refid="selectAllProjectDB"></include>
+			WHERE tppId like '%'||#{value}||'%'
+			union
+		<include refid="selectAllProjectDB"></include>
+			WHERE tppTitle like '%'||#{value}||'%'
+			union
+		<include refid="selectAllProjectDB"></include>
+			WHERE tppProjectContent like '%'||#{value}||'%'
+	</select>
+	
+	
+	
+	<!-- 작성자로 프로젝트 검색하기 -->
+	<select id = "selectTpProjectByWriter" parameterType = "string" resultMap ="tpProject-resultmap">
+	<include refid="selectAllProjectDB"></include>
+		 where tppWriter = #{value}
+	</select>
+	
+	
+	
+	 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
