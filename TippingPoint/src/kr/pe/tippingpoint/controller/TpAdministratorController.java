@@ -42,7 +42,7 @@ public class TpAdministratorController {
 			return "/tpAdminCheck.jsp";
 		}
 
-		return "/WEB-INF/view/body/tpAdministrator/tpAdminMain.jsp";
+		return "tpAdministrator/tpAdminMain.tiles";
 
 	}
 
@@ -59,7 +59,7 @@ public class TpAdministratorController {
 		Map map = adminservice.adminAllListTpProject(pageNo);
 		System.out.println("메롱2");
 
-		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectBoard.jsp", map);
+		return new ModelAndView("tpAdministrator/tpAdminProjectBoard.tiles", map);
 	}
 
 	// 단일 프로젝트 조회하기

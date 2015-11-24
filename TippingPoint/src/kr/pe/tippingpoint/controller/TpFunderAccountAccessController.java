@@ -148,7 +148,6 @@ public class TpFunderAccountAccessController {
 		System.out.println(writer);
 		int residentRegistrationFirstNum = Integer.parseInt(request.getParameter("residentRegistrationFirstNum"));
 		int residentRegistrationLastNum = Integer.parseInt(request.getParameter("residentRegistrationLastNum"));
-		int corporateRegistrationNumber = Integer.parseInt(request.getParameter("corporateRegistrationNumber"));
 		//값 넣어주기
 		TpProposer tposer = new TpProposer();
 		tposer.setTpfId(writer);//아이디
@@ -157,7 +156,7 @@ public class TpFunderAccountAccessController {
 		tposer.setCertification("F");
 		tposer.setResidentRegistrationFirstNum(residentRegistrationFirstNum);//주민번호 앞자리
 		tposer.setResidentRegistrationLastNum(residentRegistrationLastNum);//주민번호 뒷자리
-		tposer.setCorporateRegistrationNumber(corporateRegistrationNumber);//사업자번호
+		tposer.setCorporateRegistrationNumber(request.getParameter("corporateRegistrationNumber"));//사업자번호
 		System.out.println(tposer.toString());
 		
 		

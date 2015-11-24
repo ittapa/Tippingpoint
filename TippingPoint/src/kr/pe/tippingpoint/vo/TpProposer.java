@@ -6,14 +6,14 @@ public class TpProposer {
 	private String account;//계좌
 	private String proposerType;//일반개인or법인or개인사업자
 	private String certification;//승인값
-	private int corporateRegistrationNumber;//사업자번호
+	private String corporateRegistrationNumber;//사업자번호
 	private int residentRegistrationFirstNum;//주민번호 앞자리
 	private int residentRegistrationLastNum;//주민번호 뒷자리
 
 	public TpProposer() {}
 
 	public TpProposer(String tpfId, String account, String proposerType, String certification,
-			int corporateRegistrationNumber, int residentRegistrationFirstNum, int residentRegistrationLastNum) {
+			String corporateRegistrationNumber, int residentRegistrationFirstNum, int residentRegistrationLastNum) {
 		super();
 		this.tpfId = tpfId;
 		this.account = account;
@@ -38,7 +38,7 @@ public class TpProposer {
 		int result = 1;
 		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((certification == null) ? 0 : certification.hashCode());
-		result = prime * result + corporateRegistrationNumber;
+		result = prime * result + ((corporateRegistrationNumber == null) ? 0 : corporateRegistrationNumber.hashCode());
 		result = prime * result + ((proposerType == null) ? 0 : proposerType.hashCode());
 		result = prime * result + residentRegistrationFirstNum;
 		result = prime * result + residentRegistrationLastNum;
@@ -65,7 +65,10 @@ public class TpProposer {
 				return false;
 		} else if (!certification.equals(other.certification))
 			return false;
-		if (corporateRegistrationNumber != other.corporateRegistrationNumber)
+		if (corporateRegistrationNumber == null) {
+			if (other.corporateRegistrationNumber != null)
+				return false;
+		} else if (!corporateRegistrationNumber.equals(other.corporateRegistrationNumber))
 			return false;
 		if (proposerType == null) {
 			if (other.proposerType != null)
@@ -116,11 +119,11 @@ public class TpProposer {
 		this.certification = certification;
 	}
 
-	public int getCorporateRegistrationNumber() {
+	public String getCorporateRegistrationNumber() {
 		return corporateRegistrationNumber;
 	}
 
-	public void setCorporateRegistrationNumber(int corporateRegistrationNumber) {
+	public void setCorporateRegistrationNumber(String corporateRegistrationNumber) {
 		this.corporateRegistrationNumber = corporateRegistrationNumber;
 	}
 
@@ -139,6 +142,7 @@ public class TpProposer {
 	public void setResidentRegistrationLastNum(int residentRegistrationLastNum) {
 		this.residentRegistrationLastNum = residentRegistrationLastNum;
 	}
+
 	
 	
 	
