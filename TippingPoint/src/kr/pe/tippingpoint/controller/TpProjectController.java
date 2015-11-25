@@ -330,12 +330,11 @@ public class TpProjectController {
 		
 
 		Map map = service.allListTpProject(pageNo);
-<<<<<<< HEAD
-=======
+
 		List<TpProjectCategory> list = service.tpProjectCategoryList();
 		map.put("categoryList", list);
 		System.out.println("메롱2");
->>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
+
 		
 		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 	}

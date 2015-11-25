@@ -238,11 +238,7 @@ public class TpFunderAccountAccessController {
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 	
-<<<<<<< HEAD
-}
 
-=======
 }
 
 
->>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
