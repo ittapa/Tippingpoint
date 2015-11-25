@@ -19,7 +19,7 @@
 		<result property="tppState" column="tppState"/>
 		<result property="tppAdminMessage" column="tppAdminMessage"/>
 		<result property="tppMainImg" column ="tppMainImg" />
-		<result property= "tppCategroy" column = "tppCategroy"/>
+		<result property= "tppCategory" column = "tppCategory"/>
 		
 	</resultMap>
 	
@@ -35,7 +35,7 @@
 	<sql id = "selectAllProjectDB">
 		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategory
 
 				 from tpproject 
 	</sql>
@@ -47,7 +47,7 @@
 		insert into tpproject values (#{tppId}, #{tppTitle}, #{tppProjectContent}, #{tppWriter}, 
 												  #{tppWriteDate}, #{tppTotalAmount}, #{tppTargetAmount}, 
 												  #{tppFundingStartDate}, #{tppFundingLastDate}, #{tppFunderNum},
-		 										  #{tppState}, #{tppAdminMessage}, #{tppMainImg}, #{tppCategroy})
+		 										  #{tppState}, #{tppAdminMessage}, #{tppMainImg}, #{tppCategory})
 	</insert>
 
 		
@@ -55,11 +55,11 @@
 	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
 	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
 	 		from(
 	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
 	 				
