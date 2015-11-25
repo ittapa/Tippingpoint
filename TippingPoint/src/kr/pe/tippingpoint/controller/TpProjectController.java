@@ -3,6 +3,7 @@ package kr.pe.tippingpoint.controller;
 import java.io.File;
 
 
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -328,14 +329,9 @@ public class TpProjectController {
 		} catch (Exception e) {
 		}
 		
-
 		Map map = service.allListTpProject(pageNo);
-<<<<<<< HEAD
-=======
 		List<TpProjectCategory> list = service.tpProjectCategoryList();
 		map.put("categoryList", list);
-		System.out.println("메롱2");
->>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
 		
 		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 	}
