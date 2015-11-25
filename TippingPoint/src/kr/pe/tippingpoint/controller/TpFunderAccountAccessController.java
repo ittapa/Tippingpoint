@@ -2,7 +2,10 @@
 package kr.pe.tippingpoint.controller;
 
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,13 +74,17 @@ public class TpFunderAccountAccessController {
 		mav.setViewName(backpage);
 		return mav;
 	}
+	
 	/**
 	 *누가봐도 로그아웃 
+	 * @throws IOException 
 	 */
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletResponse response) throws IOException {
+		System.out.println(session.getAttribute("userLoginInfo"));
 		session.invalidate(); // 세션 삭제
-		return "/main.tp";
+		response.sendRedirect("/TippingPoint/main.tp");
+		return null;
 	}
 	
 
@@ -138,7 +145,16 @@ public class TpFunderAccountAccessController {
 	 */
 	@RequestMapping("modifyForm")
 	public String modifyForm(HttpSession session, ModelMap model) throws Exception{
-		model.addAttribute("tpFunder", service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo")))));
+		String userid = (String) session.getAttribute("userLoginInfo");
+		TpFunder funder = service.findTpFunderById(userid);
+				
+		String list = funder.getTpfPhoneNum();
+		String[] str = list.split("\\-");
+		
+		model.addAttribute("tpFunder", funder);
+		model.addAttribute("tpfPhoneNum2",str[1]);
+		model.addAttribute("tpfPhoneNum3",str[2]);
+		System.out.println();
 		return "tpMyPage/modifyRegister.tiles";
 	}
 	
