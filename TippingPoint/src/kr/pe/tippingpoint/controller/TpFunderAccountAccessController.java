@@ -236,6 +236,7 @@ public class TpFunderAccountAccessController {
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 
+
 	/**
 	 * 회원탈퇴완료
 	 * 
@@ -319,3 +320,4 @@ public class TpFunderAccountAccessController {
 		return txt;
 	}
 }
+
