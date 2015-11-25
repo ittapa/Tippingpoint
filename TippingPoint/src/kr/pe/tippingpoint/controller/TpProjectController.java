@@ -90,9 +90,9 @@ public class TpProjectController {
 			
 			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 jsp단에서 받아서 들어감깔꺼ㅏㄹ
 			
-			String userId = (String) session.getAttribute("userLoginInfo");
 			
-			tpvo.setTppWriter(userId); //session ID추출해서넣기
+			
+			tpvo.setTppWriter((String)session.getAttribute("userLoginInfo")); //session ID추출해서넣기
 			
 			//작성일자
 			Date date = new Date();
@@ -406,6 +406,132 @@ public class TpProjectController {
 			return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 		}
 	
-	
+	//프로젝트 수정 메서드
+		@RequestMapping("/tpProjectModifyForm.tp")
+		public ModelAndView tpProjectModifyForm(@RequestParam String tppId){
+			
+			TpProject tpProject = service.findTpProjectById(tppId);
+			
+			return new ModelAndView("tpMyPage/tpProjectModifyForm.tiles", "tpProject", tpProject);
+		}
+		
+		
+		// 프로젝트 수정 및 편집 컨트롤러
+		@RequestMapping("/modifyTpProject")
 
+		public String modifyTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, 
+											HttpServletRequest request, ModelMap map, Errors errors,HttpSession session)
+											throws IOException {
+			
+			//등록관련 validator 처리
+			TpProjectValidator val = new TpProjectValidator();
+	
+			val.validate(tpvo, errors);
+			
+			System.out.println("프로젝트 등록중 총 검증 실패 개수:" +errors.getErrorCount());
+			System.out.println(tpvo.getTppState());
+			if(errors.hasErrors()){//  true = 오류가 있다.
+				if(tpvo.getTppState().equals("b")){
+					
+					map.addAttribute("errorCheck", "submitError");					
+				}else if(tpvo.getTppState().equals("a")){
+					
+					map.addAttribute("errorCheck", "saveError");	
+				}
+				
+				return "/tpProjectModifyForm.tp";
+				
+			}
+	
+			
+			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 jsp단에서 받아서 들어감깔꺼ㅏㄹ
+			
+			
+			//수정이니깐 작성지 할필요 없음
+			//tpvo.setTppWriter((String)session.getAttribute("userLoginInfo")); //session ID추출해서넣기
+			
+			//작성일자
+			Date date = new Date();
+			String day = date.getYear() - 100 + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours();
+			int days = Integer.parseInt(day);
+			
+			//작성일자 vo에 넣기
+			tpvo.setTppWriteDate(days);
+	
+			/////////////////// 정보 입력 끝 이미지 경로 빼고///////////////////////////////////////
+			
+			
+			////////// main image 처리////////////////////
+			
+			// null : upImage name의 요청파라미터가 아야 없는 경우.
+			// isEmpty -true: 사용자가 파일을 전송하지 않은 경우.
+			
+			//패스 및 경로 호출
+			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+			String rootPath = request.getSession().getServletContext().getInitParameter("rootPath");
+			
+			
+			if (upfile != null && !upfile.isEmpty()) { // 업로드된 파일이 있다.
+				// 업로드 된 파일으 ㅣ정보를 조회
+				// 파일을 임시저장경로에서 최종 저장경로로 이동.
+			
+				String mainImgName = upfile.getOriginalFilename(); //이미지 원래 이름
+				long fileSize = upfile.getSize();
+				System.out.println(mainImgName + " - " + fileSize);
+
+				
+		
+				// 이미지이므로 신규 파일로 디렉토리 설정 및 업로드
+				// 파일 기본경로
+				
+				// 파일 기본경로 _ 상세경로
+				String filePath_A = "resources" + File.separator + "project" + File.separator + "mainImage"
+						+ File.separator;
+				// 파일 기본경로 _ 상세경로
+				String filePath = dftFilePath + filePath_A;
+				
+	
+				System.out.println("메인이미지 저장경로"+filePath);
+				File file = new File(filePath);
+				//메인 이미지 저장경로 설정....
+				
+				//있는지 확인하고 만들기
+				if (!file.exists()) {
+					file.mkdirs();
+				}
+				
+				long timeMilis = System.currentTimeMillis(); // 현재 시간
+				
+				String realMainImgName = tpvo.getTppId()+timeMilis+mainImgName;
+				System.out.println("miain이미지 이름 저장되는 이름"+realMainImgName);
+ 
+				//저장설정
+				File upImg = new File(filePath, realMainImgName);
+
+				// 임시경로에서 레알로 저장하기
+				upfile.transferTo(upImg);
+				//메인이미지 경로 저장
+				
+				//vo에 이미지 경로 저장
+				tpvo.setTppMainImg(rootPath+"/"+filePath_A+realMainImgName); //upfile
+			}else{
+				//TODO 
+				//이미지 안넣었을때 디폴트 이미지 수정이라서 필용벗음
+				//tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
+			}
+			
+
+			System.out.println("-----------------------------------------------");
+			System.out.println(tpvo);
+			//비즈니스 로직 처리하기 서비스
+			service.updateTpProject(tpvo);
+			
+			if(tpvo.getTppState()=="b"){ //승인요청 성공페이지
+			return "tpProject/tpProjectRequestSuccess.tiles";
+			}
+			
+			return "tpProject/tpProjectSaveSuccess.tiles";	
+		}
+	
+		
 }

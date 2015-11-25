@@ -19,6 +19,13 @@ public class TpProposerDaoImpl implements TpProposerDao{
 	public void insertInfo(TpProposer tposer) {
 		session.insert("tpProposerMapper.insertTpProposer", tposer);
 	}
+
+	
+	//////////////////////////////////////////////수정중/////////////////////////////////////////////////
+	@Override
+	public void addTpfQualFy(String t) {
+		session.update("tpProposerMapper.updateTpfQualFy", t);	
+	}
 	
 	
 

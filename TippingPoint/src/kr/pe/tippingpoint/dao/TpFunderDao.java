@@ -1,6 +1,7 @@
 package kr.pe.tippingpoint.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.pe.tippingpoint.vo.TpFunder;
 
@@ -23,4 +24,6 @@ public interface TpFunderDao {
 
 	int selectCountTpFunders();//총회원수 조회
 
+	int updateTpFunderQuqlifyTpProposer(Map map);
+	
 }

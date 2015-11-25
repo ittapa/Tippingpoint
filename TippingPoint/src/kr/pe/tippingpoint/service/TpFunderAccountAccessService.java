@@ -60,5 +60,9 @@ public interface TpFunderAccountAccessService {
 	void updateTpFunder(TpFunder newTpFunder) throws Exception;
 	
 	
-	void addProposerInfo(TpProposer tposer) throws Exception;
+	void addProposerInfo(TpProposer tposer, String Writer) throws Exception;
+	
+	
+	//////////////////////////////////////////////수정중/////////////////////////////////////////////////
+	void addTpfQualFytpproposer(String writer) throws Exception;
 }

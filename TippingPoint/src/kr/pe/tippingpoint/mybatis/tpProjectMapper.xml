@@ -214,51 +214,20 @@
 		select count(tppState) from tpproject where tppState like #{check}
 	</select>
 	
+	<update id="updateTpProjectById" parameterType = "tpProject"> 
+		update from tpproject 
+		set (tppTitle = #{tppTitle}, 
+			tppProjectContent= #{tppProjectContent},
+			tppWriteDate =	#{tppWriteDate}, 
+			tppTargetAmount=	#{tppTargetAmount}, 
+			tppFundingStartDate=	#{tppFundingStartDate}, 
+			tppFundingLastDate=	#{tppFundingLastDate},
+		 	tppState=	 #{tppState}, 
+		 	tppMainImg=	 #{tppMainImg}, 
+		 	tppCategory=	 #{tppCategory})
+		 		 
+		 where tppid = #{tppId}
+	</update>
 	
 	 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -70,6 +70,12 @@
 			</div>
 			<br/>
 		
+		
+		
+		<form action = "결제">
+			<input type = "hidden" name = "tppId"  value ="${requestScope.polist.tppId}">
+			<input type = "submit"  value = "Funding">
+		</form>
 
 </body>
 </html>

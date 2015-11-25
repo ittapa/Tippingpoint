@@ -101,6 +101,15 @@ public class TpProjectServiceImpl implements TpProjectService {
 		return map;
 	}
 	
+	//업데이트 프로젝트
+	@Override
+	public void updateTpProject(TpProject tpproject) {
+		
+		dao.updateTpProjectById(tpproject);
+	}
+	
+	
+	
 	
 	
 }

@@ -85,8 +85,8 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	}
 
 	@Override
-	public int updateById(TpProject tpproject) {
-		return 0;
+	public int updateTpProjectById(TpProject tpproject) {
+		return session.delete("tpProjectMapper.updateTpProjectById", tpproject);
 	}
 
 	@Override

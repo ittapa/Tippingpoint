@@ -208,6 +208,7 @@ public class TpFunderAccountAccessController {
 
 	// 회원정보 추가
 	//권한 업글
+	//////////////////////////////////////////////수정중/////////////////////////////////////////////////
 	@RequestMapping("addInfo")
 	public String adddInfo(HttpSession session, HttpServletRequest request) throws Exception {
 		// 세션에서 아이디 불러옴
@@ -231,8 +232,12 @@ public class TpFunderAccountAccessController {
 		tposer.setCorporateRegistrationNumber(corporateRegistrationNumber);// 사업자번호
 		System.out.println(tposer.toString());
 
-		service.addProposerInfo(tposer);
+		service.addProposerInfo(tposer, writer);
 
+		
+		TpFunder tpFunder = service.findTpFunderById(writer);
+		System.out.println(tpFunder.toString());
+		//service.addTpfQualFytpproposer(writer);
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 

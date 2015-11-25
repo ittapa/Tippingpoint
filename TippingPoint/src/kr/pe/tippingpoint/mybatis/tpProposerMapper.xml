@@ -22,6 +22,11 @@
 	</insert>
 
 		
+		<!-- 000000000000000000000수정 중00000000000000000000000  -->
+   <update id="updateTpfQualFy" parameterType="String">
+      UPDATE TPFUNDER SET TPFQUALIFYTPPROPOSER='T' WHERE TPFID=#{writer}
+   </update>
+   
 	
 	 
 </mapper>

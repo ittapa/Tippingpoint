@@ -116,6 +116,12 @@
       WHERE TPFID=#{tpfId}
    </update>
    
+   <update id ="updateTpFunderQuqlifyTpProposer" parameterType = "map">
+   update TPFUNDER 
+   SET TPFQUALIFYTPPROPOSER = #{value}
+   where TPFID = #{tppId}
+   
+   </update>
    
    
 </mapper>

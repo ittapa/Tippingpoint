@@ -83,9 +83,22 @@ public class TpFunderAccountAccessServiceImpl implements TpFunderAccountAccessSe
 		dao.updateTpFunder(newTpFunder);
 	}
 
+
+	
 	@Override
-	public void addProposerInfo(TpProposer tposer) throws Exception{
+	public void addProposerInfo(TpProposer tposer, String writer) throws Exception{
 		pdao.insertInfo(tposer);
+		Map map = new HashMap();
+		map.put("tppId", tposer.getTpfId());
+		map.put("value", "T");
+		dao.updateTpFunderQuqlifyTpProposer(map);
+	}
+
+	
+	//////////////////////////////////////////////수정중 얘 필요없ㅇ므/////////////////////////////////////////////////
+	@Override
+	public void addTpfQualFytpproposer(String writer) throws Exception {
+		//pdao.addTpfQualFy(t);
 	}
 	
 	

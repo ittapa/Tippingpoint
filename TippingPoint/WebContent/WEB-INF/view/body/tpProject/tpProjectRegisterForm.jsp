@@ -174,7 +174,8 @@ $(document).ready(function(){
 		}
 		</script>	
 			
-		<label>프로젝트 ID  : <input type="text" name="tppId" id = "tppId"/ value ='${requestScope.tpProject.tppId }'></label>
+		<label>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }'></label>
+	    한 번 설정한	프로젝트ID는 변경이 불가합니다. 신중하게 정하시기 바랍니다.
 		<input type = "hidden" value = "X" name = "idCheck" id = "idCheck"/>
 		<input type = "button" value = "ID중복 체크" id = "tppIdCheck"/>
 		

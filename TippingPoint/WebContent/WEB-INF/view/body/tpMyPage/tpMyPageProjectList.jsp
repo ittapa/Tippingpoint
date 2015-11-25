@@ -23,12 +23,16 @@
 						<div>${tpProject.tppFundingLastDate }</div>
 						<div>${tpProject.tppTotalAmount }</div>
 						</p>
+							<form action = "${initParam.rootPath }/tpProjectModifyForm.tp">
+									<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
+									<input type="submit" value="수정" />
+							</form>		
+						
 					</div>
 				</c:forEach>
 			<br/>
 			<div>총 등록한 프로젝트 수  : ${fn:length(requestScope.list) }</div>
-					
-		<input type="submit" value="수정" />
+		
 		</c:otherwise>
 	</c:choose>
 	

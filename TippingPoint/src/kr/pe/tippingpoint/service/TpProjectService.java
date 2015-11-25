@@ -8,21 +8,23 @@ import kr.pe.tippingpoint.vo.TpProjectCategory;
 
 public interface TpProjectService {
 
-	public Map allListTpProject(int pageNo);
+	Map allListTpProject(int pageNo);
 	
-	public TpProject findTpProjectById(String tppId);
+	TpProject findTpProjectById(String tppId);
 	
-	public List<TpProject> findToProjectByCategory(String tppCategory);
+	List<TpProject> findToProjectByCategory(String tppCategory);
 	
-	public void registerTpProject(TpProject tpproject);
+	void registerTpProject(TpProject tpproject);
 	
-	public Map<String, Object> serchTpProjectByKeyWord(String keyWord);
+	Map<String, Object> serchTpProjectByKeyWord(String keyWord);
 	
-	public Map findTpProjectByWriter(String writer);
+	Map findTpProjectByWriter(String writer);
 	
-	public List<TpProjectCategory> tpProjectCategoryList();
+	List<TpProjectCategory> tpProjectCategoryList();
 	
 	
 	////////////////////////////첫번째 수정 //////////////////////////
-	public Map selectCategoryProject(int pageNo, String tppCategory);
+	Map selectCategoryProject(int pageNo, String tppCategory);
+	
+	void updateTpProject(TpProject tpproject);
 }

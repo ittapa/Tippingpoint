@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,12 @@ public class TpFunderDaoImpl implements TpFunderDao {
 	@Override
 	public int selectCountTpFunders() {
 		return session.selectOne("tpFunderMapper.selectCountTpFunders");
+	}
+
+	@Override
+	public int updateTpFunderQuqlifyTpProposer(Map map) {
+		
+		return session.update("tpFunderMapper.updateTpFunderQuqlifyTpProposer",map);
 	}
 	
 	
