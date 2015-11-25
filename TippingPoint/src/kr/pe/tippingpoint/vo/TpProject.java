@@ -2,7 +2,7 @@ package kr.pe.tippingpoint.vo;
 
 
 public class TpProject {
-
+ 
 	private String tppId;
 	private String tppTitle;
 	private String tppProjectContent;
@@ -16,15 +16,18 @@ public class TpProject {
 	private String tppState;
 	private String tppAdminMessage;
 	private String tppMainImg; //이미지 경로 
-	private String tppCategroy; //카테고리 지정
+	private String tppCategory; //카테고리 지정
 	
+
+
 	//노아규 생성자
 	public TpProject(){}
 
 	//전체 생성자
+
 	public TpProject(String tppId, String tppTitle, String tppProjectContent, String tppWriter, int tppWriteDate,
 			int tppTotalAmount, int tppTargetAmount, String tppFundingStartDate, String tppFundingLastDate,
-			int tppFunderNum, String tppState, String tppAdminMessage, String tppMainImg) {
+			int tppFunderNum, String tppState, String tppAdminMessage, String tppMainImg, String tppCategory) {
 		super();
 		this.tppId = tppId;
 		this.tppTitle = tppTitle;
@@ -39,12 +42,21 @@ public class TpProject {
 		this.tppState = tppState;
 		this.tppAdminMessage = tppAdminMessage;
 		this.tppMainImg = tppMainImg;
+		this.tppCategory = tppCategory;
+	}
+	
+	public String getTppCategory() {
+		return tppCategory;
 	}
 
+	public void setTppCategory(String tppCategory) {
+		this.tppCategory = tppCategory;
+	}
+	
+	
 	public String getTppId() {
 		return tppId;
 	}
-
 	public void setTppId(String tppId) {
 		this.tppId = tppId;
 	}

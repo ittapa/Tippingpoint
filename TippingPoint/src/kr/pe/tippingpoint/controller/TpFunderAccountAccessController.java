@@ -4,6 +4,9 @@ package kr.pe.tippingpoint.controller;
 
 import java.io.IOException;
 
+
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -74,8 +77,10 @@ public class TpFunderAccountAccessController {
 		mav.setViewName(backpage);
 		return mav;
 	}
+	
 	/**
 	 *누가봐도 로그아웃 
+	 * @throws IOException 
 	 */
 	@RequestMapping("logout")
 	public String logout(HttpSession session, HttpServletResponse response) throws IOException {
@@ -233,5 +238,11 @@ public class TpFunderAccountAccessController {
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 	
+<<<<<<< HEAD
 }
 
+=======
+}
+
+
+>>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git

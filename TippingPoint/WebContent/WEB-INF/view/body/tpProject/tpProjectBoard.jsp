@@ -7,6 +7,26 @@
 			<FONT size="5"><B>프로젝트 둘러보기</B></FONT>
 		</P>
 
+
+<!-- 카테고리 조회 -->		
+<p>
+	카테고리<br>
+	<c:choose>
+		<c:when test="${fn:length(requestScope.categoryList)==0 }">
+					카테고리 정보를 가져오지 못했습니다.
+				</c:when>
+				
+				<c:otherwise>
+					
+					<c:forEach items="${requestScope.categoryList }" var="list">
+							${list.tppCategoryName }<br>
+					</c:forEach>
+				</c:otherwise>
+	</c:choose>
+</p>
+	
+	
+	
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">
 		등록된 글이 없습니다.

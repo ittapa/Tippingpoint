@@ -1,21 +1,5 @@
 drop table tpproject
-drop table tpnotice
 
-select * from TPPROJECT
-
-
--- 공지
-create table tpnotice(
-	tpNoticeNum number(20) primary key,
-	tpNoticeDate varchar2(10),
-	tpNoticeTitle varchar2(200) not null,
-	tpNoticeContents varchar2(2000) not null
-);
-
-
-insert into tpnotice values(1,'20151120', '첫번째 공지', '첫번째 공지사항입니다 ㅎㅎㅎㅎㅎㅎㅎ');
-insert into tpnotice values(2,'20151120', '두번째 공지', '두번째 공지사항입니다 ㅎㅎㅎㅎㅎㅎㅎ');
-insert into tpnotice values(3,'20151120', '세번째 공지', '세번째 공지사항입니다 ㅎㅎㅎㅎㅎㅎㅎ');
 
  	select TpNoticeNum, tpNoticeDate, tpNoticeTitle, tpNoticeContents
 	 		from(
@@ -52,7 +36,7 @@ create table tpproject(
 	tppState varchar2(4) default('a'),
 	tppAdminMessage varchar2(200),
 	tppMainImg varchar2(100),
-	tppCategroy varchar2(20)
+	tppCategory varchar2(20)
 	
 );
 
@@ -61,8 +45,8 @@ create table tpproject(
 select * from TPPROJECT
 select tppProjectContent from TPPROJECT
 
-
-
+insert into tpproject values('id666','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'o', 'message','메인이미지경로','game');
+insert into tpproject values('id777','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'o', 'message','메인이미지경로','game');
 
 insert into tpproject values('id1','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'a', 'message','메인이미지경로','game');
 insert into tpproject values('id2','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'a', 'message','메인이미지경로','game');

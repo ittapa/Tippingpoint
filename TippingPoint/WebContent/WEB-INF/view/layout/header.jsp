@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -8,14 +9,20 @@
 			<nav id="nav">
 				<ul>
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/">Home</a></li>
-<c:if test="${sessionScope.userLoginInfo == null }">
+					
+					
+					<c:if test="${sessionScope.userLoginInfo == null }">
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpfunder/registerForm.tp">SIGN UP</a></li>
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpLogin/tpLoginPage.tp">LOGIN</a></li>
-</c:if>
-<c:if test="${sessionScope.userLoginInfo != null }">
+					</c:if>
+					
+					
+					<c:if test="${sessionScope.userLoginInfo != null }">
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/myPageMain.tp">My Page</a></li>
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/logout.tp">LOGOUT</a></li>
-</c:if>
+					</c:if>
+					
+					
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpProjectRegisterForm.tp">프로젝트 등록하기</a></li>
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpProjectBoard.tp">프로젝트 둘러보기</a></li>
 					<li style="white-space: nowrap;"><a href="${initParam.rootPath}/tpNoticeBoard.tp">NOITCE</a></li>
@@ -30,3 +37,4 @@
 				</ul>
 			</nav>
 	</div>
+

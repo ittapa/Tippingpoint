@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.pe.tippingpoint.vo.TpProject;
+import kr.pe.tippingpoint.vo.TpProjectCategory;
 
 public interface TpProjectService {
 
@@ -18,4 +19,6 @@ public interface TpProjectService {
 	public Map<String, Object> serchTpProjectByKeyWord(String keyWord);
 	
 	public Map findTpProjectByWriter(String writer);
+	
+	public List<TpProjectCategory> tpProjectCategoryList();
 }

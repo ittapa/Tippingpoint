@@ -161,4 +161,5 @@ $(document).ready(function() {
 </table>
 </form>
 </body>
+>>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
 </html>

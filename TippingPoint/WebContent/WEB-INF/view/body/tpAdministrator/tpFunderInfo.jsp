@@ -55,4 +55,7 @@
 			</div>
 			<br/>
 	
+	 <a href="/TippingPoint/findAllTpFunderList.tp">회원 목록 조회 페이지로 이동</a>
+	 <br/>
+	 <a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>
 	
