@@ -75,18 +75,25 @@
    <bean class="org.springframework.context.support.ResourceBundleMessageSource" name="messageSource" p:basename="kr.pe.tippingpoint.exception.error_message"/>
    
    <!-- <인터셉터 설정 -->
-      <!--    <mvc:interceptors>
-            <mvc:interceptor>
-             path : ANT 패턴
+          <mvc:interceptors>
+          	<mvc:interceptor>
+             <!--  path : ANT 패턴
                      * : 글자수 상관없이 모든 글자
                      ? :   1글자
                      **: 경로에 사용. 자신을포함한 모든 하위경로
-                     /**/login/**/* : 경로에 login만 들어가면 된다.
+                     /**/login/**/* : 경로에 login만 들어가면 된다. -->
                      
-               <mvc:mapping path="/**/login/**/*"/>
+               <mvc:mapping path="/tpProjectRegisterForm.tp"/>
                <bean class="kr.pe.tippingpoint.interceptor.LoginCheckInterceptor" />
             </mvc:interceptor>
-         </mvc:interceptors>    -->
+         </mvc:interceptors>
+         <!-- 로그인페이지 체크 인터셉터 -->
+          <mvc:interceptors>
+            <mvc:interceptor>
+               <mvc:mapping path="/tpLogin/tpLoginPage.tp"/>
+               <bean class="kr.pe.tippingpoint.interceptor.LoginPageInterceptor" />
+            </mvc:interceptor>
+         </mvc:interceptors>    
 
    <!-- 프로젝트 관련 view 설정  -->
    <!-- View Resolver 관련 설정 -->

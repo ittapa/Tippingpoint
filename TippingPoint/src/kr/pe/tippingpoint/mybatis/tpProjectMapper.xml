@@ -97,6 +97,7 @@
 	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
 				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
 	 				

@@ -1,6 +1,5 @@
 package kr.pe.tippingpoint.controller;
 
-
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -233,6 +232,5 @@ public class TpFunderAccountAccessController {
 			
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
-
 }
 

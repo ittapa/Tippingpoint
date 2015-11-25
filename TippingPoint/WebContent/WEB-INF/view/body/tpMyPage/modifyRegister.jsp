@@ -162,4 +162,5 @@ $(document).ready(function() {
 </form>
 </body>
 >>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
+>>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
 </html>
