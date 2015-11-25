@@ -1,9 +1,13 @@
-
-
 package kr.pe.tippingpoint.controller;
 
 
 import javax.servlet.http.HttpServletRequest;
+
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,13 +76,17 @@ public class TpFunderAccountAccessController {
 		mav.setViewName(backpage);
 		return mav;
 	}
+	
 	/**
 	 *누가봐도 로그아웃 
+	 * @throws IOException 
 	 */
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletResponse response) throws IOException {
+		System.out.println(session.getAttribute("userLoginInfo"));
 		session.invalidate(); // 세션 삭제
-		return "/main.tp";
+		response.sendRedirect("/TippingPoint/main.tp");
+		return null;
 	}
 	
 
@@ -139,7 +147,16 @@ public class TpFunderAccountAccessController {
 	 */
 	@RequestMapping("modifyForm")
 	public String modifyForm(HttpSession session, ModelMap model) throws Exception{
-		model.addAttribute("tpFunder", service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo")))));
+		String userid = (String) session.getAttribute("userLoginInfo");
+		TpFunder funder = service.findTpFunderById(userid);
+				
+		String list = funder.getTpfPhoneNum();
+		String[] str = list.split("\\-");
+		
+		model.addAttribute("tpFunder", funder);
+		model.addAttribute("tpfPhoneNum2",str[1]);
+		model.addAttribute("tpfPhoneNum3",str[2]);
+		System.out.println();
 		return "tpMyPage/modifyRegister.tiles";
 	}
 	
@@ -219,55 +236,7 @@ public class TpFunderAccountAccessController {
 			
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
-
-	/**
-	 * 회원탈퇴완료
-	 * 
-	 * @param session
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("removeFunder")
-	public String dropOutFunder(HttpSession session) throws Exception {
-		System.out.println(session.getAttribute("userLoginInfo"));
-		String dropOutId = String.valueOf(session.getAttribute("userLoginInfo"));
-		service.removeTpFunder(dropOutId);
-		session.invalidate(); // 세션 삭제
-		return "/main.tp";
-	}
-
-	/**
-	 * 회원 탈퇴하기전 ID 및 비밀번호 체크
-	 * 
-	 * @param dropOutId
-	 * @param dropOutPwd
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "dropOutFunder", method = RequestMethod.POST)
-	@ResponseBody
-	public String dropIdCheck(@RequestParam String dropOutId, @RequestParam String dropOutPwd, HttpSession session) {
-		String txt = null;
-
-		String Id = dropOutId;
-		String Pwd = dropOutPwd;
-
-		if (Id == null || Id.trim().length() == 0) {// 로그인 Id가 값이없을때
-			txt = "잘못된 입력입니다";
-		}
-		try {// 로그인 ID가 DB에 존재 유무 확인
-			String TpFunderId = (service.findTpFunderById(Id)).getTpfId();
-			String TpFunderPwd = (service.findTpFunderById(Id)).getTpfPassword();
-			if (Id.equals(TpFunderId) && Pwd.equals(TpFunderPwd)) { // 로그인 및 ID
-																	// 비밀번호확인
-				txt = "success";// 입력한 ID와 비밀번호가 맞았음
-			} else {// 비밀번호가 틀렸을경우
-				txt = "비밀번호가 틀렸습니다";
-			}
-		} catch (NullPointerException e) {
-			txt = "ID를 잘못 입력하셨습니다";
-		}
-		return txt;
-	}
+	
 
 }
+

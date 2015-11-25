@@ -52,93 +52,6 @@
             }
         }).open();
     }
-    $(document).ready(function dropOut(){
-    	$("#dropOutBtn").on("click", function(){
-    		 $("#dropOutBtn").hide();
-    		 $.btnDropId = $(document.createElement("input"));
-             $.btnDropId.attr({
-                 name : "dropOutId",
-                 type : "text" ,
-                 id : "dropId"
-             });
-             $.btnDropPwd = $(document.createElement("input"));
-             $.btnDropPwd.attr({
-                 name : "dropOutPwd",
-                 type : "text" ,
-                 id : "dropPw"
-             });
-             $.btnDelete = $(document.createElement("input"));
-             $.btnDelete.attr({
-                 classname : "btnDelete",
-                 type : "button" ,
-                 value : "회원탈퇴하기",
-                 
-             }).on('click', function(){
-            	var param = "dropOutId" + "=" + $("#dropId").val() + "&" +"dropOutPwd" + "="+ $("#dropPw").val();
-         		$.ajax({
-        			"url" : "/TippingPoint/dropOutFunder.tp", //로그인 체크 컨트롤러
-        			"type" : "POST",
-        			"data" : param,// ID 및 password
-        			"dataType" : "text",//응답 데이터 타입 text,json,jsonp,xml
-        			"beforeSend":function(){// 아이디 공백체크
-        				if(!$("#dropId").val()){
-        					alert("ID를 입력해 주세요");
-        					$("#dropId").focus();
-        					return false;
-        				}
-        				if(!$("#dropPw").val()){// 비밀번호 공백체크
-        					alert("비밀번호를 입력해 주세요");
-        					$("#dropPw").focus();
-        					return false;
-        				}
-        			},	
-        			"success" : function(txt){
-        				if(txt=="success"){
-        					if (confirm("회원 탈퇴틑 하시면  데이터를 복구 할수 없습니다. 탈퇴 하시겠습니까??") == true){//확인
-        						$("#form").submit();
-        					}else{//취소
-        					 	return;
-        					}
-        				}else{
-        					alert(txt);
-        					return false;
-        				}
-        			}		
-        		});
-        	});
-             $("#delete").append("회원탈퇴를 원하시면 ID와 비밀번호를 다시 한번 입력해주세요<br>");
-             $("#delete").append("ID : ");
-             $("#delete").append($.btnDropId);
-             $("#delete").append("<br>비밀번호 : ");
-             $("#delete").append($.btnDropPwd);
-             $("#delete").append("<br>");
-             $("#delete").append($.btnDelete);
-    	});
-    });
-</script>
-
-<script>
-function checkPwd(){ //비밀번호 확인
-	var tpfPassword = document.tpFunder.tpfPassword.value; //비밀번호입력
-	var passwordConfirm = document.tpFunder.passwordConfirm.value; //비밀번호확인
-	if(tpfPassword!=passwordConfirm){
-		document.getElementById('checkPwd').innerHTML = "동일한 암호를 입력하세요.";
-	}else{
-		document.getElementById('checkPwd').innerHTML = "확인되었습니다.";
-	}
-}
-</script>
-
-<script>
-function checkPwd(){ //비밀번호 확인
-	var tpfPassword = document.tpFunder.tpfPassword.value; //비밀번호입력
-	var passwordConfirm = document.tpFunder.passwordConfirm.value; //비밀번호확인
-	if(tpfPassword!=passwordConfirm){
-		document.getElementById('checkPwd').innerHTML = "동일한 암호를 입력하세요.";
-	}else{
-		document.getElementById('checkPwd').innerHTML = "확인되었습니다.";
-	}
-}
 </script>
 
 <script>
@@ -212,8 +125,8 @@ $(document).ready(function() {
             <option value="011">011</option>
          </select>
          -
-         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4">
-         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4">
+         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" value="${requestScope.tpfPhoneNum2 }">
+         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" value="${requestScope.tpfPhoneNum3 }">
          
          <input type="hidden" name="tpfPhoneNum"/>
       </td>
@@ -247,11 +160,7 @@ $(document).ready(function() {
    </tr>
 </table>
 </form>
-<br>
-<form id="form" action="${initParam.rootPath }/removeFunder.tp" method="post">
-	<input type="button" value="회원탈퇴" id="dropOutBtn">
-	<div id="delete">
-	</div>
-</form>
 </body>
+>>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
+>>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
 </html>

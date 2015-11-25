@@ -79,3 +79,9 @@
       <input type="submit" value="요청거부">
    </form>
 
+
+<br/>
+<a href="/TippingPoint/tpAdminProjectBoard.tp">등록 신청한 목록 조회 페이지로 이동</a>
+<br/>
+<a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>
+>>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git

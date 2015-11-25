@@ -1,6 +1,8 @@
 package kr.pe.tippingpoint.controller;
 
 import java.io.File;
+
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,35 +34,63 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.pe.tippingpoint.service.TpProjectService;
+import kr.pe.tippingpoint.validator.TpProjectValidator;
 import kr.pe.tippingpoint.vo.Editor;
 import kr.pe.tippingpoint.vo.TpFunder;
 import kr.pe.tippingpoint.vo.TpProject;
+import kr.pe.tippingpoint.vo.TpProjectCategory;
 
 @Controller
 public class TpProjectController {
 
 	@Autowired
 	private TpProjectService service;
+	
 	//프로젝트 등록 폼 컨트롤러
 	@RequestMapping("/tpProjectRegisterForm")
-	public String tpProjectForm(){
+	public String tpProjectForm(ModelMap map){
 		//to.do id 체크, 권한 체크
+		List<TpProjectCategory> list = service.tpProjectCategoryList();
+		map.addAttribute("categoryList", list);
+
 		return "tpProject/tpProjectRegisterForm.tiles";
 	}
 	
 	
+	
+	
 	// 프로젝트등록 컨트롤러
 		@RequestMapping("/submitTpProject")
-		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, HttpServletRequest request, ModelMap map,HttpSession session)
-				throws IOException {
+
+		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, 
+											HttpServletRequest request, ModelMap map, Errors errors, TpProjectValidator val,HttpSession session)
+											throws IOException {
+
 			System.out.println("저장 및 승인요청");
 			
-			System.out.println("라인1"+tpvo);
+			System.out.println(tpvo.getTppFundingStartDate());
+			//등록관련 validator 처리
+			val.validate(tpvo, errors);
+			System.out.println("프로젝트 등록중 총 검증 실패 개수:" +errors.getErrorCount());
 			System.out.println(tpvo.getTppState());
+			if(errors.hasErrors()){//  true = 오류가 있다.
+				if(tpvo.getTppState().equals("b")){
+					System.out.println("bb");
+					map.addAttribute("errorCheck", "submitError");					
+				}else if(tpvo.getTppState().equals("a")){
+					System.out.println("aa");
+					map.addAttribute("errorCheck", "saveError");	
+				}
+				
+				return "/tpProjectRegisterForm.tp";
+				
+			}
+	
 			
 			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 jsp단에서 받아서 들어감깔꺼ㅏㄹ
 			
 			String userId = (String) session.getAttribute("userLoginInfo");
+			
 			tpvo.setTppWriter(userId); //session ID추출해서넣기
 			
 			//작성일자
@@ -149,6 +180,7 @@ public class TpProjectController {
 	// 사진 첨부하기 (html5가 아닐경우)
 	@RequestMapping("/file_uploader.tp")
 	public String file_uploader(HttpServletRequest request, HttpServletResponse response, Editor editor) {
+		System.out.println("file uploader");
 		String return1 = request.getParameter("callback");
 		String return2 = "?callback_func=" + request.getParameter("callback_func");
 		String return3 = "";
@@ -198,6 +230,7 @@ public class TpProjectController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("redirect:" + return1 + return2 + return3);
 		return "redirect:" + return1 + return2 + return3;
 	}
 
@@ -288,16 +321,17 @@ public class TpProjectController {
 	// 프로젝트 전체보기(o)것만
 	@RequestMapping("/tpProjectBoard")
 	public ModelAndView tpProjectBoard(HttpServletRequest request) throws Exception{
-		System.out.println("메롱");
 		int pageNo = 1;
 		try {
 			pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			
 		} catch (Exception e) {
 		}
+		
 
 		Map map = service.allListTpProject(pageNo);
-		System.out.println("메롱2");
+		List<TpProjectCategory> list = service.tpProjectCategoryList();
+		map.put("categoryList", list);
 		
 		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 	}
@@ -335,11 +369,9 @@ public class TpProjectController {
 		return String.valueOf(tpproject != null);
 	}
 	
-	
-	
-	
-	
+
 	//작성자 아이디로 프로젝트 검색
+
 	@RequestMapping("/searchByWriterProject")
 	public ModelAndView searchByWriterProject(HttpSession session , HttpServletRequest request){
 		int pageNo = 1;
@@ -350,6 +382,7 @@ public class TpProjectController {
 		
 		return new ModelAndView("tpMyPage/tpMyPageProjectList.tiles",map);
 	}
+	
 	
 	
 	

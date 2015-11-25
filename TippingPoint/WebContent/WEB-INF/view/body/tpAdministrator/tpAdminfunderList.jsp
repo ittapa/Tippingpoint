@@ -73,3 +73,7 @@
 	</c:when>
 	<c:otherwise>▶</c:otherwise>
 </c:choose>
+
+<br/>
+
+<a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>

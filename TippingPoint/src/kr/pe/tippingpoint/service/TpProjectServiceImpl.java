@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.pe.tippingpoint.dao.TpProjectCategoryDaoImpl;
 import kr.pe.tippingpoint.dao.TpProjectDao;
 import kr.pe.tippingpoint.util.TpProjectBoardPagingBean;
 import kr.pe.tippingpoint.util.TpSerchingProjectPagingBean;
 import kr.pe.tippingpoint.vo.TpProject;
+import kr.pe.tippingpoint.vo.TpProjectCategory;
 
 @Service
 public class TpProjectServiceImpl implements TpProjectService {
@@ -19,7 +21,9 @@ public class TpProjectServiceImpl implements TpProjectService {
 	@Autowired
 	private TpProjectDao dao;
 
+
 	//승인값이 o 인 프로젝트 검색
+
 	@Override
 	public Map allListTpProject(int pageNo) {
 		HashMap map = new HashMap();
@@ -36,6 +40,8 @@ public class TpProjectServiceImpl implements TpProjectService {
 		return dao.selectTpProjectById(tppId);
 	}
 
+	
+	//TODO 카테고리로 조회하기
 	@Override
 	public List<TpProject> findToProjectByCategory(String tppCategory) {
 		return null;
@@ -69,4 +75,17 @@ public class TpProjectServiceImpl implements TpProjectService {
 		return map;
 	}
 
+	
+	//카테고리 DB 호출
+	@Autowired
+	private TpProjectCategoryDaoImpl catedao; 
+	@Override
+	public List<TpProjectCategory> tpProjectCategoryList() {
+		System.out.println(catedao.selectTpProjectCategory());
+		
+		return catedao.selectTpProjectCategory();
+		
+	}
+	
 }
+
