@@ -42,7 +42,7 @@ public class TpFunderAccountAccessController {
 	public String loginProcess(@RequestParam String tpfId, @RequestParam String tpfPw, HttpSession session) {
 		String loginId = tpfId;
 		String loginPwd = tpfPw;
-
+		
 		if (loginId == null || loginId.trim().length() == 0) {// 로그인 Id가 값이없을때
 			return "잘못된 입력입니다";
 		}
@@ -66,7 +66,9 @@ public class TpFunderAccountAccessController {
 	@RequestMapping(value = "loginProcess", method = RequestMethod.POST)
 	public ModelAndView loginProcess(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/page1.tp");
+		String  backpage = String.valueOf(session.getAttribute("backpage"));
+		System.out.println(backpage);
+		mav.setViewName(backpage);
 		return mav;
 	}
 	/**
@@ -78,31 +80,6 @@ public class TpFunderAccountAccessController {
 		return "/main.tp";
 	}
 	
-
-	/**
-	 * 관리자 전체 회원 조회 메소드 
-	 */
-
-/*	@RequestMapping("/findByTpfId")
-	public String findById(@RequestParam String tpfId, ModelMap model) {
-		TpFunder tpFunder = service.findTpFunderById(tpfId);
-		model.addAttribute("tpFunder", tpFunder);
-		return "admin/tpFunder_info.tiles";
-	}*/
-
-
-//	@RequestMapping("/findAllTpFunderList")
-//	public String list(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
-//		int page = 1;
-//		try {
-//			page = Integer.parseInt(pageNo); // null일 경우 예외처리를 통해 page를 1로
-//												// 처리한다..
-//		} catch (NumberFormatException e) {
-//		}
-//		Map attributes = service.getAllTpFundersPaging(page);
-//		model.addAllAttributes(attributes);
-//		return "administrator/admin_funderList.tiles";
-//	}
 
 	/**
 	 * 회원가입
@@ -151,23 +128,7 @@ public class TpFunderAccountAccessController {
 		return String.valueOf(tpfunder != null);
 	}
 	
-
-	/**
-	 * ID로 찾기
-	 * @param tpfId
-	 * @param model
-	 * @return
-	 */
 	
-	
-/*	todo: 
-	@RequestMapping("findByTpfId")
-	public String findById(HttpSession session, ModelMap model) {
-		TpFunder tpFunder = service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo"))));
-		model.addAttribute("tpFunder", tpFunder);
-		return "tpMyPage/modifyRegister.tiles";
-	}
-	*/
 	/**
 	 * 회원수정폼 조회
 	 * @param tpfId
@@ -176,8 +137,8 @@ public class TpFunderAccountAccessController {
 	 * @throws Exception
 	 */
 	@RequestMapping("modifyForm")
-	public String modifyForm(@RequestParam(defaultValue="") String tpfId, ModelMap model) throws Exception{
-		model.addAttribute("tpfunder", service.findTpFunderById(tpfId));		
+	public String modifyForm(HttpSession session, ModelMap model) throws Exception{
+		model.addAttribute("tpFunder", service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo")))));
 		return "tpMyPage/modifyRegister.tiles";
 	}
 	
@@ -189,15 +150,37 @@ public class TpFunderAccountAccessController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("modifyRegister")
-	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model) throws Exception{
-		new TpFunderValidator().validate(tpfunder, errors);
-		if (errors.hasErrors()) {
-			return "tpMyPage/modifyRegister.tiles";
-		}
-		service.updateTpFunder(tpfunder);
-		model.addAttribute("tpfId", tpfunder.getTpfId());
-		return "redirect:/findByTpfId.tp";
+	@RequestMapping("funderModifyRegister")
+	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model, HttpSession session,
+			HttpServletRequest request) throws Exception {
+		System.out.println("와써");
+		String tpfId = (String) session.getAttribute("userLoginInfo");
+		System.out.println(tpfId);
+
+		TpFunder funder = service.findTpFunderById(tpfId);
+		System.out.println(funder.toString());
+
+		System.out.println("와써??");
+		String p1 = request.getParameter("tpfPhoneNum1");
+		String p2 = request.getParameter("tpfPhoneNum2");
+		String p3 = request.getParameter("tpfPhoneNum3");
+
+		funder.setTpfId(tpfId);
+		funder.setTpfName(request.getParameter("tpfName"));
+		funder.setTpfPassword(request.getParameter("tpfPassword"));
+
+		funder.setTpfEmail(request.getParameter("tpfEmail"));
+		funder.setTpfPhoneNum(p1+ "-" + p2+ "-" + p3);
+		funder.setTpfZipcode(request.getParameter("tpfZipcode"));
+		funder.setTpfAddress(request.getParameter("tpfAddress"));
+		funder.setTpfAddressD(request.getParameter("tpfAddressD"));
+
+		System.out.println(funder.toString());
+
+		service.updateTpFunder(funder);
+		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
+		return "tpMyPage/tpMyPageMain.tiles";
+
 	}
 	
 	//마이페이지 메인
@@ -206,10 +189,6 @@ public class TpFunderAccountAccessController {
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
-	
-	
-
-	
 
 	
 	

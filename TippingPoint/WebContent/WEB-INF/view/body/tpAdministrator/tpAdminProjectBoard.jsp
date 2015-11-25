@@ -19,17 +19,13 @@
 		등록된 글이 없습니다.
 		</c:when>
 		<c:otherwise>
-			
-		
 				<c:forEach items="${requestScope.list }" var="tpProject">
 					<div>
-						<p>
 						<div><img src="${tpProject.tppMainImg }" ></div>
 						<div>${tpProject.tppWriter }</div>
 						<div><a href="${initParam.rootPath }/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
 						<div>${tpProject.tppFundingLastDate }</div>
 						<div>${tpProject.tppTotalAmount }</div>
-						</p>
 					</div>
 				</c:forEach>
 			<br/>
@@ -77,8 +73,10 @@
 	 	</c:otherwise>
 	 </c:choose>
 	 
-		
 
+
+<br/>
+<a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>
 
 </body>
 </html>

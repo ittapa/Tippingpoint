@@ -19,11 +19,7 @@
 			<c:forEach items="${requestScope.list }" var="tpFunder">
 			<tr>
 				<td>${tpFunder.tpfId }</td>
-				<td>
-<a href="${initParam.rootPath}/findByTpfId.tp?tpfId=${tpFunder.tpfId}&pageNo=${requestScope.tpFunderPagingBean.currentPage}">
-						${tpFunder.tpfName}
-					</a>
-				</td>
+				<td><a href="${initParam.rootPath}/findByTpfId.tp?tpfId=${tpFunder.tpfId}">${tpFunder.tpfName}</a></td>
 				<td>${tpFunder.tpfEmail}</td>
 				<td>${tpFunder.tpfQualifyTpProposer}</td>
 			<tr>
@@ -39,7 +35,7 @@
  -->
  <c:choose>
  	<c:when test="${requestScope.pagingBean.previousPageGroup }">
- 		<a href="${initParam.rootPath }/list.tp?pageNo=${requestScope.TpFunderPagingBean.startPageOfPageGroup-1}">
+ 		<a href="${initParam.rootPath }/list.tp?pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">
  			◀
  		</a>
  	</c:when>
@@ -51,10 +47,10 @@
 <!-- Page Group 내의 page들 링크 처리
 	- PageGroup의 시작/끝페이지 번호 - 반복문 처리
  -->
-<c:forEach begin="${requestScope.TpFunderPagingBean.startPageOfPageGroup }" 
-		   end="${requestScope.TpFunderPagingBean.endPageOfPageGroup }" var="page">
+<c:forEach begin="${requestScope.pagingBean.startPageOfPageGroup }" 
+		   end="${requestScope.pagingBean.endPageOfPageGroup }" var="page">
 	<c:choose>
-		<c:when test="${page == requestScope.TpFunderPagingBean.currentPage }">
+		<c:when test="${page == requestScope.pagingBean.currentPage }">
 			[${page}]
 		</c:when>
 		<c:otherwise>
@@ -70,10 +66,13 @@
  -->
 
 <c:choose>
-	<c:when test="${requestScope.TpFunderPagingBean.nextPageGroup }">
-		<a href="${initParam.rootPath }/list.tp?pageNo=${requestScope.TpFunderPagingBean.endPageOfPageGroup+1}">
+	<c:when test="${requestScope.pagingBean.nextPageGroup }">
+		<a href="${initParam.rootPath }/list.tp?pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">
 			▶
 		</a>
 	</c:when>
 	<c:otherwise>▶</c:otherwise>
 </c:choose>
+
+<br/>
+<a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>

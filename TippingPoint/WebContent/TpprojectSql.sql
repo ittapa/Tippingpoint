@@ -45,14 +45,15 @@ create table tpproject(
 select * from TPPROJECT
 select tppProjectContent from TPPROJECT
 
-
-
+insert into tpproject values('id666','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'o', 'message','메인이미지경로','game');
+insert into tpproject values('id777','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'o', 'message','메인이미지경로','game');
 
 insert into tpproject values('id1','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'a', 'message','메인이미지경로','game');
 insert into tpproject values('id2','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'a', 'message','메인이미지경로','game');
 insert into tpproject values('id3','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 insert into tpproject values('id4','title','2','내용', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 insert into tpproject values('아이디','제목','이게내용이지','1', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
+insert into tpproject values('아이디2','제목2','이게내용이지2','2', 20121212, 10000, 999999, '20121212', '20121212', 1, 'b', 'message','메인이미지경로','game');
 
 UPDATE tpproject SET tppId='id1', tppState='x',
 							  tppAdminMessage='안되이시키야'
@@ -69,6 +70,26 @@ select tppTitle, tppWriter, tppFundingLastDate, tppTotalAmount
 	 			)
 	 		) 
 		where page = 1
+		
+
+	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 		from(
+	 			select ceil(rownum/10) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
+	 			from(
+	 				select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+					tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 	tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategroy
+				 	from tpproject 
+				 	where tppState like 'o'
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = 1
+	
 	 	
 	 	
 select count(tppId) from tpproject
@@ -87,6 +108,16 @@ select * from tpproject
 
 	select * from tpproject 
 
+	
+	
+	
+	select count(tppState) from tpproject where tppState like 'o'
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -16,6 +16,8 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	@Autowired
 	private SqlSessionTemplate session;
 
+	
+	//프로젝트 전체보기
 	@Override
 	public List<TpProject> selectAllTpProject(int pageNo) {
 		HashMap<String, Integer> parameter = new HashMap<String, Integer>();
@@ -23,18 +25,47 @@ public class TpProjectDaoImpl implements TpProjectDao{
 		parameter.put("pageNo", pageNo);
 		return session.selectList("tpProjectMapper.selectTpProjectPaging", parameter);
 	}
+	
+	
+	//프로젝트 전체보기 ('o')인것만
+	@Override
+	public List<TpProject> selectOTpProject(int pageNo) {
+		HashMap<String, Integer> parameter = new HashMap<String, Integer>();
+		parameter.put("contentPerPage", TpProjectBoardPagingBean.CONTENT_PER_PAGE);
+		parameter.put("pageNo", pageNo);
+		return session.selectList("tpProjectMapper.selectOTpProjectPaging", parameter);
+	}
+
+	//프로젝트 전체보기 ('A')인것만
+	@Override
+	public List<TpProject> selectATpProject(int pageNo) {
+		HashMap<String, Integer> parameter = new HashMap<String, Integer>();
+		parameter.put("contentPerPage", TpProjectBoardPagingBean.CONTENT_PER_PAGE);
+		parameter.put("pageNo", pageNo);
+		return session.selectList("tpProjectMapper.selectATpProjectPaging", parameter);
+	}
 
 	@Override
 	public int selectCountProject() {
 		return session.selectOne("tpProjectMapper.selectCountProject");
 	}
+	
+	@Override
+	public int selectOCountProject() {
+		return session.selectOne("tpProjectMapper.selectOCountProject");
+	}
+
+	@Override
+	public int selectACountProject() {
+		return session.selectOne("tpProjectMapper.selectACountProject");
+	}
+
 
 	@Override
 	public TpProject selectTpProjectById(String tppId) {
 		return session.selectOne("tpProjectMapper.selectTpProjectById", tppId);
 	}
 
-	
 	//todo : 카테고리 검색 햐야함
 	@Override
 	public List<TpProject> selectByCategory(String tppCategory) {

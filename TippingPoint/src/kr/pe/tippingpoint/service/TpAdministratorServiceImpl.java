@@ -29,9 +29,8 @@ public class TpAdministratorServiceImpl implements TpAdministratorService {
 	return map;
 	}
 
-	@Override
 	//조회
-	
+	@Override
 	public TpProject adminFindTpProjectById(String tppId) {
 		return dao.selectTpProjectById(tppId);
 	}

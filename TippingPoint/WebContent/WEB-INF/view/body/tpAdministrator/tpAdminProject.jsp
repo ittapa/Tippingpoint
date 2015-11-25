@@ -58,6 +58,11 @@
 				설명문 : ${requestScope.polist.tppProjectContent }
 			</div>
 			<br/>
+			
+			<div>
+				프로젝트 대기상태 : ${requestScope.polist.tppState }
+			</div>
+			<br/>
 
    <form name = "confirm" action="/TippingPoint/tpAdminProjectStateConvert.tp" method="post">
       <input type = "hidden" name ="tppId" value = '${requestScope.polist.tppId }'>
@@ -74,3 +79,8 @@
       <input type="submit" value="요청거부">
    </form>
 
+
+<br/>
+<a href="/TippingPoint/tpAdminProjectBoard.tp">등록 신청한 목록 조회 페이지로 이동</a>
+<br/>
+<a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>

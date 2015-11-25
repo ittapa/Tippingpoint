@@ -1,10 +1,10 @@
-
 package kr.pe.tippingpoint.controller;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,30 +26,43 @@ public class TpAdministratorController {
 
 	@Autowired
 	private TpFunderAccountAccessService service;
+	
+	private String id = "id";
+	private String pw = "pw";
 
 	// 관리자 로그인..
 	@RequestMapping("/tpAdminLogin")
-	public String tpAdminLogin(HttpServletRequest request, HttpServletResponse response) {
-		String id = "id";
-		String pw = "pw";
-		String adminId = request.getParameter("adminId");
-		String adminPw = request.getParameter("adminPw");
+	public String tpAdminLogin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		String adId = request.getParameter("adminId");
+		String adPd = request.getParameter("adminPw");
 
-		if (!id.equals(adminId)) {
-			return "/tpAdminCheck.jsp";
+		if (!id.equals(adId)) {
+			return "tpAdministrator/tpAdminAccess.tiles";
 		}
 
-		if (!pw.equals(adminPw)) {
-			return "/tpAdminCheck.jsp";
+		if (!pw.equals(adPd)) {
+			return "tpAdministrator/tpAdminAccess.tiles";
 		}
 
-		return "/WEB-INF/view/body/tpAdministrator/tpAdminMain.jsp";
+		session.setAttribute("adminId", id);
+		String adid = (String) session.getAttribute("adminId");
+		System.out.println(adid);
+		
+		
+		return "tpAdministrator/tpAdminMain.tiles";
 
 	}
 
 	// 프로젝트 전체보기
 	@RequestMapping("/tpAdminProjectBoard")
-	public ModelAndView tpAdminProjectBoard(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String tpAdminProjectBoard(HttpServletRequest request, HttpServletResponse response, 
+			ModelMap model, HttpSession session) throws Exception {
+		String adId = (String) session.getAttribute("adminId");
+				
+		if (!id.equals(adId)) {
+			return "tpAdministrator/tpAdminAccess.tiles";
+		}
+		
 		int pageNo = 1;
 		try {
 			pageNo = Integer.parseInt(request.getParameter("pageNo"));
@@ -58,54 +71,85 @@ public class TpAdministratorController {
 		}
 
 		Map map = adminservice.adminAllListTpProject(pageNo);
-
-		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProjectBoard.jsp", map);
+		model.addAllAttributes(map);
+		
+		return "tpAdministrator/tpAdminProjectBoard.tiles";
 	}
 
-	// 단일 프로젝트 조회하기
+	// 프로젝트 상세보기 (단일프로젝트조회)
 	@RequestMapping("/tpAdminFindTpProject")
-	public ModelAndView tpAdminFindTpProject(HttpServletRequest request) {
-
+	public String tpAdminFindTpProject(HttpServletRequest request, HttpSession session, ModelMap model) {
+		String adId = (String) session.getAttribute("adminId");
+		
+		if (!id.equals(adId)) {
+			return "tpAdministrator/tpAdminAccess.tiles";
+		}
+		
 		// 1.요청파라미터 조회
 		String tppId = request.getParameter("tppId");
 		TpProject polist = adminservice.adminFindTpProjectById(tppId);
-
-		return new ModelAndView("/WEB-INF/view/body/tpAdministrator/tpAdminProject.jsp", "polist", polist);
+		model.addAttribute("polist", polist);
+		return "tpAdministrator/tpAdminProject.tiles";
+		
 	}
 
 	// 프로젝트 승인
 	@RequestMapping("tpAdminProjectStateConvert")
-	public String tpAdminUp(HttpServletRequest request) {
-		String id = request.getParameter("tppId");
+	public String tpAdminUp(HttpServletRequest request, HttpSession session) {
+		String adId = (String) session.getAttribute("adminId");
+		
+		if (!id.equals(adId)) {
+			return "tpAdministrator/tpAdminAccess.tiles";
+		}
+		
+		String tppId = request.getParameter("tppId");
 		String tppState = request.getParameter("tppState");
 		String tppAdminMessage = request.getParameter("tppAdminMessage");
 		TpProject adminProject = new TpProject();
 		adminProject.setTppAdminMessage(tppAdminMessage);
-		adminProject.setTppId(id);
+		adminProject.setTppId(tppId);
 		adminProject.setTppState(tppState);
 
 		adminservice.adminProjectUp(adminProject);
 
-		return "/tpAdminProjectBoard.tp";
+		return "tpAdminProjectBoard.tp";
 	}
 
+
+//////////////////////////////////////////////////회원관리처리////////////////////////////////////////////////////////////////	
+	
+	
 	// 관리자 전체회원조회
 	@RequestMapping("/findAllTpFunderList")
-	public String findAllTpFunderList(@RequestParam(defaultValue = "1") String pageNo, ModelMap model) {
+	public String findAllTpFunderList(@RequestParam(defaultValue = "1") String pageNo, ModelMap model, HttpSession session) {
+		String adId = (String) session.getAttribute("adminId");
+		
+		if (!id.equals(adId)) {
+			return "tpAdministrator/tpAdminAccess.tiles";
+		}
+			
 		int page = 1;
 		try {
 			page = Integer.parseInt(pageNo); // null일 경우 예외처리를 통해 page를 1로
 												// 처리한다..
 		} catch (NumberFormatException e) {
 		}
+		
 		Map attributes = service.getAllTpFundersPaging(page);
 		model.addAllAttributes(attributes);
 		return "tpAdministrator/tpAdminfunderList.tiles";
 	}
 
+	
 	// 관리자 Id로 회원 조회 메소드
 	@RequestMapping("/findByTpfId")
-	public String findByTpfId(@RequestParam String tpfId, ModelMap model) {
+	public String findByTpfId(@RequestParam String tpfId, ModelMap model, HttpSession session) {
+		String adId = (String) session.getAttribute("adminId");
+		
+		if (!id.equals(adId)) {
+			return "tpAdministrator/tpAdminAccess.tiles";
+		}
+		
 		TpFunder tpFunder = service.findTpFunderById(tpfId);
 		model.addAttribute("tpFunder", tpFunder);
 		return "tpAdministrator/tpFunderInfo.tiles";

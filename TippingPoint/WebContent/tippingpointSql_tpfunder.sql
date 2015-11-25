@@ -43,3 +43,5 @@ SELECT		TPFQUALIFYTPPROPOSER
 			)
 		)
 		where page = 1
+		
+		
