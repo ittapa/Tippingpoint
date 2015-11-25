@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="tpProjectCategoryMapper">
+
+  <resultMap type="tpProjectCategory" id="category-result">
+      <id property="tppCategory" column="tppCategory"/>
+      <result property="tppCategoryName" column="tppCategoryName"/>
+   </resultMap>
+
+<select id = "selectAllTpProjectCategory" resultMap="category-result">
+select * from tpProjectCategory
+</select>
+	
+<delete id="deletTpProjectCategoryByCategory" parameterType = "String" >
+delete * from ProjectCategory where tpProjectCategory = #{value}
+</delete>
+	 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
