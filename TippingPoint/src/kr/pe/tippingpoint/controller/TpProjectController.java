@@ -333,7 +333,7 @@ public class TpProjectController {
 
 		List<TpProjectCategory> list = service.tpProjectCategoryList();
 		map.put("categoryList", list);
-		System.out.println("메롱2");
+
 
 		
 		return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
