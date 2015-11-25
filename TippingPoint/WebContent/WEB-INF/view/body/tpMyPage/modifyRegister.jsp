@@ -118,6 +118,42 @@
 </script>
 
 <script>
+function checkPwd(){ //비밀번호 확인
+	var tpfPassword = document.tpFunder.tpfPassword.value; //비밀번호입력
+	var passwordConfirm = document.tpFunder.passwordConfirm.value; //비밀번호확인
+	if(tpfPassword!=passwordConfirm){
+		document.getElementById('checkPwd').innerHTML = "동일한 암호를 입력하세요.";
+	}else{
+		document.getElementById('checkPwd').innerHTML = "확인되었습니다.";
+	}
+}
+</script>
+
+<script>
+function checkPwd(){ //비밀번호 확인
+	var tpfPassword = document.tpFunder.tpfPassword.value; //비밀번호입력
+	var passwordConfirm = document.tpFunder.passwordConfirm.value; //비밀번호확인
+	if(tpfPassword!=passwordConfirm){
+		document.getElementById('checkPwd').innerHTML = "동일한 암호를 입력하세요.";
+	}else{
+		document.getElementById('checkPwd').innerHTML = "확인되었습니다.";
+	}
+}
+</script>
+
+<script>
+function checkPwd(){ //비밀번호 확인
+	var tpfPassword = document.tpFunder.tpfPassword.value; //비밀번호입력
+	var passwordConfirm = document.tpFunder.passwordConfirm.value; //비밀번호확인
+	if(tpfPassword!=passwordConfirm){
+		document.getElementById('checkPwd').innerHTML = "동일한 암호를 입력하세요.";
+	}else{
+		document.getElementById('checkPwd').innerHTML = "확인되었습니다.";
+	}
+}
+</script>
+
+<script>
 $(document).ready(function() {
    $("#modify").on("click",function(){
       tpfunder = document.tpFunder;
@@ -136,9 +172,8 @@ $(document).ready(function() {
 
 <h2>회원정보수정</h2>
 <spring:hasBindErrors name="tpFunder"/>
-<form action="${initParam.rootPath }/tpMyPage/modifyRegister.tp" method="post" name="tpFunder">
+<form action="${initParam.rootPath }/funderModifyRegister.tp" method="post" name="tpFunder">
 <table border="1" style="width:700px">
-
    <tr>
       <td>이름</td>
       <td>
@@ -157,7 +192,8 @@ $(document).ready(function() {
    <tr>
       <td>비밀번호 확인</td>
       <td>
-         <input type="password" id="passwordConfirm" name="passwordConfirm" size="20">         
+         <input type="password" name="passwordConfirm" onkeyup="checkPwd()">
+		<div id="checkPwd">동일한 암호를 입력하세요.</div>        
       </td>
    </tr>
    <tr>
@@ -170,6 +206,7 @@ $(document).ready(function() {
    <tr>
       <td>휴대폰번호</td>
       <td>
+
          <select name="tpfPhoneNum1">
             <option value="010">010</option>
             <option value="011">011</option>
@@ -177,6 +214,7 @@ $(document).ready(function() {
          -
          <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4">
          <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4">
+         
          <input type="hidden" name="tpfPhoneNum"/>
       </td>
    </tr>

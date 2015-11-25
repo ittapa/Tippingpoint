@@ -62,7 +62,6 @@
 				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategroy
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
-	 				
 	 				order by tppFundingLastDate
 	 			)
 	 		)
@@ -115,6 +114,16 @@
 	<select id="selectCountProject" resultType="int">
 		select count(tppId) from tpproject 
 	</select>
+	
+	<select id="selectOCountProject" resultType="int">
+	select count(tppState) from tpproject where tppState like 'o'
+	</select>
+	
+	<select id="selectACountProject" resultType="int">
+	select count(tppState) from tpproject where tppState like 'a'
+	</select>
+	
+	
 	
 	
 	

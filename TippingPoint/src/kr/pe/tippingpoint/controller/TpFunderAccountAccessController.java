@@ -1,9 +1,9 @@
 
+
 package kr.pe.tippingpoint.controller;
 
-import javax.servlet.http.HttpServlet;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class TpFunderAccountAccessController {
 
 	@Autowired
 	private TpFunderAccountAccessServiceImpl service;
-
+	
 	/**
 	 * 로그인체크 컨트롤러
 	 * 
@@ -43,7 +43,7 @@ public class TpFunderAccountAccessController {
 	public String loginProcess(@RequestParam String tpfId, @RequestParam String tpfPw, HttpSession session) {
 		String loginId = tpfId;
 		String loginPwd = tpfPw;
-
+		
 		if (loginId == null || loginId.trim().length() == 0) {// 로그인 Id가 값이없을때
 			return "잘못된 입력입니다";
 		}
@@ -61,52 +61,26 @@ public class TpFunderAccountAccessController {
 		}
 
 	}
-
 	/**
 	 * 로그인 하는 컨트롤러
 	 */
 	@RequestMapping(value = "loginProcess", method = RequestMethod.POST)
 	public ModelAndView loginProcess(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		String backpage = String.valueOf(session.getAttribute("backpage"));
+		String  backpage = String.valueOf(session.getAttribute("backpage"));
 		System.out.println(backpage);
-		mav.setViewName("redirect:" + backpage);
+		mav.setViewName(backpage);
 		return mav;
 	}
-
 	/**
-	 * 누가봐도 로그아웃
+	 *누가봐도 로그아웃 
 	 */
 	@RequestMapping("logout")
-	public String logout(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
+	public String logout(HttpSession session) {
 		session.invalidate(); // 세션 삭제
 		return "/main.tp";
 	}
-
-	/**
-	 * 관리자 전체 회원 조회 메소드
-	 */
-
-	/*
-	 * @RequestMapping("/findByTpfId") public String findById(@RequestParam
-	 * String tpfId, ModelMap model) { TpFunder tpFunder =
-	 * service.findTpFunderById(tpfId); model.addAttribute("tpFunder",
-	 * tpFunder); return "admin/tpFunder_info.tiles"; }
-	 */
-
-	// @RequestMapping("/findAllTpFunderList")
-	// public String list(@RequestParam(defaultValue = "1") String pageNo,
-	// ModelMap model) {
-	// int page = 1;
-	// try {
-	// page = Integer.parseInt(pageNo); // null일 경우 예외처리를 통해 page를 1로
-	// // 처리한다..
-	// } catch (NumberFormatException e) {
-	// }
-	// Map attributes = service.getAllTpFundersPaging(page);
-	// model.addAllAttributes(attributes);
-	// return "administrator/admin_funderList.tiles";
-	// }
+	
 
 	/**
 	 * 회원가입
@@ -154,88 +128,95 @@ public class TpFunderAccountAccessController {
 		TpFunder tpfunder = service.findTpFunderById(tpfId);
 		return String.valueOf(tpfunder != null);
 	}
-
-	/**
-	 * ID로 찾기
-	 * 
-	 * @param tpfId
-	 * @param model
-	 * @return
-	 */
-
-	/*
-	 * todo:
-	 * 
-	 * @RequestMapping("findByTpfId") public String findById(HttpSession
-	 * session, ModelMap model) { TpFunder tpFunder =
-	 * service.findTpFunderById(String.valueOf((session.getAttribute(
-	 * "userLoginInfo")))); model.addAttribute("tpFunder", tpFunder); return
-	 * "tpMyPage/modifyRegister.tiles"; }
-	 */
+	
+	
 	/**
 	 * 회원수정폼 조회
-	 * 
 	 * @param tpfId
 	 * @param model
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping("modifyForm")
-	public String modifyForm(HttpSession session, ModelMap model) throws Exception {
-		model.addAttribute("tpFunder",
-				service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo")))));
+	public String modifyForm(HttpSession session, ModelMap model) throws Exception{
+		model.addAttribute("tpFunder", service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo")))));
 		return "tpMyPage/modifyRegister.tiles";
 	}
-
+	
 	/**
 	 * 회원수정
-	 * 
 	 * @param tpfunder
 	 * @param errors
 	 * @param model
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("modifyRegister")
-	public String modifyRegister(@ModelAttribute TpFunder tpFunder, Errors errors, ModelMap model) throws Exception {
-		new TpFunderValidator().validate(tpFunder, errors);
-		if (errors.hasErrors()) {
-			return "tpMyPage/modifyRegister.tiles";
-		}
-		service.updateTpFunder(tpFunder);
-		model.addAttribute("tpFunder", service.findTpFunderById(tpFunder.getTpfId()));
-		return "tpMyPage/modifyRegister.tiles";
-	}
+	@RequestMapping("funderModifyRegister")
+	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model, HttpSession session,
+			HttpServletRequest request) throws Exception {
+		System.out.println("와써");
+		String tpfId = (String) session.getAttribute("userLoginInfo");
+		System.out.println(tpfId);
 
-	// 마이페이지 메인
+		TpFunder funder = service.findTpFunderById(tpfId);
+		System.out.println(funder.toString());
+
+		System.out.println("와써??");
+		String p1 = request.getParameter("tpfPhoneNum1");
+		String p2 = request.getParameter("tpfPhoneNum2");
+		String p3 = request.getParameter("tpfPhoneNum3");
+
+		funder.setTpfId(tpfId);
+		funder.setTpfName(request.getParameter("tpfName"));
+		funder.setTpfPassword(request.getParameter("tpfPassword"));
+
+		funder.setTpfEmail(request.getParameter("tpfEmail"));
+		funder.setTpfPhoneNum(p1+ "-" + p2+ "-" + p3);
+		funder.setTpfZipcode(request.getParameter("tpfZipcode"));
+		funder.setTpfAddress(request.getParameter("tpfAddress"));
+		funder.setTpfAddressD(request.getParameter("tpfAddressD"));
+
+		System.out.println(funder.toString());
+
+		service.updateTpFunder(funder);
+		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
+		return "tpMyPage/tpMyPageMain.tiles";
+
+	}
+	
+	//마이페이지 메인
 	@RequestMapping("myPageMain")
-	public String myPageMain(HttpSession session, @ModelAttribute TpFunder tpfunder, ModelMap model) throws Exception {
+	public String myPageMain(HttpSession session, @ModelAttribute TpFunder tpfunder, ModelMap model) throws Exception{
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 
-	// 회원정보 추가
+	
+	
+	//회원정보 추가 
 	@RequestMapping("addInfo")
-	public String adddInfo(HttpSession session, HttpServletRequest request) throws Exception {
-		// 세션에서 아이디 불러옴
+	public String adddInfo(HttpSession session, HttpServletRequest request) throws Exception{
+		//세션에서 아이디 불러옴
 		String writer = (String) session.getAttribute("userLoginInfo");
 		System.out.println(writer);
 		int residentRegistrationFirstNum = Integer.parseInt(request.getParameter("residentRegistrationFirstNum"));
 		int residentRegistrationLastNum = Integer.parseInt(request.getParameter("residentRegistrationLastNum"));
 		int corporateRegistrationNumber = Integer.parseInt(request.getParameter("corporateRegistrationNumber"));
-		// 값 넣어주기
+		//값 넣어주기
 		TpProposer tposer = new TpProposer();
-		tposer.setTpfId(writer);// 아이디
-		tposer.setAccount(request.getParameter("account"));// 계좌
-		tposer.setProposerType(request.getParameter("proposerType"));// 일반개인or법인or개인사업자
+		tposer.setTpfId(writer);//아이디
+		tposer.setAccount(request.getParameter("account"));//계좌
+		tposer.setProposerType(request.getParameter("proposerType"));//일반개인or법인or개인사업자
 		tposer.setCertification("F");
-		tposer.setResidentRegistrationFirstNum(residentRegistrationFirstNum);// 주민번호앞자리
-		tposer.setResidentRegistrationLastNum(residentRegistrationLastNum);// 주민번호뒷자리
-		tposer.setCorporateRegistrationNumber(corporateRegistrationNumber);// 사업자번호
+		tposer.setResidentRegistrationFirstNum(residentRegistrationFirstNum);//주민번호 앞자리
+		tposer.setResidentRegistrationLastNum(residentRegistrationLastNum);//주민번호 뒷자리
+		tposer.setCorporateRegistrationNumber(corporateRegistrationNumber);//사업자번호
 		System.out.println(tposer.toString());
-
+		
+		
 		service.addProposerInfo(tposer);
-
+		
+			
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 
@@ -277,7 +258,8 @@ public class TpFunderAccountAccessController {
 		try {// 로그인 ID가 DB에 존재 유무 확인
 			String TpFunderId = (service.findTpFunderById(Id)).getTpfId();
 			String TpFunderPwd = (service.findTpFunderById(Id)).getTpfPassword();
-			if (Id.equals(TpFunderId) && Pwd.equals(TpFunderPwd)) { // 로그인 및 ID 비밀번호확인
+			if (Id.equals(TpFunderId) && Pwd.equals(TpFunderPwd)) { // 로그인 및 ID
+																	// 비밀번호확인
 				txt = "success";// 입력한 ID와 비밀번호가 맞았음
 			} else {// 비밀번호가 틀렸을경우
 				txt = "비밀번호가 틀렸습니다";
@@ -287,4 +269,5 @@ public class TpFunderAccountAccessController {
 		}
 		return txt;
 	}
+
 }

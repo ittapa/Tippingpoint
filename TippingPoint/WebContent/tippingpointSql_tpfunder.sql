@@ -1,4 +1,4 @@
-ㅋㅋcreate table TPFUNDER(
+create table TPFUNDER(
    TPFID varchar2(20) primary key,
    TPFNAME varchar2(15) not null,
    TPFPASSWORD varchar2(15) not null,

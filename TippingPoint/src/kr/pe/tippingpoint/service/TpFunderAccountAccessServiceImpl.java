@@ -1,6 +1,7 @@
 package kr.pe.tippingpoint.service;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +26,7 @@ public class TpFunderAccountAccessServiceImpl implements TpFunderAccountAccessSe
 	@Autowired
 	private TpProposerDao pdao;
 	
-	private TpFunderAccountAccessServiceImpl(TpFunderDaoImpl dao) {
-		this.dao = dao;
-	}
+	
 	
 	public TpFunderAccountAccessServiceImpl() {}
 	

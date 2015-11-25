@@ -19,8 +19,6 @@
 		등록된 글이 없습니다.
 		</c:when>
 		<c:otherwise>
-			
-		
 				<c:forEach items="${requestScope.list }" var="tpProject">
 					<div>
 						<div><img src="${tpProject.tppMainImg }" ></div>
