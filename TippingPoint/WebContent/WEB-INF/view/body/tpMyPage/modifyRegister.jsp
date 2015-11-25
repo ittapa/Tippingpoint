@@ -125,8 +125,8 @@ $(document).ready(function() {
             <option value="011">011</option>
          </select>
          -
-         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4">
-         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4">
+         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" value="${requestScope.tpfPhoneNum2 }">
+         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" value="${requestScope.tpfPhoneNum3 }">
          
          <input type="hidden" name="tpfPhoneNum"/>
       </td>
@@ -161,4 +161,5 @@ $(document).ready(function() {
 </table>
 </form>
 </body>
+>>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
 </html>

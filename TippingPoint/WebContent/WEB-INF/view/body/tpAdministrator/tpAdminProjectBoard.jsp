@@ -79,4 +79,5 @@
 <a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>
 
 </body>
+>>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
 </html>
