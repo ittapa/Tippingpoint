@@ -17,7 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.pe.tippingpoint.service.TpAdministratorService;
 import kr.pe.tippingpoint.service.TpFunderAccountAccessService;
+import kr.pe.tippingpoint.service.TpNoticeService;
+import kr.pe.tippingpoint.service.TpNoticeServiceImpl;
 import kr.pe.tippingpoint.vo.TpFunder;
+import kr.pe.tippingpoint.vo.TpNotice;
 import kr.pe.tippingpoint.vo.TpProject;
 
 @Controller
@@ -169,6 +172,41 @@ public class TpAdministratorController {
 		model.addAttribute("tpFunder", tpFunder);
 		return "tpAdministrator/tpFunderInfo.tiles";
 	}
+	
+	
+	
+	// 어드민 카테고리별 보기
+
+			@RequestMapping("/tpAdminCategoryProjectBoard")
+
+			public String tpAdminCategoryProjectBoard(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model, HttpSession session) throws Exception {
+				String adId = (String) session.getAttribute("adminId");
+				if (!id.equals(adId)) {
+					return "tpAdministrator/tpAdminAccess.tiles";
+				}
+				int pageNo = 1;
+
+				try {
+
+					pageNo = Integer.parseInt(request.getParameter("pageNo"));
+				} catch (Exception e) {
+
+				}
+
+
+				String check = request.getParameter("check");
+
+
+				Map map = adminservice.adminCategoryProject(pageNo, check);
+
+				model.addAllAttributes(map);
+
+				return "tpAdministrator/tpAdminProjectBoard.tiles";
+
+			}
+	
+
 	
 }
 

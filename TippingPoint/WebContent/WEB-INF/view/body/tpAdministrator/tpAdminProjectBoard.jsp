@@ -14,6 +14,13 @@
 			<FONT size="5"><B>프로젝트 목록</B></FONT>
 		</P>
 
+
+				<a href="/TippingPoint/tpAdminProjectBoard.tp">모두보기</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=b">저장된것 보기</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=a">등록 대기 보기</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=x">등록 거부 보기</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=o">등록 승인 보기</a><br>
+				
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">
 		등록된 글이 없습니다.
@@ -77,8 +84,5 @@
 
 <br/>
 <a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>
-
 </body>
->>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
->>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
 </html>

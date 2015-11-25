@@ -106,7 +106,40 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	public List<TpProject> selectTpProjectByWriter(String writer) {
 		return session.selectList("tpProjectMapper.selectTpProjectByWriter", writer);
 	}
+
+
 	
+	//////////////////////// 첫번째 수정 //////////////////////////////
+
+	@Override
+	public List<TpProject> selectCategoryProjectDao(int pageNo, String tppCategory) {
+		HashMap parameter = new HashMap();
+		parameter.put("contentPerPage", TpProjectBoardPagingBean.CONTENT_PER_PAGE);
+		parameter.put("pageNo", pageNo);
+		parameter.put("tppCategory", tppCategory);
+		return session.selectList("tpProjectMapper.selectOAndCategoryTpProjectPaging", parameter);
+	}
+
+
+	@Override
+	public int selectOAndCTCountProject(String tppCategory) {
+		return session.selectOne("tpProjectMapper.selectOAndCategoryCountProject");
+	}
+
+
+	@Override
+	public List<TpProject> adminCategoryProjectDao(int pageNo, String check) {
+		HashMap parameter = new HashMap();
+		parameter.put("contentPerPage", TpProjectBoardPagingBean.CONTENT_PER_PAGE);
+		parameter.put("pageNo", pageNo);
+		parameter.put("check", check);
+		return session.selectList("tpProjectMapper.adminCheckCategory", parameter);
+	}
+
+	@Override
+	public int adminCheckCountProject(String check) {
+		return session.selectOne("tpProjectMapper.adminCheckCountProject",check);
+	}
 	
 	
 	

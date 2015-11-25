@@ -70,6 +70,8 @@
    
    <!-- 관리자 페이지  --> 
    <mvc:view-controller path="/admin/list.tp" view-name="administrator/admin_funderList.tiles"/>
+    <!-- 비밀번호 찾기 페이지 -->
+   <mvc:view-controller path="tpLogin/findPassword.tp" view-name="tpLogin/findPassword.tiles"/>
    
    <!-- 에러... property -->
    <bean class="org.springframework.context.support.ResourceBundleMessageSource" name="messageSource" p:basename="kr.pe.tippingpoint.exception.error_message"/>
@@ -133,5 +135,22 @@
    <bean
       class="org.springframework.web.servlet.view.InternalResourceViewResolver"
       p:order="2" />
-
+ <!-- gmail -->
+    <bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="username" value="nagazam21@gmail.com" />
+        <property name="password" value="aa963857" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="email" class="kr.pe.tippingpoint.mail.Email">
+    </bean>
+    <bean id="emailSender" class="kr.pe.tippingpoint.mail.EmailSender">
+    </bean>
 </beans>

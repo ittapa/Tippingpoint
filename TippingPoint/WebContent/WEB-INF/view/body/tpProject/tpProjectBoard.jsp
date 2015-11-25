@@ -14,18 +14,17 @@
 	<c:choose>
 		<c:when test="${fn:length(requestScope.categoryList)==0 }">
 					카테고리 정보를 가져오지 못했습니다.
-				</c:when>
+		</c:when>
 				
 				<c:otherwise>
-					
+					<a href="${initParam.rootPath}/tpProjectBoard.tp">모두보기</a><br>
 					<c:forEach items="${requestScope.categoryList }" var="list">
-							${list.tppCategoryName }<br>
+					<a href="${initParam.rootPath }/tpProjectCategoryBoard.tp?&tppCategory=${list.tppCategory }">${list.tppCategoryName }</a>
+					<br>
 					</c:forEach>
 				</c:otherwise>
 	</c:choose>
 </p>
-	
-	
 	
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">

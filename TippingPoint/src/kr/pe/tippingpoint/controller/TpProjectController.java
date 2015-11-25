@@ -63,22 +63,22 @@ public class TpProjectController {
 		@RequestMapping("/submitTpProject")
 
 		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, 
-											HttpServletRequest request, ModelMap map, Errors errors, TpProjectValidator val,HttpSession session)
+											HttpServletRequest request, ModelMap map, Errors errors,HttpSession session)
 											throws IOException {
-
-			System.out.println("저장 및 승인요청");
 			
-			System.out.println(tpvo.getTppFundingStartDate());
 			//등록관련 validator 처리
+			TpProjectValidator val = new TpProjectValidator();
+	
 			val.validate(tpvo, errors);
+			
 			System.out.println("프로젝트 등록중 총 검증 실패 개수:" +errors.getErrorCount());
 			System.out.println(tpvo.getTppState());
 			if(errors.hasErrors()){//  true = 오류가 있다.
 				if(tpvo.getTppState().equals("b")){
-					System.out.println("bb");
+					
 					map.addAttribute("errorCheck", "submitError");					
 				}else if(tpvo.getTppState().equals("a")){
-					System.out.println("aa");
+					
 					map.addAttribute("errorCheck", "saveError");	
 				}
 				
@@ -386,7 +386,25 @@ public class TpProjectController {
 		return new ModelAndView("tpMyPage/tpMyPageProjectList.tiles",map);
 	}
 	
-	
+	// 프로젝트 전체보기(o)것 카테고리별 조회
+		@RequestMapping("/tpProjectCategoryBoard")
+		public ModelAndView tpProjectCategoryBoard(HttpServletRequest request) throws Exception{
+			int pageNo = 1;
+			try {
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+			} catch (Exception e) {
+			}
+			String tppCategory = request.getParameter("tppCategory");
+			System.out.println(tppCategory);
+			
+			Map map = service.selectCategoryProject(pageNo,tppCategory);
+			
+			List<TpProjectCategory> list = service.tpProjectCategoryList();
+			map.put("categoryList", list);
+			
+			System.out.println("오잉? 와썹?");
+			return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
+		}
 	
 	
 

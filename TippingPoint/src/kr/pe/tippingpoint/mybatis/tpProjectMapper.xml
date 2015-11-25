@@ -164,6 +164,56 @@
 	</select>
 	
 	
+	<!-- 11111111111111111111111111첫번재 수정 사항 11111111111111111111111111111111 -->
+	
+	
+	<!-- 전체프로젝트 조회'o'인거이면서 카테고리가 ___인거 찾기 paging처리 select문 -->
+	 <select id="selectOAndCategoryTpProjectPaging" parameterType="map" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 			from(
+	 				<include refid="selectAllProjectDB"/>
+				 	where tppState like 'o' and tppCategory like #{tppCategory}
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+	 
+	
+	<select id="selectOAndCategoryCountProject" resultType="int">
+		select count(tppState) from tpproject where tppState like 'o' and tppCategory like #{tppCategory}
+	</select>
+	
+	
+	
+	<!-- 관리자가 프로젝트 조회 ____인거 찾기 paging처리 select문 -->
+	 <select id="adminCheckCategory" parameterType="map" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 			from(
+	 				<include refid="selectAllProjectDB"/>
+				 	where tppState like #{check}
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+	 
+	<select id="adminCheckCountProject" parameterType="String" resultType="int">
+		select count(tppState) from tpproject where tppState like #{check}
+	</select>
+	
 	
 	 
 </mapper>

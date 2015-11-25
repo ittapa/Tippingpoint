@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.pe.tippingpoint.service.TpNoticeService;
@@ -16,7 +17,6 @@ import kr.pe.tippingpoint.vo.TpNotice;
 @Controller
 public class TpNoticeController {
 	
-
 	@Autowired
 	private TpNoticeService service;
 
@@ -24,7 +24,7 @@ public class TpNoticeController {
 
 	// 공지사항 전체보기(리스트)
 	@RequestMapping("/tpNoticeBoard")
-	public ModelAndView tpNoticeBoard (HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView tpNoticeBoard (HttpServletRequest request) throws Exception{
 		int pageNo = 1;
 		try {
 			pageNo = Integer.parseInt(request.getParameter("pageNo"));
@@ -51,6 +51,35 @@ public class TpNoticeController {
 
 		return new ModelAndView("tpNotice/tpNoticeView.tiles", "noticeList", noticeList);
 	}
+	
+	
+	
 
+	//관리자 공지사항 매니저
+	@RequestMapping("/tpAdminNoticeManager")
+	public ModelAndView tpAdminNoticeManager(HttpServletRequest request){
+		int pageNo = 1;
+		try {
+			pageNo = Integer.parseInt(request.getParameter("pageNo"));
+		} catch (Exception e) {
+		}
 
+		Map map = service.allListTpNotice(pageNo);
+		
+		return new ModelAndView("tpAdministrator/tpAdminNoticeBoard.tiles", map);
+
+	}
+	
+	@RequestMapping("/findTpAdminNotice")
+	public ModelAndView findTpNotice(@RequestParam int tpNoticeNum) {
+
+		// 1.요청파라미터 조회
+		//String num = request.getParameter("tpNoticeNum");
+		//int tpNoticeNum = Integer.parseInt(num);
+		TpNotice noticeList = service.findTpNoticeNum(tpNoticeNum);
+
+		return new ModelAndView("tpAdministrator/tpAdminNoticeView.tiles", "noticeList", noticeList);
+	}
+	
+	
 }

@@ -10,9 +10,9 @@
 <script type="text/javascript">
 $(document).ready(function loginCheck(){
 	$("#passwordFindBtn").on("click", function(){
-		var param = "findId" + "=" + $("#findPd").val() + "&" +"findEmail" + "="+ $("#findEmail").val();
+		var param = "findId" + "=" + $("#findId").val() + "&" +"findEmail" + "="+ $("#findEmail").val();
 		$.ajax({
-			"url" : "/TippingPoint/sendpw.tp", //로그인 체크 컨트롤러
+			"url" : "/TippingPoint/mailPw.tp", //로그인 체크 컨트롤러
 			"type" : "POST",
 			"data" : param,// ID 및 password
 			"dataType" : "text",//응답 데이터 타입 text,json,jsonp,xml

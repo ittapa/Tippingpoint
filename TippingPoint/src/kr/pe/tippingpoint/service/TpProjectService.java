@@ -21,4 +21,8 @@ public interface TpProjectService {
 	public Map findTpProjectByWriter(String writer);
 	
 	public List<TpProjectCategory> tpProjectCategoryList();
+	
+	
+	////////////////////////////첫번째 수정 //////////////////////////
+	public Map selectCategoryProject(int pageNo, String tppCategory);
 }

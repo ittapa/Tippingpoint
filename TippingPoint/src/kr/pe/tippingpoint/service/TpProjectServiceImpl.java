@@ -86,6 +86,22 @@ public class TpProjectServiceImpl implements TpProjectService {
 		return catedao.selectTpProjectCategory();
 		
 	}
+
+	//////////////////////////////////////첫번째 수정 //////////////////////////////////////
+	
+
+	@Override
+	public Map selectCategoryProject(int pageNo, String tppCategory) {
+		HashMap map = new HashMap();
+		List<TpProject> list = dao.selectCategoryProjectDao(pageNo,tppCategory);
+		TpProjectBoardPagingBean pagingBean = new TpProjectBoardPagingBean(dao.selectOAndCTCountProject(tppCategory), pageNo);
+		map.put("list", list); // 목록에 뿌려질 고객들 정보
+		map.put("pagingBean", pagingBean); // 페이징 처리위한 pagingBean
+
+		return map;
+	}
+	
+	
 	
 }
 

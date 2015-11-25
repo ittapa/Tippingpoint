@@ -41,6 +41,22 @@ public class TpAdministratorServiceImpl implements TpAdministratorService {
 	public void adminProjectUp(TpProject adminProject) {
 		dao.adminUpById(adminProject);
 	}
+
+	
+	
+	
+
+	////////////////////////////첫번째 수정 //////////////////////////
+	@Override
+	public Map adminCategoryProject(int pageNo, String check) {
+		HashMap map = new HashMap();
+		List<TpProject> list = dao.adminCategoryProjectDao(pageNo,check);
+		TpProjectBoardPagingBean pagingBean = new TpProjectBoardPagingBean(dao.adminCheckCountProject(check), pageNo);
+		map.put("list", list); // 목록에 뿌려질 고객들 정보
+		map.put("pagingBean", pagingBean); // 페이징 처리위한 pagingBean
+
+		return map;
+	}
 	
 	
 	

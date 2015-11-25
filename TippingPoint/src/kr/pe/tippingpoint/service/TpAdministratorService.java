@@ -11,4 +11,9 @@ public interface TpAdministratorService {
 	public TpProject adminFindTpProjectById(String tppId);
 	
 	public void adminProjectUp(TpProject adminProject);
+	
+	
+
+	////////////////////////////첫번째 수정 //////////////////////////
+	public Map adminCategoryProject(int pageNo, String check);
 }

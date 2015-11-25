@@ -36,4 +36,17 @@ public interface TpProjectDao {
 	
 	public List<TpProject> selectTpProjectByWriter(String writer);
 	
+	
+	////////////////////////////첫번째 수정 //////////////////////////
+	public List<TpProject> selectCategoryProjectDao(int pageNo, String tppCategory);//프로젝트 전체보기 ('o')인것만
+	
+	public int selectOAndCTCountProject(String tppCategory);
+	
+	
+
+	public List<TpProject> adminCategoryProjectDao(int pageNo, String check);//프로젝트전체 보기
+
+	public int adminCheckCountProject(String check);
+	
+	
 }
