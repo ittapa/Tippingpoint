@@ -2,7 +2,10 @@
 package kr.pe.tippingpoint.controller;
 
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,9 +78,11 @@ public class TpFunderAccountAccessController {
 	 *누가봐도 로그아웃 
 	 */
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletResponse response) throws IOException {
+		System.out.println(session.getAttribute("userLoginInfo"));
 		session.invalidate(); // 세션 삭제
-		return "/main.tp";
+		response.sendRedirect("/TippingPoint/main.tp");
+		return null;
 	}
 	
 
@@ -138,7 +143,16 @@ public class TpFunderAccountAccessController {
 	 */
 	@RequestMapping("modifyForm")
 	public String modifyForm(HttpSession session, ModelMap model) throws Exception{
-		model.addAttribute("tpFunder", service.findTpFunderById(String.valueOf((session.getAttribute("userLoginInfo")))));
+		String userid = (String) session.getAttribute("userLoginInfo");
+		TpFunder funder = service.findTpFunderById(userid);
+				
+		String list = funder.getTpfPhoneNum();
+		String[] str = list.split("\\-");
+		
+		model.addAttribute("tpFunder", funder);
+		model.addAttribute("tpfPhoneNum2",str[1]);
+		model.addAttribute("tpfPhoneNum3",str[2]);
+		System.out.println();
 		return "tpMyPage/modifyRegister.tiles";
 	}
 	
@@ -153,10 +167,14 @@ public class TpFunderAccountAccessController {
 	@RequestMapping("funderModifyRegister")
 	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model, HttpSession session,
 			HttpServletRequest request) throws Exception {
+		System.out.println("와써");
 		String tpfId = (String) session.getAttribute("userLoginInfo");
+		System.out.println(tpfId);
 
 		TpFunder funder = service.findTpFunderById(tpfId);
+		System.out.println(funder.toString());
 
+		System.out.println("와써??");
 		String p1 = request.getParameter("tpfPhoneNum1");
 		String p2 = request.getParameter("tpfPhoneNum2");
 		String p3 = request.getParameter("tpfPhoneNum3");
@@ -166,10 +184,12 @@ public class TpFunderAccountAccessController {
 		funder.setTpfPassword(request.getParameter("tpfPassword"));
 
 		funder.setTpfEmail(request.getParameter("tpfEmail"));
-		funder.setTpfPhoneNum(p1 + p2 + p3);
+		funder.setTpfPhoneNum(p1+ "-" + p2+ "-" + p3);
 		funder.setTpfZipcode(request.getParameter("tpfZipcode"));
 		funder.setTpfAddress(request.getParameter("tpfAddress"));
 		funder.setTpfAddressD(request.getParameter("tpfAddressD"));
+
+		System.out.println(funder.toString());
 
 		service.updateTpFunder(funder);
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));

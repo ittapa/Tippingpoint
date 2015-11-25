@@ -2,6 +2,7 @@ package kr.pe.tippingpoint.controller;
 
 import java.util.Map;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -114,8 +115,21 @@ public class TpAdministratorController {
 
 		return "tpAdminProjectBoard.tp";
 	}
-
-
+	
+	//관리자 체크 페이지 - 관리자 메인으로 이동
+	
+	@RequestMapping("/adminCheckAndMain")
+	public String tpAdminCheck(HttpSession session){
+	String adId = (String) session.getAttribute("adminId");
+		
+		if (!id.equals(adId)) {
+			return "tpAdministrator/tpAdminAccess.tiles";
+		}
+		
+		return "tpAdministrator/tpAdminMain.tiles";
+	}
+	
+	
 //////////////////////////////////////////////////회원관리처리////////////////////////////////////////////////////////////////	
 	
 	
