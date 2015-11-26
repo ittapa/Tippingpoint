@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="/TippingPoint/jquery/jquery.js"></script>
+<!-- <script type="text/javascript" src="/TippingPoint/jquery/jquery.js"></script> -->
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
 <%
@@ -13,7 +14,7 @@
 %>
 	<h2>프로젝트 페이지 내 후원 폼</h2>
 	후원방식 선택
-	<form name="frmPayStart" action="/TippingPoint/payRequest.tp" method="post" onsubmit="return chkPayFrm(this)">
+	<form name="frmPayStart" action="/TippingPoint/payCardRequest.tp" method="post" onsubmit="return chkPayFrm(this)">
 		회원ID: <input type="text" name="strUserId" value="${sessionScope.userLoginInfo}" /><br/>
 		프로젝트 ID: <input type="text" name="tppId" value="id1" /><br/>
 		프로젝트 Title: <input type="text" name="tppTitle" value="myProjectTitle" /><br/>
@@ -39,6 +40,14 @@
 		}
 		
 	}
+	
+	jQuery("select[name=tppPayType]").on("change", function(){
+		if(jQuery("option:selected", this).val() == "c"){
+			document.frmPayStart.action="/TippingPoint/payCardRequest.tp";
+		} else {
+			document.frmPayStart.action="/TippingPoint/payAccountRequest.tp"
+		}		
+	});
 	
 </script>
 

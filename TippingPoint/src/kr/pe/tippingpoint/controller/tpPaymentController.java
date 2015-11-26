@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.pe.tippingpoint.service.TpFunderAccountAccessServiceImpl;
 import kr.pe.tippingpoint.vo.TpFunder;
+
+// 카드결제 후 사용
+import lgdacom.XPayClient.XPayClient;
 
 /**
  * 결제 컨트롤러
@@ -36,7 +40,7 @@ public class tpPaymentController {
 	 * @param model
 	 * @return URL: 계좌이체 요청 페이지 or 카드 결제 요청 페이지
 	 */
-	@RequestMapping("payRequest.tp")
+	@RequestMapping(value={"payCardRequest.tp", "payAccountRequest.tp"})
 	public String payRequest(@RequestParam String tppPayType, @RequestParam String tppTitle, @RequestParam int tpAmount, HttpSession session, ModelMap model){
 		// TODO: 세션 처리되는 페이지 통합시 테스트 코드 삭제		
 		session.setAttribute("userLoginInfo", "1");
@@ -75,30 +79,49 @@ public class tpPaymentController {
 		
 //		String strView = "/WEB-INF/view/body/tpPayment/";
 		String strView = "tpPayment/";
-		if(tppPayType == "p"){ // 현금 계좌이체
-			strView += "payAccountReq.tiles";
+		if(tppPayType.equals("p")){ // 현금 계좌이체
+			strView += "payAccountRequest.tiles";
 		} else { // card
-//			strView += "payCardReq.jsp";
-			strView += "payRequest.tiles";
+			strView += "payCardRequest.tiles";
 		}
 		
+		// TODO: 결제완료 페이지에서 세션 삭제
+		// 세션을 통해 주문 유요성 체크
+		session.setAttribute("strOrderUId", strOrderUId); // 주문번호
+		session.setAttribute("tppId", tppId); // 프로젝트 ID(상품ID)
+		session.setAttribute("tpAmount", tpAmount); // 주문 금액
 		
 		
 		
-		model.addAttribute("tppId", tppId);
-		model.addAttribute("tppTitle", tppTitle);
 		
-		model.addAttribute("tppPayType", tppPayType);
-		model.addAttribute("tpAmount", tpAmount);
-		model.addAttribute("strOrderUId", strOrderUId);
-		model.addAttribute("tpfEmail", tpFunder.getTpfEmail());
-		model.addAttribute("LGD_TIMESTAMP", strCurrent);
+		model.addAttribute("tppId", tppId); // 프로젝트 ID
+		model.addAttribute("tppTitle", tppTitle); // 프로젝트 제목
 		
-		// TODO: 테스트 후 삭제
+		model.addAttribute("tppPayType", tppPayType); // 결제 타입
+		model.addAttribute("tpAmount", tpAmount); //  결제 금액
+		model.addAttribute("strOrderUId", strOrderUId); // 주문번호
+		model.addAttribute("tpfEmail", tpFunder.getTpfEmail()); // 주문자 email
+		model.addAttribute("LGD_TIMESTAMP", strCurrent); // 주문 시각
+		
+		// TODO: 주문내역 Console log - 테스트 후 삭제
 		System.out.println("tppId: " + tppId + " + tppTitle: " + tppTitle + " + tppPayType: " + tppPayType 
 				+ " / tppId: " + tppId + " / tpAmount: " + tpAmount + " / strOrderUId: " + strOrderUId 
 				+ " / tpFunder.getTpfEmail(): " + tpFunder.getTpfEmail() + " / strCurrent: " + strCurrent + " / strView: " + strView);
 		
 		return strView;
+	}
+	
+	// 결제후 처리(DB처리 포함)
+	@RequestMapping("tpPayCardRet.tp")
+	public String payCardRet(HttpRequest request){
+		
+		
+		return "";
+	}
+	
+	// 결제 실패
+	@RequestMapping("tpPayCardFailed.tp")
+	public String payCardFailed(){
+		return "";
 	}
 }

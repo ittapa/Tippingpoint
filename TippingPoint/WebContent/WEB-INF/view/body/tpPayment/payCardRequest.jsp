@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%// TODO: 인터셉터 또는 AOP로 결제에 필요한 항목 유효성 체크하기  %>
 <h2>카드 결제를 통한 프로젝트 후원</h2>
-<h3>payRequest결제 내용 확인:</h3>
+<h3>결제 내용 확인:</h3>
 
 <%@ page import="java.security.MessageDigest, java.util.*" %>
 
@@ -42,12 +42,12 @@
     /*
      * 가상계좌(무통장) 결제 연동을 하시는 경우 아래 LGD_CASNOTEURL 을 설정하여 주시기 바랍니다.
      */
-    String LGD_CASNOTEURL		= "http://tippingpoint.pe.kr/tippingpoint/cas_noteurl.jsp";
+    String LGD_CASNOTEURL		= "http://www.tippingpoint.pe.kr/TippingPoint/cas_noteurl.jsp";
 
     /*
      * LGD_RETURNURL 을 설정하여 주시기 바랍니다. 반드시 현재 페이지와 동일한 프로트콜 및  호스트이어야 합니다. 아래 부분을 반드시 수정하십시요.
      */
-    String LGD_RETURNURL		= "http://tippingpoint.pe.kr/tippingpoint/returnurl.jsp";// FOR MANUAL
+    String LGD_RETURNURL		= "http://www.tippingpoint.pe.kr/TippingPoint/returnurl.jsp";// FOR MANUAL
 
     /*
      *************************************************
@@ -135,10 +135,7 @@
 
  %>
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>통합LG유플러스 전자결서비스 결제테스트</title>
+
 <script language="javascript" src="http://xpay.uplus.co.kr/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
 <script type="text/javascript">
 
@@ -182,8 +179,7 @@ function payment_return() {
 }
 
 </script>
-</head>
-<body>
+
 <form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="payres.jsp">
 
 
