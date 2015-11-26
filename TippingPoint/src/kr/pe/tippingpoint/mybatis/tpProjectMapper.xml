@@ -1,7 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tpProjectMapper">
 
-<<<<<<< HEAD
+	<!-- tpProject 모든 값 -->
+	<resultMap type="tpProject" id="tpProject-resultmap">
+		<result property="tppId" column="tppId"/>
+		<result property="tppTitle" column="tppTitle"/>
+		<result property="tppProjectContent" column="tppProjectContent"/>
+		<result property="tppWriter" column="tppWriter"/>
+		<result property="tppWriteDate" column="tppWriteDate"/>
+		<result property="tppTotalAmount" column="tppTotalAmount"/>
+		<result property="tppTargetAmount" column="tppTargetAmount"/>
+		<result property="tppTotalAmount" column="tppTotalAmount"/>
+		<result property="tppFundingStartDate" column="tppFundingStartDate"/>
+		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
+		<result property="tppFunderNum" column="tppFunderNum"/>
+		<result property="tppState" column="tppState"/>
+		<result property="tppAdminMessage" column="tppAdminMessage"/>
+		<result property="tppMainImg" column ="tppMainImg" />
+		<result property= "tppCategory" column = "tppCategory"/>
+		
+	</resultMap>
+	
+	<!-- 뭐징뭐징 -->
+	<resultMap type="tpProject" id="tpProject-resultmap2">
+		<result property="tppId" column="tppId"/>
+		<result property="tppTitle" column="tppTitle"/>
+		<result property="tppWriter" column="tppWriter"/>
+		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
+		<result property="tppTargetAmount" column="tppTargetAmount"/>
+	</resultMap>
+	
+	<sql id = "selectAllProjectDB">
+		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategory
+
+				 from tpproject 
+	</sql>
+	
+	
+
+	<!-- 프로젝트 추가 쿼리문 -->
+	<insert id = "insertTpProject" parameterType = "tpProject">
+		insert into tpproject values (#{tppId}, #{tppTitle}, #{tppProjectContent}, #{tppWriter}, 
+												  #{tppWriteDate}, #{tppTotalAmount}, #{tppTargetAmount}, 
+												  #{tppFundingStartDate}, #{tppFundingLastDate}, #{tppFunderNum},
+		 										  #{tppState}, #{tppAdminMessage}, #{tppMainImg}, #{tppCategory})
+	</insert>
+
+		
+	<!-- 전체프로젝트 조회 paging처리 select문 -->
+	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 			from(
+	 				<include refid="selectAllProjectDB"/>
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+
+	 
+	 <!-- 전체프로젝트 조회'o'인거 찾기 paging처리 select문 -->
+	 <select id="selectOTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 			from(
+	 				<include refid="selectAllProjectDB"/>
+	 				
+				 	where tppState like 'o'
+	 				order by tppFundingLastDate
+	 			)
+	 		)
+	 	where page = #{pageNo}
+	 </select>
+	 
+	 <!-- 전체프로젝트 조회'a'인거 찾기 paging처리 select문 -->
+	  <select id="selectATpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
+	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+	 		from(
+	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
+				
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
 	 				
@@ -11,6 +106,9 @@
 	 		)
 	 	where page = #{pageNo}
 	 </select>
+	 
+
+	 
 	 
 	 
 	 
@@ -135,235 +233,3 @@
 	
 	 
 </mapper>
-=======
-<mapper namespace="tpProjectMapper">
-
-	<!-- tpProject 모든 값 -->
-	<resultMap type="tpProject" id="tpProject-resultmap">
-		<result property="tppId" column="tppId"/>
-		<result property="tppTitle" column="tppTitle"/>
-		<result property="tppProjectContent" column="tppProjectContent"/>
-		<result property="tppWriter" column="tppWriter"/>
-		<result property="tppWriteDate" column="tppWriteDate"/>
-		<result property="tppTotalAmount" column="tppTotalAmount"/>
-		<result property="tppTargetAmount" column="tppTargetAmount"/>
-		<result property="tppTotalAmount" column="tppTotalAmount"/>
-		<result property="tppFundingStartDate" column="tppFundingStartDate"/>
-		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
-		<result property="tppFunderNum" column="tppFunderNum"/>
-		<result property="tppState" column="tppState"/>
-		<result property="tppAdminMessage" column="tppAdminMessage"/>
-		<result property="tppMainImg" column ="tppMainImg" />
-		<result property= "tppCategory" column = "tppCategory"/>
-		
-	</resultMap>
-	
-	<!-- 뭐징뭐징 -->
-	<resultMap type="tpProject" id="tpProject-resultmap2">
-		<result property="tppId" column="tppId"/>
-		<result property="tppTitle" column="tppTitle"/>
-		<result property="tppWriter" column="tppWriter"/>
-		<result property="tppFundingLastDate" column="tppFundingLastDate"/>
-		<result property="tppTargetAmount" column="tppTargetAmount"/>
-	</resultMap>
-	
-	<sql id = "selectAllProjectDB">
-		select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, 	tppMainImg, tppCategory
-
-				 from tpproject 
-	</sql>
-	
-	
-
-	<!-- 프로젝트 추가 쿼리문 -->
-	<insert id = "insertTpProject" parameterType = "tpProject">
-		insert into tpproject values (#{tppId}, #{tppTitle}, #{tppProjectContent}, #{tppWriter}, 
-												  #{tppWriteDate}, #{tppTotalAmount}, #{tppTargetAmount}, 
-												  #{tppFundingStartDate}, #{tppFundingLastDate}, #{tppFunderNum},
-		 										  #{tppState}, #{tppAdminMessage}, #{tppMainImg}, #{tppCategory})
-	</insert>
-
-		
-	<!-- 전체프로젝트 조회 paging처리 select문 -->
-	 <select id="selectTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
-	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 		from(
-	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 			from(
-	 				<include refid="selectAllProjectDB"/>
-	 				order by tppFundingLastDate
-	 			)
-	 		)
-	 	where page = #{pageNo}
-	 </select>
-
-	 
-	 <!-- 전체프로젝트 조회'o'인거 찾기 paging처리 select문 -->
-	 <select id="selectOTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
-	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 		from(
-	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 			from(
-	 				<include refid="selectAllProjectDB"/>
-	 				
-				 	where tppState like 'o'
-	 				order by tppFundingLastDate
-	 			)
-	 		)
-	 	where page = #{pageNo}
-	 </select>
-	 
-	 <!-- 전체프로젝트 조회'a'인거 찾기 paging처리 select문 -->
-	  <select id="selectATpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
-	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 		from(
-	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-				
-	 			from(
-	 				<include refid="selectAllProjectDB"/>
-	 				
-				 	where tppState like 'a'
-	 				order by tppFundingLastDate
-	 			)
-	 		)
-	 	where page = #{pageNo}
-	 </select>
-	 
-	 
-	 
-	 
-	 
-	 <!-- 총 프로젝트수 조회 paging 처리 할때 -->
-	<select id="selectCountProject" resultType="int">
-		select count(tppId) from tpproject 
-	</select>
-	
-	<select id="selectOCountProject" resultType="int">
-	select count(tppState) from tpproject where tppState like 'o'
-	</select>
-	
-	<select id="selectACountProject" resultType="int">
-	select count(tppState) from tpproject where tppState like 'a'
-	</select>
-	
-	
-	
-	
-	
-	<!-- 단일 프로젝트 조회하기 -->
-	<select id = "selectTpProjectById" parameterType = "string" resultMap ="tpProject-resultmap">
-	<include refid="selectAllProjectDB"></include>
-		 where tppId = #{value}
-	</select>
-	
-		
-	<!-- 프로젝트 승인/거부-->
-	 	<update id="adminProjectUpdate" parameterType= "tpProject">
-		UPDATE tpproject SET tppId=#{tppId}, tppState=#{tppState},
-							  tppAdminMessage=#{tppAdminMessage}
-		WHERE tppId=#{tppId}
-	</update>
-	
-	<!-- 프로젝트 검색하기 -->
-	<select id="serchProjectByKeyWord" parameterType ="string" resultMap="tpProject-resultmap">
-		<include refid="selectAllProjectDB"></include>
-			WHERE tppId like '%'||#{value}||'%'
-			union
-		<include refid="selectAllProjectDB"></include>
-			WHERE tppTitle like '%'||#{value}||'%'
-			union
-		<include refid="selectAllProjectDB"></include>
-			WHERE tppProjectContent like '%'||#{value}||'%'
-	</select>
-	
-	
-	
-	<!-- 작성자로 프로젝트 검색하기 -->
-	<select id = "selectTpProjectByWriter" parameterType = "string" resultMap ="tpProject-resultmap">
-	<include refid="selectAllProjectDB"></include>
-		 where tppWriter = #{value}
-	</select>
-	
-	
-	<!-- 11111111111111111111111111첫번재 수정 사항 11111111111111111111111111111111 -->
-	
-	
-	<!-- 전체프로젝트 조회'o'인거이면서 카테고리가 ___인거 찾기 paging처리 select문 -->
-	 <select id="selectOAndCategoryTpProjectPaging" parameterType="map" resultMap="tpProject-resultmap">
-	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 		from(
-	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 			from(
-	 				<include refid="selectAllProjectDB"/>
-				 	where tppState like 'o' and tppCategory like #{tppCategory}
-	 				order by tppFundingLastDate
-	 			)
-	 		)
-	 	where page = #{pageNo}
-	 </select>
-	 
-	
-	<select id="selectOAndCategoryCountProject" resultType="int">
-		select count(tppState) from tpproject where tppState like 'o' and tppCategory like #{tppCategory}
-	</select>
-	
-	
-	
-	<!-- 관리자가 프로젝트 조회 ____인거 찾기 paging처리 select문 -->
-	 <select id="adminCheckCategory" parameterType="map" resultMap="tpProject-resultmap">
-	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 		from(
-	 			select ceil(rownum/#{contentPerPage}) page, tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
-				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
-				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
-	 			from(
-	 				<include refid="selectAllProjectDB"/>
-				 	where tppState like #{check}
-	 				order by tppFundingLastDate
-	 			)
-	 		)
-	 	where page = #{pageNo}
-	 </select>
-	 
-	<select id="adminCheckCountProject" parameterType="String" resultType="int">
-		select count(tppState) from tpproject where tppState like #{check}
-	</select>
-	
-	<update id="updateTpProjectById" parameterType = "tpProject"> 
-		update from tpproject 
-		set (tppTitle = #{tppTitle}, 
-			tppProjectContent= #{tppProjectContent},
-			tppWriteDate =	#{tppWriteDate}, 
-			tppTargetAmount=	#{tppTargetAmount}, 
-			tppFundingStartDate=	#{tppFundingStartDate}, 
-			tppFundingLastDate=	#{tppFundingLastDate},
-		 	tppState=	 #{tppState}, 
-		 	tppMainImg=	 #{tppMainImg}, 
-		 	tppCategory=	 #{tppCategory})
-		 		 
-		 where tppid = #{tppId}
-	</update>
-	
-	 
-</mapper>
->>>>>>> branch 'master' of https://github.com/LeeSangGuk/tippingpoint.git
