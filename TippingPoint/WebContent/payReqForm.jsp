@@ -13,7 +13,7 @@
 %>
 	<h2>프로젝트 페이지 내 후원 폼</h2>
 	후원방식 선택
-	<form name="frmPayStart" action="/TippingPoint/pay/payRequest.tp" method="post" onsubmit="return chkPayFrm(this)">
+	<form name="frmPayStart" action="/TippingPoint/payRequest.tp" method="post" onsubmit="return chkPayFrm(this)">
 		회원ID: <input type="text" name="strUserId" value="${sessionScope.userLoginInfo}" /><br/>
 		프로젝트 ID: <input type="text" name="tppId" value="id1" /><br/>
 		프로젝트 Title: <input type="text" name="tppTitle" value="myProjectTitle" /><br/>

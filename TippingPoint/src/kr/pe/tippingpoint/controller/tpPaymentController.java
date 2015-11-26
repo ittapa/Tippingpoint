@@ -21,7 +21,7 @@ import kr.pe.tippingpoint.vo.TpFunder;
  *
  */
 @Controller
-@RequestMapping("/pay/")
+//@RequestMapping("/pay/")
 public class tpPaymentController {
 	
 	@Autowired
@@ -73,11 +73,13 @@ public class tpPaymentController {
 		
 		
 		
-		String strView = "/WEB-INF/view/body/tpPayment/";
+//		String strView = "/WEB-INF/view/body/tpPayment/";
+		String strView = "tpPayment/";
 		if(tppPayType == "p"){ // 현금 계좌이체
-			strView += "payAccountReq.jsp";
+			strView += "payAccountReq.tiles";
 		} else { // card
-			strView += "payCardReq.jsp";
+//			strView += "payCardReq.jsp";
+			strView += "payRequest.tiles";
 		}
 		
 		
