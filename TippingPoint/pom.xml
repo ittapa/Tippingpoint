@@ -31,7 +31,7 @@
 				<version>2.2</version>
 				<configuration>
 					<!-- <path>/${project.build.finalName}</path> -->
-					<path>/tippingpoint</path>
+					<path>/TippingPoint</path>
 					<update>true</update>
 					<url>http://tippingpoint.pe.kr:8888/manager/text</url>
 					<server>tomcatServer</server>
