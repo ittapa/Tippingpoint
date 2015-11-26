@@ -408,11 +408,17 @@ public class TpProjectController {
 	
 	//프로젝트 수정 메서드
 		@RequestMapping("/tpProjectModifyForm.tp")
-		public ModelAndView tpProjectModifyForm(@RequestParam String tppId){
+		public String tpProjectModifyForm(@RequestParam String tppId, ModelMap map){
 			
+			//카테고리 호출
+			List<TpProjectCategory> list = service.tpProjectCategoryList();
+			map.addAttribute("categoryList", list);
+			
+			//프로젝트 내용들 호출
 			TpProject tpProject = service.findTpProjectById(tppId);
+			map.addAttribute("tpProject", tpProject);
 			
-			return new ModelAndView("tpMyPage/tpProjectModifyForm.tiles", "tpProject", tpProject);
+			return "tpMyPage/tpProjectModifyForm.tiles";
 		}
 		
 		
@@ -517,7 +523,7 @@ public class TpProjectController {
 			}else{
 				//TODO 
 				//이미지 안넣었을때 디폴트 이미지 수정이라서 필용벗음
-				//tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
+				tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
 			}
 			
 

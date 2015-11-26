@@ -215,7 +215,7 @@
 	</select>
 	
 	<update id="updateTpProjectById" parameterType = "tpProject"> 
-		update from tpproject 
+		update tpproject 
 		set (tppTitle = #{tppTitle}, 
 			tppProjectContent= #{tppProjectContent},
 			tppWriteDate =	#{tppWriteDate}, 
