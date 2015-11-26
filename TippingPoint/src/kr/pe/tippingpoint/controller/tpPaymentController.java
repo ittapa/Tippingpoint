@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.pe.tippingpoint.service.TpFunderAccountAccessServiceImpl;
 import kr.pe.tippingpoint.vo.TpFunder;
 
+/**
+ * 결제 컨트롤러
+ * @author Timothy 2015-11-26
+ *
+ */
 @Controller
 @RequestMapping("/pay/")
 public class tpPaymentController {
@@ -22,6 +27,15 @@ public class tpPaymentController {
 	@Autowired
 	private TpFunderAccountAccessServiceImpl TpFunderAccService;
 
+	/**
+	 * 카드 / 현금 결제 요청 페이지 핸들러
+	 * @param: String tppPayType - 결제 타입("p": 현금 계좌이체 / "c": 카드) 
+	 * @param String tppTitle - 프로젝트 제목 
+	 * @param int tpAmount - 결제 금액
+	 * @param session
+	 * @param model
+	 * @return URL: 계좌이체 요청 페이지 or 카드 결제 요청 페이지
+	 */
 	@RequestMapping("payRequest.tp")
 	public String payRequest(@RequestParam String tppPayType, @RequestParam String tppTitle, @RequestParam int tpAmount, HttpSession session, ModelMap model){
 		// TODO: 세션 처리되는 페이지 통합시 테스트 코드 삭제		
@@ -67,8 +81,6 @@ public class tpPaymentController {
 		}
 		
 		
-		// TODO: 테스트 후 삭제
-		System.out.println("tppPayType: " + tppPayType + " / tppId: " + tppId + " / tpAmount: " + tpAmount + " / strView: " + strView);
 		
 		
 		model.addAttribute("tppId", tppId);
@@ -80,6 +92,10 @@ public class tpPaymentController {
 		model.addAttribute("tpfEmail", tpFunder.getTpfEmail());
 		model.addAttribute("LGD_TIMESTAMP", strCurrent);
 		
+		// TODO: 테스트 후 삭제
+		System.out.println("tppId: " + tppId + " + tppTitle: " + tppTitle + " + tppPayType: " + tppPayType 
+				+ " / tppId: " + tppId + " / tpAmount: " + tpAmount + " / strOrderUId: " + strOrderUId 
+				+ " / tpFunder.getTpfEmail(): " + tpFunder.getTpfEmail() + " / strCurrent: " + strCurrent + " / strView: " + strView);
 		
 		return strView;
 	}
