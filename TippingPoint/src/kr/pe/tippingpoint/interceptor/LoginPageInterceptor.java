@@ -8,31 +8,31 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.ModelAndViewDefiningException;
 
-public class LoginPageInterceptor implements HandlerInterceptor{
-	
+public class LoginPageInterceptor implements HandlerInterceptor {
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		System.out.println("------------로그인페이지 확인------------");
 		HttpSession session = request.getSession();
-		if(session.getAttribute("userLoginInfo")!=null){
-			//안한경우 - ModelAndViewDefiningException 발생
+		if (session.getAttribute("userLoginInfo") != null) {
+			// 안한경우 - ModelAndViewDefiningException 발생
 			throw new ModelAndViewDefiningException(new ModelAndView("/main.tp"));
-		} 
-		//로그인한 사용자. ->handler(컨트롤러) 호출
+		}
+		// 로그인한 사용자. ->handler(컨트롤러) 호출
 		return true;
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		
+
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		
+
 	}
-	
+
 }

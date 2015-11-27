@@ -8,17 +8,16 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.ModelAndViewDefiningException;
 
-public class LoginCheckInterceptor implements HandlerInterceptor {
+public class AdminCheckInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("------------로그인 확인------------");
+		System.out.println("------------관리자 확인------------");
 		HttpSession session = request.getSession();
-		if (session.getAttribute("userLoginInfo") == null) {
-			request.setAttribute("unLogin", "unLogin");
+		if (session.getAttribute("adminId") == null) {
 			// 안한경우 - ModelAndViewDefiningException 발생
-			throw new ModelAndViewDefiningException(new ModelAndView("/tpLogin/tpLoginPage.tp"));
+			throw new ModelAndViewDefiningException(new ModelAndView("/tpAdminAccess.tp"));
 		}
 		// 로그인한 사용자. ->handler(컨트롤러) 호출
 		return true;

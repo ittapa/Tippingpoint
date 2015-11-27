@@ -194,6 +194,9 @@
 	
 	
 	
+	
+	
+	
 	<!-- 관리자가 프로젝트 조회 ____인거 찾기 paging처리 select문 -->
 	 <select id="adminCheckCategory" parameterType="map" resultMap="tpProject-resultmap">
 	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
@@ -218,15 +221,16 @@
 	
 	<update id="updateTpProjectById" parameterType = "tpProject"> 
 		update tpproject 
-		set (tppTitle = #{tppTitle}, 
-			tppProjectContent= #{tppProjectContent},
+		set 
+			tppTitle = #{tppTitle}, 
+			tppProjectContent=#{tppProjectContent},
 			tppWriteDate =	#{tppWriteDate}, 
-			tppTargetAmount=	#{tppTargetAmount}, 
-			tppFundingStartDate=	#{tppFundingStartDate}, 
+			tppTargetAmount=#{tppTargetAmount}, 
+			tppFundingStartDate=#{tppFundingStartDate}, 
 			tppFundingLastDate=	#{tppFundingLastDate},
 		 	tppState=	 #{tppState}, 
 		 	tppMainImg=	 #{tppMainImg}, 
-		 	tppCategory=	 #{tppCategory})
+		 	tppCategory=	 #{tppCategory}
 		 		 
 		 where tppid = #{tppId}
 	</update>

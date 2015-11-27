@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String strCurrentUrl = request.getScheme() + "://" + request.getServerName() 
 			+ ((request.getServerPort() != 80) ? ":" : "") + request.getServerPort() + request.getContextPath() + "/"; 
@@ -34,12 +33,8 @@
 								<li>© Tipping Point. All rights reserved.</li>
 								<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 								<li><a href="#">개인정보보호정책</a></li>
-								<c:if test="${sessionScope.adminId != null}">
-									<li><a href="${initParam.rootPath}/logout.tp">관리자 로그아웃</a></li>
-								</c:if>
-								<c:if test="${sessionScope.adminId == null}">
+
 								<li><a href="${initParam.rootPath}/tpAdminAccess.tp">관리자 로그인</a></li>
-								</c:if>
 							</ul>
 						</div>
 

@@ -20,6 +20,9 @@
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpFunderMapper.xml"/>
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpProposerMapper.xml"/>
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpProjectCategoryMapper.xml"/>
+		<mapper resource="kr/pe/tippingpoint/mybatis/tpBankListMapper.xml"/>
 	</mappers>
 
 </configuration>
+
+

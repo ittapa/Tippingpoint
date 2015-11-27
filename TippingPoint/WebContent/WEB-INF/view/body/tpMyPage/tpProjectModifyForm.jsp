@@ -21,7 +21,7 @@
 $(document).ready(function(){
 
 	
-	
+	//네이버 에디터 textarea 수정
 	 var oEditors = [];
 	 nhn.husky.EZCreator.createInIFrame({
 	  oAppRef: oEditors,
@@ -38,10 +38,7 @@ $(document).ready(function(){
 	  
 	  
 	 });
-	 
-	
-	 
-	 
+
 	 
 	 //저장을 눌렀을시 디폴트값인 
 	 $("#save").click(function(){
@@ -76,9 +73,9 @@ $(document).ready(function(){
 			
 			//네이버 에디터 처리부분
 			oEditors.getById["tppProjectContent"].exec("UPDATE_CONTENTS_FIELD", []);
-	         
+			document.getElementById("tppState").value = "a";
 	        // 이부분에 에디터 validation 검증
-	       var saveConfirm =  confirm($("#tppProjectContent").val());
+	       var saveConfirm =  confirm("프로젝트를 저장하시겠습니까?");
 	        
 	        if(!saveConfirm){
 	        	return false;
@@ -95,20 +92,47 @@ $(document).ready(function(){
 	 // 승인요청을 눌렀을시
 	 $("#projectSubmit").click(function(){
 
-	      //////
+		
+		
+			//시작일 입력여부
+
+			if(!$("#date1").val()){
+			alert("프로젝트 시작일을 입력하시기 바랍니다.");
+			return false
+			}
+			
+			//마감일 입력여부
+		
+			if(!$("#date2").val()){
+				alert("프로젝트 마감일을 입력하시기 바랍니다.");
+				return false
+			}
+			
+			//목표금액 입력여부
+			if(!$("#tppTargetAmount").val()){
+				alert("목표금액을 입력하시기 바랍니다.");
+				return false;
+			}
 		 
 		 
 		 //id가 smarteditor인 textarea에 에디터에서 대입
 		        oEditors.getById["tppProjectContent"].exec("UPDATE_CONTENTS_FIELD", []);
 		        //document.getElementByName("tppState").value;
-		       document.getElementById("tppState").value = "b";
+		     
 		        // 이부분에 에디터 validation 검증
-		       var submitConfirm= confirm("관리자에게 프로젝트승인요청을 하시겠습니까?"); 
-				
-		        if(!submitConfirm){
+		       var submitConfirm= confirm("내용 수정 및 관리자에게 프로젝트 승인요청을 하시겠습니까?"); 
+		            
+		       if(!submitConfirm){
 		        	return false;
 		        }else{
-		    
+		       	var tppStateValue = document.getElementById("tppState").value;
+				if(tppStateValue !='c'){
+					alert("수정수정수정");
+				}else{
+		       	tppStateValue = "b";
+				}
+		       	alert(tppStateValue);
+		        	
 		        //폼 submit
 		        $("#tpProjectForm").submit();
 		        }
@@ -158,7 +182,7 @@ $(document).ready(function(){
 
 	
 	
-	
+	<spring:hasBindErrors name="tpProject"/>
 	<form action="modifyTpProject.tp" method="post" id ="tpProjectForm"
 		enctype="multipart/form-data">
 
@@ -184,18 +208,23 @@ $(document).ready(function(){
 			<label>프로젝트 제목 : <input type="text" name="tppTitle" value = '${requestScope.tpProject.tppTitle }'/></label>
 			<span class="error"><form:errors path = "tpProject.tppTitle" delimiter = " | "/></span>
 			<br /><br/>
-			<label>카테고리 : 
-			<select name="tppCategory">
+			
+			<!-- 카테고리 -->
+			<label>카테고리 :
+			<select name="tppCategory" selected = "${list.tppCategory }">
 			<option  value= "null">카테고리를 선택하세요</option>
 			<c:choose>
 				<c:when test="${fn:length(requestScope.categoryList)==0 }">
 					<option value = null>카테고리 정보를 가져오지 못했습니다.</option>
 				</c:when>
-				
+			
 				<c:otherwise>
-					
+					${requestScope.tpProject.tppCategory }
 					<c:forEach items="${requestScope.categoryList }" var="list">
-							<option  value= "${list.tppCategory }">${list.tppCategoryName }</option>
+							<option  value= "${list.tppCategory }" 
+							${list.tppCategory==requestScope.tpProject.tppCategory ? 'selected="selected"' : '' }>
+							${list.tppCategoryName }
+							</option>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>	
@@ -204,8 +233,11 @@ $(document).ready(function(){
 			
 			<br/>
 			<br/>
-			 <img src ="${requestScope.tpProject.tppMainImg }" width="200" ><br/>
-			원래이미지<br/>
+			<div>
+			<img src ="${requestScope.tpProject.tppMainImg }" width="200" ><br/>
+			기존 이미지<br/>
+			<input type = "hidden" name = "tppMainImg" value = "${requestScope.tpProject.tppMainImg }" >
+			</div>
 			<br/>
 			변경할 사진 업로드	: <input type="file" name="upfile"><br /> 
 			
@@ -233,7 +265,7 @@ $(document).ready(function(){
 					
 					<br/>
 					<br/>
-				프로젝트 마감일 : <input type="text" id="date2" name="tppFundingLastDate"  readonly="readonly" value = '${requestScope.tpProject.tppFundingLastDate }'/>
+				프로젝트 마감일 : <input type="text" id="date2" name="tppFundingLastDate" id ="tppFundingLastDate" readonly="readonly" value = '${requestScope.tpProject.tppFundingLastDate }'/>
 				<span class="error"><form:errors path = "tpProject.tppFundingLastDate" delimiter = " | "/></span>
 				</p>
 			<br/> 
@@ -253,26 +285,49 @@ $(document).ready(function(){
 			 </textarea>
 			<br/> 
 	
-			<br/><br/>
+		
 			<!-- //승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 
 								디폴트값 a  승인요청b  승인요청 취소시 다시 a로  삭-->
+			
+			<br>
+			프로젝트 현재 상태 :
 			<input type = "hidden" id = "tppState" name = "tppState" value = "${requestScope.tpProject.tppState }"/>
-			
-			
-			
-			
-			
 			<c:choose>
-				<c:when test="${requestScope.tpProject.tppState }=='O' }">
+				<c:when test = "${requestScope.tpProject.tppState =='a' }">
+				저장<br/><br/>
+					<input type="button" id="save" value="저장" /> 
+					<input type="button" id="projectSubmit" value="승인요청" />
+				</c:when>
+				
+				<c:when test = "${requestScope.tpProject.tppState =='b' }">
+				승인요청<br/>
+						<input type="button" id="projectSubmit" value="내용 수정" />
+						<input type="button" id="save" value="승인요청 취소" /><br/>
+						승인 요청취소 시 저장상태로 변경됩니다.
+				</c:when>
+				
+				<c:when test = "${requestScope.tpProject.tppState =='c' }">
+				승인완료<bt/>
 						<input type="button" id="projectSubmit" value="내용 수정" />
 				</c:when>
 				
-				<c:otherwise>
+				<c:when test = "${requestScope.tpProject.tppState =='d' }">
+				승인거부
 					<input type="button" id="save" value="저장" /> 
-					<input type="button" id="projectSubmit" value="승인요청" />
-				</c:otherwise>
-			</c:choose>	
+					<input type="button" id="projectSubmit" value="재승인요청" />
+				</c:when>
+				<c:when test = "${requestScope.tpProject.tppState =='e' }">
+				펀딩종료
+				</c:when>
+			</c:choose>
+		<br/><br/>
+			</form>
+		
+			
+		
+
 			
 			
-	</form>
+			
+
 

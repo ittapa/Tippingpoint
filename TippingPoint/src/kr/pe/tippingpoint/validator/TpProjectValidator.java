@@ -41,6 +41,7 @@ public class TpProjectValidator implements Validator {
 	
 	
 		if(tpProject.getTppCategory().equals("null")){
+			System.out.println("아메리카노");
 			errors.rejectValue("tppCategory", "selected", new Object[]{"카테고리"}, "필수입력사항입니다.");
 		}
 		

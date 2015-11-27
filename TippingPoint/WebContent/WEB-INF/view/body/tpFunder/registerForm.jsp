@@ -91,6 +91,10 @@ $(document).ready(function() { //핸드폰번호 3개를 입력받아 db한컬�
 			alert("아이디 중복체크를 해주세요");
 			return false;
 		}
+		else if(tpfunder.tpfPassword.value != tpfunder.passwordConfirm.value){
+			alert("비밀번호를 확인하세요");
+			return false;
+		}
 		tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
 		tpfunder.submit();
 	});
@@ -119,7 +123,6 @@ $(document).ready(function(){
 					document.tpFunder.id_hidden.value="Y";
 				}else{
 					alert("중복입니다.");
-					document.tpFunder.id_hidden.value="N";
 				}
 			},
 			error: function(){

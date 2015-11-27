@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri= "http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -13,13 +14,11 @@
 	<style type = "text/css">
 	.error{
 	color: red;
-	
 	}
 </style>
 
    <script type="text/javascript">
-$(document).ready(function(){
-
+	$(document).ready(function(){
 	
 	
 	 var oEditors = [];
@@ -78,7 +77,7 @@ $(document).ready(function(){
 			oEditors.getById["tppProjectContent"].exec("UPDATE_CONTENTS_FIELD", []);
 	         
 	        // 이부분에 에디터 validation 검증
-	       var saveConfirm =  confirm($("#tppProjectContent").val());
+	       var saveConfirm =  confirm("프로젝트를 저장하시겠습니까?");
 	        
 	        if(!saveConfirm){
 	        	return false;
@@ -95,7 +94,31 @@ $(document).ready(function(){
 	 // 승인요청을 눌렀을시
 	 $("#projectSubmit").click(function(){
 
-	      //////
+			//id 중복확인여부
+	       	if($("#idCheck").val() !="O"){
+	       		alert("프로젝트 ID 중복확인을 하시기 바랍니다.");
+	       		return false;
+	       	}
+		
+			//시작일 입력여부
+
+			if(!$("#date1").val()){
+			alert("프로젝트 시작일을 입력하시기 바랍니다.");
+			return false
+			}
+			
+			//마감일 입력여부
+		
+			if(!$("#date2").val()){
+				alert("프로젝트 마감일을 입력하시기 바랍니다.");
+				return false
+			}
+			
+			//목표금액 입력여부
+			if(!$("#tppTargetAmount").val()){
+				alert("목표금액을 입력하시기 바랍니다.");
+				return false;
+			}
 		 
 		 
 		 //id가 smarteditor인 textarea에 에디터에서 대입
@@ -172,6 +195,8 @@ $(document).ready(function(){
 				 alert("프로젝트 저장요청 실패");
 			 }
 		}
+		
+	
 		</script>	
 			
 		<label>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }'></label>
@@ -196,19 +221,59 @@ $(document).ready(function(){
 				<c:otherwise>
 					
 					<c:forEach items="${requestScope.categoryList }" var="list">
-							<option  value= "${list.tppCategory }">${list.tppCategoryName }</option>
+							<option  value= "${list.tppCategory }">  ${list.tppCategoryName }</option>
 					</c:forEach>
+					
 				</c:otherwise>
 			</c:choose>	
 			</select>
+			</label>
 			<span class="error"><form:errors path = "tpProject.tppCategory" delimiter = " | "/></span>
+
+			<br/>
+			<br/>
+			<script type="text/javascript">
+			//이미지 관련 삭제 및 호출
+			  $(function() {
+				$("#tppMainImgDelete").on("click", function(){
+					alert(	$("#upfile").val());
+					$("#upfile").val("");
+					
+				});
+	
+				//이미지 변경된 이미지 호출
+				 $('input:file').change(function(){
+					alert(this.value);
+					alert($("#imga"));
+					alert($("#imga").attr("src"));
+					
+					
+					$("#imga").attr("src",this.value);				
+					
+
+				});
+		
+			  });
+			</script>
+			
+			<img src ="${initParam.rootPath}/test/Desert.jpg" alt = "기본이미지" width ="300"  height = "300" id = "imga">
+		
+			대표 이미지	: 
+			<div class= "mainImagfileBox">
+				<label >
+					<input type="file" name="upfile"  id = "upfile"><br />
+				</label>
+				<input type ="button" id = "tppMainImgDelete" value = "삭제">
+			</div>
+			<br/>
+			<br>
+			메롱메롱
 			
 			<br/>
-			<br/>
-			썸네일 사진	: <input type="file" name="upfile" ><br /> 
-			<br/>
-			
-			 
+		 
+			대표이미지는 가로/세로 300px이하를 권장합니다.
+			<br/><br/>
+	
 			 
 			  <script>
 				//날짜 깞 처리 

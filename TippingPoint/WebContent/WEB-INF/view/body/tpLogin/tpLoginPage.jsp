@@ -12,6 +12,17 @@ table.login {
  }
 </style>
 
+
+<script type="text/javascript">
+
+var unLogin = "<%=request.getAttribute("unLogin")%>";
+$(document).ready(function loginCheck(){
+	if(unLogin == "unLogin"){
+		alert("로그인이 필요한 페이지 입니다.")
+	}
+});
+
+</script>
 <script type="text/javascript">
 <%session.setAttribute("backpage", request.getHeader("referer"));%>
 var referrer = document.referrer;
