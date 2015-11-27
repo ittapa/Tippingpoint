@@ -2,7 +2,8 @@
 <%@ page import="lgdacom.XPayClient.XPayClient"%>
 
 <%
-	String configPath 	= "C:/lgdacom";  //LG유플러스에서 제공한 환경파일("/conf/lgdacom.conf") 위치 지정.	
+//	String configPath 	= "C:/lgdacom";  //LG유플러스에서 제공한 환경파일("/conf/lgdacom.conf") 위치 지정.	
+	String configPath 	= "${initParam.LGUPlusPgConfPath}";  //LG유플러스에서 제공한 환경파일("/conf/lgdacom.conf") 위치 지정.	
 	
     /*
      * [LG유플러스 환경파일 UPDATE]

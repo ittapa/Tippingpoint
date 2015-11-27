@@ -8,6 +8,17 @@
     <param-name>rootPath</param-name>
     <param-value>/TippingPoint</param-value>
   </context-param>
+  <!-- TippingPoint 웹앱 절대경로 -->
+  <context-param>
+  	<param-name>ServerRootPath</param-name>
+  	<param-value>/usr/local/tomcat8/webapps/TippingPoint/</param-value>
+  </context-param>
+  <!-- 결제모듈 환경설정파일 위치: 외부공개 금지 -->
+  <context-param>
+  	<param-name>LGUPlusPgConfPath</param-name>
+  	<!-- <param-value>/usr/local/tomcat8/webapps/TippingPoint/WEB-INF/lgdacom/conf</param-value> -->
+  	<param-value>/usr/local/tomcat8/webapps/TippingPoint/WEB-INF/lgdacom</param-value>
+  </context-param>
   <servlet>
     <servlet-name>springDispatcherServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
