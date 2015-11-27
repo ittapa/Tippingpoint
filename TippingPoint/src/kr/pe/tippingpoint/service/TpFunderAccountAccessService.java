@@ -3,6 +3,7 @@ package kr.pe.tippingpoint.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.pe.tippingpoint.vo.TpBankList;
 import kr.pe.tippingpoint.vo.TpFunder;
 import kr.pe.tippingpoint.vo.TpProposer;
 
@@ -65,4 +66,7 @@ public interface TpFunderAccountAccessService {
 	
 	//////////////////////////////////////////////수정중/////////////////////////////////////////////////
 	void addTpfQualFytpproposer(String writer) throws Exception;
+	
+	
+	List<TpBankList> getAllBankList();
 }

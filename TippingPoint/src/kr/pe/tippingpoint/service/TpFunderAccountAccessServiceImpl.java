@@ -8,11 +8,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.pe.tippingpoint.dao.TpBankListDaoImpl;
 import kr.pe.tippingpoint.dao.TpFunderDaoImpl;
 import kr.pe.tippingpoint.dao.TpProposerDao;
 import kr.pe.tippingpoint.exception.DuplicatedIdException;
 import kr.pe.tippingpoint.exception.TpFunderNotFoundException;
 import kr.pe.tippingpoint.util.TpFunderPagingBean;
+import kr.pe.tippingpoint.vo.TpBankList;
 import kr.pe.tippingpoint.vo.TpFunder;
 import kr.pe.tippingpoint.vo.TpProposer;
 
@@ -88,6 +90,7 @@ public class TpFunderAccountAccessServiceImpl implements TpFunderAccountAccessSe
 	@Override
 	public void addProposerInfo(TpProposer tposer, String writer) throws Exception{
 		pdao.insertInfo(tposer);
+		
 		Map map = new HashMap();
 		map.put("tppId", tposer.getTpfId());
 		map.put("value", "T");
@@ -101,7 +104,14 @@ public class TpFunderAccountAccessServiceImpl implements TpFunderAccountAccessSe
 		//pdao.addTpfQualFy(t);
 	}
 	
+	@Autowired
+	private TpBankListDaoImpl bkdao;
 	
+	@Override
+	public List<TpBankList> getAllBankList() {
+			
+		return bkdao.allTpBankList();
+	}
 	
 	
 }

@@ -64,7 +64,7 @@ public class TpProjectController {
 		@RequestMapping("/submitTpProject")
 
 		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, 
-											HttpServletRequest request, ModelMap map, Errors errors,HttpSession session)
+											HttpServletRequest request, ModelMap map, Errors errors, HttpSession session)
 											throws IOException {
 			
 			//등록관련 validator 처리
@@ -429,23 +429,31 @@ public class TpProjectController {
 											HttpServletRequest request, ModelMap map, Errors errors,HttpSession session)
 											throws IOException {
 			
+			
 			//등록관련 validator 처리
 			TpProjectValidator val = new TpProjectValidator();
 	
 			val.validate(tpvo, errors);
 			
 			System.out.println("프로젝트 등록중 총 검증 실패 개수:" +errors.getErrorCount());
+			System.out.println(errors);
+			
+			
 			System.out.println(tpvo.getTppState());
 			if(errors.hasErrors()){//  true = 오류가 있다.
+				//카테고리 호출
+				List<TpProjectCategory> list = service.tpProjectCategoryList();
+				map.addAttribute("categoryList", list);
 				if(tpvo.getTppState().equals("b")){
 					
 					map.addAttribute("errorCheck", "submitError");					
 				}else if(tpvo.getTppState().equals("a")){
 					
-					map.addAttribute("errorCheck", "saveError");	
+					map.addAttribute("errorCheck", "saveError");
 				}
 				
-				return "/tpProjectModifyForm.tp";
+				//return "/tpProjectModifyForm.tp";
+				return "tpMyPage/tpProjectModifyForm.tiles";
 				
 			}
 	
@@ -477,6 +485,7 @@ public class TpProjectController {
 			String rootPath = request.getSession().getServletContext().getInitParameter("rootPath");
 			
 			
+		
 			if (upfile != null && !upfile.isEmpty()) { // 업로드된 파일이 있다.
 				// 업로드 된 파일으 ㅣ정보를 조회
 				// 파일을 임시저장경로에서 최종 저장경로로 이동.
@@ -522,8 +531,11 @@ public class TpProjectController {
 				tpvo.setTppMainImg(rootPath+"/"+filePath_A+realMainImgName); //upfile
 			}else{
 				//TODO 
-				//이미지 안넣었을때 디폴트 이미지 수정이라서 필용벗음
-				tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
+				//새로 이미지 안넣었을때
+				if(tpvo.getTppMainImg() == null){
+					tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
+				}
+					
 			}
 			
 
@@ -532,12 +544,13 @@ public class TpProjectController {
 			//비즈니스 로직 처리하기 서비스
 			service.updateTpProject(tpvo);
 			
-			if(tpvo.getTppState()=="b"){ //승인요청 성공페이지
-			return "tpProject/tpProjectRequestSuccess.tiles";
-			}
-			
-			return "tpProject/tpProjectSaveSuccess.tiles";	
+				if(tpvo.getTppState()=="b"){ //승인요청 성공페이지
+					return "redirect: tpProject/tpProjectRequestSuccess.tiles";
+				}else if (tpvo.getTppState()=="s"){ // 저장성공 페이지
+				return "redirect: tpProject/tpProjectSaveSuccess.tiles";	
+				}
+				return "redirect: tpProject/tpProjectSaveSuccess.tiles";	//일단 저장
 		}
-	
+		
 		
 }

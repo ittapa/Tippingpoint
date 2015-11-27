@@ -75,10 +75,6 @@ $(document).ready(function() {
          $("#tpfPhoneNum2").focus();
          return false;
       }
-      else if(tpfunder.tpfPassword.value != tpfunder.passwordConfirm.value){
-			alert("비밀번호를 확인하세요");
-			return false;
-	  }
       tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
       tpfunder.submit();
    });

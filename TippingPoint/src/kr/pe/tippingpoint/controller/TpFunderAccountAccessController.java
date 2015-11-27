@@ -22,6 +22,8 @@ import kr.pe.tippingpoint.mail.Email;
 import kr.pe.tippingpoint.mail.EmailSender;
 import kr.pe.tippingpoint.service.TpFunderAccountAccessServiceImpl;
 import kr.pe.tippingpoint.validator.TpFunderValidator;
+import kr.pe.tippingpoint.validator.TpProposerValidator;
+import kr.pe.tippingpoint.vo.TpBankList;
 import kr.pe.tippingpoint.vo.TpFunder;
 import kr.pe.tippingpoint.vo.TpProposer;
 
@@ -171,6 +173,11 @@ public class TpFunderAccountAccessController {
 	@RequestMapping("funderModifyRegister")
 	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model, HttpSession session,
 			HttpServletRequest request) throws Exception {
+		TpFunderValidator validate = new TpFunderValidator();
+		validate.validate(tpfunder, errors);
+		if (errors.hasErrors()) {
+			return "tpMyPage/modifyRegister.tiles";
+		}
 		String tpfId = (String) session.getAttribute("userLoginInfo");
 		System.out.println(tpfId);
 
@@ -208,36 +215,42 @@ public class TpFunderAccountAccessController {
 
 	// 회원정보 추가
 	//권한 업글
-	//////////////////////////////////////////////수정중/////////////////////////////////////////////////
 	@RequestMapping("addInfo")
-	public String adddInfo(HttpSession session, HttpServletRequest request) throws Exception {
+	public String adddInfo(@ModelAttribute TpProposer tposer,HttpSession session, HttpServletRequest request, Errors errors) throws Exception {
 		// 세션에서 아이디 불러옴
 		String writer = (String) session.getAttribute("userLoginInfo");
 		System.out.println(writer);
-		int residentRegistrationFirstNum = Integer.parseInt(request.getParameter("residentRegistrationFirstNum"));
-		int residentRegistrationLastNum = Integer.parseInt(request.getParameter("residentRegistrationLastNum"));
-		int corporateRegistrationNumber = Integer.parseInt(request.getParameter("corporateRegistrationNumber"));
-		// 값 넣어주기
-		TpProposer tposer = new TpProposer();
 		
+		// 값 넣어주기		
 		
 		tposer.setTpfId(writer);// 아이디
 		tposer.setAccount(request.getParameter("account"));// 계좌
 		tposer.setProposerType(request.getParameter("proposerType"));// 일반개인or법인or개인사업자
 		tposer.setCertification("F");
-		tposer.setResidentRegistrationFirstNum(residentRegistrationFirstNum);// 주민번호
+		tposer.setResidentRegistrationFirstNum(request.getParameter("residentRegistrationFirstNum"));// 주민번호
 																				// 앞자리
-		tposer.setResidentRegistrationLastNum(residentRegistrationLastNum);// 주민번호
+		tposer.setResidentRegistrationLastNum(request.getParameter("residentRegistrationLastNum"));// 주민번호
 																			// 뒷자리
-		tposer.setCorporateRegistrationNumber(corporateRegistrationNumber);// 사업자번호
+		tposer.setCorporateRegistrationNumber(request.getParameter("corporateRegistrationNumber"));// 사업자번호
+		
+		
+		
 		System.out.println(tposer.toString());
 
+		TpProposerValidator validate = new TpProposerValidator();
+		validate.validate(tposer, errors);
+		
+		System.out.println("프로퍼저 등록 검증 에러필드 개수 : "+errors.getErrorCount());
+		if(errors.hasErrors()){
+			return "tpMyPage/tpProposer.tiles";
+		}
+		System.out.println("프로퍼저 벨리데이션 통과");
+		
 		service.addProposerInfo(tposer, writer);
 
 		
 		TpFunder tpFunder = service.findTpFunderById(writer);
 		System.out.println(tpFunder.toString());
-		//service.addTpfQualFytpproposer(writer);
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 
@@ -323,6 +336,13 @@ public class TpFunderAccountAccessController {
 			txt = "등록된 ID가 아닙니다.";
 		}
 		return txt;
+	}
+	//추가정보 입력창으로 이동
+	@RequestMapping("Proposer")
+	public String bankAllList(@ModelAttribute TpBankList lists, ModelMap model) {
+		model.addAttribute("list", service.getAllBankList());
+		System.out.println();
+		return "tpMyPage/tpProposer.tiles";
 	}
 }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="tpBankListMapper">
+
+  <resultMap type="tpBankList" id="bankList-result">
+      <id property="bankKr" column="bankKr"/>
+      <result property="bankEr" column="bankEr"/>
+      <result property="code" column="code"/>
+   </resultMap>
+
+<select id = "selectAllBankList" resultMap="bankList-result">
+select * from bankList
+</select>
+	
+
+
+	 
+</mapper>

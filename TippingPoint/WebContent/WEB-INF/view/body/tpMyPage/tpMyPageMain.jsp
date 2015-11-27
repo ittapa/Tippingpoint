@@ -12,7 +12,9 @@
 <br />
 
 <a href="${initParam.rootPath}/searchByWriterProject.tp">내가 등록한 프로젝트 목록</a>
+<br/>
+<a href = "${initParam.rootPath}/">내가 결제한 프로젝트 목록[미구현]</a>
 
 <br />
-<a href="${initParam.rootPath}/tpProposer.tp">추가정보입력</a>
+<a href="${initParam.rootPath}/Proposer.tp">추가정보입력</a>
 <br />

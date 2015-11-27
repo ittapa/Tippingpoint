@@ -59,8 +59,9 @@
    <mvc:view-controller path="/tpMyPage/modifyRegister.tp" view-name="tpMyPage/modifyRegister.tiles"/>
    <!-- 로그인 페이지 -->
    <mvc:view-controller path="/tpLogin/tpLoginPage.tp" view-name="tpLogin/tpLoginPage.tiles"/> 
+   
    <!-- 회원정보 추가 페이지 -->
-   <mvc:view-controller path="/tpProposer.tp" view-name="tpMyPage/tpProposer.tiles"/> 
+<!--    <mvc:view-controller path="/tpProposer.tp" view-name="tpMyPage/tpProposer.tiles"/>  -->
    
    <mvc:view-controller path="/page1.tp" view-name="tpLogin/page1.tiles"/> <!-- test용  -->
    <mvc:view-controller path="/page2.tp" view-name="tpLogin/page2.tiles"/><!-- test용  -->
@@ -77,25 +78,45 @@
    <bean class="org.springframework.context.support.ResourceBundleMessageSource" name="messageSource" p:basename="kr.pe.tippingpoint.exception.error_message"/>
    
    <!-- <인터셉터 설정 -->
-          <mvc:interceptors>
+         <!--  <mvc:interceptors>
           	<mvc:interceptor>
-             <!--  path : ANT 패턴
+              path : ANT 패턴
                      * : 글자수 상관없이 모든 글자
                      ? :   1글자
                      **: 경로에 사용. 자신을포함한 모든 하위경로
-                     /**/login/**/* : 경로에 login만 들어가면 된다. -->
-                     
+                     /**/login/**/* : 경로에 login만 들어가면 된다.
+            </mvc:interceptor>
+         </mvc:interceptors> -->
+         
+         
+          <mvc:interceptors>
+          	<!-- 로그인체크 인터셉터 -->
+          	<mvc:interceptor>
                <mvc:mapping path="/tpProjectRegisterForm.tp"/>
                <bean class="kr.pe.tippingpoint.interceptor.LoginCheckInterceptor" />
             </mvc:interceptor>
-         </mvc:interceptors>
-         <!-- 로그인페이지 체크 인터셉터 -->
-          <mvc:interceptors>
-            <mvc:interceptor>
+          	 <!-- 로그인페이지 체크 인터셉터 -->
+          	 <mvc:interceptor>
                <mvc:mapping path="/tpLogin/tpLoginPage.tp"/>
                <bean class="kr.pe.tippingpoint.interceptor.LoginPageInterceptor" />
             </mvc:interceptor>
-         </mvc:interceptors>    
+          	<!-- 관리자체크 인터셉터 -->
+          	<mvc:interceptor>
+               <mvc:mapping path="/**/tpAdministrator/**/*"/>
+               <bean class="kr.pe.tippingpoint.interceptor.AdminCheckInterceptor" />
+            </mvc:interceptor>
+            <!-- 관리자 로그인페이지 체크 인터셉터 -->
+            <mvc:interceptor>
+               <mvc:mapping path="/tpAdminLogin.tp"/>
+               <bean class="kr.pe.tippingpoint.interceptor.AdminLoginPageInterceptor" />
+            </mvc:interceptor>
+            <!-- 프로젝트 등록 권한 확인 인터셉터 -->
+            <mvc:interceptor>
+               <mvc:mapping path="/tpProjectRegisterForm.tp"/>
+               <bean class="kr.pe.tippingpoint.interceptor.ProperserCheckInterceptor" />
+            </mvc:interceptor>
+         </mvc:interceptors>
+         
 
    <!-- 프로젝트 관련 view 설정  -->
    <!-- View Resolver 관련 설정 -->
