@@ -174,4 +174,5 @@
     </bean>
     <bean id="emailSender" class="kr.pe.tippingpoint.mail.EmailSender">
     </bean>
+
 </beans>

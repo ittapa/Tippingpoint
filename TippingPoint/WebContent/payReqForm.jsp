@@ -14,13 +14,14 @@
 	<h2>프로젝트 페이지 내 후원 폼</h2>
 	후원방식 선택
 	<form name="frmPayStart" action="/TippingPoint/pay/payRequest.tp" method="post" onsubmit="return chkPayFrm(this)">
-		회원ID: <input type="text" name="strUserId" /><br/>
-		프로젝트 ID: <input type="text" name="tppId" /><br/>
+		회원ID: <input type="text" name="strUserId" value="${sessionScope.userLoginInfo}" /><br/>
+		프로젝트 ID: <input type="text" name="tppId" value="id1" /><br/>
+		프로젝트 Title: <input type="text" name="tppTitle" value="myProjectTitle" /><br/>
 		결제 방식: <select name="tppPayType">
-			<option value="c">카드</option>
+			<option value="c" selected="selected">카드</option>
 			<option value="p">계좌이체</option>
-		</select><br/>		
-		결제금액: <input type="text" name="tpAmount" /><br/>
+		</select><br/>
+		결제금액: <input type="text" name="tpAmount" value="1000" /><br/>
 		<input type="submit" value="후원"/><br/>
 	</form>
 </body>
