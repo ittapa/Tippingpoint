@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.Enumeration"%>
+<%@page import ="kr.pe.tippingpoint.vo.TpProject" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri= "http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -73,7 +74,7 @@ $(document).ready(function(){
 			
 			//네이버 에디터 처리부분
 			oEditors.getById["tppProjectContent"].exec("UPDATE_CONTENTS_FIELD", []);
-			document.getElementById("tppState").value = "a";
+			document.getElementById("tppState").value = "A";
 	        // 이부분에 에디터 validation 검증
 	       var saveConfirm =  confirm("프로젝트를 저장하시겠습니까?");
 	        
@@ -126,10 +127,10 @@ $(document).ready(function(){
 		        	return false;
 		        }else{
 		       	var tppStateValue = document.getElementById("tppState").value;
-				if(tppStateValue !='c'){
-					alert("수정수정수정");
+				if(tppStateValue =='O'){
+					
 				}else{
-		       	tppStateValue = "b";
+		       	tppStateValue = "B";
 				}
 		       	alert(tppStateValue);
 		        	
@@ -138,6 +139,33 @@ $(document).ready(function(){
 		        }
 			 	
 		 });
+	 
+	 //메인이미지 삭제
+		var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+			$("#tppMainImgDelete").on("click", function(){
+				/* if(!$("#upfile").val()){
+					alert("추가된 이미지가 없습니다.");
+					return false;
+				} */
+				
+				var imgconfimr = confirm("메인이미지를 기본이미지로 변경합니다.");
+				if(imgconfimr){
+					$("#upfile").val("");
+					document.getElementById('imgView').src=defaultImg;
+				}else{
+					return false
+				}
+			});
+	 
+	 //이미지 되돌리기
+	 var originImag =  '<%=((TpProject)request.getAttribute("tpProject")).getTppMainImg()%>';
+	 		$("#tppMainImgOrigin").on("click", function(){
+	 			$("#upfile").val("");
+				document.getElementById('imgView').src=originImag;
+	 			
+	 		});
+	 
+		
 	 
 	//프로젝트아이디 중복확인 안함 수정이라서
 					/*  $("#tppIdCheck").on("click",function(){ 
@@ -234,16 +262,40 @@ $(document).ready(function(){
 			<br/>
 			<br/>
 			<div>
-			<img src ="${requestScope.tpProject.tppMainImg }" width="200" ><br/>
-			기존 이미지<br/>
+			<img src ="${requestScope.tpProject.tppMainImg }" width="200" id = "imgView" name = "imgView"><br/>
+			대표 이미지<br/>
 			<input type = "hidden" name = "tppMainImg" value = "${requestScope.tpProject.tppMainImg }" >
+			<div class= "mainImagfileBox">
+				<label >
+					사진 업로드	<input type="file" name="upfile"  id = "upfile"  onchange ="imgChange(this);">
+					<br />대표이미지는 가로/세로 300px이하를 권장합니다.
+			<br/>
+				</label>
+				<input type ="button" id = "tppMainImgDelete" value = "기본 이미지">
+				<input type ="button" id = "tppMainImgOrigin" value = "원래 이미지">
 			</div>
-			<br/>
-			변경할 사진 업로드	: <input type="file" name="upfile"><br /> 
-			
-			<br/>
-			
-			
+			<script type="text/javascript">
+			function imgChange(evt) {
+				alert("대표 이미지를 업로드합니다.");
+				var tgt = evt.target || window.event.srcElement,
+		   		 files = tgt.files;
+
+				    // 파일리더를 지원하는 경우
+				    if (FileReader && files && files.length) {
+				        var fr = new FileReader();
+				        fr.onload = function () {
+				            document.getElementById('imgView').src = fr.result;
+				        }
+				        fr.readAsDataURL(files[0]);
+				    }
+				
+				    // Not supported 아닌경우 아이프레임..ㅠㅠ
+				    else {
+				        // fallback -- perhaps submit the input to an iframe and temporarily store
+				        // them on the server until the user's session ends.
+				    }
+				} //imgChange function 종료
+			</script>
 			 
 			 
 			  <script>
@@ -260,7 +312,7 @@ $(document).ready(function(){
 			  </script>
 			
 			  
-			<p>프로젝트 시작일 :  <input type="text" id="date1" name="tppFundingStartDate"  readonly="readonly" value = '${requestScope.tpProject.tppFundingStartDate }'> 
+			<p>프로젝트 시작일 :  <input type="text" id="nono" name="tppFundingStartDate"  readonly="readonly" value = '${requestScope.tpProject.tppFundingStartDate }'> 
 				<span class="error"><form:errors path = "tpProject.tppFundingStartDate" delimiter = " | "/></span>
 					
 					<br/>
@@ -293,30 +345,30 @@ $(document).ready(function(){
 			프로젝트 현재 상태 :
 			<input type = "hidden" id = "tppState" name = "tppState" value = "${requestScope.tpProject.tppState }"/>
 			<c:choose>
-				<c:when test = "${requestScope.tpProject.tppState =='a' }">
+				<c:when test = "${requestScope.tpProject.tppState =='A' }">
 				저장<br/><br/>
 					<input type="button" id="save" value="저장" /> 
 					<input type="button" id="projectSubmit" value="승인요청" />
 				</c:when>
 				
-				<c:when test = "${requestScope.tpProject.tppState =='b' }">
+				<c:when test = "${requestScope.tpProject.tppState =='B' }">
 				승인요청<br/>
 						<input type="button" id="projectSubmit" value="내용 수정" />
 						<input type="button" id="save" value="승인요청 취소" /><br/>
 						승인 요청취소 시 저장상태로 변경됩니다.
 				</c:when>
 				
-				<c:when test = "${requestScope.tpProject.tppState =='c' }">
+				<c:when test = "${requestScope.tpProject.tppState =='O' }">
 				승인완료<bt/>
 						<input type="button" id="projectSubmit" value="내용 수정" />
 				</c:when>
 				
-				<c:when test = "${requestScope.tpProject.tppState =='d' }">
+				<c:when test = "${requestScope.tpProject.tppState =='X' }">
 				승인거부
 					<input type="button" id="save" value="저장" /> 
 					<input type="button" id="projectSubmit" value="재승인요청" />
 				</c:when>
-				<c:when test = "${requestScope.tpProject.tppState =='e' }">
+				<c:when test = "${requestScope.tpProject.tppState =='E' or requestScope.tpProject.tppState =='Z'}">
 				펀딩종료
 				</c:when>
 			</c:choose>

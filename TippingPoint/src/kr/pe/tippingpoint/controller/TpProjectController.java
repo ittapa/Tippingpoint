@@ -75,10 +75,10 @@ public class TpProjectController {
 			System.out.println("프로젝트 등록중 총 검증 실패 개수:" +errors.getErrorCount());
 			System.out.println(tpvo.getTppState());
 			if(errors.hasErrors()){//  true = 오류가 있다.
-				if(tpvo.getTppState().equals("b")){
+				if(tpvo.getTppState().equals("B")){
 					
 					map.addAttribute("errorCheck", "submitError");					
-				}else if(tpvo.getTppState().equals("a")){
+				}else if(tpvo.getTppState().equals("A")){
 					
 					map.addAttribute("errorCheck", "saveError");	
 				}
@@ -160,7 +160,7 @@ public class TpProjectController {
 				tpvo.setTppMainImg(rootPath+"/"+filePath_A+realMainImgName); //upfile
 			}else{
 				//이미지 안넣었을때 디폴트 이미지
-				tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
+				tpvo.setTppMainImg(rootPath+"/defaultImg/tpProjectDefault.png");
 			}
 			
 
@@ -168,12 +168,23 @@ public class TpProjectController {
 			System.out.println(tpvo);
 			//비즈니스 로직 처리하기 서비스
 			service.registerTpProject(tpvo);
+		
 			
-			if(tpvo.getTppState()=="b"){ //승인요청 성공페이지
-			return "tpProject/tpProjectRequestSuccess.tiles";
+			return "redirect: /tpProjectSaveAndSubmitSuccess.tp?tppId="+tpvo.getTppId();	
+		}
+		
+		//등록 성공저장관련 처리
+		@RequestMapping("tpProjectSaveAndSubmitSuccess")
+		public String tpProjectSaveSuccess(@RequestParam String tppId){
+			TpProject tpvo = service.findTpProjectById(tppId);
+			if(tpvo.getTppState()=="B"){ //승인요청 성공페이지
+				
+				return "tpProject/tpProjectRequestSuccess.tiles";
+			}else if (tpvo.getTppState()=="A"){ // 저장성공 페이지
+			
+			return "tpProject/tpProjectSaveSuccess.tiles";	//승인성공페이지
 			}
-			
-			return "tpProject/tpProjectSaveSuccess.tiles";	
+			return "tpProject/tpProjectSaveSuccess.tiles";	//혹시몰라서 저장처리
 		}
 	
 	
@@ -238,7 +249,7 @@ public class TpProjectController {
 	// 사진 첨부하기html5
 	@RequestMapping("/fuh5.tp")
 	public void file_uploader_html5(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("왜안오니");
+		System.out.println("사진저장");
 		try {
 			// 파일정보
 			String sFileInfo = "";
@@ -374,7 +385,6 @@ public class TpProjectController {
 	
 
 	//작성자 아이디로 프로젝트 검색
-
 	@RequestMapping("/searchByWriterProject")
 	public ModelAndView searchByWriterProject(HttpSession session , HttpServletRequest request){
 		int pageNo = 1;
@@ -406,7 +416,7 @@ public class TpProjectController {
 			return new ModelAndView("tpProject/tpProjectBoard.tiles", map);
 		}
 	
-	//프로젝트 수정 메서드
+	//프로젝트 수정폼 호출
 		@RequestMapping("/tpProjectModifyForm.tp")
 		public String tpProjectModifyForm(@RequestParam String tppId, ModelMap map){
 			
@@ -444,19 +454,19 @@ public class TpProjectController {
 				//카테고리 호출
 				List<TpProjectCategory> list = service.tpProjectCategoryList();
 				map.addAttribute("categoryList", list);
-				if(tpvo.getTppState().equals("b")){
+				if(tpvo.getTppState().equals("B")){
 					
 					map.addAttribute("errorCheck", "submitError");					
-				}else if(tpvo.getTppState().equals("a")){
+				}else if(tpvo.getTppState().equals("A")){
 					
 					map.addAttribute("errorCheck", "saveError");
 				}
 				
 				//return "/tpProjectModifyForm.tp";
-				return "tpMyPage/tpProjectModifyForm.tiles";
+				return "redirect: tpMyPage/tpProjectModifyForm.tiles";
 				
 			}
-	
+			
 			
 			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 jsp단에서 받아서 들어감깔꺼ㅏㄹ
 			
@@ -533,7 +543,7 @@ public class TpProjectController {
 				//TODO 
 				//새로 이미지 안넣었을때
 				if(tpvo.getTppMainImg() == null){
-					tpvo.setTppMainImg(rootPath+"/test/Desert.jpg");
+					tpvo.setTppMainImg(rootPath+"/defaultImg/tpProjectDefault.png");
 				}
 					
 			}
@@ -544,13 +554,11 @@ public class TpProjectController {
 			//비즈니스 로직 처리하기 서비스
 			service.updateTpProject(tpvo);
 			
-				if(tpvo.getTppState()=="b"){ //승인요청 성공페이지
-					return "redirect: tpProject/tpProjectRequestSuccess.tiles";
-				}else if (tpvo.getTppState()=="s"){ // 저장성공 페이지
-				return "redirect: tpProject/tpProjectSaveSuccess.tiles";	
-				}
-				return "redirect: tpProject/tpProjectSaveSuccess.tiles";	//일단 저장
+		
+				return "redirect: tpProject/tpProjectSaveAndSubmitSuccess.tp";	//일단 저장
 		}
+		
+	
 		
 		
 }

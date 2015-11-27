@@ -80,7 +80,7 @@
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
 	 				
-				 	where tppState like 'o'
+				 	where tppState like 'O'
 	 				order by tppFundingLastDate
 	 			)
 	 		)
@@ -100,7 +100,7 @@
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
 	 				
-				 	where tppState like 'a'
+				 	where tppState like 'A'
 	 				order by tppFundingLastDate
 	 			)
 	 		)
@@ -119,12 +119,14 @@
 		select count(tppId) from tpproject 
 	</select>
 	
+	<!-- 승인완료 -->
 	<select id="selectOCountProject" resultType="int">
-	select count(tppState) from tpproject where tppState like 'o'
+	select count(tppState) from tpproject where tppState like 'O'
 	</select>
 	
+	<!-- 승인저장 -->
 	<select id="selectACountProject" resultType="int">
-	select count(tppState) from tpproject where tppState like 'a'
+	select count(tppState) from tpproject where tppState like 'A'
 	</select>
 	
 	
@@ -149,12 +151,15 @@
 	<select id="serchProjectByKeyWord" parameterType ="string" resultMap="tpProject-resultmap">
 		<include refid="selectAllProjectDB"></include>
 			WHERE tppId like '%'||#{value}||'%'
+					AND tppState IN('O','E','Z') 
 			union
 		<include refid="selectAllProjectDB"></include>
 			WHERE tppTitle like '%'||#{value}||'%'
+			       AND tppState IN('O','E','Z') 
 			union
 		<include refid="selectAllProjectDB"></include>
 			WHERE tppProjectContent like '%'||#{value}||'%'
+					AND tppState IN('O','E','Z') 
 	</select>
 	
 	
@@ -180,7 +185,8 @@
 				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
-				 	where tppState like 'o' and tppCategory like #{tppCategory}
+				 	where tppState IN('O','E','Z') 
+				 	and tppCategory like #{tppCategory}
 	 				order by tppFundingLastDate
 	 			)
 	 		)
@@ -189,7 +195,7 @@
 	 
 	
 	<select id="selectOAndCategoryCountProject" resultType="int">
-		select count(tppState) from tpproject where tppState like 'o' and tppCategory like #{tppCategory}
+		select count(tppState) from tpproject where tppState IN('O','E','Z') and tppCategory like #{tppCategory}
 	</select>
 	
 	

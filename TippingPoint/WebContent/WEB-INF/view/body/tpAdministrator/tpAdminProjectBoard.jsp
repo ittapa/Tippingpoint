@@ -16,29 +16,57 @@
 
 
 				<a href="/TippingPoint/tpAdminProjectBoard.tp">모두보기</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=b">저장된것 보기</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=a">등록 대기 보기</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=x">등록 거부 보기</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=o">등록 승인 보기</a><br>
-				
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=B">저장된 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=A">승인요청 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=X">승인거부 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=O">승인완료 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=E">펀딩종료 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=Z">펀딩마감 프로젝트</a><br>
+					<div>총 게시글수 : ${fn:length(requestScope.list) }</div>
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">
 		등록된 글이 없습니다.
 		</c:when>
 		<c:otherwise>
+				<table>
+						<tr>
+							<th>프로젝트 ID</th>
+							<th>프로젝트 제목</th>
+							<th> 프로젝트 작성자</th>
+							<th>프로젝트 카테고리</th>
+							<th>작성/수정 날자</th>
+							<th>펀딩 된 금액</th>
+							<th>목표 펀딩 금액</th>
+							<th>펀딩 시작일</th>
+							<th>펀딩 마감일</th>
+							<th>프로젝트 상태</th>
+							<th>관리자 메시지</th>
+							<th></th>
+						</tr>		
 				<c:forEach items="${requestScope.list }" var="tpProject">
-					<div>
-						<div><img src="${tpProject.tppMainImg }" ></div>
-						<div>${tpProject.tppWriter }</div>
-						<div><a href="${initParam.rootPath }/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
-						<div>${tpProject.tppFundingLastDate }</div>
-						<div>${tpProject.tppTotalAmount }</div>
-					</div>
-				</c:forEach>
-			<br/>
-			<div>총 게시글수 : ${fn:length(requestScope.list) }</div>
 					
+				
+		
+					<tr>
+							<td><a href="${initParam.rootPath }/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="150" height="1500"></a>
+									<br/><a href="${initParam.rootPath }/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppId }</a></td>
+							<td>${tpProject.tppTitle }</td>
+							<td>${tpProject.tppWriter }</td>
+							<td>${tpProject.tppCategory }</td>
+							<td>${tpProject.tppWriteDate }</td>
+							<td>${tpProject.tppTotalAmount }</td>
+							<td>${tpProject.tppTargetAmount }</td>
+							<td>${tpProject.tppFundingStartDate }</td>
+							<td>${tpProject.tppFundingLastDate }</td>
+							<td>${tpProject.tppState }</td>
+							<td>${tpProject.tppAdminMessage }</td>
+							<td></td>
+					</tr>
+				</c:forEach>
+			<br/>		
+			</table>
 		</c:otherwise>
+			
 	</c:choose>
 	
 	

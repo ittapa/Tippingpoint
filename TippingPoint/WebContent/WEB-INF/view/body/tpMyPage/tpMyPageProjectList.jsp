@@ -65,32 +65,57 @@
 		등록된 글이 없습니다.
 	</c:when>
 		<c:otherwise>
-	
-			<c:forEach items="${requestScope.list }" var="tpProject">
-					<div>
-						<p>
-						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="200" height="200"></a></div>
-						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
-						<div>${tpProject.tppFundingStartDate }</div>
-						<div>${tpProject.tppFundingLastDate }</div>
-						<div>${tpProject.tppTargetAmount }</div>
-						<div>${tpProject.tppTotalAmount }</div>
-						</p>
-							<!-- 프로젝트 수정폼으로 이동 -->
-							<form action = "${initParam.rootPath }/tpProjectModifyForm.tp">
-									<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
-									<input type="submit" value="수정" />
-							</form>		
-								<!-- 		//펀딩종료하기-->
-							<form action ="??????.tp" id="tpProjectExit">
-									<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
-									<input type = "button" value = "펀딩 종료" id = "exitButton">
-							</form>
-			
+						<table>
+						<tr>
+							<th>프로젝트 ID</th>
+							<th>프로젝트 제목</th>
+							<th>프로젝트 카테고리</th>
+							<th>작성/수정 날자</th>
+							<th>펀딩 된 금액</th>
+							<th>목표 펀딩 금액</th>
+							<th>펀딩 시작일</th>
+							<th>펀딩 마감일</th>
+							<th>프로젝트 상태</th>
+							<th>관리자 메시지</th>
+							<th></th>
+						</tr>										
+				<c:forEach items="${requestScope.list }" var="tpProject">
+						<tr>
+							<td><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="150" height="1500"></a>
+									<br/><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppId }</a></td>
+							<td>${tpProject.tppTitle }</td>
+							<td>${tpProject.tppCategory }</td>
+							<td>${tpProject.tppWriteDate }</td>
+							<td>${tpProject.tppTotalAmount }</td>
+							<td>${tpProject.tppTargetAmount }</td>
+							<td>${tpProject.tppFundingStartDate }</td>
+							<td>${tpProject.tppFundingLastDate }</td>
+							<td>${tpProject.tppState }</td>
+							<td>${tpProject.tppAdminMessage }</td>
+							<td>
+								<!-- 프로젝트로 이동 -->
+								<form action = "${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">
+										<input type = "submit" value = "자세히 보기">
+								</form>
+								<!-- 프로젝트 수정폼으로 이동 -->
+								<form action = "${initParam.rootPath }/tpProjectModifyForm.tp">
+										<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
+										<input type="submit" value="수정" />
+								</form>		
+									<!-- 		//펀딩종료하기-->
+								<form action ="??????.tp" id="tpProjectExit">
+										<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
+										<input type = "button" value = "펀딩 종료" id = "exitButton">
+								</form>
+								
+							</td>											
+						</tr>
 
 							
-					</div>
+						
+
 				</c:forEach>
+				</table>
 			<br/>
 			<div>총 등록한 프로젝트 수  : ${fn:length(requestScope.list) }</div>
 		

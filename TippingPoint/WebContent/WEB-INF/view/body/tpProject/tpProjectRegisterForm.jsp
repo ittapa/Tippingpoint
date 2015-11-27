@@ -78,7 +78,7 @@
 	         
 	        // 이부분에 에디터 validation 검증
 	       var saveConfirm =  confirm("프로젝트를 저장하시겠습니까?");
-	        
+	       document.getElementById("tppState").value = "A";
 	        if(!saveConfirm){
 	        	return false;
 	        	
@@ -124,10 +124,10 @@
 		 //id가 smarteditor인 textarea에 에디터에서 대입
 		        oEditors.getById["tppProjectContent"].exec("UPDATE_CONTENTS_FIELD", []);
 		        //document.getElementByName("tppState").value;
-		       document.getElementById("tppState").value = "b";
+		     
 		        // 이부분에 에디터 validation 검증
 		       var submitConfirm= confirm("관리자에게 프로젝트승인요청을 하시겠습니까?"); 
-				
+		       document.getElementById("tppState").value = "B";
 		        if(!submitConfirm){
 		        	return false;
 		        }else{
@@ -168,6 +168,23 @@
 			}
 		});
 	});
+	
+	var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+	$("#tppMainImgDelete").on("click", function(){
+		if(!$("#upfile").val()){
+			alert("추가된 이미지가 없습니다.");
+			return false;
+		}
+		
+		var imgconfimr = confirm("추가된 메인이미지를 삭제합니다.");
+		if(imgconfimr){
+			$("#upfile").val("");
+			document.getElementById('imgView').src=defaultImg;
+		}else{
+			return false
+		}
+	});
+	
 	}); //document.ready
 	
 </script>
@@ -221,7 +238,10 @@
 				<c:otherwise>
 					
 					<c:forEach items="${requestScope.categoryList }" var="list">
-							<option  value= "${list.tppCategory }">  ${list.tppCategoryName }</option>
+							<option  value= "${list.tppCategory }" 
+							${list.tppCategory==requestScope.tpProject.tppCategory ? 'selected="selected"' : '' }>
+							${list.tppCategoryName }
+							</option>
 					</c:forEach>
 					
 				</c:otherwise>
@@ -234,45 +254,51 @@
 			<br/>
 			<script type="text/javascript">
 			//이미지 관련 삭제 및 호출
-			  $(function() {
-				$("#tppMainImgDelete").on("click", function(){
-					alert(	$("#upfile").val());
-					$("#upfile").val("");
-					
-				});
+			 
 	
 				//이미지 변경된 이미지 호출
-				 $('input:file').change(function(){
-					alert(this.value);
-					alert($("#imga"));
-					alert($("#imga").attr("src"));
-					
-					
-					$("#imga").attr("src",this.value);				
-					
-
-				});
 		
-			  });
 			</script>
+			대표 이미지	<br>
+			<img src ="${initParam.rootPath}/defaultImg/tpProjectDefault.png" width ="300"  height = "300" id = "imgView">
+			<br/>
 			
-			<img src ="${initParam.rootPath}/test/Desert.jpg" alt = "기본이미지" width ="300"  height = "300" id = "imga">
-		
-			대표 이미지	: 
 			<div class= "mainImagfileBox">
 				<label >
-					<input type="file" name="upfile"  id = "upfile"><br />
+					사진 업로드	<input type="file" name="upfile"  id = "upfile"  onchange ="imgChange(this);">
+					<br />대표이미지는 가로/세로 300px이하를 권장합니다.
+			<br/>
 				</label>
-				<input type ="button" id = "tppMainImgDelete" value = "삭제">
+				<input type ="button" id = "tppMainImgDelete" value = "이미지 초기화">
 			</div>
 			<br/>
 			<br>
-			메롱메롱
 			
+			<script type="text/javascript">
+			function imgChange(evt) {
+				alert("대표 이미지를 업로드합니다.");
+				var tgt = evt.target || window.event.srcElement,
+		   		 files = tgt.files;
+
+				    // 파일리더를 지원하는 경우
+				    if (FileReader && files && files.length) {
+				        var fr = new FileReader();
+				        fr.onload = function () {
+				            document.getElementById('imgView').src = fr.result;
+				        }
+				        fr.readAsDataURL(files[0]);
+				    }
+				
+				    // Not supported 아닌경우 아이프레임..ㅠㅠ
+				    else {
+				        // fallback -- perhaps submit the input to an iframe and temporarily store
+				        // them on the server until the user's session ends.
+				    }
+				} //imgChange function 종료
+			</script>
 			<br/>
 		 
-			대표이미지는 가로/세로 300px이하를 권장합니다.
-			<br/><br/>
+			<br/>
 	
 			 
 			  <script>
@@ -317,7 +343,7 @@
 			<br/><br/>
 			<!-- //승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 
 								디폴트값 a  승인요청b  승인요청 취소시 다시 a로  삭-->
-			<input type = "hidden" id = "tppState" name = "tppState" value = "a"/>
+			<input type = "hidden" id = "tppState" name = "tppState"/>
 			
 			<input type="button" id="save" value="저장" /> 
 			<input type="button" id="projectSubmit" value="승인요청" />
