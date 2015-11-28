@@ -49,7 +49,8 @@
      */
 //     String strCurrentUrl = request.getScheme() + "://" + request.getServerName() + ((request.getServerPort() != 80) ? ":" : "") + request.getServerPort()+ ${initParam.rootPath} + "/"; 
     
-    String LGD_RETURNURL		= "http://www.tippingpoint.pe.kr/TippingPoint/returnurl.jsp";// FOR MANUAL
+//    String LGD_RETURNURL		= "http://www.tippingpoint.pe.kr/TippingPoint/returnurl.jsp";// FOR MANUAL
+    String LGD_RETURNURL		= "http://www.tippingpoint.pe.kr/TippingPoint/tpPayCardRet.tp";
 
     /*
      *************************************************
@@ -172,7 +173,7 @@ function payment_return() {
 		
 			document.getElementById("LGD_PAYKEY").value = fDoc.document.getElementById('LGD_PAYKEY').value;
 			document.getElementById("LGD_PAYINFO").target = "_self";
-			document.getElementById("LGD_PAYINFO").action = "payres.jsp";
+			document.getElementById("LGD_PAYINFO").action = "${initParam.rootPath}/tpPayPgReturn.tp";
 			document.getElementById("LGD_PAYINFO").submit();
 	} else {
 		alert("LGD_RESPCODE (결과코드) : " + fDoc.document.getElementById('LGD_RESPCODE').value + "\n" + "LGD_RESPMSG (결과메시지): " + fDoc.document.getElementById('LGD_RESPMSG').value);
@@ -182,7 +183,7 @@ function payment_return() {
 
 </script>
 
-<form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="payres.jsp">
+<form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="${initParam.rootPath}/tpPayCardRet.tp">
 
 
 <ul>
@@ -193,42 +194,6 @@ function payment_return() {
 	<li><input type="button" value="결제" onclick="launchCrossPlatform();"/></li>
 </ul>
 
-
-
-<%-- 
-<table>
-    <tr>
-        <td>구매자 이름 </td>
-        <td><%= LGD_BUYER %></td>
-    </tr>
-    <tr>
-        <td>상품정보 </td>
-        <td><%= LGD_PRODUCTINFO %></td>
-    </tr>
-    <tr>
-        <td>결제금액 </td>
-        <td><%= LGD_AMOUNT %></td>
-    </tr>
-    <tr>
-        <td>구매자 이메일 </td>
-        <td><%= LGD_BUYEREMAIL %></td>
-    </tr>
-    <tr>
-        <td>주문번호 </td>
-        <td><%= LGD_OID %></td>
-    </tr>
-    <tr>
-        <td colspan="2">* 추가 상세 결제요청 파라미터는 메뉴얼을 참조하시기 바랍니다.</td>
-    </tr>
-    <tr>
-        <td colspan="2"></td>
-    </tr>
-    <tr>
-        <td colspan="2">
-		<input type="button" value="인증요청" onclick="launchCrossPlatform();"/>
-        </td>
-    </tr>
-</table> --%>
 <%
 	for(Iterator i = payReqMap.keySet().iterator(); i.hasNext();){
 		Object key = i.next();

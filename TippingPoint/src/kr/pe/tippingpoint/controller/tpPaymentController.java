@@ -2,13 +2,13 @@ package kr.pe.tippingpoint.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.pe.tippingpoint.service.TpFunderAccountAccessServiceImpl;
 import kr.pe.tippingpoint.vo.TpFunder;
-
 // 카드결제 후 사용
 import lgdacom.XPayClient.XPayClient;
 
@@ -114,6 +113,13 @@ public class tpPaymentController {
 				+ " / tpFunder.getTpfEmail(): " + tpFunder.getTpfEmail() + " / strCurrent: " + strCurrent + " / strView: " + strView);
 		
 		return strView;
+	}
+	
+	// LG에서 결제 처리후 호출하는 URL
+	// 아래의 View에서 자동으로 tpPayCardRet를 호출함.
+	@RequestMapping("tpPayPgReturn.tp")
+	public String tpPayPgReturn(@RequestParam String LGD_RESPCODE, @RequestParam String LGD_RESPMSG, @RequestParam Map payReqMap){
+		return "/WEB-INF/view/body/tpPayment/payPgReturn.jsp"; // tiles 적용안함.
 	}
 	
 	// 결제후 처리(DB처리 포함)
