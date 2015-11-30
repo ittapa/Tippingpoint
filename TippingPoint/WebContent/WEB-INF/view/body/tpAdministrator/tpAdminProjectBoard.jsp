@@ -16,8 +16,8 @@
 
 
 				<a href="/TippingPoint/tpAdminProjectBoard.tp">모두보기</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=B">저장된 프로젝트</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=A">승인요청 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=A">저장된 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=B">승인요청 프로젝트</a><br>
 				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=X">승인거부 프로젝트</a><br>
 				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=O">승인완료 프로젝트</a><br>
 				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=E">펀딩종료 프로젝트</a><br>
@@ -32,7 +32,7 @@
 						<tr>
 							<th>프로젝트 ID</th>
 							<th>프로젝트 제목</th>
-							<th> 프로젝트 작성자</th>
+							<th>프로젝트 작성자</th>
 							<th>프로젝트 카테고리</th>
 							<th>작성/수정 날자</th>
 							<th>펀딩 된 금액</th>

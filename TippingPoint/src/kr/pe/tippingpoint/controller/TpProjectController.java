@@ -48,8 +48,9 @@ public class TpProjectController {
 	private TpProjectService service;
 	
 	//프로젝트 등록 폼 컨트롤러
-	@RequestMapping("/tpProjectRegisterForm")
+	@RequestMapping("tpProjectRegisterForm")
 	public String tpProjectForm(ModelMap map){
+		System.out.println("프로젝트 등록폼으로 이동");
 		//to.do id 체크, 권한 체크
 		List<TpProjectCategory> list = service.tpProjectCategoryList();
 		map.addAttribute("categoryList", list);
@@ -58,9 +59,7 @@ public class TpProjectController {
 	}
 	
 	
-	
-	
-	// 프로젝트등록 컨트롤러
+	// 새로운 프로젝트 저장 및 승인 컨트롤러
 		@RequestMapping("/submitTpProject")
 
 		public String registerTpProject(@ModelAttribute TpProject tpvo, @RequestParam MultipartFile upfile, 
@@ -129,8 +128,10 @@ public class TpProjectController {
 				// 파일 기본경로
 				
 				// 파일 기본경로 _ 상세경로
-				String filePath_A = "resources" + File.separator + "project" + File.separator + "mainImage"
-						+ File.separator;
+				String filePath_A = "resources" + "/" + "project" + "/" + "mainImage"
+						+ "/";
+	/*			String filePath_A = "resources" + "/" + "project" + File.separator + "mainImage"
+						+ File.separator;*/
 				// 파일 기본경로 _ 상세경로
 				String filePath = dftFilePath + filePath_A;
 				
@@ -173,14 +174,16 @@ public class TpProjectController {
 			return "redirect: /tpProjectSaveAndSubmitSuccess.tp?tppId="+tpvo.getTppId();	
 		}
 		
-		//등록 성공저장관련 처리
+		//등록 성공저장관련 처리 redirect 받기
 		@RequestMapping("tpProjectSaveAndSubmitSuccess")
 		public String tpProjectSaveSuccess(@RequestParam String tppId){
-			TpProject tpvo = service.findTpProjectById(tppId);
-			if(tpvo.getTppState()=="B"){ //승인요청 성공페이지
-				
+			TpProject tpvo = service.findTpProjectById(tppId);//id로 등록도니 프로젝트 조회
+			
+			System.out.println(tpvo.getTppState());
+			if(tpvo.getTppState().equals("B")){ //승인요청 성공페이지
+				System.out.println("승인요청 성공페이지로 이동");
 				return "tpProject/tpProjectRequestSuccess.tiles";
-			}else if (tpvo.getTppState()=="A"){ // 저장성공 페이지
+			}else if (tpvo.getTppState().equals("A")){ // 저장성공 페이지
 			
 			return "tpProject/tpProjectSaveSuccess.tiles";	//승인성공페이지
 			}
@@ -189,7 +192,7 @@ public class TpProjectController {
 	
 	
 
-	// 사진 첨부하기 (html5가 아닐경우)
+	// 사진 첨부하기_1 스마트 에디터
 	@RequestMapping("/file_uploader.tp")
 	public String file_uploader(HttpServletRequest request, HttpServletResponse response, Editor editor) {
 		System.out.println("file uploader");
@@ -246,7 +249,7 @@ public class TpProjectController {
 		return "redirect:" + return1 + return2 + return3;
 	}
 
-	// 사진 첨부하기html5
+	// 사진 첨부하기_2 html5 스마트 에디터
 	@RequestMapping("/fuh5.tp")
 	public void file_uploader_html5(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("사진저장");
@@ -330,7 +333,7 @@ public class TpProjectController {
 		}
 	}
 
-	// 프로젝트 전체보기(o)것만
+	// 프로젝트 전체보기(O,X, E)것만
 	@RequestMapping("/tpProjectBoard")
 	public ModelAndView tpProjectBoard(HttpServletRequest request) throws Exception{
 		int pageNo = 1;
@@ -450,6 +453,7 @@ public class TpProjectController {
 			
 			
 			System.out.println(tpvo.getTppState());
+			
 			if(errors.hasErrors()){//  true = 오류가 있다.
 				//카테고리 호출
 				List<TpProjectCategory> list = service.tpProjectCategoryList();
@@ -463,10 +467,11 @@ public class TpProjectController {
 				}
 				
 				//return "/tpProjectModifyForm.tp";
-				return "redirect: tpMyPage/tpProjectModifyForm.tiles";
+				return "tpMyPage/tpProjectModifyForm.tiles";
 				
 			}
-			
+
+
 			
 			//승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 jsp단에서 받아서 들어감깔꺼ㅏㄹ
 			
@@ -510,8 +515,8 @@ public class TpProjectController {
 				// 파일 기본경로
 				
 				// 파일 기본경로 _ 상세경로
-				String filePath_A = "resources" + File.separator + "project" + File.separator + "mainImage"
-						+ File.separator;
+				String filePath_A = "resources" + "/" + "project" + "/" + "mainImage"
+						+ "/";
 				// 파일 기본경로 _ 상세경로
 				String filePath = dftFilePath + filePath_A;
 				
@@ -542,8 +547,10 @@ public class TpProjectController {
 			}else{
 				//TODO 
 				//새로 이미지 안넣었을때
-				if(tpvo.getTppMainImg() == null){
-					tpvo.setTppMainImg(rootPath+"/defaultImg/tpProjectDefault.png");
+				System.out.println("이미지 안넣었을시.."+tpvo.getTppMainImg());
+				if(tpvo.getTppMainImg().equals("default")){
+			
+				tpvo.setTppMainImg(rootPath+"/defaultImg/tpProjectDefault.png");
 				}
 					
 			}
@@ -551,11 +558,13 @@ public class TpProjectController {
 
 			System.out.println("-----------------------------------------------");
 			System.out.println(tpvo);
+			System.out.println();
 			//비즈니스 로직 처리하기 서비스
 			service.updateTpProject(tpvo);
 			
 		
-				return "redirect: tpProject/tpProjectSaveAndSubmitSuccess.tp";	//일단 저장
+				return "redirect: /tpProjectSaveAndSubmitSuccess.tp?tppId="+tpvo.getTppId();	
+				
 		}
 		
 	

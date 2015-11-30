@@ -37,18 +37,20 @@
 				 from tpnotice where TpNoticeNum = #{TpNoticeNum}
 	</select>
 	
+	<insert id = "insertTpNoticeWrite" parameterType = "tpnotice">
+		insert into tpnotice (TpNoticeNum, TpNoticeDate, TpNoticeTitle, TpNoticeContents, TpNoticeWriter)
+			   values (SEQ_TPNOTICE_NUM.nextval, #{tpNoticeDate}, #{tpNoticeTitle}, #{tpNoticeContents}, #{tpNoticeWriter})
+	</insert>
+	
+	<delete id= "deleteTpNotice" parameterType = "int">
+		delete from tpnotice where TPNOTICENUM =#{tpNoticeNum}
+	</delete>
+	
+	<update id="updateTpNotice" parameterType="tpnotice">
+	update tpnotice set TPNOTICEDATE=#{tpNoticeDate}, TPNOTICETITLE=#{tpNoticeTitle},
+						TPNOTICECONTENTS=#{tpNoticeContents}, TPNOTICEWRITER=#{tpNoticeWriter}
+	where TPNOTICENUM=#{tpNoticeNum}
+	</update>
 	 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -133,6 +133,50 @@ $(document).ready(function(){
 });
 </script>
 
+<script type="text/javascript">
+//이미지 관련 삭제 및 호출
+$(document).ready(function() {
+	var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+	$("#tpfMainImgDelete").on("click", function(){
+		if(!$("#upfile").val()){
+			alert("추가된 이미지가 없습니다.");
+			return false;
+		}
+		
+		var imgconfirm = confirm("추가된 메인이미지를 삭제합니다.");
+		if(imgconfirm){
+			$("#upfile").val("");
+			document.getElementById('imgView').src=defaultImg;
+		}else{
+			return false
+		}
+	});
+});
+</script>
+
+<script type="text/javascript">
+function imgChange(evt) {
+	alert("대표 이미지를 업로드합니다.");
+	var tgt = evt.target || window.event.srcElement,
+	files = tgt.files;
+	
+	// 파일리더를 지원하는 경우
+	if (FileReader && files && files.length) {
+		var fr = new FileReader();
+		fr.onload = function () {
+			document.getElementById('imgView').src = fr.result;
+		}
+		fr.readAsDataURL(files[0]);
+	}
+					
+	// Not supported 아닌경우 아이프레임..ㅠㅠ
+	else {
+	// fallback -- perhaps submit the input to an iframe and temporarily store
+	// them on the server until the user's session ends.
+	}
+} //imgChange function 종료
+</script>
+
 <style type="text/css">
 table{
 	/* width: 700px; */
@@ -151,7 +195,7 @@ table.register {
 </style>
 
 <spring:hasBindErrors name="tpFunder"/>
-<form action="${initParam.rootPath}/registerTpFunder.tp" method="post" name="tpFunder">
+<form action="${initParam.rootPath}/registerTpFunder.tp" method="post" name="tpFunder" enctype="multipart/form-data">
 	<table class="register">
 		<tr>
 			<td width="150px">ID</td>
@@ -228,6 +272,20 @@ table.register {
 				<input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4"/>
 				<input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4"/>
 				<input type="hidden" name="tpfPhoneNum"/>
+			</td>
+		</tr>
+		<tr>
+			<td>대표 이미지</td>
+			<td>
+			<img src ="${initParam.rootPath}/defaultImg/tpProjectDefault.png" alt = "기본이미지" width ="300"  height = "300" id = "imgView"><br>
+				<div class="mainImgfileBox">
+					<label>
+						사진 업로드 <input type="file" name="upfile" id="upfile" onchange="imgChange(this);"><br>						
+					</label>
+					<input type="button" id="tpfMainImgDelete" value="이미지 초기화">
+				</div>
+				<br>
+				대표이미지는 가로/세로 300px 이하를 권장합니다.
 			</td>
 		</tr>
 		<tr>

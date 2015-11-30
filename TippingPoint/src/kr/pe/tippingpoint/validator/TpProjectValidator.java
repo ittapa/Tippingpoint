@@ -1,6 +1,7 @@
 package kr.pe.tippingpoint.validator;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 import org.springframework.validation.Errors;
@@ -9,6 +10,7 @@ import org.springframework.validation.Validator;
 
 import kr.pe.tippingpoint.vo.TpFunder;
 import kr.pe.tippingpoint.vo.TpProject;
+import sun.print.resources.serviceui;
 
 public class TpProjectValidator implements Validator {
 
@@ -53,15 +55,20 @@ public class TpProjectValidator implements Validator {
 		//날짜 잘못입력시, 오늘날짜보다 뒤에 날짜 일시 , 시작날짜보다 마감날짜가 멀시.
 		SimpleDateFormat form = new SimpleDateFormat("yyyyMMdd");
 		int numToday = Integer.parseInt(form.format(new Date()));
-		if(tpProject.getTppFundingStartDate().length()!=8 || Integer.parseInt(tpProject.getTppFundingStartDate()) < numToday){
+		
+		
+		//TODO : 
+		
+		System.out.println("null로 떠라 젠장알"+tpProject.getTppId());
+		if((tpProject.getTppState() =="A"||tpProject.getTppId() == null)&&tpProject.getTppFundingStartDate().length()!=8 || Integer.parseInt(tpProject.getTppFundingStartDate()) < numToday){
 			errors.rejectValue("tppFundingStartDate","mistake","유효하지 않은 날자 입니다.");
 		}
+		
 		if(tpProject.getTppFundingStartDate().length()!=8 || Integer.parseInt(tpProject.getTppFundingLastDate()) < numToday){
 			errors.rejectValue("tppFundingLastDate","mistake","유효하지 않은 날자 입니다.");
 		}
 		
 		if(Integer.parseInt(tpProject.getTppFundingLastDate()) < Integer.parseInt(tpProject.getTppFundingStartDate())){
-			System.out.println("메롱2");
 			errors.rejectValue("tppFundingLastDate","mistake","마감일이 시작일보다 빠릅니다.");
 	
 		}

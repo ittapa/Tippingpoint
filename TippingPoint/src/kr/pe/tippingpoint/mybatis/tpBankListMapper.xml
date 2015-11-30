@@ -14,7 +14,19 @@
 select * from bankList
 </select>
 	
+	<insert id="insertBank" parameterType = "map">
+		insert into BankList values(#{bankKr}, #{bankEr}, #{code})
+	</insert>
 
+	<insert id = "deleteBank" parameterType = "String">
+		delete from bankList where bankKr=#{bankKr}
+
+	</insert>
+	
+	<update id = "updateBank" parameterType = "map">
+		update banklist set bankKr=#{bankKr}, bankEr=#{bankEr}, code=#{code} 
+		where bankKr=#{updateBank}
+	</update>
 
 	 
 </mapper>

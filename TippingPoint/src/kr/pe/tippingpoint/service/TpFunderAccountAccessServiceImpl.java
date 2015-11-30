@@ -113,5 +113,20 @@ public class TpFunderAccountAccessServiceImpl implements TpFunderAccountAccessSe
 		return bkdao.allTpBankList();
 	}
 	
+	@Override
+	public TpProposer selectTpProposerById(String tpfId) {
+		return pdao.selectProposer(tpfId);
+	}
 	
+	@Override
+	public void updateInfo(TpProposer rposer) throws Exception {
+		// TODO Auto-generated method stub
+		pdao.updateInfo(rposer);
+	}
+	
+	//폰넘버로 펀더 조회 _ 아이디 찾기를 위해
+	@Override
+	public TpFunder findTpFunderByPhoneNum(String tpfPhoneNum) {
+		return dao.selectTpFundersByPhoneNum(tpfPhoneNum);
+	}
 }

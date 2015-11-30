@@ -17,9 +17,12 @@ import kr.pe.tippingpoint.service.TpAdministratorService;
 import kr.pe.tippingpoint.service.TpFunderAccountAccessService;
 import kr.pe.tippingpoint.service.TpNoticeService;
 import kr.pe.tippingpoint.service.TpNoticeServiceImpl;
+import kr.pe.tippingpoint.service.TpProjectService;
+import kr.pe.tippingpoint.vo.TpBankList;
 import kr.pe.tippingpoint.vo.TpFunder;
 import kr.pe.tippingpoint.vo.TpNotice;
 import kr.pe.tippingpoint.vo.TpProject;
+import kr.pe.tippingpoint.vo.TpProjectCategory;
 
 @Controller
 public class TpAdministratorController {
@@ -29,9 +32,12 @@ public class TpAdministratorController {
 
 	@Autowired
 	private TpFunderAccountAccessService service;
+	
+	@Autowired
+	private TpProjectService projectservice;
 
-	private String id = "id";
-	private String pw = "pw";
+	private String id = "admin";
+	private String pw = "admin";
 
 	// 관리자 로그인..
 	@RequestMapping("/tpAdminLogin")
@@ -42,7 +48,6 @@ public class TpAdministratorController {
 		if (!id.equals(adId)) {
 			return "tpAdministrator/tpAdminAccess.tiles";
 		}
-
 		if (!pw.equals(adPd)) {
 			return "tpAdministrator/tpAdminAccess.tiles";
 		}
@@ -59,11 +64,6 @@ public class TpAdministratorController {
 	@RequestMapping("/tpAdminProjectBoard")
 	public String tpAdminProjectBoard(HttpServletRequest request, HttpServletResponse response, ModelMap model,
 			HttpSession session) throws Exception {
-		String adId = (String) session.getAttribute("adminId");
-
-		if (!id.equals(adId)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
-		}
 
 		int pageNo = 1;
 		try {
@@ -81,11 +81,6 @@ public class TpAdministratorController {
 	// 프로젝트 상세보기 (단일프로젝트조회)
 	@RequestMapping("/tpAdminFindTpProject")
 	public String tpAdminFindTpProject(HttpServletRequest request, HttpSession session, ModelMap model) {
-		String adId = (String) session.getAttribute("adminId");
-
-		if (!id.equals(adId)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
-		}
 
 		// 1.요청파라미터 조회
 		String tppId = request.getParameter("tppId");
@@ -98,11 +93,6 @@ public class TpAdministratorController {
 	// 프로젝트 승인
 	@RequestMapping("tpAdminProjectStateConvert")
 	public String tpAdminUp(HttpServletRequest request, HttpSession session) {
-		String adId = (String) session.getAttribute("adminId");
-
-		if (!id.equals(adId)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
-		}
 
 		String tppId = request.getParameter("tppId");
 		String tppState = request.getParameter("tppState");
@@ -118,14 +108,8 @@ public class TpAdministratorController {
 	}
 
 	// 관리자 체크 페이지 - 관리자 메인으로 이동
-
 	@RequestMapping("/adminCheckAndMain")
 	public String tpAdminCheck(HttpSession session) {
-		String adId = (String) session.getAttribute("adminId");
-
-		if (!id.equals(adId)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
-		}
 
 		return "tpAdministrator/tpAdminMain.tiles";
 	}
@@ -136,11 +120,6 @@ public class TpAdministratorController {
 	@RequestMapping("/findAllTpFunderList")
 	public String findAllTpFunderList(@RequestParam(defaultValue = "1") String pageNo, ModelMap model,
 			HttpSession session) {
-		String adId = (String) session.getAttribute("adminId");
-
-		if (!id.equals(adId)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
-		}
 
 		int page = 1;
 		try {
@@ -157,11 +136,6 @@ public class TpAdministratorController {
 	// 관리자 Id로 회원 조회 메소드
 	@RequestMapping("/findByTpfId")
 	public String findByTpfId(@RequestParam String tpfId, ModelMap model, HttpSession session) {
-		String adId = (String) session.getAttribute("adminId");
-
-		if (!id.equals(adId)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
-		}
 
 		TpFunder tpFunder = service.findTpFunderById(tpfId);
 		model.addAttribute("tpFunder", tpFunder);
@@ -169,15 +143,11 @@ public class TpAdministratorController {
 	}
 
 	// 어드민 카테고리별 보기
-
 	@RequestMapping("/tpAdminCategoryProjectBoard")
 
 	public String tpAdminCategoryProjectBoard(HttpServletRequest request, HttpServletResponse response, ModelMap model,
 			HttpSession session) throws Exception {
-		String adId = (String) session.getAttribute("adminId");
-		if (!id.equals(adId)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
-		}
+
 		int pageNo = 1;
 
 		try {
@@ -195,6 +165,137 @@ public class TpAdministratorController {
 
 		return "tpAdministrator/tpAdminProjectBoard.tiles";
 
+	}
+
+	///////////////////////////////////////////// 관리자 카테고리 관리////////////////////////////////////////////
+	// 관리자 체크 페이지 - 카테고리 관리 메인으로 이동
+	@RequestMapping("/tpAdminCheckAndCategoryMain")
+	public String tpAdminCheckAndCategoryMain(HttpSession session) {
+		return "tpAdministrator/tpAdminCategoryMain.tiles";
+	}
+
+	// 카테고리 추가,수정 삭제 페이지로 이동
+	@RequestMapping("/catrgoryController")
+	public String catrgoryController(HttpSession session, HttpServletRequest request,ModelMap model) {
+
+		String controll = request.getParameter("controll");
+		model.addAttribute("list", projectservice.tpProjectCategoryList());
+
+		if (controll.equals("add")) {
+			return "tpAdministrator/tpAdminAddCategory.tiles";
+		}
+		if (controll.equals("delete")) {
+			return "tpAdministrator/tpAdminDeleteCategory.tiles";
+		}
+		if (controll.equals("update")) {
+			return "tpAdministrator/tpAdminUpdateCategory.tiles";
+		}
+
+		return "tpAdministrator/tpAdminCategoryMain.tiles";
+	}
+
+	// 관리자 - 카테고리 추가 메소드
+	@RequestMapping("insertCategory")
+	public String insertCategory(HttpServletRequest request, HttpSession session) {
+		String tppCategory = request.getParameter("tppCategory");
+		String tppCategoryName = request.getParameter("tppCategoryName");
+		adminservice.addTpCategory(tppCategory, tppCategoryName);
+		
+		return "tpAdministrator/tpAdminCategoryMain.tiles";
+	}
+
+	// 관리자 - 카테고리 삭제 메소드
+	@RequestMapping("deleteCategory")
+	public String deleteCategory(HttpServletRequest request, HttpSession sessionn) {
+		String tppCategoryName = request.getParameter("tppCategoryName");
+		System.out.println(tppCategoryName);
+		adminservice.deleteTpCategory(tppCategoryName);
+
+		return "tpAdministrator/tpAdminCategoryMain.tiles";
+	}
+
+	// 관리자 - 카테고리 수정 메소드
+	@RequestMapping("updateCategory")
+	public String updateCategory(HttpServletRequest request, HttpSession session) {
+		String tppCategory = request.getParameter("tppCategory");
+		String tppCategoryName = request.getParameter("tppCategoryName");
+		String updateCategory = request.getParameter("updateCategory");
+		
+		TpProjectCategory category = new TpProjectCategory();
+		category.setTppCategory(tppCategory);
+		category.setTppCategoryName(tppCategoryName);
+		
+		adminservice.updateTpCategory(category, updateCategory);
+
+		return "tpAdministrator/tpAdminCategoryMain.tiles";
+	}
+
+	//////////////////////////////////////////////////// 은행 Page//////////////////////////////////////////
+	// 은행 관리 - Main으로 이동
+	@RequestMapping("/tpAdminCheckAndBankMain")
+	public String tpAdminCheckAndBankMain(HttpSession session) {
+
+		return "tpAdministrator/tpAdminBankMain.tiles";
+	}
+
+	// 은행 추가,수정 삭제 페이지로 이동
+	@RequestMapping("/bankController")
+	public String bankController(HttpSession session, HttpServletRequest request,ModelMap model) {
+
+		String controll = request.getParameter("controll");
+		model.addAttribute("list", service.getAllBankList());
+		
+		if (controll.equals("add")) {
+			return "tpAdministrator/tpAdminAddBank.tiles";
+		}
+		if (controll.equals("delete")) {
+			return "tpAdministrator/tpAdminDeleteBank.tiles";
+		}
+		if (controll.equals("update")) {
+			return "tpAdministrator/tpAdminUpdateBank.tiles";
+		}
+
+		return "tpAdministrator/tpAdminBankMain.tiles";
+	}
+
+	// 은행 - 카테고리 추가 메소드
+	@RequestMapping("insertBank")
+	public String insertBank(HttpServletRequest request, HttpSession session) {
+
+		String bankKr = request.getParameter("bankKr");
+		String bankEr = request.getParameter("bankEr");
+		String code = request.getParameter("code");
+		adminservice.addBank(bankKr, bankEr, code);
+
+		return "tpAdministrator/tpAdminBankMain.tiles";
+	}
+
+	// 은행 - 카테고리 삭제 메소드
+	@RequestMapping("deleteBank")
+	public String deleteBank(HttpServletRequest request, HttpSession session) {
+
+		String bankKr = request.getParameter("bankKr");
+		adminservice.deleteBank(bankKr);
+
+		return "tpAdministrator/tpAdminBankMain.tiles";
+	}
+
+	// 은행 - 카테고리 수정 메소드
+	@RequestMapping("updateBank")
+	public String updateBank(HttpServletRequest request, HttpSession session) {
+
+		String updateBank = request.getParameter("updateBank");
+		String bankKr = request.getParameter("bankKr");
+		String bankEr = request.getParameter("bankEr");
+		String code = request.getParameter("code");
+
+		TpBankList bankList = new TpBankList();
+		bankList.setBankKr(bankKr);
+		bankList.setBankEr(bankEr);
+		bankList.setCode(code);
+		adminservice.updateBank(updateBank, bankList);
+
+		return "tpAdministrator/tpAdminBankMain.tiles";
 	}
 
 }

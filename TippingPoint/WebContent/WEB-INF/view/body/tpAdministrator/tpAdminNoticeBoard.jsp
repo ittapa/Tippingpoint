@@ -7,6 +7,13 @@
 <meta charset="UTF-8 ">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript">
+$(document).ready(function goRegister2(){//
+	$("#writeBtn").on("click", function(){
+		location.href="/TippingPoint/tpNotice/tpNoticeWriter.tp"  // 페이지 이동...
+	});
+});
+</script>
 <body>
 
 		<P ><!-- align="center" -->
@@ -29,9 +36,9 @@
 				<c:forEach items="${requestScope.list }" var="tpNotice">
 					<tr>
 						<td>${tpNotice.tpNoticeNum }</td>
-						<td><a href="${initParam.rootPath }/findTpAdminNotice.tp?tpNoticeNum=${tpNotice.tpNoticeNum }">${tpNotice.tpNoticeTitle }</a></td>
-						<td>${tpNotice.tpNoticeDate }</td>
-						<td>${tpNotice.tpNoticeWriter }</td>						
+						<td>${tpNotice.tpNoticeDate }</a></td>
+						<td><a href="${initParam.rootPath }/adminFindTpNotice.tp?tpNoticeNum=${tpNotice.tpNoticeNum }">${tpNotice.tpNoticeTitle }</a></td>
+						<td>${tpNotice.tpNoticeWriter }</td>		
 					<tr>
 				</c:forEach>
 				</table>
@@ -81,13 +88,7 @@
 	 		▶
 	 	</c:otherwise>
 	 </c:choose>
-	 
-	 
-		<form action = "/tpAdminNoticeRegisterForm">
-			<input type = "submit" value = "글쓰기">
-		</form>
-
-
-
+	 <br>
+	<input type="button" id="writeBtn" value="글쓰기">
 </body>
 </html>

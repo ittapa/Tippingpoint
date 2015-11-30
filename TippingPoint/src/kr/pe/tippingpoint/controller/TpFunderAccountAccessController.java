@@ -1,5 +1,6 @@
 package kr.pe.tippingpoint.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.pe.tippingpoint.exception.DuplicatedIdException;
@@ -100,10 +102,11 @@ public class TpFunderAccountAccessController {
 	 * @return
 	 * @throws DuplicatedIdException
 	 */
-	@RequestMapping(value = "registerTpFunder", method = RequestMethod.POST)
-	public String registerTpFunder(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model)
+	@RequestMapping("/registerTpFunder")
+	public String registerTpFunder(@ModelAttribute TpFunder tpfunder, @RequestParam(required=false) MultipartFile upfile, 
+			HttpServletRequest request, Errors errors, ModelMap model, HttpSession session)
 			throws DuplicatedIdException {
-
+		
 		tpfunder.setTpfQualifyTpProposer("F"); // 제안자 권한 false
 		tpfunder.setTpfAccountType("D"); // 계정 유형 DEfault / F: facebook
 		TpFunderValidator validate = new TpFunderValidator();
@@ -113,6 +116,45 @@ public class TpFunderAccountAccessController {
 			return "/tpfunder/registerForm.tp";
 		}
 
+		///////이미지  처리//////////
+		String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+		String rootpath = request.getSession().getServletContext().getInitParameter("rootPath");
+		
+		if(upfile != null && !upfile.isEmpty()){
+			//업로드된 파일의 정보를 조회
+			//파일을 임시저장경로에서 최종 저장경로로 이동
+			String mainImgName = upfile.getOriginalFilename();
+			long fileSize = upfile.getSize();
+			System.out.println(mainImgName + "-" + fileSize); //todo
+			
+			//신규 파일로 디렉토리 설정 및 업로드
+			String filePath_1 = "resources" + "/" + "project" +"/" + "mainImage" + "/" ;
+			String filePath = dftFilePath + filePath_1;
+			System.out.println("메인이미지 저장경로" + filePath); //todo
+			
+			File file = new File(filePath); // 메인이미지 저장경로 설정
+			if(!file.exists()){
+				file.mkdirs();
+			}
+			
+			long tileMilis = System.currentTimeMillis(); //현재시간
+			String realMainImgName = tpfunder.getTpfId()+tileMilis+mainImgName;
+			System.out.println("main이미지 이름 저장되는 이름"+realMainImgName);
+			
+			File upImg = new File(filePath, realMainImgName); //저장설정
+			try {
+				upfile.transferTo(upImg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			tpfunder.setTpfProfileImg(rootpath+"/"+filePath_1+realMainImgName); //upfile			
+		}else{
+			if(tpfunder.getTpfProfileImg() == null){
+				tpfunder.setTpfProfileImg(rootpath+"/defaultImg/tpProjectDefault.png");
+			}
+		
+		}
+				
 		service.addTpFunder(tpfunder);
 		model.addAttribute("tpfunder", tpfunder);
 		return "redirect:/tpfunder/registerSuccess.tp";
@@ -171,36 +213,78 @@ public class TpFunderAccountAccessController {
 	 * @throws Exception
 	 */
 	@RequestMapping("funderModifyRegister")
-	public String modifyRegister(@ModelAttribute TpFunder tpfunder, Errors errors, ModelMap model, HttpSession session,
+	public String modifyRegister(@ModelAttribute TpFunder tpfunder, @RequestParam(required=false) MultipartFile upfile, Errors errors, ModelMap model, HttpSession session,
 			HttpServletRequest request) throws Exception {
 		TpFunderValidator validate = new TpFunderValidator();
 		validate.validate(tpfunder, errors);
 		if (errors.hasErrors()) {
+			System.out.println(errors);
 			return "tpMyPage/modifyRegister.tiles";
 		}
+		
 		String tpfId = (String) session.getAttribute("userLoginInfo");
-		System.out.println(tpfId);
+		
 
-		TpFunder funder = service.findTpFunderById(tpfId);
-		System.out.println(funder.toString());
+		//TpFunder funder = service.findTpFunderById(tpfId);
+	
 
 		String p1 = request.getParameter("tpfPhoneNum1");
 		String p2 = request.getParameter("tpfPhoneNum2");
 		String p3 = request.getParameter("tpfPhoneNum3");
 
-		funder.setTpfId(tpfId);
-		funder.setTpfName(request.getParameter("tpfName"));
-		funder.setTpfPassword(request.getParameter("tpfPassword"));
+		tpfunder.setTpfId(tpfId);
+		tpfunder.setTpfPhoneNum(p1 + "-" + p2 + "-" + p3);
+		
+		//funder.setTpfName(request.getParameter("tpfName"));
+		//funder.setTpfPassword(request.getParameter("tpfPassword"));
 
-		funder.setTpfEmail(request.getParameter("tpfEmail"));
-		funder.setTpfPhoneNum(p1 + "-" + p2 + "-" + p3);
-		funder.setTpfZipcode(request.getParameter("tpfZipcode"));
-		funder.setTpfAddress(request.getParameter("tpfAddress"));
-		funder.setTpfAddressD(request.getParameter("tpfAddressD"));
+		//funder.setTpfEmail(request.getParameter("tpfEmail"));
+		//funder.setTpfZipcode(request.getParameter("tpfZipcode"));
+		//funder.setTpfAddress(request.getParameter("tpfAddress"));
+		//funder.setTpfAddressD(request.getParameter("tpfAddressD"));
+		//funder.setTpfProfileImg(request.getParameter("tpfProfileImg"));
+		
+	
 
-		System.out.println(funder.toString());
-
-		service.updateTpFunder(funder);
+		///////이미지  처리//////////
+		String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+		String rootpath = request.getSession().getServletContext().getInitParameter("rootPath");
+			
+		if(upfile != null && !upfile.isEmpty()){
+			//업로드된 파일의 정보를 조회
+			//파일을 임시저장경로에서 최종 저장경로로 이동
+			String mainImgName = upfile.getOriginalFilename();
+			long fileSize = upfile.getSize();
+			System.out.println(mainImgName + "-" + fileSize); //todo
+				
+			//신규 파일로 디렉토리 설정 및 업로드
+			String filePath_1 = "resources" + "/" + "project" + "/" + "mainImage" + "/";
+			String filePath = dftFilePath + filePath_1;
+			System.out.println("메인이미지 저장경로" + filePath); //todo
+				
+			File file = new File(filePath); // 메인이미지 저장경로 설정
+			if(!file.exists()){
+				file.mkdirs();
+			}
+				
+			long tileMilis = System.currentTimeMillis(); //현재시간
+			String realMainImgName = tpfunder.getTpfId()+tileMilis+mainImgName;
+			System.out.println("main이미지 이름 저장되는 이름"+realMainImgName);
+				
+			File upImg = new File(filePath, realMainImgName); //저장설정
+			upfile.transferTo(upImg);			
+			tpfunder.setTpfProfileImg(rootpath+"/"+filePath_1+realMainImgName); //upfile			
+			
+		}else{
+			System.out.println(tpfunder.getTpfProfileImg());
+			if(tpfunder.getTpfProfileImg().equals("default")){
+				System.out.println("메롱123123");
+				tpfunder.setTpfProfileImg(rootpath+"/defaultImg/tpProjectDefault.png");
+			}
+			
+		}
+		
+		service.updateTpFunder(tpfunder);
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
 		return "tpMyPage/tpMyPageMain.tiles";
 
@@ -209,51 +293,56 @@ public class TpFunderAccountAccessController {
 	// 마이페이지 메인
 	@RequestMapping("myPageMain")
 	public String myPageMain(HttpSession session, @ModelAttribute TpFunder tpfunder, ModelMap model) throws Exception {
+		String tfId = (String) session.getAttribute("userLoginInfo");
+		TpFunder funder = service.findTpFunderById(tfId);
+		String qualify = funder.getTpfQualifyTpProposer();
+		System.out.println(qualify);
+
+		int num = 0;
+		if (qualify.equals("T")) {
+			num = 0;
+		} else {
+			num = 1;
+		}
+		System.out.println(num);
+
+		model.addAttribute("num", num);
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
 
 	// 회원정보 추가
-	//권한 업글
-	@RequestMapping("addInfo")
-	public String adddInfo(@ModelAttribute TpProposer tposer,HttpSession session, HttpServletRequest request, Errors errors) throws Exception {
+	// 새롭게 권한 업글
+	@RequestMapping("addInfoProposer")
+	public String adddInfo(@ModelAttribute TpProposer tpProposer, HttpSession session, HttpServletRequest request,
+			Errors errors, ModelMap model) throws Exception {
 		// 세션에서 아이디 불러옴
-		String writer = (String) session.getAttribute("userLoginInfo");
-		System.out.println(writer);
-		
-		// 값 넣어주기		
-		
-		tposer.setTpfId(writer);// 아이디
-		tposer.setAccount(request.getParameter("account"));// 계좌
-		tposer.setProposerType(request.getParameter("proposerType"));// 일반개인or법인or개인사업자
-		tposer.setCertification("F");
-		tposer.setResidentRegistrationFirstNum(request.getParameter("residentRegistrationFirstNum"));// 주민번호
-																				// 앞자리
-		tposer.setResidentRegistrationLastNum(request.getParameter("residentRegistrationLastNum"));// 주민번호
-																			// 뒷자리
-		tposer.setCorporateRegistrationNumber(request.getParameter("corporateRegistrationNumber"));// 사업자번호
-		
-		
-		
-		System.out.println(tposer.toString());
+		String tpfid = (String) session.getAttribute("userLoginInfo");
+		System.out.println(tpfid);
+		tpProposer.setTpfId(tpfid);
+		System.out.println(tpProposer.toString());
 
 		TpProposerValidator validate = new TpProposerValidator();
-		validate.validate(tposer, errors);
-		
-		System.out.println("프로퍼저 등록 검증 에러필드 개수 : "+errors.getErrorCount());
-		if(errors.hasErrors()){
+		validate.validate(tpProposer, errors);
+
+		System.out.println("프로퍼저 등록 검증 에러필드 개수 : " + errors.getErrorCount());
+		if (errors.hasErrors()) {
+			model.addAttribute("num", 1);
+			model.addAttribute("proposer", tpProposer);
+			model.addAttribute("errorMessage", "Proposer 권한등록에 실패했습니다.");
+			model.addAttribute("bankList", service.getAllBankList());
+
 			return "tpMyPage/tpProposer.tiles";
 		}
 		System.out.println("프로퍼저 벨리데이션 통과");
-		
-		service.addProposerInfo(tposer, writer);
 
-		
-		TpFunder tpFunder = service.findTpFunderById(writer);
+		service.addProposerInfo(tpProposer, tpfid);
+
+		TpFunder tpFunder = service.findTpFunderById(tpfid);
+		model.addAttribute("num", 0);
 		System.out.println(tpFunder.toString());
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
-
 
 	/**
 	 * 회원탈퇴완료
@@ -303,6 +392,7 @@ public class TpFunderAccountAccessController {
 		}
 		return txt;
 	}
+
 	/**
 	 * 회원비밀번호 찾기
 	 */
@@ -312,37 +402,131 @@ public class TpFunderAccountAccessController {
 	private Email email;
 	@RequestMapping("mailPw")
 	@ResponseBody
-	public String sendEmailAction(@RequestParam String findId, @RequestParam String findEmail) throws Exception {
+	public String sendEmailPassword(@RequestParam String findId, @RequestParam String findName,  @RequestParam String findEmail, @RequestParam String findBirth) throws Exception {
 		String txt = null;
 		String id = findId;
+		String name = findName;
 		String e_mail = findEmail;
+		String birth = findBirth;
+		
 		try {
 			String tpfId = service.findTpFunderById(id).getTpfId();
+			String tpfName = service.findTpFunderById(id).getTpfName();
 			String tpfEmail = service.findTpFunderById(id).getTpfEmail();
+			String tpfBirth = service.findTpFunderById(id).getTpfBirth();
 			String pw = service.findTpFunderById(id).getTpfPassword();
+			
+			String fpw = "";//비밀번호 뒷자리 3개를 *로 변경
+			char[] password = pw.toCharArray();
+			for(int i=0; i<(password.length-3); i++){
+				fpw += password[i];
+			}
+			fpw = fpw+"***";
+			
 			System.out.println(pw);
-			if (id.equals(tpfId) && e_mail.equals(tpfEmail)) {
+			if (id.equals(tpfId) && name.equals(tpfName) && e_mail.equals(tpfEmail) && birth.equals(tpfBirth)) {
 				if (pw != null) {
-					email.setContent("비밀번호는 " + pw + " 입니다.");// 보낼 이메일 내용
+					email.setContent("비밀번호는 " + fpw + " 입니다.");// 보낼 이메일 내용
 					email.setReceiver(e_mail);// 받을 이메일 주소
-					email.setSubject(id + "님 비밀번호 찾기 메일입니다.");// 이메일 제목
-					emailSender.SendEmail(email);
+					email.setSubject(name + "님 비밀번호 찾기 메일입니다.");// 이메일 제목
+					emailSender.SendEmail(email); //보내는 email
 					txt = "success";
 				}
 			} else {
-				txt = "아이디와 이메일주소가 맞지 않습니다.";
+				txt = "회원정보가 맞지 않습니다.";
 			}
 		} catch (NullPointerException e) {
 			txt = "등록된 ID가 아닙니다.";
 		}
 		return txt;
 	}
-	//추가정보 입력창으로 이동
-	@RequestMapping("Proposer")
-	public String bankAllList(@ModelAttribute TpBankList lists, ModelMap model) {
-		model.addAttribute("list", service.getAllBankList());
+
+	// 추가정보 입력창으로 이동
+	// 추가정보 입력창 또는 수정창으로 이동
+	@RequestMapping("tpProposer")
+	public String bankAllList(ModelMap model, HttpSession session) {
+		String tpfId = (String) session.getAttribute("userLoginInfo");
+		TpFunder funder = service.findTpFunderById(tpfId);
+		String qualify = funder.getTpfQualifyTpProposer();
+		System.out.println(qualify);
+
+		int num = 0;
+		if (qualify.equals("T")) {
+			num = 0;
+			model.addAttribute("proposer", service.selectTpProposerById(tpfId));
+		} else {
+			num = 1;
+		}
+		System.out.println(num);
+		model.addAttribute("num", num);
+		model.addAttribute("bankList", service.getAllBankList());
 		System.out.println();
 		return "tpMyPage/tpProposer.tiles";
 	}
-}
 
+	@RequestMapping("/updateInfoProposer")
+	public String updateInfo(@ModelAttribute TpProposer proposer, HttpSession session, HttpServletRequest request,
+			Errors errors, ModelMap model) throws Exception {
+
+		String tpfId = (String) session.getAttribute("userLoginInfo");
+		System.out.println(tpfId);
+		proposer.setTpfId(tpfId);// 아이디
+
+		System.out.println(proposer.toString());
+
+		TpProposerValidator validate = new TpProposerValidator();
+		validate.validate(proposer, errors);
+
+		System.out.println("프로퍼저 등록 검증 에러필드 개수 : " + errors.getErrorCount());
+		if (errors.hasErrors()) {
+			model.addAttribute("num", 0);
+			model.addAttribute("proposer", proposer);
+			model.addAttribute("errorMessage", "정보 수정에 실패했습니다.");
+			model.addAttribute("bankList", service.getAllBankList());
+			return "tpMyPage/tpProposer.tiles";
+		}
+		System.out.println("프로퍼저 벨리데이션 통과");
+
+		service.updateInfo(proposer);
+
+		model.addAttribute("proposer", proposer);
+		model.addAttribute("num", 0);
+
+		return "tpMyPage/tpMyPageMain.tiles";
+
+	}
+	/**
+	 * 회원ID찾기
+	 */
+	@RequestMapping("mailId")
+	@ResponseBody
+	public String sendEmailId(@RequestParam String findPhoneNum,  @RequestParam String findEmail, @RequestParam String findBirth) throws Exception {
+		String txt = null;
+		String phoneNum = findPhoneNum;
+		String e_mail = findEmail;
+		String birth = findBirth;
+		
+		try {
+			String tpfName = service.findTpFunderByPhoneNum(phoneNum).getTpfName();
+			String tpfEmail = service.findTpFunderByPhoneNum(phoneNum).getTpfEmail();
+			String tpfBirth = service.findTpFunderByPhoneNum(phoneNum).getTpfBirth();
+			String tpfId = service.findTpFunderByPhoneNum(phoneNum).getTpfId();
+			String tpfPhoneNum = service.findTpFunderByPhoneNum(phoneNum).getTpfPhoneNum();
+			if (phoneNum.equals(tpfPhoneNum) && e_mail.equals(tpfEmail) && birth.equals(tpfBirth)) {
+				if (tpfId != null) {
+					email.setContent("아이디는 " + tpfId + " 입니다.");// 보낼 이메일 내용
+					email.setReceiver(e_mail);// 받을 이메일 주소
+					email.setSubject(tpfName + "님 아이디찾기 메일입니다.");// 이메일 제목
+					emailSender.SendEmail(email); //보내는 email
+					txt = "success";
+				}
+			} else {
+				txt = "회원정보가 맞지 않습니다.";
+			}
+		} catch (NullPointerException e) {
+			txt = "등록된 회원이 아닙니다.";
+		}
+		return txt;
+	}
+
+}

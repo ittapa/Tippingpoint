@@ -68,8 +68,9 @@
 	 </select>
 
 	 
-	 <!-- 전체프로젝트 조회'o'인거 찾기 paging처리 select문 -->
-	 <select id="selectOTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
+	 
+	 <!--프로젝트 둘러보기:  전체프로젝트 조회'OXEZ'인거 찾기 paging처리 select문 -->
+	 <select id="selectOXEZTpProjectPaging" parameterType="int" resultMap="tpProject-resultmap">
 	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
 				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
@@ -80,7 +81,7 @@
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
 	 				
-				 	where tppState like 'O'
+				 	where tppState IN('O','E','X','Z') 
 	 				order by tppFundingLastDate
 	 			)
 	 		)
@@ -120,10 +121,12 @@
 	</select>
 	
 	<!-- 승인완료 -->
-	<select id="selectOCountProject" resultType="int">
-	select count(tppState) from tpproject where tppState like 'O'
+	<select id="selectOEXZCountProject" resultType="int">
+	select count(tppState) from tpproject where tppState IN('O','E','X','Z') 
 	</select>
 	
+	
+	<!--todo 어디에쓰는건지  -->
 	<!-- 승인저장 -->
 	<select id="selectACountProject" resultType="int">
 	select count(tppState) from tpproject where tppState like 'A'
@@ -151,15 +154,15 @@
 	<select id="serchProjectByKeyWord" parameterType ="string" resultMap="tpProject-resultmap">
 		<include refid="selectAllProjectDB"></include>
 			WHERE tppId like '%'||#{value}||'%'
-					AND tppState IN('O','E','Z') 
+					AND tppState IN('O','E','X','Z') 
 			union
 		<include refid="selectAllProjectDB"></include>
 			WHERE tppTitle like '%'||#{value}||'%'
-			       AND tppState IN('O','E','Z') 
+			       AND tppState IN('O','E','X','Z') 
 			union
 		<include refid="selectAllProjectDB"></include>
 			WHERE tppProjectContent like '%'||#{value}||'%'
-					AND tppState IN('O','E','Z') 
+					AND tppState IN('O','E','X','Z') 
 	</select>
 	
 	
@@ -174,7 +177,7 @@
 	<!-- 11111111111111111111111111첫번재 수정 사항 11111111111111111111111111111111 -->
 	
 	
-	<!-- 전체프로젝트 조회'o'인거이면서 카테고리가 ___인거 찾기 paging처리 select문 -->
+	<!-- 전체프로젝트 조회'oexz'인거이면서 카테고리가 ___인거 찾기 paging처리 select문 -->
 	 <select id="selectOAndCategoryTpProjectPaging" parameterType="map" resultMap="tpProject-resultmap">
 	 	select tppId, tppTitle, tppProjectContent, tppWriter, tppWriteDate, tppTotalAmount,
 				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
@@ -185,7 +188,7 @@
 				 tppFunderNum, tppState, tppAdminMessage, tppMainImg, tppCategory
 	 			from(
 	 				<include refid="selectAllProjectDB"/>
-				 	where tppState IN('O','E','Z') 
+				 	where tppState  IN('O','E','X','Z') 
 				 	and tppCategory like #{tppCategory}
 	 				order by tppFundingLastDate
 	 			)
@@ -195,7 +198,7 @@
 	 
 	
 	<select id="selectOAndCategoryCountProject" resultType="int">
-		select count(tppState) from tpproject where tppState IN('O','E','Z') and tppCategory like #{tppCategory}
+		select count(tppState) from tpproject where tppState  IN('O','E','X','Z')  and tppCategory like #{tppCategory}
 	</select>
 	
 	
@@ -229,15 +232,14 @@
 		update tpproject 
 		set 
 			tppTitle = #{tppTitle}, 
-			tppProjectContent=#{tppProjectContent},
-			tppWriteDate =	#{tppWriteDate}, 
-			tppTargetAmount=#{tppTargetAmount}, 
-			tppFundingStartDate=#{tppFundingStartDate}, 
-			tppFundingLastDate=	#{tppFundingLastDate},
-		 	tppState=	 #{tppState}, 
-		 	tppMainImg=	 #{tppMainImg}, 
-		 	tppCategory=	 #{tppCategory}
-		 		 
+			tppProjectContent = #{tppProjectContent},
+			tppWriteDate = #{tppWriteDate}, 
+			tppTargetAmount = #{tppTargetAmount}, 
+			tppFundingLastDate = #{tppFundingLastDate},
+		 	tppState = #{tppState}, 
+		 	tppMainImg = #{tppMainImg}, 
+		 	tppCategory =	#{tppCategory},
+		 	tppFundingStartDate = #{tppFundingStartDate}
 		 where tppid = #{tppId}
 	</update>
 	

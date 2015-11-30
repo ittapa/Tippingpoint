@@ -26,4 +26,6 @@ public interface TpFunderDao {
 
 	int updateTpFunderQuqlifyTpProposer(Map map);
 	
+	TpFunder selectTpFundersByPhoneNum(String tpfPhoneNum);//핸드폰번호로 찾기
+
 }

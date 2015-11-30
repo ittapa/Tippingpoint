@@ -40,13 +40,13 @@ function loginSuccess(){
 					"type" : "POST",
 					"data" : param,// ID 및 password
 					"dataType" : "text",//응답 데이터 타입 text,json,jsonp,xml
-					"beforeSend":function(){// 아이디 공백체크
+					"beforeSend":function(){//공백체크
 						if(!$("#id").val()){
 							alert("ID를 입력해 주세요");
 							$("#id").focus();
 							return false;
 						}
-						if(!$("#pw").val()){// 비밀번호 공백체크
+						if(!$("#pw").val()){
 							alert("비밀번호를 입력해 주세요");
 							$("#pw").focus();
 							return false;
@@ -74,10 +74,17 @@ function loginSuccess(){
 			});
 		});
 		$(document).ready(function goRegister2(){//
-			$("#passwordCheckBtn").on("click", function(){
+			$("#idFindBtn").on("click", function(){
+				location.href="/TippingPoint/tpLogin/findId.tp"  // 페이지 이동...
+			});
+		});
+
+		$(document).ready(function goRegister3(){//
+			$("#passwordFindBtn").on("click", function(){
 				location.href="/TippingPoint/tpLogin/findPassword.tp"  // 페이지 이동...
 			});
 		});
+		
 
 		
 </script>
@@ -102,7 +109,8 @@ function loginSuccess(){
 				<td colspan="2" align="center" height="30">
 					<input type="button" value="로그인" id="loginBtn"> 
 					<input type="button" value="회원 가입" id="registerBtn">
-					<input type="button" value="비밀번호 찾기" id="passwordCheckBtn">
+					<input type="button" value="아이디 찾기" id="idFindBtn">
+					<input type="button" value="비밀번호 찾기" id="passwordFindBtn">
 				</td>
 			</tr>
 		</table>

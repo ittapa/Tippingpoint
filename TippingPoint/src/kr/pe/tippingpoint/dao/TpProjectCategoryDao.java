@@ -8,8 +8,10 @@ public interface TpProjectCategoryDao {
 
 	public List<TpProjectCategory> selectTpProjectCategory();
 	
-	public int deleteTpProjectCategoryByCategory();
+	public void deleteTpProjectCategoryByCategory(String tppCategoryName);
+
+	public void insertTpProjectCategoryByCategory(String tppCategory, String tppCategoryName);
 	
-	public int insertTpProjectCategoryByCategory();
-	
+	public void updateTpProjectCategoryByCategory(TpProjectCategory category, String updateCategory);
+		
 }

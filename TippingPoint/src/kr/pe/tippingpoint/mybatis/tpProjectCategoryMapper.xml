@@ -13,8 +13,20 @@ select * from tpProjectCategory
 </select>
 	
 <delete id="deletTpProjectCategoryByCategory" parameterType = "String" >
-delete * from ProjectCategory where tpProjectCategory = #{value}
+delete from tpProjectCategory where tppCategoryName = #{tppCategoryName}
 </delete>
+
+<!-- 카테고리추가 -->
+<insert id="insertTpProjectCategoryByCategory" parameterType="String">
+	insert into tpProjectCategory values(#{tppCategory},
+	#{tppCategoryName})
+</insert>
+
+<update id="updateTpProjectCategoryByCategory" parameterType="map">
+	UPDATE Banklist SET bankKr=#{bankkr}, bankEr=#{bankEr}, code=#{code} 
+	WHERE bankKr=#{bankKr}
+</update>
+
 	 
 </mapper>
 

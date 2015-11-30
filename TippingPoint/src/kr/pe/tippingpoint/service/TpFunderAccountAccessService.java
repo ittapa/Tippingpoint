@@ -67,6 +67,12 @@ public interface TpFunderAccountAccessService {
 	//////////////////////////////////////////////수정중/////////////////////////////////////////////////
 	void addTpfQualFytpproposer(String writer) throws Exception;
 	
+	void updateInfo(TpProposer rposer) throws Exception;
 	
 	List<TpBankList> getAllBankList();
+	
+	TpProposer selectTpProposerById(String tpfId);
+	
+	TpFunder findTpFunderByPhoneNum(String tpfPhoneNum);
+
 }

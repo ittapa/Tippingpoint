@@ -14,10 +14,13 @@ public class TpFunder {
 	private String tpfPhoneNum;
 	private String tpfQualifyTpProposer;// funder / proposer / 
 	private String tpfAccountType;
+	private String tpfProfileImg; // 프로필 이미지
 	
-	public TpFunder(String tpfId, String tpfName, String tpfPassword, String tpfBirth, String tpfGender, String tpfEmail,
-			String tpfZipcode, String tpfAddress, String tpfAddressD, String tpfPhoneNum, String tpfQualifyTpProposer,
-			String tpfAccountType) {
+	public TpFunder(){}
+	
+	public TpFunder(String tpfId, String tpfName, String tpfPassword, String tpfBirth, String tpfGender,
+			String tpfEmail, String tpfZipcode, String tpfAddress, String tpfAddressD, String tpfPhoneNum,
+			String tpfQualifyTpProposer, String tpfAccountType, String tpfProfileImg) {
 		super();
 		this.tpfId = tpfId;
 		this.tpfName = tpfName;
@@ -31,131 +34,121 @@ public class TpFunder {
 		this.tpfPhoneNum = tpfPhoneNum;
 		this.tpfQualifyTpProposer = tpfQualifyTpProposer;
 		this.tpfAccountType = tpfAccountType;
+		this.tpfProfileImg = tpfProfileImg;
 	}
-	
-	
-	public TpFunder() {}
-
 
 	public String getTpfId() {
 		return tpfId;
 	}
 
-
 	public void setTpfId(String tpfId) {
 		this.tpfId = tpfId;
 	}
-
 
 	public String getTpfName() {
 		return tpfName;
 	}
 
-
 	public void setTpfName(String tpfName) {
 		this.tpfName = tpfName;
 	}
-
 
 	public String getTpfPassword() {
 		return tpfPassword;
 	}
 
-
 	public void setTpfPassword(String tpfPassword) {
 		this.tpfPassword = tpfPassword;
 	}
-
 
 	public String getTpfBirth() {
 		return tpfBirth;
 	}
 
-
 	public void setTpfBirth(String tpfBirth) {
 		this.tpfBirth = tpfBirth;
 	}
-
 
 	public String getTpfGender() {
 		return tpfGender;
 	}
 
-
 	public void setTpfGender(String tpfGender) {
 		this.tpfGender = tpfGender;
 	}
-
 
 	public String getTpfEmail() {
 		return tpfEmail;
 	}
 
-
 	public void setTpfEmail(String tpfEmail) {
 		this.tpfEmail = tpfEmail;
 	}
-
 
 	public String getTpfZipcode() {
 		return tpfZipcode;
 	}
 
-
 	public void setTpfZipcode(String tpfZipcode) {
 		this.tpfZipcode = tpfZipcode;
 	}
-
 
 	public String getTpfAddress() {
 		return tpfAddress;
 	}
 
-
 	public void setTpfAddress(String tpfAddress) {
 		this.tpfAddress = tpfAddress;
 	}
-
 
 	public String getTpfAddressD() {
 		return tpfAddressD;
 	}
 
-
 	public void setTpfAddressD(String tpfAddressD) {
 		this.tpfAddressD = tpfAddressD;
 	}
-
 
 	public String getTpfPhoneNum() {
 		return tpfPhoneNum;
 	}
 
-
 	public void setTpfPhoneNum(String tpfPhoneNum) {
 		this.tpfPhoneNum = tpfPhoneNum;
 	}
-
 
 	public String getTpfQualifyTpProposer() {
 		return tpfQualifyTpProposer;
 	}
 
-
 	public void setTpfQualifyTpProposer(String tpfQualifyTpProposer) {
 		this.tpfQualifyTpProposer = tpfQualifyTpProposer;
 	}
-
 
 	public String getTpfAccountType() {
 		return tpfAccountType;
 	}
 
-
 	public void setTpfAccountType(String tpfAccountType) {
 		this.tpfAccountType = tpfAccountType;
 	}
 
+	public String getTpfProfileImg() {
+		return tpfProfileImg;
+	}
+
+	public void setTpfProfileImg(String tpfProfileImg) {
+		this.tpfProfileImg = tpfProfileImg;
+	}
+
+	@Override
+	public String toString() {
+		return "TpFunder [tpfId=" + tpfId + ", tpfName=" + tpfName + ", tpfPassword=" + tpfPassword + ", tpfBirth="
+				+ tpfBirth + ", tpfGender=" + tpfGender + ", tpfEmail=" + tpfEmail + ", tpfZipcode=" + tpfZipcode
+				+ ", tpfAddress=" + tpfAddress + ", tpfAddressD=" + tpfAddressD + ", tpfPhoneNum=" + tpfPhoneNum
+				+ ", tpfQualifyTpProposer=" + tpfQualifyTpProposer + ", tpfAccountType=" + tpfAccountType
+				+ ", tpfProfileImg=" + tpfProfileImg + "]";
+	}
 
 	@Override
 	public int hashCode() {
@@ -171,11 +164,11 @@ public class TpFunder {
 		result = prime * result + ((tpfName == null) ? 0 : tpfName.hashCode());
 		result = prime * result + ((tpfPassword == null) ? 0 : tpfPassword.hashCode());
 		result = prime * result + ((tpfPhoneNum == null) ? 0 : tpfPhoneNum.hashCode());
+		result = prime * result + ((tpfProfileImg == null) ? 0 : tpfProfileImg.hashCode());
 		result = prime * result + ((tpfQualifyTpProposer == null) ? 0 : tpfQualifyTpProposer.hashCode());
 		result = prime * result + ((tpfZipcode == null) ? 0 : tpfZipcode.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -236,6 +229,11 @@ public class TpFunder {
 				return false;
 		} else if (!tpfPhoneNum.equals(other.tpfPhoneNum))
 			return false;
+		if (tpfProfileImg == null) {
+			if (other.tpfProfileImg != null)
+				return false;
+		} else if (!tpfProfileImg.equals(other.tpfProfileImg))
+			return false;
 		if (tpfQualifyTpProposer == null) {
 			if (other.tpfQualifyTpProposer != null)
 				return false;
@@ -248,17 +246,6 @@ public class TpFunder {
 			return false;
 		return true;
 	}
-
-
-	@Override
-	public String toString() {
-		return "TpFunder [tpfId=" + tpfId + ", tpfName=" + tpfName + ", tpfPassword=" + tpfPassword + ", tpfBirth="
-				+ tpfBirth + ", tpfGender=" + tpfGender + ", tpfEmail=" + tpfEmail + ", tpfZipcode=" + tpfZipcode
-				+ ", tpfAddress=" + tpfAddress + ", tpfAddressD=" + tpfAddressD + ", tpfPhoneNum=" + tpfPhoneNum
-				+ ", tpfQualifyTpProposer=" + tpfQualifyTpProposer + ", tpfAccountType=" + tpfAccountType + "]";
-	}
-	
-	
 	
 	
 }

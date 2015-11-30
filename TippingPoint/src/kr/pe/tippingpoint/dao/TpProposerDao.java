@@ -9,4 +9,8 @@ public interface TpProposerDao {
 	
 	//////////////////////////////////////////////수정중/////////////////////////////////////////////////
 	public void addTpfQualFy(String t);
+	
+	public TpProposer selectProposer(String tpfId);
+
+	public void updateInfo(TpProposer rposer);
 }

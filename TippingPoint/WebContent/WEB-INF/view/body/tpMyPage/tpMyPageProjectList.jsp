@@ -95,6 +95,7 @@
 							<td>
 								<!-- 프로젝트로 이동 -->
 								<form action = "${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">
+										<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
 										<input type = "submit" value = "자세히 보기">
 								</form>
 								<!-- 프로젝트 수정폼으로 이동 -->

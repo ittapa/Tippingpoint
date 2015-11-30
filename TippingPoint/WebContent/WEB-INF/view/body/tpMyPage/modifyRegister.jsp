@@ -1,8 +1,10 @@
 <%@ page import="java.util.Enumeration" %>
+<%@ page import="kr.pe.tippingpoint.vo.TpFunder" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,7 +86,58 @@ $(document).ready(function() {
    });
 });
 </script>
-===========================================
+
+<script type="text/javascript">
+//이미지 관련 삭제 및 호출
+$(document).ready(function() {
+	var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+	$("#tpfMainImgDelete").on("click", function(){
+		var imgconfirm = confirm("기본이미지로 변경합니다.");
+		if(imgconfirm){
+			$("#upfile").val("");
+			document.getElementById('imgView').src=defaultImg;
+			$("#tpfProfileImg").val("default");
+			alert($("#tpfProfileImg").val());
+		}else{
+			return false;
+		}
+	});
+	
+	
+	var originImag = '<%=((TpFunder)request.getAttribute("tpFunder")).getTpfProfileImg()%>';
+	$("#tpfMainImgOrigin").on("click",function(){
+		$("#upfile").val("");
+		document.getElementById('imgView').src=originImag;
+		$("#tpfProfileImg").val(originImag);
+		alert($("#tpfProfileImg").val());
+	});
+});
+</script>
+
+<script type="text/javascript">
+function imgChange(evt) {
+	alert("대표 이미지를 업로드합니다.");
+	var tgt = evt.target || window.event.srcElement,
+	files = tgt.files;
+	
+	// 파일리더를 지원하는 경우
+	if (FileReader && files && files.length) {
+		var fr = new FileReader();
+		fr.onload = function () {
+			document.getElementById('imgView').src = fr.result;
+		}
+		fr.readAsDataURL(files[0]);
+	}
+					
+	// Not supported 아닌경우 아이프레임..ㅠㅠ
+	else {
+	// fallback -- perhaps submit the input to an iframe and temporarily store
+	// them on the server until the user's session ends.
+	}
+} //imgChange function 종료
+</script>
+
+
 <script>
 $(document).ready(function dropOut(){
 	$("#dropOutBtn").on("click", function(){
@@ -150,13 +203,14 @@ $(document).ready(function dropOut(){
 	});
 });
 </script>
-===========================================
+
 <body>
 
 <h2>회원정보수정</h2>
 <spring:hasBindErrors name="tpFunder"/>
-<form action="${initParam.rootPath }/funderModifyRegister.tp" method="post" name="tpFunder">
+<form action="${initParam.rootPath }/funderModifyRegister.tp" method="post" name="tpFunder" enctype="multipart/form-data">
 <table border="1" style="width:700px">
+	<input type="hidden" name="tpfId" id="tpfId" value="${requestScope.tpFunder.tpfId }">
    <tr>
       <td>이름</td>
       <td>
@@ -224,19 +278,35 @@ $(document).ready(function dropOut(){
       </td>
    </tr>
    <tr>
+   		<td>대표 이미지</td>
+   		<td>
+   		<img src ="${requestScope.tpFunder.tpfProfileImg}" width ="300"  height = "300" id = "imgView" name="imgView"><br>
+   		<input type="hidden" id="tpfProfileImg" name="tpfProfileImg" value="${requestScope.tpFunder.tpfProfileImg }">
+   		<div class="mainImgfileBox">
+					<label>
+						사진 업로드 <input type="file" name="upfile" id="upfile" onchange="imgChange(this);"><br>						
+					</label>
+					<input type="button" id="tpfMainImgDelete" value="기본 이미지">
+					<input type="button" id="tpfMainImgOrigin" value="원래 이미지">
+				</div>
+				<br>
+				대표이미지는 가로/세로 300px 이하를 권장합니다.
+   		</td>
+   </tr>
+   <tr>
       <td colspan="2" align="center">
          <input type="submit" value="등록" id="modify">
       </td>
    </tr>
 </table>
 </form>
-===========================================
+
 <br>
 <form id="form" action="${initParam.rootPath }/removeFunder.tp" method="post">
 	<input type="button" value="회원탈퇴" id="dropOutBtn">
 	<div id="delete">
 	</div>
 </form>
-===========================================
+
 </body>
 </html>

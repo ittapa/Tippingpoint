@@ -1,5 +1,6 @@
 package kr.pe.tippingpoint.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -22,23 +23,36 @@ public class TpProjectCategoryDaoImpl implements TpProjectCategoryDao{
 
 	@Override
 	public List<TpProjectCategory> selectTpProjectCategory() {
-			
 		return session.selectList("tpProjectCategoryMapper.selectAllTpProjectCategory");
 	}
 
-	
-	//todo
+	//카테고리 삭제
 	@Override
-	public int deleteTpProjectCategoryByCategory() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteTpProjectCategoryByCategory(String tppCategoryName) {
+		session.insert("tpProjectCategoryMapper.deletTpProjectCategoryByCategory", tppCategoryName);
 	}
 
+	//카테고리 추가
 	@Override
-	public int insertTpProjectCategoryByCategory() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertTpProjectCategoryByCategory(String tppCategory, String tppCategoryName) {
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("tppCategory", tppCategory);
+		map.put("tppCategoryName", tppCategoryName);
+		System.out.println(map.get("tppCategoryName"));
+		session.insert("tpProjectCategoryMapper.insertTpProjectCategoryByCategory", map);
 	}
+
+
+	@Override
+	public void updateTpProjectCategoryByCategory(TpProjectCategory category, String updateCategory) {
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("tppCategory", category.getTppCategory());
+		map.put("tppCategoryName", category.getTppCategoryName());
+		map.put("updateCategory", updateCategory);
+		session.update("tpProjectCategoryMapper.updateTpProjectCategoryByCategory",map);
+	}
+	
+	
 
 	
 }

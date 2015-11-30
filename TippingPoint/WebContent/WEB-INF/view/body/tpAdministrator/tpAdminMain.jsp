@@ -9,10 +9,12 @@
    <br/>
    <a href="${initParam.rootPath}/findAllTpFunderList.tp">회원 목록 조회</a>
    <br/>
-   <a href="${initParam.rootPath}/tpAdminNoticeManager.tp">공지사항[작성중]</a>
+   <a href="${initParam.rootPath}/tpAdminNoticeManager.tp">공지사항</a>
    <br/>
-   <a href="${initParam.rootPath}/">프로젝트 카테고리 관리하기[미구현]</a>
+   <a href="${initParam.rootPath}/tpAdminCheckAndCategoryMain.tp">카테고리 관리하기</a>
    <br/>
+   <a href="${initParam.rootPath}/tpAdminCheckAndBankMain.tp">은행 관리하기</a>
+    <br/>
     <a href="${initParam.rootPath}/">관리자 계정 관리[미구현]</a>
    <br/>
 
