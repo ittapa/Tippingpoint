@@ -3,7 +3,8 @@
 
 <%
 //	String configPath 	= "C:/lgdacom";	//LG유플러스에서 제공한 환경파일("/conf/lgdacom.conf") 위치 지정.	
-	String configPath 	= "${initParam.LGUPlusPgConfPath}";	//LG유플러스에서 제공한 환경파일("/conf/lgdacom.conf") 위치 지정.	
+//	String configPath 	= "${initParam.LGUPlusPgConfPath}";	//LG유플러스에서 제공한 환경파일("/conf/lgdacom.conf") 위치 지정.	
+	String configPath 	= "/usr/local/tomcat8/webapps/TippingPoint/lgdacom";	//LG유플러스에서 제공한 환경파일("/conf/lgdacom.conf") 위치 지정.	
 	
     /*
      * [LG유플러스 연결 확인 페이지]

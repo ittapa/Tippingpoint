@@ -26,7 +26,8 @@
     String CST_MID              = "lgdacomxpay";                      //LG유플러스로 부터 발급받으신 상점아이디를 입력하세요.
     String LGD_MID              = ("test".equals(CST_PLATFORM.trim())?"t":"")+CST_MID;  //테스트 아이디는 't'를 제외하고 입력하세요.
                                                                                         //상점아이디(자동생성)
-    String LGD_OID              = request.getParameter("strOrderUId");                      //주문번호(상점정의 유니크한 주문번호를 입력하세요)
+//    String LGD_OID              = request.getParameter("strOrderUId");                      //주문번호(상점정의 유니크한 주문번호를 입력하세요)
+    String LGD_OID              = String.valueOf(session.getAttribute("strOrderUId"));                      //주문번호(상점정의 유니크한 주문번호를 입력하세요)
     String LGD_AMOUNT           = request.getParameter("tpAmount");                   //결제금액("," 를 제외한 결제금액을 입력하세요)
     String LGD_MERTKEY          = "반드시 입력하세요";                  						//상점MertKey(mertkey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실수 있습니다)
     String LGD_BUYER            = (String)session.getAttribute("userLoginInfo");                    //구매자명
@@ -38,6 +39,8 @@
     String LGD_CUSTOM_SWITCHINGTYPE = "IFRAME"; //신용카드 카드사 인증 페이지 연동 방식 (수정불가)
     String LGD_WINDOW_VER		= "2.5";												//결제창 버젼정보
     String LGD_WINDOW_TYPE      = "iframe";               //결제창 호출 방식 (수정불가)
+    
+//    out.println("LGD_OID 1: "+ request.getParameter("strOrderUId") + "LGD_OID 2: " + String.valueOf(session.getAttribute("strOrderUId")) + "LGD_OID 3: " + LGD_OID);
 
     /*
      * 가상계좌(무통장) 결제 연동을 하시는 경우 아래 LGD_CASNOTEURL 을 설정하여 주시기 바랍니다.
@@ -49,8 +52,8 @@
      */
 //     String strCurrentUrl = request.getScheme() + "://" + request.getServerName() + ((request.getServerPort() != 80) ? ":" : "") + request.getServerPort()+ ${initParam.rootPath} + "/"; 
     
-//    String LGD_RETURNURL		= "http://www.tippingpoint.pe.kr/TippingPoint/returnurl.jsp";// FOR MANUAL
-    String LGD_RETURNURL		= "http://www.tippingpoint.pe.kr/TippingPoint/tpPayCardRet.tp";
+    String LGD_RETURNURL		= "http://www.tippingpoint.pe.kr/TippingPoint/returnurl.jsp";// FOR MANUAL
+//    String LGD_RETURNURL		= "http://www.tippingpoint.pe.kr/TippingPoint/tpPayCardRet.tp";
 
     /*
      *************************************************
@@ -174,6 +177,7 @@ function payment_return() {
 			document.getElementById("LGD_PAYKEY").value = fDoc.document.getElementById('LGD_PAYKEY').value;
 			document.getElementById("LGD_PAYINFO").target = "_self";
 			document.getElementById("LGD_PAYINFO").action = "${initParam.rootPath}/tpPayPgReturn.tp";
+//			document.getElementById("LGD_PAYINFO").action = "payres.jsp";
 			document.getElementById("LGD_PAYINFO").submit();
 	} else {
 		alert("LGD_RESPCODE (결과코드) : " + fDoc.document.getElementById('LGD_RESPCODE').value + "\n" + "LGD_RESPMSG (결과메시지): " + fDoc.document.getElementById('LGD_RESPMSG').value);
@@ -185,6 +189,7 @@ function payment_return() {
 
 <form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="${initParam.rootPath}/tpPayCardRet.tp">
 
+<input type="text" name="test111" value="test111"/>
 
 <ul>
 	<li>프로젝트 명: ${tppTitle}</li>

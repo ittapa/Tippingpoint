@@ -65,6 +65,8 @@
    
       <!-- 결제 요청 페이지 -->
    <mvc:view-controller path="/pay/payRequest.tp" view-name="tpPayment/payRequest.tiles"/>
+   <!-- 결제 요청결과 저장 페이지 -->
+   <mvc:view-controller path="/tpPayPgReturn.tp" view-name="tpPayment/payCardSuccess.tiles"/>
    
    <mvc:view-controller path="/page1.tp" view-name="tpLogin/page1.tiles"/> <!-- test용  -->
    <mvc:view-controller path="/page2.tp" view-name="tpLogin/page2.tiles"/><!-- test용  -->

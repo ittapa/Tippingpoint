@@ -18,7 +18,7 @@ Map payReqMap = request.getParameterMap();
      <script type="text/javascript">
 
 		function setLGDResult() {
-			parent.payment_return();
+			///parent.payment_return();
 			try {
 			} catch (e) {
 				alert(e.message);

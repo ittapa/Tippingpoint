@@ -2,6 +2,7 @@ package kr.pe.tippingpoint.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -14,9 +15,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import kr.pe.tippingpoint.service.TpFunderAccountAccessService;
-import kr.pe.tippingpoint.service.TpProjectService;
+import kr.pe.tippingpoint.service.TpFunderAccountAccessServiceImpl;
 import kr.pe.tippingpoint.vo.TpFunder;
+// 카드결제 후 사용
 import lgdacom.XPayClient.XPayClient;
 
 /**
@@ -26,13 +27,10 @@ import lgdacom.XPayClient.XPayClient;
  */
 @Controller
 //@RequestMapping("/pay/")
-public class tpPaymentController {
+public class tpPaymentControllerBak {
 	
 	@Autowired
-	private TpFunderAccountAccessService TpFunderAccService;
-	
-	@Autowired
-	private TpProjectService tpProjectService;
+	private TpFunderAccountAccessServiceImpl TpFunderAccService;
 
 	/**
 	 * 카드 / 현금 결제 요청 페이지 핸들러
@@ -43,21 +41,18 @@ public class tpPaymentController {
 	 * @param model
 	 * @return URL: 계좌이체 요청 페이지 or 카드 결제 요청 페이지
 	 */
-//	@RequestMapping(value={"payCardRequest.tp", "payAccountRequest.tp"})
-	// payreq_crossflatform
-	@RequestMapping("payCardRequest.tp")
+	@RequestMapping(value={"payCardRequest_.tp", "payAccountRequest_.tp"})
 	public String payRequest(@RequestParam String tppPayType, @RequestParam String tppTitle, @RequestParam int tpAmount, HttpSession session, ModelMap model){
 		
-		// 결제가 가능한 프로젝트인지 판단
-//		tpProjectService.
+		// TODO: 결제가 가능한 프로젝트인지 날짜로 체크
 		
-
+		
 		// TODO: 세션 처리되는 페이지 통합시 테스트 코드 삭제		
 		session.setAttribute("userLoginInfo", "1");
-		
+
 		
 		String tppId = (String)session.getAttribute("userLoginInfo");
-		
+				
 		// 세션 사용자ID 체크
 		// FIXME: 인터셉터로 세션 ID 존재 유무 체크로 수정하기 & 이전에 보고 있던 페이지로 되돌아가도록 처리하기
 		if(tppId.trim().length() < 1){
@@ -121,11 +116,16 @@ public class tpPaymentController {
 		return strView;
 	}
 	
-
+	// LG에서 결제 처리후 호출하는 URL
+	// 아래의 View에서 자동으로 tpPayCardRet를 호출함.
+	@RequestMapping("tpPayPgReturn_.tp")
+	public String tpPayPgReturn(@RequestParam String LGD_RESPCODE, @RequestParam String LGD_RESPMSG, @RequestParam Map payReqMap){
+		return "/WEB-INF/view/body/tpPayment/payPgReturn.jsp"; // tiles 적용안함.
+	}
+	
 	// 결제후 처리(DB처리 포함)
-	@RequestMapping("tpPayPgReturn.tp")
-//	public String payCardRet(@RequestParam HttpServletRequest request, HttpSession session, ModelMap model){
-	public String payCardRet(HttpServletRequest request, HttpSession session, ModelMap model){
+	@RequestMapping("tpPayCardRet_.tp")
+	public String payCardRet(@RequestParam HttpServletRequest request, HttpSession session, ModelMap model){
 
 		// 아래 항목들 DI로 옮기지 마세요.
 	    String CST_PLATFORM                 = request.getParameter("CST_PLATFORM");
@@ -136,8 +136,7 @@ public class tpPaymentController {
 		// String configPath = "C:/lgdacom"; //LG유플러스에서 제공한
 		// 환경파일("/conf/lgdacom.conf,/conf/mall.conf") 위치 지정.
 		ServletContext servletContext = request.getServletContext();
-//		String configPath = servletContext.getInitParameter("LGUPlusPgConfPath");
-		String configPath = "/usr/local/tomcat8/webapps/TippingPoint/lgdacom";
+		String configPath = servletContext.getInitParameter("LGUPlusPgConfPath");
 
 		// TODO: 삭제
 		System.out.println("결제모듈 경로: " + configPath);
@@ -145,7 +144,6 @@ public class tpPaymentController {
 		// 해당 API를 사용하기 위해 WEB-INF/lib/XPayClient.jar 를 Classpath 로 등록하셔야 합니다.
 		XPayClient xpay = new XPayClient();
 		boolean isInitOK = xpay.Init(configPath, CST_PLATFORM);
-		
 
 		String errMsg = "";
 
@@ -160,7 +158,7 @@ public class tpPaymentController {
 			System.out.println("API 초기화 실패!");
 			// 결제모듈 에러 페이지로 전환!
 			model.addAttribute("errMsg", errMsg);
-			return "tpPayment/errMsg.tiles";
+			return "errMsg.tiles";
 
 		} else {
 			try {
@@ -174,7 +172,7 @@ public class tpPaymentController {
 				xpay.Set("LGD_PAYKEY", LGD_PAYKEY);
 
 				// 세션을 통한 결제금액 체크
-				String DB_AMOUNT = String.valueOf(session.getAttribute("tpAmount")); // 반드시 위변조가 불가능한 곳(DB나 세션)에서 금액을 가져오십시요.
+				String DB_AMOUNT = (String) session.getAttribute("tpAmount"); // 반드시 위변조가 불가능한 곳(DB나 세션)에서 금액을 가져오십시요.
 				
 				xpay.Set("LGD_AMOUNTCHECKYN", "Y");
 				xpay.Set("LGD_AMOUNT", DB_AMOUNT);
@@ -187,7 +185,7 @@ public class tpPaymentController {
 				// 결제모듈 에러 페이지로 전환!
 
 				model.addAttribute("errMsg", errMsg);
-				return "tpPayment/errMsg.tiles";
+				return "errMsg.tiles";
 
 			}
 		}
@@ -226,7 +224,6 @@ public class tpPaymentController {
 				// System.out.println("최종결제요청 결과 성공 DB처리하시기 바랍니다.<br>");
 
 				// Service단 처리
-				System.out.println("결제 Serivce(DB)처리 단");
 				
 
 				// 최종결제요청 결과 성공 DB처리 실패시 Rollback 처리
@@ -246,7 +243,7 @@ public class tpPaymentController {
 					}
 					
 					model.addAttribute("errMsg", errMsg);
-					return "tpPayment/errMsg.tiles";
+					return "errMsg.tiles";
 				}
 
 			} else {
@@ -255,27 +252,9 @@ public class tpPaymentController {
 				// XXX: 결제가 안되었으므로 rollback할 것이 없다.
 				
 				errMsg += "최종결제요청 결과 실패";
-				/*
-				errMsg += " /m_szResCode: ";
-				errMsg += xpay.m_szResCode;
-				errMsg += " /m_szResMsg: ";
-				errMsg += xpay.Response("m_szResMsg",0);
-				errMsg += " /LGD_TID: ";
-				errMsg += xpay.Response("LGD_TID",0);
-				errMsg += " /LGD_MID: ";
-				errMsg += xpay.Response("LGD_MID",0);
-				errMsg += " /LGD_OID: ";
-				errMsg += xpay.Response("LGD_OID",0);
-				errMsg += " /LGD_AMOUNT: ";
-				errMsg += xpay.Response("LGD_AMOUNT",0);
-				errMsg += " /LGD_RESPCODE: ";
-				errMsg += xpay.Response("LGD_RESPCODE",0);
-				errMsg += " /LGD_RESPMSG: ";
-				errMsg += xpay.Response("LGD_RESPMSG",0);
-				*/
 				
 				model.addAttribute("errMsg", errMsg);
-				return "tpPayment/errMsg.tiles";
+				return "errMsg.tiles";
 				
 			}
 		} else {
@@ -294,13 +273,18 @@ public class tpPaymentController {
 			errMsg += "결제 모듈 응답 메시지: " + xpay.m_szResMsg;
 			
 			model.addAttribute("errMsg", errMsg);
-			return "tpPayment/errMsg.tiles";
+			return "errMsg.tiles";
 			
 		}
 
 		// TODO: 세션 삭제
 
-		return "tpPayment/payCardSuccess.tiles";
+		return "";
 	}
 	
+	// 결제 실패
+	@RequestMapping("tpPayCardFailed_.tp")
+	public String payCardFailed(){
+		return "";
+	}
 }
