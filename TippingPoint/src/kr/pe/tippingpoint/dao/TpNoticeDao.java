@@ -13,10 +13,10 @@ public interface TpNoticeDao {
 
 	public TpNotice selectTpNoticeNum(int tpNoticeNum);
 
-	public int insertTpNotice(TpNotice tpnotice);
+	public int insertTpNotice(TpNotice tpNotice);
 
-	public int deleteTpNotice(String tppId);
+	public int updateTpNotice(TpNotice tpNotice);
 
-	public int updateTpNotice(TpNotice tpnotice);
+	public int deleteTpNotice(int tpNoticeNum);
 	
 }

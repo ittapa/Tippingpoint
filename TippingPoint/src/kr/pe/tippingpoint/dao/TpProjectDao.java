@@ -9,13 +9,13 @@ public interface TpProjectDao {
 
 	public List<TpProject> selectAllTpProject(int pageNo);
 	
-	public List<TpProject> selectOTpProject(int pageNo);//프로젝트 전체보기 ('o')인것만
+	public List<TpProject> selectOXEZCountProject(int pageNo);//프로젝트 전체보기 ('O,X,E')인것만
 	
 	public List<TpProject> selectATpProject(int pageNo);//프로젝트 전체보기 ('x')인것만
 
 	public int selectCountProject();
 	
-	public int selectOCountProject();
+	public int selectOEXZCountProject();
 
 	public int selectACountProject();
 	

@@ -1,22 +1,24 @@
 package kr.pe.tippingpoint.vo;
 
 public class TpNotice {
-	
+
 	private int tpNoticeNum;
-	private int tpNoticeDate;
+	private String tpNoticeDate;
 	private String tpNoticeTitle;
 	private String tpNoticeContents;
 	private String tpNoticeWriter;
-	
-	public TpNotice(){}
 
-	public TpNotice(int tpNoticeNum, int tpNoticeDate, String tpNoticeTitle, String tpNoticeContents, String tpNoticeWriter) {
+	public TpNotice() {
+	}
+
+	public TpNotice(int tpNoticeNum, String tpNoticeDate, String tpNoticeTitle, String tpNoticeContents,
+			String tpNoticeWriter) {
 		super();
 		this.tpNoticeNum = tpNoticeNum;
 		this.tpNoticeDate = tpNoticeDate;
 		this.tpNoticeTitle = tpNoticeTitle;
 		this.tpNoticeContents = tpNoticeContents;
-		this.tpNoticeContents = tpNoticeWriter;
+		this.tpNoticeWriter = tpNoticeWriter;
 	}
 
 	public int getTpNoticeNum() {
@@ -27,11 +29,11 @@ public class TpNotice {
 		this.tpNoticeNum = tpNoticeNum;
 	}
 
-	public int getTpNoticeDate() {
+	public String getTpNoticeDate() {
 		return tpNoticeDate;
 	}
 
-	public void setTpNoticeDate(int tpNoticeDate) {
+	public void setTpNoticeDate(String tpNoticeDate) {
 		this.tpNoticeDate = tpNoticeDate;
 	}
 
@@ -64,7 +66,7 @@ public class TpNotice {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((tpNoticeContents == null) ? 0 : tpNoticeContents.hashCode());
-		result = prime * result + tpNoticeDate;
+		result = prime * result + ((tpNoticeDate == null) ? 0 : tpNoticeDate.hashCode());
 		result = prime * result + tpNoticeNum;
 		result = prime * result + ((tpNoticeTitle == null) ? 0 : tpNoticeTitle.hashCode());
 		result = prime * result + ((tpNoticeWriter == null) ? 0 : tpNoticeWriter.hashCode());
@@ -85,7 +87,10 @@ public class TpNotice {
 				return false;
 		} else if (!tpNoticeContents.equals(other.tpNoticeContents))
 			return false;
-		if (tpNoticeDate != other.tpNoticeDate)
+		if (tpNoticeDate == null) {
+			if (other.tpNoticeDate != null)
+				return false;
+		} else if (!tpNoticeDate.equals(other.tpNoticeDate))
 			return false;
 		if (tpNoticeNum != other.tpNoticeNum)
 			return false;

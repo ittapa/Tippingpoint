@@ -14,6 +14,7 @@
       <result property="tpfPhoneNum" column="TPFPHONENUM"/>
       <result property="tpfQualifyTpProposer" column="TPFQUALIFYTPPROPOSER"/>
       <result property="tpfAccountType" column="TPFACCOUNTTYPE"/>
+      <result property="tpfProfileImg" column="TPFPROFILEIMG"/>
    </resultMap>
    
    <resultMap type="tpFunder" id="tpFunder-constructor-resultmap">
@@ -31,6 +32,7 @@
          <arg column="TPFPHONENUM" javaType="string"/>
          <arg column="TPFQUALIFYTPPROPOSER" javaType="string"/>
          <arg column="TPFACCOUNTTYPE" javaType="string"/>
+         <arg column="TPFPROFILEIMG" javaType="string"/>
       </constructor>
    </resultMap>
    
@@ -46,7 +48,8 @@
                TPFADDRESS_D,
                TPFPHONENUM,
                TPFQUALIFYTPPROPOSER,
-               TPFACCOUNTTYPE
+               TPFACCOUNTTYPE,
+               TPFPROFILEIMG
       FROM   tpFunder
    </sql>
    <sql id="select-column-sql">
@@ -61,7 +64,8 @@
         TPFADDRESS_D,
         TPFPHONENUM,
         TPFQUALIFYTPPROPOSER,
-        TPFACCOUNTTYPE
+        TPFACCOUNTTYPE,
+        TPFPROFILEIMG
    </sql>
    
    <select id="selectTpFunderById" parameterType="string" resultMap="tpFunder-resultmap">
@@ -99,20 +103,19 @@
    
    <insert id="insertTpFunder" parameterType="tpfunder">
       INSERT INTO TPFUNDER (TPFID, TPFNAME, TPFPASSWORD, TPFBIRTH, TPFGENDER, TPFEMAIL,
-                       TPFZIPCODE, TPFADDRESS, TPFADDRESS_D, TPFPHONENUM, TPFQUALIFYTPPROPOSER, TPFACCOUNTTYPE)
+                       TPFZIPCODE, TPFADDRESS, TPFADDRESS_D, TPFPHONENUM, TPFQUALIFYTPPROPOSER, TPFACCOUNTTYPE, TPFPROFILEIMG)
       VALUES (#{tpfId}, #{tpfName}, #{tpfPassword}, #{tpfBirth}, #{tpfGender}, #{tpfEmail}, #{tpfZipcode},
-              #{tpfAddress}, #{tpfAddressD}, #{tpfPhoneNum}, #{tpfQualifyTpProposer}, #{tpfAccountType})
+              #{tpfAddress}, #{tpfAddressD}, #{tpfPhoneNum}, #{tpfQualifyTpProposer}, #{tpfAccountType}, #{tpfProfileImg})
    </insert>
    
    <delete id="deleteTpFunderById" parameterType="string">
       DELETE FROM TPFUNDER WHERE TPFID=#{tpfId}
    </delete>
    
-   <update id="updateTpFunder" parameterType="tpFunder">
+    <update id="updateTpFunder" parameterType="tpFunder">
       UPDATE TPFUNDER SET TPFNAME=#{tpfName}, TPFPASSWORD=#{tpfPassword}, TPFBIRTH=#{tpfBirth}, 
                      TPFGENDER=#{tpfGender}, TPFEMAIL=#{tpfEmail},    TPFZIPCODE=#{tpfZipcode}, TPFADDRESS=#{tpfAddress}, 
-                     TPFADDRESS_D=#{tpfAddressD}, TPFPHONENUM=#{tpfPhoneNum}, TPFQUALIFYTPPROPOSER=#{tpfQualifyTpProposer},  
-                     TPFACCOUNTTYPE=#{tpfAccountType}
+                     TPFADDRESS_D=#{tpfAddressD}, TPFPHONENUM=#{tpfPhoneNum}, TPFPROFILEIMG=#{tpfProfileImg}
       WHERE TPFID=#{tpfId}
    </update>
    
@@ -123,5 +126,11 @@
    
    </update>
    
+   
+    <!-- 번호로 회원 조회 -->
+   <select id="selectTpFunderByPhoneNum" resultType="string" resultMap="tpFunder-resultmap">
+         <include refid="select-sql"/>
+         WHERE   TPFPHONENUM=#{tpfPhoneNum}
+   </select>
    
 </mapper>

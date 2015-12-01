@@ -35,9 +35,11 @@
 								<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 								<li><a href="#">개인정보보호정책</a></li>
 								<c:if test="${sessionScope.adminId != null}">
+									<li><a href="${initParam.rootPath}/tpAdminLogin.tp">관리자 PAGE</a></li>
 									<li><a href="${initParam.rootPath}/logout.tp">관리자 로그아웃</a></li>
 								</c:if>
 								<c:if test="${sessionScope.adminId == null}">
+								
 								<li><a href="${initParam.rootPath}/tpAdminAccess.tp">관리자 로그인</a></li>
 								</c:if>
 							</ul>

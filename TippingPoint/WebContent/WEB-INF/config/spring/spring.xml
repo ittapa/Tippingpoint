@@ -59,17 +59,15 @@
    <mvc:view-controller path="/tpMyPage/modifyRegister.tp" view-name="tpMyPage/modifyRegister.tiles"/>
    <!-- 로그인 페이지 -->
    <mvc:view-controller path="/tpLogin/tpLoginPage.tp" view-name="tpLogin/tpLoginPage.tiles"/> 
+  	<!--HELP 페이지  -->
+   <mvc:view-controller path="/tpHelpPage.tp" view-name = "/tpHelpPage.tiles"/>
+   <mvc:view-controller path="/page1.tp" view-name="tpLogin/page1.tiles"/> <!-- test용  -->
+   <mvc:view-controller path="/page2.tp" view-name="tpLogin/page2.tiles"/><!-- test용  -->
    
-   <!-- 회원정보 추가 페이지 -->
-<!--    <mvc:view-controller path="/tpProposer.tp" view-name="tpMyPage/tpProposer.tiles"/>  -->
-   
-      <!-- 결제 요청 페이지 -->
+    <!-- 결제 요청 페이지 -->
    <mvc:view-controller path="/pay/payRequest.tp" view-name="tpPayment/payRequest.tiles"/>
    <!-- 결제 요청결과 저장 페이지 -->
    <mvc:view-controller path="/tpPayPgReturn.tp" view-name="tpPayment/payCardSuccess.tiles"/>
-   
-   <mvc:view-controller path="/page1.tp" view-name="tpLogin/page1.tiles"/> <!-- test용  -->
-   <mvc:view-controller path="/page2.tp" view-name="tpLogin/page2.tiles"/><!-- test용  -->
    
    <!-- 관리자 페이지 by 재혁 -->
    <mvc:view-controller path="/tpAdminAccess.tp" view-name="tpAdministrator/tpAdminAccess.tiles"/>
@@ -78,6 +76,10 @@
    <mvc:view-controller path="/admin/list.tp" view-name="administrator/admin_funderList.tiles"/>
     <!-- 비밀번호 찾기 페이지 -->
    <mvc:view-controller path="tpLogin/findPassword.tp" view-name="tpLogin/findPassword.tiles"/>
+   <!-- 게시물 작성 페이지 -->
+   <mvc:view-controller path="tpNotice/tpNoticeWriter.tp" view-name="tpNotice/tpNoticeWrite.tiles"/>
+   <!-- 아이디 찾기 페이지 -->
+   <mvc:view-controller path="tpLogin/findId.tp" view-name="tpLogin/findId.tiles"/>
    
    <!-- 에러... property -->
    <bean class="org.springframework.context.support.ResourceBundleMessageSource" name="messageSource" p:basename="kr.pe.tippingpoint.exception.error_message"/>
@@ -100,11 +102,17 @@
                <mvc:mapping path="/tpProjectRegisterForm.tp"/>
                <bean class="kr.pe.tippingpoint.interceptor.LoginCheckInterceptor" />
             </mvc:interceptor>
-          	 <!-- 로그인페이지 체크 인터셉터 -->
+          	 <!-- 로그인페이지 , 체크 인터셉터 -->
           	 <mvc:interceptor>
                <mvc:mapping path="/tpLogin/tpLoginPage.tp"/>
                <bean class="kr.pe.tippingpoint.interceptor.LoginPageInterceptor" />
             </mvc:interceptor>
+            <!-- 회원가입 페이지 인터셉터 처리 -->
+            <mvc:interceptor>
+               <mvc:mapping path="/tpfunder/registerForm.tp"/>
+               <bean class="kr.pe.tippingpoint.interceptor.LoginPageInterceptor" />
+            </mvc:interceptor>
+            
           	<!-- 관리자체크 인터셉터 -->
           	<mvc:interceptor>
                <mvc:mapping path="/**/tpAdministrator/**/*"/>
@@ -115,6 +123,7 @@
                <mvc:mapping path="/tpAdminLogin.tp"/>
                <bean class="kr.pe.tippingpoint.interceptor.AdminLoginPageInterceptor" />
             </mvc:interceptor>
+            
             <!-- 프로젝트 등록 권한 확인 인터셉터 -->
             <mvc:interceptor>
                <mvc:mapping path="/tpProjectRegisterForm.tp"/>

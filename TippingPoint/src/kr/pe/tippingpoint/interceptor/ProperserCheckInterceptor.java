@@ -20,8 +20,7 @@ public class ProperserCheckInterceptor implements HandlerInterceptor {
 			throws Exception {
 		System.out.println("------------프로젝트 등록 권한 확인------------");
 		HttpSession session = request.getSession();
-		if (!service.findTpFunderById(String.valueOf(session.getAttribute("userLoginInfo"))).getTpfQualifyTpProposer()
-				.equals("T")) {
+		if (!service.findTpFunderById(String.valueOf(session.getAttribute("userLoginInfo"))).getTpfQualifyTpProposer().equals("T")) {
 			request.setAttribute("unProperser", "unProperser");
 			// 안한경우 - ModelAndViewDefiningException 발생
 			throw new ModelAndViewDefiningException(new ModelAndView("/tpProposer.tp"));

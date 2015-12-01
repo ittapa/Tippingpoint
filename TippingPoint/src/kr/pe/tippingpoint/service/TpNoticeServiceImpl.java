@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.pe.tippingpoint.dao.TpNoticeDao;
+import kr.pe.tippingpoint.exception.DuplicatedIdException;
 import kr.pe.tippingpoint.util.TpNoticeBoardPagingBean;
 import kr.pe.tippingpoint.vo.TpNotice;
 import kr.pe.tippingpoint.vo.TpProject;
@@ -23,8 +24,8 @@ public class TpNoticeServiceImpl implements TpNoticeService {
 		HashMap map = new HashMap();
 		List<TpProject> list = dao.selectAllTpNotice(pageNo);
 		TpNoticeBoardPagingBean pagingBean = new TpNoticeBoardPagingBean(dao.selectCountTpNotice(), pageNo);
-		map.put("list", list); // 목록에 뿌려질 고객들 정보
-		map.put("pagingBean", pagingBean); // 페이징 처리위한 pagingBean
+		map.put("list", list);
+		map.put("pagingBean", pagingBean);
 		return map;
 	}
 
@@ -34,13 +35,18 @@ public class TpNoticeServiceImpl implements TpNoticeService {
 	}
 
 	@Override
-	public List<TpProject> findToProjectByCategory(String tppCategory) {
-		return null;
+	public void removeNotice(int tpNoticeNum) {
+		dao.deleteTpNotice(tpNoticeNum);
+	}
+	
+	@Override
+	public void tpNoticeWriter(TpNotice tpNotice) {
+		dao.insertTpNotice(tpNotice);
 	}
 
 	@Override
-	public void registerTpProject(TpProject tpproject) {
-
+	public void updateTpNotice(TpNotice tpNotice) {
+		dao.updateTpNotice(tpNotice);
 	}
-
+	
 }

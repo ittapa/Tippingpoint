@@ -12,13 +12,13 @@
 		<result property="residentRegistrationFirstNum" column="residentRegistrationFirstNum"/>
 		<result property="residentRegistrationLastNum" column="residentRegistrationLastNum"/>
 		<result property="corporateRegistrationNumber" column="corporateRegistrationNumber"/>
-		
+		<result property= "bankListCategory" column = "bankListCategory"/>
 	</resultMap>
 
 	<!-- 프로젝트 추가 쿼리문 -->
 	<insert id = "insertTpProposer" parameterType = "tpProposer">
 		insert into tpProposer values (#{tpfId}, #{account}, #{proposerType}, #{certification}, 
-			 #{residentRegistrationFirstNum}, #{residentRegistrationLastNum}, #{corporateRegistrationNumber})
+			 #{residentRegistrationFirstNum}, #{residentRegistrationLastNum}, #{corporateRegistrationNumber}, #{bankListCategory})
 	</insert>
 
 		
@@ -27,51 +27,20 @@
       UPDATE TPFUNDER SET TPFQUALIFYTPPROPOSER='T' WHERE TPFID=#{writer}
    </update>
    
+   
+   <update id = "updateInfo" parameterType = "tpProposer">
+		update tpProposer 
+		set account=#{account}, proposerType=#{proposerType}, certification=#{certification}, 
+			 residentRegistrationFirstNum=#{residentRegistrationFirstNum}, residentRegistrationLastNum=#{residentRegistrationLastNum}, 
+			 corporateRegistrationNumber=#{corporateRegistrationNumber}, bankListCategory = #{bankListCategory}
+		where tpfId=#{tpfId} 
+	</update>
+	 
+
+	 <select id="selectTpProposerById" parameterType="string" resultMap="tpProposer-resultmap">
+			select * from tpProposer where tpfId = #{tpfId}
+	 </select>
 	
 	 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -8,6 +8,10 @@ public interface TpBankListDao {
 
 	List<TpBankList> allTpBankList ();
 	
+	void insertBankListByCode (String bankKr, String bankEr, String code);
 	
+	void deleteBankListById(String bankKr);
+	
+	void updateBankList(String updateBank, TpBankList bankList);
 	
 }

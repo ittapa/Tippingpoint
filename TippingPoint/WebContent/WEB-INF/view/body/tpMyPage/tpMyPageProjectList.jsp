@@ -62,37 +62,103 @@
 
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">
-		등록된 글이 없습니다.
+		등록하신 프로젝트가 없습니다.
 	</c:when>
 		<c:otherwise>
-	
-			<c:forEach items="${requestScope.list }" var="tpProject">
-					<div>
-						<p>
-						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="200" height="200"></a></div>
-						<div><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppTitle }</a></div>
-						<div>${tpProject.tppFundingStartDate }</div>
-						<div>${tpProject.tppFundingLastDate }</div>
-						<div>${tpProject.tppTargetAmount }</div>
-						<div>${tpProject.tppTotalAmount }</div>
-						</p>
-							<!-- 프로젝트 수정폼으로 이동 -->
-							<form action = "${initParam.rootPath }/tpProjectModifyForm.tp">
-									<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
-									<input type="submit" value="수정" />
-							</form>		
-								<!-- 		//펀딩종료하기-->
-							<form action ="??????.tp" id="tpProjectExit">
-									<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
-									<input type = "button" value = "펀딩 종료" id = "exitButton">
-							</form>
-			
+					<div>총 등록한 프로젝트 수  : ${fn:length(requestScope.list) }</div>
+						<table>
+						<tr>
+							<th>프로젝트 ID</th>
+							<th>프로젝트 제목</th>
+							<th>프로젝트 카테고리</th>
+							<th>작성/수정 날자</th>
+							<th>펀딩 된 금액 / 목표 펀딩 금액</th>
+							<th>펀딩 기간</th>
+							<th>프로젝트 상태</th>
+							<th>관리자 메시지</th>
+							<th></th>
+						</tr>										
+				<c:forEach items="${requestScope.list }" var="tpProject">
+						<tr>
+							<td><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="150" height="1500"></a>
+									<br/><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppId }</a></td>
+							<td>${tpProject.tppTitle }</td>
+							<td>${tpProject.tppCategory }</td>
+							<td>${tpProject.tppWriteDate }</td>
+							<td>${tpProject.tppTotalAmount } / ${tpProject.tppTargetAmount }</td>
+							<td>${tpProject.tppFundingStartDate } ~ ${tpProject.tppFundingLastDate }</td>
+							<td>
+								<c:choose>
+									<c:when test="${tpProject.tppState =='A'}">
+										저장
+									</c:when>
+									
+									<c:when test="${tpProject.tppState =='B'}">
+										승인요청
+									</c:when>
+									
+									<c:when test="${tpProject.tppState =='O'}">
+										승인완료
+									</c:when>
+									
+									<c:when test="${tpProject.tppState =='X'}">
+										승인거부
+									</c:when>
+									
+									<c:when test="${tpProject.tppState =='E'}">
+										펀딩종료
+									</c:when>	
+									
+									<c:when test="${tpProject.tppState =='Z'}">
+										펀딩마감
+									</c:when>
+																	
+								</c:choose> 
+							</td>
+							<td>${tpProject.tppAdminMessage }</td>
+							<td>
+								
+								</form>
+								
+									<c:choose>
+										<c:when test="${tpProject.tppState =='A' or tpProject.tppState == 'B' or tpProject.tppState == 'O' or tpProject.tppState == 'X'}">
+												<!-- 프로젝트 수정폼으로 이동 -->
+												<form action = "${initParam.rootPath }/tpProjectModifyForm.tp">
+														<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
+														<input type="submit" value="수정" />
+												</form>		
+										</c:when>
+				
+									
+									<c:when test="${tpProject.tppState =='O'}">
+										<!-- 		//펀딩종료하기-->
+											<form name = "exit" action ="${initParam.rootPath }/tpProjectExit.tp" id="tpProjectExit" method = "post">
+													<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
+													<input type = "hidden" name = "tppState" value = "E">
+													<input type = "submit" value = "펀딩 종료" id = "exitButton">
+											</form>			
+									</c:when>	
+															
+								</c:choose> 
+								
+								
+								<!-- 프로젝트로 이동 -->
+								<form action = "${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">
+										<input type ="hidden" name = "tppId" value = "${tpProject.tppId }">
+										<input type = "submit" value = "자세히 보기">
+									
+								
+								
+							</td>											
+						</tr>
 
 							
-					</div>
+						
+
 				</c:forEach>
+				</table>
 			<br/>
-			<div>총 등록한 프로젝트 수  : ${fn:length(requestScope.list) }</div>
+
 		
 		</c:otherwise>
 	</c:choose>

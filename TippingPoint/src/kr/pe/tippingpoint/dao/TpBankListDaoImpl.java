@@ -1,5 +1,6 @@
 package kr.pe.tippingpoint.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -21,5 +22,40 @@ public class TpBankListDaoImpl implements TpBankListDao{
 		
 		return session.selectList("tpBankListMapper.selectAllBankList");
 	}
+
+	@Override
+	public void insertBankListByCode(String bankKr, String bankEr, String code) {
+		
+		HashMap map = new HashMap();
+		map.put("bankKr", bankKr);
+		map.put("bankEr", bankEr);
+		map.put("code", code);
+		
+		session.insert("tpBankListMapper.insertBank",map);
+		
+	}
+
+	@Override
+	public void deleteBankListById(String bankKr) {
+
+		session.delete("tpBankListMapper.deleteBank", bankKr);
+		
+	}
+
+	@Override
+	public void updateBankList(String updateBank, TpBankList bankList) {
+
+		HashMap map = new HashMap();
+		map.put("bankKr", bankList.getBankKr());
+		map.put("bankEr", bankList.getBankEr());
+		map.put("code", bankList.getCode());
+		map.put("updateBank", updateBank);
+		
+		session.update("tpBankListMapper.updateBank", map);
+		
+	}
+	
+	
+	
 	
 }

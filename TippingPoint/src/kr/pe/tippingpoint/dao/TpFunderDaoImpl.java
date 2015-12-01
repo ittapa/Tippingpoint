@@ -82,6 +82,13 @@ public class TpFunderDaoImpl implements TpFunderDao {
 		
 		return session.update("tpFunderMapper.updateTpFunderQuqlifyTpProposer",map);
 	}
+
+	@Override
+	public TpFunder selectTpFundersByPhoneNum(String tpfPhoneNum) {
+		return session.selectOne("tpFunderMapper.selectTpFunderByPhoneNum", tpfPhoneNum);
+	}
+	
+	
 	
 	
 	

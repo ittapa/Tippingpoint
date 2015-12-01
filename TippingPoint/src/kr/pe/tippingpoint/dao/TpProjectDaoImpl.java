@@ -27,13 +27,13 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	}
 	
 	
-	//프로젝트 전체보기 ('o')인것만
+	//프로젝트 전체보기 ('OXEZ')인것만
 	@Override
-	public List<TpProject> selectOTpProject(int pageNo) {
+	public List<TpProject> selectOXEZCountProject(int pageNo) {
 		HashMap<String, Integer> parameter = new HashMap<String, Integer>();
 		parameter.put("contentPerPage", TpProjectBoardPagingBean.CONTENT_PER_PAGE);
 		parameter.put("pageNo", pageNo);
-		return session.selectList("tpProjectMapper.selectOTpProjectPaging", parameter);
+		return session.selectList("tpProjectMapper.selectOXEZTpProjectPaging", parameter);
 	}
 
 	//프로젝트 전체보기 ('A')인것만
@@ -51,8 +51,8 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	}
 	
 	@Override
-	public int selectOCountProject() {
-		return session.selectOne("tpProjectMapper.selectOCountProject");
+	public int selectOEXZCountProject() {
+		return session.selectOne("tpProjectMapper.selectOEXZCountProject");
 	}
 
 	@Override

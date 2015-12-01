@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.Enumeration"%>
+<%@page import ="kr.pe.tippingpoint.vo.TpProject" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri= "http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -15,11 +16,26 @@
 	color: red;
 	
 	}
-</style>
+	</style>
 
    <script type="text/javascript">
 $(document).ready(function(){
-
+	if($("#errorCheck")){
+		 if($("#errorCheck").val() == "submitError"){
+			 alert("프로젝트 승인요청 실패");
+		 }else if( $("#errorCheck").val() == "saveError"){
+			 alert("프로젝트 저장요청 실패");
+		 }
+	}
+	//날짜처리
+	  $(function() {
+		    $("#date1, #date2").datepicker({
+		      changeMonth: true,
+		      changeYear: true,
+		      dateFormat : "yymmdd",
+		      yearRange : "1900:c+1"
+		    });
+		  });
 	
 	//네이버 에디터 textarea 수정
 	 var oEditors = [];
@@ -44,21 +60,10 @@ $(document).ready(function(){
 	 $("#save").click(function(){
 		//id가 smarteditor인 textarea에 에디터에서 대입
 		
-			//id 중복확인여부
-	/*        	if($("#idCheck").val() !="O"){
-	       		alert("프로젝트 ID 중복확인을 하시기 바랍니다.");
-	       		return false;
-	       	} 수정에서는 ID값은 고정*/
 		
-			//시작일 입력여부
-
-			if(!$("#date1").val()){
-			alert("프로젝트 시작일을 입력하시기 바랍니다.");
-			return false
-			}
+	
 			
 			//마감일 입력여부
-		
 			if(!$("#date2").val()){
 				alert("프로젝트 마감일을 입력하시기 바랍니다.");
 				return false
@@ -73,36 +78,23 @@ $(document).ready(function(){
 			
 			//네이버 에디터 처리부분
 			oEditors.getById["tppProjectContent"].exec("UPDATE_CONTENTS_FIELD", []);
-			document.getElementById("tppState").value = "a";
-	        // 이부분에 에디터 validation 검증
+			document.getElementById("tppState").value = "A";
+	       
 	       var saveConfirm =  confirm("프로젝트를 저장하시겠습니까?");
-	        
 	        if(!saveConfirm){
 	        	return false;
-	        	
 	        }else{
 	        	 //폼 submit
 		        $("#tpProjectForm").submit();
 	        }
 
-	       
-
-		 
 	 });
 	 // 승인요청을 눌렀을시
 	 $("#projectSubmit").click(function(){
 
 		
-		
-			//시작일 입력여부
-
-			if(!$("#date1").val()){
-			alert("프로젝트 시작일을 입력하시기 바랍니다.");
-			return false
-			}
 			
 			//마감일 입력여부
-		
 			if(!$("#date2").val()){
 				alert("프로젝트 마감일을 입력하시기 바랍니다.");
 				return false
@@ -125,52 +117,70 @@ $(document).ready(function(){
 		       if(!submitConfirm){
 		        	return false;
 		        }else{
-		       	var tppStateValue = document.getElementById("tppState").value;
-				if(tppStateValue !='c'){
-					alert("수정수정수정");
-				}else{
-		       	tppStateValue = "b";
-				}
-		       	alert(tppStateValue);
-		        	
+					if($("#tppState").val() =='O'){					
+					}else{
+						$("#tppState").val("B");
+					}
+		
 		        //폼 submit
 		        $("#tpProjectForm").submit();
 		        }
 			 	
 		 });
 	 
-	//프로젝트아이디 중복확인 안함 수정이라서
-					/*  $("#tppIdCheck").on("click",function(){ 
-						$.ajax({
-							url:"${initParam.rootPath}/tppIdDuplicatedCheck.tp",
-							type:"GET",
-							data:{tppId:$("#tppId").val()},
-							dataType:"JSON",
-							beforeSend:function(){
-								if(!$("#tppId").val()){
-									alert("id를 입력하세요");
-									$("#tppId").focus();
-									return false;
-								} 
-					
-							},
-							success:function(txt){
-								if(txt==false){
-									document.getElementById("idCheck").value = "O";
-									alert("사용 가능한 아이디입니다.");
-									
-								}else{
-									alert("중복입니다.");
-								}
-							
-							},
-							error: function(){
-								alert("에러");
-							}
-						});
-					}); */
+	 
+	 //이미지 되돌리기
+	 var originImag =  '<%=((TpProject)request.getAttribute("tpProject")).getTppMainImg()%>';
+	 		$("#tppMainImgOrigin").on("click", function(){
+	 			$("#upfile").val("");
+				document.getElementById('imgView').src=originImag;
+				$("#tppMainImg").val(originImag);
+				alert($("#tppMainImg").val());
+	 		});
+	 
+	 //메인이미지 삭제
+		var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+			$("#tppMainImgDelete").on("click", function(){
+				/* if(!$("#upfile").val()){
+					alert("추가된 이미지가 없습니다.");
+					return false;
+				} */
+				
+				var imgconfirm = confirm("메인이미지를 기본이미지로 변경합니다.");
+				if(imgconfirm){
+					$("#upfile").val("");
+					document.getElementById('imgView').src=defaultImg;
+					$("#tppMainImg").val("default");
+					alert($("#tppMainImg").val());
+				}else{
+					return false
+				}
+			});
+	 
 	}); //document.ready
-	
+	function imgChange(evt) {
+		alert("대표 이미지를 업로드합니다.");
+		var tgt = evt.target || window.event.srcElement,
+   		 files = tgt.files;
+
+		    // 파일리더를 지원하는 경우
+		    if (FileReader && files && files.length) {
+		        var fr = new FileReader();
+		        fr.onload = function () {
+		            document.getElementById('imgView').src = fr.result;
+		        }
+		        fr.readAsDataURL(files[0]);
+		    }
+		
+		    // Not supported 아닌경우 아이프레임..ㅠㅠ
+		    else {
+		        // fallback -- perhaps submit the input to an iframe and temporarily store
+		        // them on the server until the user's session ends.
+		    }
+		} //imgChange function 종료
+		
+		
+		
 </script>
 
 	<!-- 프로젝트 등록  -->
@@ -189,13 +199,7 @@ $(document).ready(function(){
 		<input type = "hidden" value = "${requestScope.errorCheck }" id = "errorCheck"/>
 		
 		<script type="text/javascript">
-		if($("#errorCheck")){
-			 if($("#errorCheck").val() == "submitError"){
-				 alert("프로젝트 승인요청 실패");
-			 }else if( $("#errorCheck").val() == "saveError"){
-				 alert("프로젝트 저장요청 실패");
-			 }
-		}
+	
 		</script>	
 			
 		<label>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }' readonly="readonly"></label>
@@ -234,33 +238,29 @@ $(document).ready(function(){
 			<br/>
 			<br/>
 			<div>
-			<img src ="${requestScope.tpProject.tppMainImg }" width="200" ><br/>
-			기존 이미지<br/>
-			<input type = "hidden" name = "tppMainImg" value = "${requestScope.tpProject.tppMainImg }" >
+			<img src ="${requestScope.tpProject.tppMainImg }" width="200" id = "imgView" name = "imgView"><br/>
+			대표 이미지<br/>
+			<input type = "hidden" id = "tppMainImg" name = "tppMainImg" value = "${requestScope.tpProject.tppMainImg }" >
+			<div class= "mainImagfileBox">
+				<label >
+					사진 업로드	<input type="file" name="upfile"  id = "upfile"  onchange ="imgChange(this);">
+					<br />대표이미지는 가로/세로 300px이하를 권장합니다.
+			<br/>
+				</label>
+				<input type ="button" id = "tppMainImgDelete" value = "기본 이미지">
+				<input type ="button" id = "tppMainImgOrigin" value = "원래 이미지">
 			</div>
-			<br/>
-			변경할 사진 업로드	: <input type="file" name="upfile"><br /> 
-			
-			<br/>
-			
 			
 			 
 			 
 			  <script>
 				//날짜 깞 처리 
-			  $(function() {
-					    $("#date1, #date2").datepicker({
-					      changeMonth: true,
-					      changeYear: true,
-					      dateFormat : "yymmdd",
-					      yearRange : "1900:c+1"
-					    });
-					  });
+	
 				
 			  </script>
 			
 			  
-			<p>프로젝트 시작일 :  <input type="text" id="date1" name="tppFundingStartDate"  readonly="readonly" value = '${requestScope.tpProject.tppFundingStartDate }'> 
+			<p>프로젝트 시작일 :  <input type="text" id= '${requestScope.tpProject.tppState == "A"? "date1":"reject" }' name="tppFundingStartDate"  readonly="readonly" value = '${requestScope.tpProject.tppFundingStartDate }'> 
 				<span class="error"><form:errors path = "tpProject.tppFundingStartDate" delimiter = " | "/></span>
 					
 					<br/>
@@ -284,39 +284,39 @@ $(document).ready(function(){
 			${requestScope.tpProject.tppProjectContent }
 			 </textarea>
 			<br/> 
-	
+			<br/>
 		
 			<!-- //승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 
 								디폴트값 a  승인요청b  승인요청 취소시 다시 a로  삭-->
-			
+			${requestScope.tpProject.tppState }_지울것<br/>
 			<br>
 			프로젝트 현재 상태 :
 			<input type = "hidden" id = "tppState" name = "tppState" value = "${requestScope.tpProject.tppState }"/>
 			<c:choose>
-				<c:when test = "${requestScope.tpProject.tppState =='a' }">
+				<c:when test = "${requestScope.tpProject.tppState =='A' }">
 				저장<br/><br/>
 					<input type="button" id="save" value="저장" /> 
 					<input type="button" id="projectSubmit" value="승인요청" />
 				</c:when>
 				
-				<c:when test = "${requestScope.tpProject.tppState =='b' }">
+				<c:when test = "${requestScope.tpProject.tppState =='B' }">
 				승인요청<br/>
 						<input type="button" id="projectSubmit" value="내용 수정" />
 						<input type="button" id="save" value="승인요청 취소" /><br/>
 						승인 요청취소 시 저장상태로 변경됩니다.
 				</c:when>
 				
-				<c:when test = "${requestScope.tpProject.tppState =='c' }">
+				<c:when test = "${requestScope.tpProject.tppState =='O' }">
 				승인완료<bt/>
 						<input type="button" id="projectSubmit" value="내용 수정" />
 				</c:when>
 				
-				<c:when test = "${requestScope.tpProject.tppState =='d' }">
+				<c:when test = "${requestScope.tpProject.tppState =='X' }">
 				승인거부
 					<input type="button" id="save" value="저장" /> 
 					<input type="button" id="projectSubmit" value="재승인요청" />
 				</c:when>
-				<c:when test = "${requestScope.tpProject.tppState =='e' }">
+				<c:when test = "${requestScope.tpProject.tppState =='E' or requestScope.tpProject.tppState =='Z'}">
 				펀딩종료
 				</c:when>
 			</c:choose>

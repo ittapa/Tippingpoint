@@ -38,18 +38,18 @@ public class TpNoticeDaoImpl implements TpNoticeDao{
 	}
 
 	@Override
-	public int insertTpNotice(TpNotice tpnotice) {
-		return session.insert("tpNoticeMapper.insertTpNotice",tpnotice);
+	public int insertTpNotice(TpNotice tpNotice) {
+		return session.insert("tpNoticeMapper.insertTpNoticeWrite", tpNotice );
 	}
 
 	@Override
-	public int deleteTpNotice(String tppId) {
-		return session.delete("tpNoticeMapper.deleteTpNotice",tppId);
+	public int deleteTpNotice(int tpNoticeNum) {
+		return session.delete("tpNoticeMapper.deleteTpNotice", tpNoticeNum);
 	}
 
 	@Override
-	public int updateTpNotice(TpNotice tpnotice) {
-		return session.update("tpNoticeMapper.updateTpNotice",tpnotice);
+	public int updateTpNotice(TpNotice tpNotice) {
+		return session.update("tpNoticeMapper.updateTpNotice", tpNotice);
 	}
 	
 	

@@ -11,10 +11,12 @@ public interface TpNoticeService {
 	public Map allListTpNotice(int pageNo);
 	
 	public TpNotice findTpNoticeNum(int tpNoticeNum);
-	
-	public List<TpProject> findToProjectByCategory(String tppCategory);
-	
-	public void registerTpProject(TpProject tpproject);
+
+	public void tpNoticeWriter(TpNotice tpNotice);
+
+	public void removeNotice(int tpNoticeNum);
+
+	void updateTpNotice(TpNotice tpNotice);
 	
 
 }
