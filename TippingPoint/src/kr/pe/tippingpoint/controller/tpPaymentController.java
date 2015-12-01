@@ -53,9 +53,9 @@ public class tpPaymentController {
 		
 
 		// TODO: 세션 처리되는 페이지 통합시 테스트 코드 삭제		
-		session.setAttribute("userLoginInfo", "1");
+		session.setAttribute("userLoginInfo", "asdfasdf");
 		
-		
+		// FIXME: 회원이 없는 경우 예외처리
 		String tppId = (String)session.getAttribute("userLoginInfo");
 		
 		// 세션 사용자ID 체크
@@ -110,14 +110,19 @@ public class tpPaymentController {
 		model.addAttribute("tppPayType", tppPayType); // 결제 타입
 		model.addAttribute("tpAmount", tpAmount); //  결제 금액
 		model.addAttribute("strOrderUId", strOrderUId); // 주문번호
-		model.addAttribute("tpfEmail", tpFunder.getTpfEmail()); // 주문자 email
+		
+		// FIXME: Merge를 다시 한 뒤에 DB에서 가져오도록 수정하기
+//		model.addAttribute("tpfEmail", tpFunder.getTpfEmail()); // 주문자 email		
+		model.addAttribute("tpfEmail", "bluel004@daum.net"); // 주문자 email
+		
 		model.addAttribute("LGD_TIMESTAMP", strCurrent); // 주문 시각
 		
+		/*
 		// TODO: 주문내역 Console log - 테스트 후 삭제
 		System.out.println("tppId: " + tppId + " + tppTitle: " + tppTitle + " + tppPayType: " + tppPayType 
 				+ " / tppId: " + tppId + " / tpAmount: " + tpAmount + " / strOrderUId: " + strOrderUId 
 				+ " / tpFunder.getTpfEmail(): " + tpFunder.getTpfEmail() + " / strCurrent: " + strCurrent + " / strView: " + strView);
-		
+		*/
 		return strView;
 	}
 	
@@ -224,6 +229,16 @@ public class tpPaymentController {
 			if ("0000".equals(xpay.m_szResCode)) {
 				// 최종결제요청 결과 성공 DB처리
 				// System.out.println("최종결제요청 결과 성공 DB처리하시기 바랍니다.<br>");
+				
+				model.addAttribute("m_szResCode", xpay.m_szResCode);
+				model.addAttribute("Response_msg", xpay.m_szResMsg);
+				model.addAttribute("LGD_TID", xpay.Response("LGD_TID",0));
+				model.addAttribute("LGD_MID", xpay.Response("LGD_MID",0));
+				model.addAttribute("LGD_OID", xpay.Response("LGD_OID",0));
+				model.addAttribute("LGD_AMOUNT", xpay.Response("LGD_AMOUNT",0));
+				model.addAttribute("LGD_RESPCODE", xpay.Response("LGD_RESPCODE",0));
+				model.addAttribute("LGD_RESPMSG", xpay.Response("LGD_RESPMSG",0));
+				
 
 				// Service단 처리
 				System.out.println("결제 Serivce(DB)처리 단");

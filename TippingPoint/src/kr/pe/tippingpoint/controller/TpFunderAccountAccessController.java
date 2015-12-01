@@ -550,5 +550,18 @@ public class TpFunderAccountAccessController {
 
 		return "tpMyPage/tpMyPageMain.tiles";
 	}
-
+	
+	/**
+	    * 회원가입 아이디 중복 체크
+	    * 
+	    * @param tpfId
+	    * @return
+	    */
+	@RequestMapping("phoneNumDuplicatedCheck")
+	@ResponseBody
+	public String phoneNumDuplicatedCheck(@RequestParam String tpfPhoneNum) {
+		TpFunder tpfunder = service.findTpFunderByPhoneNum(tpfPhoneNum);
+		System.out.println("핸드폰번호 체크");
+		return String.valueOf(tpfunder != null);
+	}
 }

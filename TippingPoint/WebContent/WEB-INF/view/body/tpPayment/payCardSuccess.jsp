@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%
 	out.println(request);
 %>
@@ -9,3 +11,24 @@
 </ul>
  
 ${requestScope.retMsg}
+
+<hr/>
+
+<table>
+<c:forEach items="${request}" var="r">
+	<tr>
+		<td>${r.key}</td>
+		<td>${r.value}</td>
+	</tr>
+</c:forEach>
+</table>
+<ul>
+	<li>${requestScope.m_szResCode}</li>
+	<li>${requestScope.m_szResMsg}</li>
+	<li>${requestScope.LGD_TID}</li>
+	<li>${requestScope.LGD_MID}</li>
+	<li>${requestScope.LGD_OID}</li>
+	<li>${requestScope.LGD_AMOUNT}</li>
+	<li>${requestScope.LGD_RESPCODE}</li>
+	<li>${requestScope.LGD_RESPMSG}</li>
+</ul>

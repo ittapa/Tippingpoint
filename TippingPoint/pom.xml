@@ -35,7 +35,7 @@
 					<update>true</update>
 					<url>http://tippingpoint.pe.kr:8888/manager/text</url>
 					<server>tomcatServer</server>
-					<!-- <username>tomcat</username> <password>tomcatuser!</password> -->
+					<!-- <username>tomcatuser</username> <password>password</password> -->
 				</configuration>
 			</plugin>
 		</plugins>
