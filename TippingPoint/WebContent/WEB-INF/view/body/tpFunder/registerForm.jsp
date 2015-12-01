@@ -5,6 +5,12 @@
 <meta charset="UTF-8">
 <!-- <title>Insert title here</title> -->
 
+	<style type = "text/css">
+	.error{
+	color: red;
+	
+	}
+</style>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 
 <script>
@@ -95,6 +101,10 @@ $(document).ready(function() { //핸드폰번호 3개를 입력받아 db한컬�
 			alert("비밀번호를 확인하세요");
 			return false;
 		}
+		else if(tpfunder.phoneNum_hidden.value=="N"){
+			alert("핸드폰번호 중복체크를 해주세요");
+			return false;
+		}
 		tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
 		tpfunder.submit();
 	});
@@ -116,6 +126,15 @@ $(document).ready(function(){
 					$("#tpfId").focus();
 					return false;
 				}
+				for (i=0; i<$("#tpfId").val().length; i++ )
+				{
+				ch=$("#tpfId").val().charAt(i)
+					if (!(ch>='0' && ch<='9') && !(ch>='a' && ch<='z')){
+						 alert ("아이디는 소문자, 숫자만 입력가능합니다.")
+				 		 $("#tpfId").focus();
+				  		 return false;
+				  }
+				}
 			},
 			success:function(txt){
 				if(txt==false){
@@ -123,6 +142,38 @@ $(document).ready(function(){
 					document.tpFunder.id_hidden.value="Y";
 				}else{
 					alert("중복입니다.");
+				}
+			},
+			error: function(){
+				alert("에러");
+			}
+		});
+	});
+});
+</script>
+
+<script>
+$(document).ready(function(){
+	$("#pncheck").on("click",function(){ //아이디 중복확인
+		var param = $("#tpfPhoneNum1")+"-"+$("#tpfPhoneNum2")+"-"+$("#tpfPhoneNum3");
+		$.ajax({
+			url:"${initParam.rootPath}/phoneNumDuplicatedCheck.tp",
+			type:"GET",
+			data:{tpfPhoneNum:param},
+			dataType:"JSON",
+			beforeSend:function(){
+				if($("#tpfPhoneNum2").val().length<3 || $("#tpfPhoneNum3").val().length<4){
+					alert("핸드폰 번호를 입력하세요");
+					$("#tpfPhoneNum1").focus();
+					return false;
+				}
+			},
+			success:function(txt){
+				if(txt==false){
+					alert("가능한 번호입니다.");
+					document.tpFunder.phoneNum_hidden.value="Y";
+				}else{
+					alert("가입되있는 번호입니다.");
 				}
 			},
 			error: function(){
@@ -200,7 +251,7 @@ table.register {
 		<tr>
 			<td width="150px">ID</td>
 			<td><input type="text" name="tpfId" id="tpfId" value="${requestScope.tpFunder.tpfId }">
-			<input type="button" value="중복확인" id="idcheck"/>
+			<input type="button" value="중복확인" id="idcheck"/>&nbsp;&nbsp;아이디는 소문자, 숫자 혼용하여 6~12자 까지 가능
 			<span class="error"><form:errors path="tpFunder.tpfId" delimiter=" | "/></span>
 			<input type="hidden" name="id_hidden" value="N"/>
 			</td>
@@ -208,7 +259,7 @@ table.register {
 		<tr>
 			<td>이름</td>
 			<td><input type="text" name="tpfName" id="tpfName" value="${requestScope.tpFunder.tpfName }">
-			<form:errors path="tpFunder.tpfName" delimiter=" | "/>
+				<span class="error"><form:errors path="tpFunder.tpfName" delimiter=" | "/></span>
 			</td>
 		</tr>
 		<tr>
@@ -239,26 +290,26 @@ table.register {
 		<tr>
 			<td>이메일</td>
 			<td><input type="text" name="tpfEmail" id="tpfEmail" value="${requestScope.tpFunder.tpfEmail }">
-			<form:errors path="tpFunder.tpfEmail" delimiter=" | "/>
+				<span class="error"><form:errors path="tpFunder.tpfEmail" delimiter=" | "/></span>
 			</td>
 		</tr>
 		<tr>
 			<td>우편번호</td>
 			<td><input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" value="${requestScope.tpFunder.tpfZipcode }"> 
 				<input type="button" onclick="button()" value="우편번호 찾기">
-				<form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
+					<span class="error"><form:errors path="tpFunder.tpfZipcode" delimiter=" | "/></span>
 			</td>
 		</tr>
 		<tr>
 			<td>주소</td>
 			<td><input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" value="${requestScope.tpFunder.tpfAddress }">
-				<form:errors path="tpFunder.tpfAddress" delimiter=" | "/>
+					<span class="error"><form:errors path="tpFunder.tpfAddress" delimiter=" | "/></span>
 			</td>
 		</tr>
 		<tr>
 			<td>상세주소</td>
 			<td><input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" value="${requestScope.tpFunder.tpfAddressD }">
-				<form:errors path="tpFunder.tpfAddressD" delimiter=" | "/>
+					<span class="error"><form:errors path="tpFunder.tpfAddressD" delimiter=" | "/></span>
 			</td>
 		</tr>
 		<tr>
@@ -270,7 +321,10 @@ table.register {
 				</select>
 				-
 				<input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4"/>
+				-
 				<input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4"/>
+				<input type="button" value="중복확인" id="pncheck"/>
+				<input type="hidden" name="phoneNum_hidden" value="N"/>
 				<input type="hidden" name="tpfPhoneNum"/>
 			</td>
 		</tr>

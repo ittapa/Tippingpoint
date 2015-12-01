@@ -16,7 +16,7 @@
 	color: red;
 	
 	}
-</style>
+	</style>
 
    <script type="text/javascript">
 $(document).ready(function(){
@@ -60,21 +60,10 @@ $(document).ready(function(){
 	 $("#save").click(function(){
 		//id가 smarteditor인 textarea에 에디터에서 대입
 		
-			//id 중복확인여부
-	/*        	if($("#idCheck").val() !="O"){
-	       		alert("프로젝트 ID 중복확인을 하시기 바랍니다.");
-	       		return false;
-	       	} 수정에서는 ID값은 고정*/
 		
-			//시작일 입력여부
-			/* 시작일은 고정 
-			if(!$("#date1").val()){
-			alert("프로젝트 시작일을 입력하시기 바랍니다.");
-			return false
-			} */
+	
 			
 			//마감일 입력여부
-		
 			if(!$("#date2").val()){
 				alert("프로젝트 마감일을 입력하시기 바랍니다.");
 				return false
@@ -90,36 +79,22 @@ $(document).ready(function(){
 			//네이버 에디터 처리부분
 			oEditors.getById["tppProjectContent"].exec("UPDATE_CONTENTS_FIELD", []);
 			document.getElementById("tppState").value = "A";
-	        // 이부분에 에디터 validation 검증
+	       
 	       var saveConfirm =  confirm("프로젝트를 저장하시겠습니까?");
-	        
 	        if(!saveConfirm){
 	        	return false;
-	        	
 	        }else{
 	        	 //폼 submit
 		        $("#tpProjectForm").submit();
 	        }
 
-	       
-
-		 
 	 });
 	 // 승인요청을 눌렀을시
 	 $("#projectSubmit").click(function(){
 
 		
-		
-			//시작일 입력여부
-		
-		
-			if(!$("#date1").val()){
-			alert("프로젝트 시작일을 입력하시기 바랍니다.");
-			return false
-			}
 			
 			//마감일 입력여부
-		
 			if(!$("#date2").val()){
 				alert("프로젝트 마감일을 입력하시기 바랍니다.");
 				return false
@@ -182,39 +157,6 @@ $(document).ready(function(){
 				}
 			});
 	 
-	
-		
-	 
-	//프로젝트아이디 중복확인 안함 수정이라서
-					/*  $("#tppIdCheck").on("click",function(){ 
-						$.ajax({
-							url:"${initParam.rootPath}/tppIdDuplicatedCheck.tp",
-							type:"GET",
-							data:{tppId:$("#tppId").val()},
-							dataType:"JSON",
-							beforeSend:function(){
-								if(!$("#tppId").val()){
-									alert("id를 입력하세요");
-									$("#tppId").focus();
-									return false;
-								} 
-					
-							},
-							success:function(txt){
-								if(txt==false){
-									document.getElementById("idCheck").value = "O";
-									alert("사용 가능한 아이디입니다.");
-									
-								}else{
-									alert("중복입니다.");
-								}
-							
-							},
-							error: function(){
-								alert("에러");
-							}
-						});
-					}); */
 	}); //document.ready
 	function imgChange(evt) {
 		alert("대표 이미지를 업로드합니다.");

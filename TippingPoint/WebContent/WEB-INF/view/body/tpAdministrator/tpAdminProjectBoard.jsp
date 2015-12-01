@@ -16,8 +16,8 @@
 
 
 				<a href="/TippingPoint/tpAdminProjectBoard.tp">모두보기</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=A">저장된 프로젝트</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=B">승인요청 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=B">저장된 프로젝트</a><br>
+				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=A">승인요청 프로젝트</a><br>
 				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=X">승인거부 프로젝트</a><br>
 				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=O">승인완료 프로젝트</a><br>
 				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=E">펀딩종료 프로젝트</a><br>
@@ -32,7 +32,7 @@
 						<tr>
 							<th>프로젝트 ID</th>
 							<th>프로젝트 제목</th>
-							<th>프로젝트 작성자</th>
+							<th> 프로젝트 작성자</th>
 							<th>프로젝트 카테고리</th>
 							<th>작성/수정 날자</th>
 							<th>펀딩 된 금액</th>
@@ -58,9 +58,61 @@
 							<td>${tpProject.tppTargetAmount }</td>
 							<td>${tpProject.tppFundingStartDate }</td>
 							<td>${tpProject.tppFundingLastDate }</td>
-							<td>${tpProject.tppState }</td>
+							<td>
+								<c:choose>
+									<c:when test="${tpProject.tppState =='A'}">
+										저장
+									</c:when>
+									
+									<c:when test="${tpProject.tppState =='B'}">
+										승인요청
+									</c:when>
+									
+									<c:when test="${tpProject.tppState =='O'}">
+										승인완료
+									</c:when>
+									
+									<c:when test="${tpProject.tppState =='X'}">
+										승인거부
+									</c:when>
+									
+									<c:when test="${tpProject.tppState =='E'}">
+										펀딩종료
+									</c:when>	
+									
+									<c:when test="${tpProject.tppState =='Z'}">
+										펀딩마감
+									</c:when>
+																	
+								</c:choose> 
+							</td>
 							<td>${tpProject.tppAdminMessage }</td>
-							<td></td>
+							<td>
+							
+								<c:choose>
+									<c:when test="${tpProject.tppState == 'O'}">
+										<form name = tpProjectExit action="/TippingPoint/tpAdminProjectStateConvert.tp" method="post">
+				       						<input type = "hidden" name ="tppId" value = '${tpProject.tppId }'>
+				      						<input type = "hidden" name = "tppState" value = "E">
+				     						<input type="submit" value="프로젝트종료">
+			   							</form>
+									</c:when>
+									
+	   								<c:when test="${tpProject.tppState =='E' }">
+										<form name = tpProjectExit action="/TippingPoint/tpAdminProjectStateConvert.tp" method="post">
+				       						<input type = "hidden" name ="tppId" value = '${tpProject.tppId }'>
+				      						<input type = "hidden" name = "tppState" value = "Z">
+				     						<input type="submit" value="프로젝트마감">
+			   							</form>
+	   								</c:when>
+	   								
+	   								<c:otherwise>
+	   								
+	   								</c:otherwise>
+								</c:choose>
+	   							<a href = "${initParam.rootPath }/_____?tppId=${tpProject.tppId }"">펀딩 내역 조회[미구현]</a>
+
+	   						</td>
 					</tr>
 				</c:forEach>
 			<br/>		

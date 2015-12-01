@@ -32,7 +32,7 @@ public class TpAdministratorController {
 
 	@Autowired
 	private TpFunderAccountAccessService service;
-	
+
 	@Autowired
 	private TpProjectService projectservice;
 
@@ -167,7 +167,8 @@ public class TpAdministratorController {
 
 	}
 
-	///////////////////////////////////////////// 관리자 카테고리 관리////////////////////////////////////////////
+	///////////////////////////////////////////// 관리자 카테고리
+	///////////////////////////////////////////// 관리////////////////////////////////////////////
 	// 관리자 체크 페이지 - 카테고리 관리 메인으로 이동
 	@RequestMapping("/tpAdminCheckAndCategoryMain")
 	public String tpAdminCheckAndCategoryMain(HttpSession session) {
@@ -176,7 +177,7 @@ public class TpAdministratorController {
 
 	// 카테고리 추가,수정 삭제 페이지로 이동
 	@RequestMapping("/catrgoryController")
-	public String catrgoryController(HttpSession session, HttpServletRequest request,ModelMap model) {
+	public String catrgoryController(HttpSession session, HttpServletRequest request, ModelMap model) {
 
 		String controll = request.getParameter("controll");
 		model.addAttribute("list", projectservice.tpProjectCategoryList());
@@ -200,7 +201,7 @@ public class TpAdministratorController {
 		String tppCategory = request.getParameter("tppCategory");
 		String tppCategoryName = request.getParameter("tppCategoryName");
 		adminservice.addTpCategory(tppCategory, tppCategoryName);
-		
+
 		return "tpAdministrator/tpAdminCategoryMain.tiles";
 	}
 
@@ -220,17 +221,18 @@ public class TpAdministratorController {
 		String tppCategory = request.getParameter("tppCategory");
 		String tppCategoryName = request.getParameter("tppCategoryName");
 		String updateCategory = request.getParameter("updateCategory");
-		
+
 		TpProjectCategory category = new TpProjectCategory();
 		category.setTppCategory(tppCategory);
 		category.setTppCategoryName(tppCategoryName);
-		
+
 		adminservice.updateTpCategory(category, updateCategory);
 
 		return "tpAdministrator/tpAdminCategoryMain.tiles";
 	}
 
-	//////////////////////////////////////////////////// 은행 Page//////////////////////////////////////////
+	//////////////////////////////////////////////////// 은행
+	//////////////////////////////////////////////////// Page//////////////////////////////////////////
 	// 은행 관리 - Main으로 이동
 	@RequestMapping("/tpAdminCheckAndBankMain")
 	public String tpAdminCheckAndBankMain(HttpSession session) {
@@ -240,11 +242,11 @@ public class TpAdministratorController {
 
 	// 은행 추가,수정 삭제 페이지로 이동
 	@RequestMapping("/bankController")
-	public String bankController(HttpSession session, HttpServletRequest request,ModelMap model) {
+	public String bankController(HttpSession session, HttpServletRequest request, ModelMap model) {
 
 		String controll = request.getParameter("controll");
 		model.addAttribute("list", service.getAllBankList());
-		
+
 		if (controll.equals("add")) {
 			return "tpAdministrator/tpAdminAddBank.tiles";
 		}
