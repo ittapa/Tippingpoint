@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tpCardPaymentMapper">
+
+	<!-- <resultMap id="tpCardPayment-resultmap" type="tpCardPayment">
+		<id column="TPCID" property="tpCid"/>		
+		<result column="xxx" property="xxx"/>
+	</resultMap> -->
+	
+	
+
+	<insert id="insertTpCardPayment" parameterType="tpCardPayment">
+		<selectKey keyProperty="tpCid" resultType="_int" order="BEFORE">
+			select SEQ_TPCARDPAYMENT_NUM.nextval from dual
+		</selectKey>
+		insert into TPCARDPAYMENT(TPCID, TPLGD_RESPCODE, TPLGD_RESPMSG, TPLGD_OID, TPLGD_TID, TPLGD_HASHDATA, TPLGD_FINANCECODE, TPLGD_FINANCENAME, TPLGD_ESCROWYN, TPLGD_TRANSAMOUNT, TPLGD_EXCHANGERATE, TPLGD_BUYER, TPLGD_BUYERPHONE, TPLGD_BUYEREMAIL, TPLGD_PRODUCTINFO, TPLGD_CARDNUM, TPLGD_CARDINSTALLMONTH, TPLGD_CARDNOINTYN, TPLGD_FINANCEAUTHNUM, TPCAmount)
+		values(#{tpCid}, #{tpLgdRespcode}, #{tpLgdResPMsg}, #{tpLgdOid}, #{tpLgdTid}, #{tpLgdHashData}, #{tpLgdFinanceCode}, #{tpLgdFinanceName}, #{tpLgdEscrowYN}, #{tpLgdTransAmount}, #{tpLgdExchangeRate}, #{tpLgdBuyer}, #{tpLgdBuyerPhone}, #{tpLgdBuyerEmail}, #{tpLgdProductInfo}, #{tpLgdCardNum}, #{tpLgdCardInstallMonth}, #{tpLgdCardNoIntYN}, #{tpLgdFinanceAuthNum}, #{tpCAmount})
+	</insert>
+</mapper>

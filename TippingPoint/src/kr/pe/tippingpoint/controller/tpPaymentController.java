@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.pe.tippingpoint.service.TpFunderAccountAccessService;
+import kr.pe.tippingpoint.service.TpPaymentService;
 import kr.pe.tippingpoint.service.TpProjectService;
+import kr.pe.tippingpoint.vo.TPProjectFundingList;
+import kr.pe.tippingpoint.vo.TpCardPayment;
 import kr.pe.tippingpoint.vo.TpFunder;
 import lgdacom.XPayClient.XPayClient;
 
@@ -33,6 +36,8 @@ public class tpPaymentController {
 	
 	@Autowired
 	private TpProjectService tpProjectService;
+	@Autowired
+	TpPaymentService tpPaymentService;
 
 	/**
 	 * 카드 / 현금 결제 요청 페이지 핸들러
@@ -46,7 +51,7 @@ public class tpPaymentController {
 //	@RequestMapping(value={"payCardRequest.tp", "payAccountRequest.tp"})
 	// payreq_crossflatform
 	@RequestMapping("payCardRequest.tp")
-	public String payRequest(@RequestParam String tppPayType, @RequestParam String tppTitle, @RequestParam int tpAmount, HttpSession session, ModelMap model){
+	public String payRequest(@RequestParam String tppPayType, @RequestParam String tppId, @RequestParam String tppTitle, @RequestParam int tpAmount, HttpSession session, ModelMap model){
 		
 		// 결제가 가능한 프로젝트인지 판단
 //		tpProjectService.
@@ -56,16 +61,16 @@ public class tpPaymentController {
 		session.setAttribute("userLoginInfo", "asdfasdf");
 		
 		// FIXME: 회원이 없는 경우 예외처리
-		String tppId = (String)session.getAttribute("userLoginInfo");
+		String tpfId = (String)session.getAttribute("userLoginInfo");
 		
 		// 세션 사용자ID 체크
 		// FIXME: 인터셉터로 세션 ID 존재 유무 체크로 수정하기 & 이전에 보고 있던 페이지로 되돌아가도록 처리하기
-		if(tppId.trim().length() < 1){
+		if(tpfId.trim().length() < 1){
 			return "redirct:/tpProjectBoard.tp";
 		}
 		
 		// user정보 가져오기
-		TpFunder tpFunder = TpFunderAccService.findTpFunderById(tppId);
+		TpFunder tpFunder = TpFunderAccService.findTpFunderById(tpfId);
 		
 		
 		// Start: 주문 번호 생성
@@ -77,7 +82,7 @@ public class tpPaymentController {
 		strUuid = strUuid.replace("-", "") ;
 
 
-		String strOrderUId = tppId + "_" + strCurrent + strUuid;
+		String strOrderUId = tpfId + "_" + strCurrent + strUuid;
 		// End: 주문 번호 생성
 		
 		// 타임스탬프
@@ -98,6 +103,7 @@ public class tpPaymentController {
 		// TODO: 결제완료 페이지에서 세션 삭제
 		// 세션을 통해 주문 유요성 체크
 		session.setAttribute("strOrderUId", strOrderUId); // 주문번호
+//		session.setAttribute("tpfId", tpfId); // 사용자 ID
 		session.setAttribute("tppId", tppId); // 프로젝트 ID(상품ID)
 		session.setAttribute("tpAmount", tpAmount); // 주문 금액
 		
@@ -111,9 +117,7 @@ public class tpPaymentController {
 		model.addAttribute("tpAmount", tpAmount); //  결제 금액
 		model.addAttribute("strOrderUId", strOrderUId); // 주문번호
 		
-		// FIXME: Merge를 다시 한 뒤에 DB에서 가져오도록 수정하기
-//		model.addAttribute("tpfEmail", tpFunder.getTpfEmail()); // 주문자 email		
-		model.addAttribute("tpfEmail", "bluel004@daum.net"); // 주문자 email
+		model.addAttribute("tpfEmail", tpFunder.getTpfEmail()); // 주문자 email	
 		
 		model.addAttribute("LGD_TIMESTAMP", strCurrent); // 주문 시각
 		
@@ -130,7 +134,7 @@ public class tpPaymentController {
 	// 결제후 처리(DB처리 포함)
 	@RequestMapping("tpPayPgReturn.tp")
 //	public String payCardRet(@RequestParam HttpServletRequest request, HttpSession session, ModelMap model){
-	public String payCardRet(HttpServletRequest request, HttpSession session, ModelMap model){
+	public String payCardRet(TPProjectFundingList tpProjectFundingList, TpCardPayment tpCardPayment, HttpServletRequest request, HttpSession session, ModelMap model){
 
 		// 아래 항목들 DI로 옮기지 마세요.
 	    String CST_PLATFORM                 = request.getParameter("CST_PLATFORM");
@@ -238,6 +242,31 @@ public class tpPaymentController {
 				model.addAttribute("LGD_AMOUNT", xpay.Response("LGD_AMOUNT",0));
 				model.addAttribute("LGD_RESPCODE", xpay.Response("LGD_RESPCODE",0));
 				model.addAttribute("LGD_RESPMSG", xpay.Response("LGD_RESPMSG",0));
+				
+				// xpay 응답결과 -> VO담기
+				tpCardPayment.setTpLgdRespcode(xpay.m_szResCode);
+				tpCardPayment.setTpLgdResPMsg(xpay.m_szResMsg);
+				tpCardPayment.setTpLgdOid(xpay.Response("LGD_OID",0));
+				tpCardPayment.setTpLgdTid(xpay.Response("LGD_TID",0));
+				tpCardPayment.setTpLgdHashData(xpay.Response("LGD_HASHDATA",0));
+				tpCardPayment.setTpLgdFinanceCode(xpay.Response("LGD_FINANCECODE",0));
+				tpCardPayment.setTpLgdFinanceName(xpay.Response("LGD_FINANCENAME",0));
+				tpCardPayment.setTpLgdEscrowYN(xpay.Response("LGD_ESCROWYN",0));
+				tpCardPayment.setTpLgdTransAmount(xpay.Response("LGD_TRANSAMOUNT",0));
+				tpCardPayment.setTpLgdExchangeRate(xpay.Response("LGD_EXCHANGERATE",0));
+				tpCardPayment.setTpLgdBuyer(xpay.Response("LGD_BUYER",0));
+				tpCardPayment.setTpLgdBuyerPhone(xpay.Response("LGD_BUYERPHONE",0));
+				tpCardPayment.setTpLgdBuyerEmail(xpay.Response("LGD_BUYEREMAIL",0));
+				tpCardPayment.setTpLgdProductInfo(xpay.Response("LGD_PRODUCTINFO",0));
+				tpCardPayment.setTpLgdCardNum(xpay.Response("LGD_CARDNUM",0));
+				tpCardPayment.setTpLgdCardInstallMonth(xpay.Response("LGD_CARDINSTALLMONTH",0));
+				tpCardPayment.setTpLgdCardNoIntYN(Integer.valueOf(xpay.Response("LGD_CARDNOINTYN",0)));
+				tpCardPayment.setTpLgdFinanceAuthNum(xpay.Response("LGD_FINANCEAUTHNUM",0));
+				tpCardPayment.setTpCAmount(Integer.valueOf(xpay.Response("LGD_AMOUNT",0)));
+								
+				
+				tpPaymentService.insertCardPaymentAndProjectFundingList(tpProjectFundingList, tpCardPayment
+						, (String)session.getAttribute("userLoginInfo"), (String)session.getAttribute("tppId"), "c", "o");
 				
 
 				// Service단 처리

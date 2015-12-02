@@ -21,6 +21,8 @@
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpProposerMapper.xml"/>
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpProjectCategoryMapper.xml"/>
 		<mapper resource="kr/pe/tippingpoint/mybatis/tpBankListMapper.xml"/>
+		<mapper resource="kr/pe/tippingpoint/mybatis/tpPaymentMapper.xml"/>
+		<mapper resource="kr/pe/tippingpoint/mybatis/tpCardPaymentMapper.xml"/>
 		
 	</mappers>
 

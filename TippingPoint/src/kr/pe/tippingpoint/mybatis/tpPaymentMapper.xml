@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tpPaymentMapper">
+	<insert id="insertTPProjectFundingList" parameterType="tPProjectFundingList">
+		<selectKey keyProperty="listNum" resultType="_int" order="BEFORE">
+			select SEQ_TPPROJECTFUNDINGLIST_NUM.nextval from dual
+		</selectKey>
+		insert into TPPROJECTFUNDINGLIST(listNum, tpPid, tpFid, tpCid, tpAid, tppPayType, tppPayState, tppPayDateTime, tppPayCancelReqDateTime, tpCCid)
+		values (#{listNum}, #{tpPid}, #{tpFid}, #{tpCid}, #{tpAid}, #{tppPayType}, #{tppPayState}, #{tppPayDateTime}, #{tppPayCancelReqDateTime}, #{tpCCid})
+	</insert>
+	
+	
+</mapper>
+
+<!-- CREATE TABLE TPPROJECTFUNDINGLIST (
+	LISTNUM NUMBER NOT NULL, /* 결제정보테이블ID */
+	tppId varchar2(100), /* 프로젝트ID */
+	TPFID VARCHAR2(20), /* 일반회원ID */
+	TPCID NUMBER, /* 카드결제ID */
+	TPAID NUMBER, /* 계좌이체정보ID */
+	tppPayType VARCHAR2(1) NOT NULL, /* 결제타입 */
+	tppPayState CHAR(1) DEFAULT 'o' NOT NULL, /* 결제상태 */
+	tppPayDateTime DATE NOT NULL, /* 결제일시 */
+	tppPayCancelReqDateTime DATE, /* 현금결제취소요청일 */
+	TPCCID NUMBER /* 카드결제취소ID */
+); -->
