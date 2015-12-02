@@ -244,7 +244,7 @@ $(document).ready(function(){
 			<div class= "mainImagfileBox">
 				<label >
 					사진 업로드	<input type="file" name="upfile"  id = "upfile"  onchange ="imgChange(this);">
-					<br />대표이미지는 가로/세로 300px이하를 권장합니다.
+					<br />대표이미지는 620 X 465px 이상을 권장합니다.
 			<br/>
 				</label>
 				<input type ="button" id = "tppMainImgDelete" value = "기본 이미지">

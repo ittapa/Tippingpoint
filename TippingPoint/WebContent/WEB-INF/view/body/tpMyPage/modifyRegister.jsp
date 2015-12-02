@@ -5,16 +5,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
-
-	<style type = "text/css">
-	.error{
-	color: red;
-	
-	}
-</style>
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 
 <script>
@@ -208,6 +204,7 @@ $(document).ready(function dropOut(){
 });
 </script>
 
+<body>
 
 <h2>회원정보수정</h2>
 <spring:hasBindErrors name="tpFunder"/>
@@ -240,7 +237,7 @@ $(document).ready(function dropOut(){
       <td>이메일</td>
       <td>
          <input type="text" id="tpfEmail" name="tpfEmail" value="${requestScope.tpFunder.tpfEmail }">
-         	<span class="error"><form:errors path="tpFunder.tpfEmail" delimiter=" | "/></span>
+         <form:errors path="tpFunder.tpfEmail" delimiter=" | "/>
       </td>
    </tr>
    <tr>
@@ -263,21 +260,21 @@ $(document).ready(function dropOut(){
       <td>
       <input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" value="${requestScope.tpFunder.tpfZipcode }"> 
       <input type="button" onclick="button()" value="우편번호 찾기">
-      	<span class="error"><form:errors path="tpFunder.tpfZipcode" delimiter=" | "/></span>
+      <form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
       </td>
    </tr>
    <tr>
       <td>주소</td>
       <td>
       <input type="text" readonly="readonly" name="tpfAddress" id="tpfAddress" placeholder="주소" value="${requestScope.tpFunder.tpfAddress }">
-      	<span class="error"><form:errors path="tpFunder.tpfAddress" delimiter=" | "/></span>
+      <form:errors path="tpFunder.tpfAddress" delimiter=" | "/>
       </td>
    </tr>
    <tr>
       <td>상세주소</td>
       <td>
       <input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" value="${requestScope.tpFunder.tpfAddressD }">
-     	<span class="error"> <form:errors path="tpFunder.tpfAddressD" delimiter=" | "/></span>
+      <form:errors path="tpFunder.tpfAddressD" delimiter=" | "/>
       </td>
    </tr>
    <tr>
@@ -311,3 +308,5 @@ $(document).ready(function dropOut(){
 	</div>
 </form>
 
+</body>
+</html>

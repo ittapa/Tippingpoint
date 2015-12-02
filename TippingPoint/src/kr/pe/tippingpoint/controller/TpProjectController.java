@@ -177,6 +177,7 @@ public class TpProjectController {
 		//등록 성공저장관련 처리 redirect 받기
 		@RequestMapping("tpProjectSaveAndSubmitSuccess")
 		public String tpProjectSaveSuccess(@RequestParam String tppId){
+
 			TpProject tpvo = service.findTpProjectById(tppId);//id로 등록도니 프로젝트 조회
 			
 			System.out.println(tpvo.getTppState());
@@ -358,10 +359,9 @@ public class TpProjectController {
 	@RequestMapping("/tpProject.tp")
 	public ModelAndView findTpProject(@RequestParam String tppId) {
 
-		//to.do 검증 추가해야됨.
-		TpProject polist = service.findTpProjectById(tppId);
-
-		return new ModelAndView("tpProject/tpProject.tiles", "polist", polist); 
+		Map map = service.findTpProjectAndTpfunderById(tppId);
+		
+		return new ModelAndView("tpProject/tpProject.tiles", map); 
 	}
 	
 	//프로젝트 검색하기

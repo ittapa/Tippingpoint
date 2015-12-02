@@ -17,6 +17,7 @@
 	}
 </style>
 
+
    <script type="text/javascript">
 	$(document).ready(function(){
 	
@@ -151,6 +152,15 @@
 					$("#tppId").focus();
 					return false;
 				}
+				for (i=0; i<$("#tppId").val().length; i++ )
+				{
+				ch=$("#tppId").val().charAt(i)
+					if (!(ch>='0' && ch<='9') && !(ch>='a' && ch<='z')&&!(ch>='A' &&ch<='Z')){
+						 alert ("프로젝트 아이디는 영문, 숫자만 입력가능합니다.")
+				 		 $("#tppId").focus();
+				  		 return false;
+				  }
+				}
 	
 			},
 			success:function(txt){
@@ -266,7 +276,7 @@
 			<div class= "mainImagfileBox">
 				<label >
 					사진 업로드	<input type="file" name="upfile"  id = "upfile"  onchange ="imgChange(this);">
-					<br />대표이미지는 가로/세로 300px이하를 권장합니다.
+					<br />대표이미지는 620 X 465px 이상을 권장합니다.
 			<br/>
 				</label>
 				<input type ="button" id = "tppMainImgDelete" value = "이미지 초기화">

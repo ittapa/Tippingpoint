@@ -12,6 +12,9 @@ public interface TpProjectService {
 	
 	TpProject findTpProjectById(String tppId);
 	
+	Map findTpProjectAndTpfunderById(String tppId);
+	
+	
 	List<TpProject> findToProjectByCategory(String tppCategory);
 	
 	void registerTpProject(TpProject tpproject);

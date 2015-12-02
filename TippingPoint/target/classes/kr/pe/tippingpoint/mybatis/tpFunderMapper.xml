@@ -112,7 +112,7 @@
       DELETE FROM TPFUNDER WHERE TPFID=#{tpfId}
    </delete>
    
-    <update id="updateTpFunder" parameterType="tpFunder">
+   <update id="updateTpFunder" parameterType="tpFunder">
       UPDATE TPFUNDER SET TPFNAME=#{tpfName}, TPFPASSWORD=#{tpfPassword}, TPFBIRTH=#{tpfBirth}, 
                      TPFGENDER=#{tpfGender}, TPFEMAIL=#{tpfEmail},    TPFZIPCODE=#{tpfZipcode}, TPFADDRESS=#{tpfAddress}, 
                      TPFADDRESS_D=#{tpfAddressD}, TPFPHONENUM=#{tpfPhoneNum}, TPFPROFILEIMG=#{tpfProfileImg}
@@ -126,11 +126,5 @@
    
    </update>
    
-   
-    <!-- 번호로 회원 조회 -->
-   <select id="selectTpFunderByPhoneNum" resultType="string" resultMap="tpFunder-resultmap">
-         <include refid="select-sql"/>
-         WHERE   TPFPHONENUM=#{tpfPhoneNum}
-   </select>
    
 </mapper>
