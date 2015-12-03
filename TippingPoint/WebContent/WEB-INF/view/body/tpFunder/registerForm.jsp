@@ -85,27 +85,28 @@ $(function() { //생년월일 찾기
 </script>
 
 <script>
-$(document).ready(function() { //핸드폰번호 3개를 입력받아 db한컬럼에 넣기
-	$("#register").on("click",function(){
+$(document).ready(function() { 
+	$("#register").on("click",function(){ //가입 하기 전 확인할것들 처리
 		tpfunder = document.tpFunder;
 		if(tpfunder.tpfPhoneNum2.value.length<3 || tpfunder.tpfPhoneNum3.value.length<4){
 			alert("핸드폰번호를 입력하세요");
 			$("#tpfPhoneNum2").focus();
 			return false;
-		}
+		}//핸드폰번호 제대로 입력 안할시 가입 못하게 함
 		else if(tpfunder.id_hidden.value=="N"){
 			alert("아이디 중복체크를 해주세요");
 			return false;
-		}
+		}//아이디 중복체크 안할시 가입 못하게 함
 		else if(tpfunder.tpfPassword.value != tpfunder.passwordConfirm.value){
 			alert("비밀번호를 확인하세요");
 			return false;
-		}
+		}//비밀번호 확인 못할시 가입 못하게 함
 		else if(tpfunder.phoneNum_hidden.value=="N"){
 			alert("핸드폰번호 중복체크를 해주세요");
 			return false;
-		}
+		}//핸드폰번호 중복 체크 안할 시 가입 못하게함
 		tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
+		//input text에 있는 핸드폰번호 3개를 입력받아 db한컬럼(핸드폰번호)에 넣게 합침
 		tpfunder.submit();
 	});
 });
@@ -114,26 +115,25 @@ $(document).ready(function() { //핸드폰번호 3개를 입력받아 db한컬�
 
 <script>
 $(document).ready(function(){
-	$("#idcheck").on("click",function(){ //아이디 중복확인
+	$("#idcheck").on("click",function(){ //아이디 중복확인 및 id 조건 처리
 		$.ajax({
 			url:"${initParam.rootPath}/idDuplicatedCheck.tp",
 			type:"GET",
 			data:{tpfId:$("#tpfId").val()},
 			dataType:"JSON",
 			beforeSend:function(){
-				if(!$("#tpfId").val()){
-					alert("id를 입력하세요");
+				if($("#tpfId").val().length < 6){
+					alert("id는 소문자, 숫자 혼용하여 6~12자 까지 가능합니다.");
 					$("#tpfId").focus();
 					return false;
 				}
-				for (i=0; i<$("#tpfId").val().length; i++ )
-				{
-				ch=$("#tpfId").val().charAt(i)
-					if (!(ch>='0' && ch<='9') && !(ch>='a' && ch<='z')){
-						 alert ("아이디는 소문자, 숫자만 입력가능합니다.")
-				 		 $("#tpfId").focus();
-				  		 return false;
-				  }
+				for (i=0; i<$("#tpfId").val().length; i++ ){ //for문을 돌려서 아이디 첫글자부터 확인
+					ch=$("#tpfId").val().charAt(i)
+					if (!(ch>='0' && ch<='9') && !(ch>='a' && ch<='z')){ //대,소문자 확인
+						alert ("아이디는 소문자, 숫자만 입력가능합니다.")
+					 	$("#tpfId").focus();
+					  	return false;
+					}
 				}
 			},
 			success:function(txt){
@@ -154,7 +154,7 @@ $(document).ready(function(){
 
 <script>
 $(document).ready(function(){
-	$("#pncheck").on("click",function(){ //아이디 중복확인
+	$("#pncheck").on("click",function(){ //핸드폰 번호 중복확인
 		var param = $("#tpfPhoneNum1")+"-"+$("#tpfPhoneNum2")+"-"+$("#tpfPhoneNum3");
 		$.ajax({
 			url:"${initParam.rootPath}/phoneNumDuplicatedCheck.tp",
@@ -166,6 +166,15 @@ $(document).ready(function(){
 					alert("핸드폰 번호를 입력하세요");
 					$("#tpfPhoneNum1").focus();
 					return false;
+				}
+				for (i=0; i<$("#tpfPhoneNum2").val().length; i++ ){ //for문을 돌려서 첫글자부터 확인
+					ch=$("#tpfPhoneNum2").val().charAt(i)
+					ch2=$("#tpfPhoneNum3").val().charAt(i)
+					if (!(ch>='0' && ch<='9') || !(ch2>='0' && ch2<='9')){ 
+						alert ("핸드폰 번호는 숫자만 입력가능합니다.")
+					 	$("#tpfPhoneNum2").focus();
+					  	return false;
+					}
 				}
 			},
 			success:function(txt){
@@ -187,7 +196,7 @@ $(document).ready(function(){
 <script type="text/javascript">
 //이미지 관련 삭제 및 호출
 $(document).ready(function() {
-	var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+	var defaultImg = "/TippingPoint/defaultImg/tpProfileDefault.png"
 	$("#tpfMainImgDelete").on("click", function(){
 		if(!$("#upfile").val()){
 			alert("추가된 이미지가 없습니다.");
@@ -250,15 +259,14 @@ table.register {
 	<table class="register">
 		<tr>
 			<td width="150px">ID</td>
-			<td><input type="text" name="tpfId" id="tpfId" value="${requestScope.tpFunder.tpfId }">
+			<td><input type="text" name="tpfId" id="tpfId" maxlength="12" value="${requestScope.tpFunder.tpfId }">
 			<input type="button" value="중복확인" id="idcheck"/>&nbsp;&nbsp;아이디는 소문자, 숫자 혼용하여 6~12자 까지 가능
-			<span class="error"><form:errors path="tpFunder.tpfId" delimiter=" | "/></span>
 			<input type="hidden" name="id_hidden" value="N"/>
 			</td>
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td><input type="text" name="tpfName" id="tpfName" value="${requestScope.tpFunder.tpfName }">
+			<td><input type="text" name="tpfName" id="tpfName" maxlength="6" value="${requestScope.tpFunder.tpfName }">
 				<span class="error"><form:errors path="tpFunder.tpfName" delimiter=" | "/></span>
 			</td>
 		</tr>
@@ -289,7 +297,7 @@ table.register {
 		</tr>
 		<tr>
 			<td>이메일</td>
-			<td><input type="text" name="tpfEmail" id="tpfEmail" value="${requestScope.tpFunder.tpfEmail }">
+			<td><input type="text" name="tpfEmail" id="tpfEmail" maxlength="30" value="${requestScope.tpFunder.tpfEmail }">
 				<span class="error"><form:errors path="tpFunder.tpfEmail" delimiter=" | "/></span>
 			</td>
 		</tr>
@@ -308,7 +316,7 @@ table.register {
 		</tr>
 		<tr>
 			<td>상세주소</td>
-			<td><input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" value="${requestScope.tpFunder.tpfAddressD }">
+			<td><input type="text" name="tpfAddressD" id="tpfAddressD" placeholder="상세주소" maxlength="100" value="${requestScope.tpFunder.tpfAddressD }">
 					<span class="error"><form:errors path="tpFunder.tpfAddressD" delimiter=" | "/></span>
 			</td>
 		</tr>
@@ -331,7 +339,7 @@ table.register {
 		<tr>
 			<td>대표 이미지</td>
 			<td>
-			<img src ="${initParam.rootPath}/defaultImg/tpProjectDefault.png" alt = "기본이미지"  id = "imgView"><br>
+			<img src ="${initParam.rootPath}/defaultImg/tpProfileDefault.png" alt = "기본이미지" width ="150"  height = "150" id = "imgView"><br>
 				<div class="mainImgfileBox">
 					<label>
 						사진 업로드 <input type="file" name="upfile" id="upfile" onchange="imgChange(this);"><br>						
@@ -339,7 +347,7 @@ table.register {
 					<input type="button" id="tpfMainImgDelete" value="이미지 초기화">
 				</div>
 				<br>
-				대표이미지는 가로/세로 300px 이하를 권장합니다.
+				대표이미지는 가로/세로 150px 이하를 권장합니다.
 			</td>
 		</tr>
 		<tr>

@@ -126,5 +126,10 @@
    
    </update>
    
+   <!-- 번호로 회원 조회 -->
+   <select id="selectTpFunderByPhoneNum" resultType="string" resultMap="tpFunder-resultmap">
+         <include refid="select-sql"/>
+         WHERE   TPFPHONENUM=#{tpfPhoneNum}
+   </select>
    
 </mapper>

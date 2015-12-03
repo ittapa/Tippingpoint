@@ -103,58 +103,58 @@ public class TpFunderAccountAccessController {
 	 * @throws DuplicatedIdException
 	 */
 	@RequestMapping("/registerTpFunder")
-	public String registerTpFunder(@ModelAttribute TpFunder tpfunder, @RequestParam(required=false) MultipartFile upfile, 
-			HttpServletRequest request, Errors errors, ModelMap model, HttpSession session)
-			throws DuplicatedIdException {
-		
+	public String registerTpFunder(@ModelAttribute TpFunder tpfunder,
+			@RequestParam(required = false) MultipartFile upfile, HttpServletRequest request, Errors errors,
+			ModelMap model, HttpSession session) throws DuplicatedIdException {
+
 		tpfunder.setTpfQualifyTpProposer("F"); // 제안자 권한 false
-		tpfunder.setTpfAccountType("D"); // 계정 유형 DEfault / F: facebook
+		tpfunder.setTpfAccountType("D"); // 계정 유형 Default / F: facebook
 		TpFunderValidator validate = new TpFunderValidator();
-		validate.validate(tpfunder, errors); // ★
+		validate.validate(tpfunder, errors); // Validate처리
 
 		if (errors.hasErrors()) {
 			return "/tpfunder/registerForm.tp";
 		}
 
-		///////이미지  처리//////////
+		/////// 이미지 처리//////////
 		String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 		String rootpath = request.getSession().getServletContext().getInitParameter("rootPath");
-		
-		if(upfile != null && !upfile.isEmpty()){
-			//업로드된 파일의 정보를 조회
-			//파일을 임시저장경로에서 최종 저장경로로 이동
+
+		if (upfile != null && !upfile.isEmpty()) {
+			// 업로드된 파일의 정보를 조회
+			// 파일을 임시저장경로에서 최종 저장경로로 이동
 			String mainImgName = upfile.getOriginalFilename();
 			long fileSize = upfile.getSize();
-			System.out.println(mainImgName + "-" + fileSize); //todo
-			
-			//신규 파일로 디렉토리 설정 및 업로드
-			String filePath_1 = "resources" + "/" + "project" +"/" + "mainImage" + "/" ;
+			System.out.println(mainImgName + "-" + fileSize); // todo
+
+			// 신규 파일로 디렉토리 설정 및 업로드
+			String filePath_1 = "resources" + "/" + "profile" + "/" + "mainImage" + "/";
 			String filePath = dftFilePath + filePath_1;
-			System.out.println("메인이미지 저장경로" + filePath); //todo
-			
+			System.out.println("메인이미지 저장경로" + filePath); // todo
+
 			File file = new File(filePath); // 메인이미지 저장경로 설정
-			if(!file.exists()){
+			if (!file.exists()) {
 				file.mkdirs();
 			}
-			
-			long tileMilis = System.currentTimeMillis(); //현재시간
-			String realMainImgName = tpfunder.getTpfId()+tileMilis+mainImgName;
-			System.out.println("main이미지 이름 저장되는 이름"+realMainImgName);
-			
-			File upImg = new File(filePath, realMainImgName); //저장설정
+
+			long tileMilis = System.currentTimeMillis(); // 현재시간
+			String realMainImgName = tpfunder.getTpfId() + tileMilis + mainImgName;
+			System.out.println("main이미지 이름 저장되는 이름" + realMainImgName);
+
+			File upImg = new File(filePath, realMainImgName); // 저장설정
 			try {
 				upfile.transferTo(upImg);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			tpfunder.setTpfProfileImg(rootpath+"/"+filePath_1+realMainImgName); //upfile			
-		}else{
-			if(tpfunder.getTpfProfileImg() == null){
-				tpfunder.setTpfProfileImg(rootpath+"/defaultImg/tpProjectDefault.png");
+			tpfunder.setTpfProfileImg(rootpath + "/" + filePath_1 + realMainImgName); // upfile
+		} else {
+			if (tpfunder.getTpfProfileImg() == null) {
+				tpfunder.setTpfProfileImg(rootpath + "/defaultImg/tpProfileDefault.png");
 			}
-		
+
 		}
-				
+
 		service.addTpFunder(tpfunder);
 		model.addAttribute("tpfunder", tpfunder);
 		return "redirect:/tpfunder/registerSuccess.tp";
@@ -213,20 +213,18 @@ public class TpFunderAccountAccessController {
 	 * @throws Exception
 	 */
 	@RequestMapping("funderModifyRegister")
-	public String modifyRegister(@ModelAttribute TpFunder tpfunder, @RequestParam(required=false) MultipartFile upfile, Errors errors, ModelMap model, HttpSession session,
+	public String modifyRegister(@ModelAttribute TpFunder tpfunder,
+			@RequestParam(required = false) MultipartFile upfile, Errors errors, ModelMap model, HttpSession session,
 			HttpServletRequest request) throws Exception {
+		
 		TpFunderValidator validate = new TpFunderValidator();
 		validate.validate(tpfunder, errors);
 		if (errors.hasErrors()) {
 			System.out.println(errors);
 			return "tpMyPage/modifyRegister.tiles";
 		}
-		
-		String tpfId = (String) session.getAttribute("userLoginInfo");
-		
 
-		//TpFunder funder = service.findTpFunderById(tpfId);
-	
+		String tpfId = (String) session.getAttribute("userLoginInfo");
 
 		String p1 = request.getParameter("tpfPhoneNum1");
 		String p2 = request.getParameter("tpfPhoneNum2");
@@ -234,56 +232,44 @@ public class TpFunderAccountAccessController {
 
 		tpfunder.setTpfId(tpfId);
 		tpfunder.setTpfPhoneNum(p1 + "-" + p2 + "-" + p3);
-		
-		//funder.setTpfName(request.getParameter("tpfName"));
-		//funder.setTpfPassword(request.getParameter("tpfPassword"));
 
-		//funder.setTpfEmail(request.getParameter("tpfEmail"));
-		//funder.setTpfZipcode(request.getParameter("tpfZipcode"));
-		//funder.setTpfAddress(request.getParameter("tpfAddress"));
-		//funder.setTpfAddressD(request.getParameter("tpfAddressD"));
-		//funder.setTpfProfileImg(request.getParameter("tpfProfileImg"));
-		
-	
-
-		///////이미지  처리//////////
+		/////// 이미지 처리//////////
 		String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 		String rootpath = request.getSession().getServletContext().getInitParameter("rootPath");
-			
-		if(upfile != null && !upfile.isEmpty()){
-			//업로드된 파일의 정보를 조회
-			//파일을 임시저장경로에서 최종 저장경로로 이동
+
+		if (upfile != null && !upfile.isEmpty()) {
+			// 업로드된 파일의 정보를 조회
+			// 파일을 임시저장경로에서 최종 저장경로로 이동
 			String mainImgName = upfile.getOriginalFilename();
 			long fileSize = upfile.getSize();
-			System.out.println(mainImgName + "-" + fileSize); //todo
-				
-			//신규 파일로 디렉토리 설정 및 업로드
-			String filePath_1 = "resources" + "/" + "project" + "/" + "mainImage" + "/";
+			System.out.println(mainImgName + "-" + fileSize); // todo
+
+			// 신규 파일로 디렉토리 설정 및 업로드
+			String filePath_1 = "resources" + "/" + "profile" + "/" + "mainImage" + "/";
 			String filePath = dftFilePath + filePath_1;
-			System.out.println("메인이미지 저장경로" + filePath); //todo
-				
+			System.out.println("메인이미지 저장경로" + filePath); // todo
+
 			File file = new File(filePath); // 메인이미지 저장경로 설정
-			if(!file.exists()){
+			if (!file.exists()) {
 				file.mkdirs();
 			}
-				
-			long tileMilis = System.currentTimeMillis(); //현재시간
-			String realMainImgName = tpfunder.getTpfId()+tileMilis+mainImgName;
-			System.out.println("main이미지 이름 저장되는 이름"+realMainImgName);
-				
-			File upImg = new File(filePath, realMainImgName); //저장설정
-			upfile.transferTo(upImg);			
-			tpfunder.setTpfProfileImg(rootpath+"/"+filePath_1+realMainImgName); //upfile			
-			
-		}else{
+
+			long tileMilis = System.currentTimeMillis(); // 현재시간
+			String realMainImgName = tpfunder.getTpfId() + tileMilis + mainImgName;
+			System.out.println("main이미지 이름 저장되는 이름" + realMainImgName);
+
+			File upImg = new File(filePath, realMainImgName); // 저장설정
+			upfile.transferTo(upImg);
+			tpfunder.setTpfProfileImg(rootpath + "/" + filePath_1 + realMainImgName); // upfile
+
+		} else {
 			System.out.println(tpfunder.getTpfProfileImg());
-			if(tpfunder.getTpfProfileImg().equals("default")){
-				System.out.println("메롱123123");
-				tpfunder.setTpfProfileImg(rootpath+"/defaultImg/tpProjectDefault.png");
+			if (tpfunder.getTpfProfileImg().equals("default")) {
+				tpfunder.setTpfProfileImg(rootpath + "/defaultImg/tpProfileDefault.png");
 			}
-			
+
 		}
-		
+
 		service.updateTpFunder(tpfunder);
 		model.addAttribute("tpfId", session.getAttribute("userLoginInfo"));
 		return "tpMyPage/tpMyPageMain.tiles";
@@ -484,4 +470,17 @@ public class TpFunderAccountAccessController {
 
 	}
 
+	/**
+	    * 회원가입 핸드폰번호 중복 체크
+	    * 
+	    * @param tpfId
+	    * @return
+	    */
+	@RequestMapping("phoneNumDuplicatedCheck")
+	@ResponseBody
+	public String phoneNumDuplicatedCheck(@RequestParam String tpfPhoneNum) {
+		System.out.println(tpfPhoneNum);
+		TpFunder tpfunder = service.findTpFunderByPhoneNum(tpfPhoneNum);
+		return String.valueOf(tpfunder != null);
+	}
 }

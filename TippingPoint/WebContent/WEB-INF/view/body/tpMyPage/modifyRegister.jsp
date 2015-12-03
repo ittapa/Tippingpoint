@@ -72,16 +72,10 @@ function checkPwd(){ //비밀번호 확인
 $(document).ready(function() {
    $("#modify").on("click",function(){
       tpfunder = document.tpFunder;
-      if(tpfunder.tpfPhoneNum2.value.length<3 || tpfunder.tpfPhoneNum3.value.length<4){
-         alert("핸드폰번호를 입력하세요");
-         $("#tpfPhoneNum2").focus();
-         return false;
-      }
-      else if(tpfunder.tpfPassword.value != tpfunder.passwordConfirm.value){
+      if(tpfunder.tpfPassword.value != tpfunder.passwordConfirm.value){
 			alert("비밀번호를 확인하세요");
 			return false;
 	  }
-      tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
       tpfunder.submit();
    });
 });
@@ -90,7 +84,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 //이미지 관련 삭제 및 호출
 $(document).ready(function() {
-	var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+	var defaultImg = "/TippingPoint/defaultImg/tpProfileDefault.png"
 	$("#tpfMainImgDelete").on("click", function(){
 		var imgconfirm = confirm("기본이미지로 변경합니다.");
 		if(imgconfirm){
@@ -223,7 +217,7 @@ $(document).ready(function dropOut(){
       <td>비밀번호</td>
       <td>
          <input type="password" id="tpfPassword" name="tpfPassword" size="20" value="${requestScope.tpFunder.tpfPassword }">
-         <span class="error"><form:errors path="tpFunder.tpfPassword" delimiter=" | "/></span>
+         <form:errors path="tpFunder.tpfPassword" delimiter=" | "/>
       </td>
    </tr>
    <tr>
@@ -241,7 +235,7 @@ $(document).ready(function dropOut(){
       </td>
    </tr>
    <tr>
-      <td>휴대폰번호</td>
+       <td>휴대폰번호</td>
       <td>
 
          <select name="tpfPhoneNum1">
@@ -249,9 +243,9 @@ $(document).ready(function dropOut(){
             <option value="011">011</option>
          </select>
          -
-         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" value="${requestScope.tpfPhoneNum2 }">
-         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" value="${requestScope.tpfPhoneNum3 }">
-         
+         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" value="${requestScope.tpfPhoneNum2 }" readonly="readonly">
+         -
+         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" value="${requestScope.tpfPhoneNum3 }" readonly="readonly">
          <input type="hidden" name="tpfPhoneNum"/>
       </td>
    </tr>
@@ -280,7 +274,7 @@ $(document).ready(function dropOut(){
    <tr>
    		<td>대표 이미지</td>
    		<td>
-   		<img src ="${requestScope.tpFunder.tpfProfileImg}" width ="300"  height = "300" id = "imgView" name="imgView"><br>
+   		<img src ="${requestScope.tpFunder.tpfProfileImg}" width ="150"  height = "150" id = "imgView" name="imgView"><br>
    		<input type="hidden" id="tpfProfileImg" name="tpfProfileImg" value="${requestScope.tpFunder.tpfProfileImg }">
    		<div class="mainImgfileBox">
 					<label>
@@ -290,7 +284,7 @@ $(document).ready(function dropOut(){
 					<input type="button" id="tpfMainImgOrigin" value="원래 이미지">
 				</div>
 				<br>
-				대표이미지는 가로/세로 300px 이하를 권장합니다.
+				대표이미지는 가로/세로 150px 이하를 권장합니다.
    		</td>
    </tr>
    <tr>

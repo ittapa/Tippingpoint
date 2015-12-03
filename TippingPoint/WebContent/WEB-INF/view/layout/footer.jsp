@@ -40,7 +40,6 @@
 	<!--small footer end-->
 
 	<!-- js placed at the end of the document so the pages load faster -->
-	<script src="${initParam.rootPath}/js/jquery.min.js"></script>
 	<script src="${initParam.rootPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${initParam.rootPath}/js/hover-dropdown.js"></script>
 	<script type="text/javascript" src="${initParam.rootPath}/assets/bxslider/jquery.bxslider.js"></script>
