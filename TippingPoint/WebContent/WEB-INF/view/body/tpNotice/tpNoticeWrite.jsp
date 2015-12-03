@@ -66,7 +66,10 @@
         </table>
          
         <input type="button" id="writeBtn" value="작성하기">
-        <a href="#this" class="btn" id="list" >목록으로</a>
     </form>
+    <br>
+    <form name = "noticeList" action="${initParam.rootPath }/tpAdminNoticeManager.tp">
+  	<input type="submit" value="목록으로">
+  	</form>
 </body>
 </html>

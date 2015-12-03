@@ -24,8 +24,8 @@
 				<div class="col-md-4">
 					<div class="copyright">
 						<p>&copy; Copyright - TippingPoint.
-						<c:if test="${sessionScope.adminId != null}">
-							&nbsp;<a href="${initParam.rootPath}/tpAdminLogin.tp">관리자 PAGE</a>
+						<c:if test="${sessionScope.adminId != null}">									
+							&nbsp;<a href="tpAdministrator/tpAdminMain.tp">관리자 PAGE</a>
 							&nbsp;<a href="${initParam.rootPath}/logout.tp">관리자 로그아웃</a>
 						</c:if>
 						<c:if test="${sessionScope.adminId == null}">

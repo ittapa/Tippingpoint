@@ -202,19 +202,19 @@ $(document).ready(function(){
 	
 		</script>	
 			
-		<label>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }' readonly="readonly"></label>
+		<div>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }' readonly="readonly"></div>
 <!-- 		<input type = "hidden" value = "X" name = "idCheck" id = "idCheck"/>
 		<input type = "button" value = "ID중복 체크" id = "tppIdCheck"/> ID는 한번 정한대로-->
 		
 		<br/>
 		<span class="error"><form:errors path = "tpProject.tppId" delimiter = " | "/></span>
 		<br /> <br/>
-			<label>프로젝트 제목 : <input type="text" name="tppTitle" value = '${requestScope.tpProject.tppTitle }'/></label>
+			<div>프로젝트 제목 : <input type="text" name="tppTitle" value = '${requestScope.tpProject.tppTitle }'/></div>
 			<span class="error"><form:errors path = "tpProject.tppTitle" delimiter = " | "/></span>
 			<br /><br/>
 			
 			<!-- 카테고리 -->
-			<label>카테고리 :
+			<div>카테고리 :
 			<select name="tppCategory" selected = "${list.tppCategory }">
 			<option  value= "null">카테고리를 선택하세요</option>
 			<c:choose>
@@ -242,11 +242,11 @@ $(document).ready(function(){
 			대표 이미지<br/>
 			<input type = "hidden" id = "tppMainImg" name = "tppMainImg" value = "${requestScope.tpProject.tppMainImg }" >
 			<div class= "mainImagfileBox">
-				<label >
+				<div >
 					사진 업로드	<input type="file" name="upfile"  id = "upfile"  onchange ="imgChange(this);">
 					<br />대표이미지는 620 X 465px 이상을 권장합니다.
 			<br/>
-				</label>
+				</div>
 				<input type ="button" id = "tppMainImgDelete" value = "기본 이미지">
 				<input type ="button" id = "tppMainImgOrigin" value = "원래 이미지">
 			</div>
@@ -269,7 +269,7 @@ $(document).ready(function(){
 				<span class="error"><form:errors path = "tpProject.tppFundingLastDate" delimiter = " | "/></span>
 				</p>
 			<br/> 
-			<label>목표 후원 금액 : <input type="number" name="tppTargetAmount" id = "tppTargetAmount" value = "${requestScope.tpProject.tppTargetAmount }" />
+			<div>목표 후원 금액 : <input type="number" name="tppTargetAmount" id = "tppTargetAmount" value = "${requestScope.tpProject.tppTargetAmount }" />
 			<br/>
 			<span class="error"><form:errors path = "tpProject.tppTargetAmount" delimiter = " | "/></span>
 		

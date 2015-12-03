@@ -1,192 +1,224 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
-   xmlns:c="http://www.springframework.org/schema/c"
-   xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
-      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
-      
-      <!-- mybatis 및 DB 설정 -->
-      
-   <bean name="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"
-      c:sqlSessionFactory-ref="SqlSessionFactoryBean" />
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-   <!-- sqlsessionFactroybean 설정 -->
-   <bean name="SqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
-      <property name="configLocation"
-         value="classpath:kr/pe/tippingpoint/mybatis/mybatis-config.xml" />
-      <property name="dataSource" ref="BasicDataSourceclass" />
-   </bean>
+	<!-- mybatis 및 DB 설정 -->
 
+	<bean name="SqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"
+		c:sqlSessionFactory-ref="SqlSessionFactoryBean" />
 
-   <!-- basic data source BEAN 객 -->
-   <bean name="BasicDataSourceclass" class="org.apache.commons.dbcp2.BasicDataSource">
-      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-      <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE" />
-      <property name="username" value="tippingpoint" />
-      <property name="password" value="1592" />
-      <property name="maxTotal" value="50" />
-   </bean>
-   
-   <!-- 88888888888888-->
-   <mvc:annotation-driven>
-   <!-- 한글처리 -->
-   <mvc:message-converters>
-         <bean class="org.springframework.http.converter.StringHttpMessageConverter"
-            c:defaultCharset="UTF-8" />
-   </mvc:message-converters>
-   </mvc:annotation-driven>
-   <!-- 88888888888888 -->
+	<!-- sqlsessionFactroybean 설정 -->
+	<bean name="SqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:kr/pe/tippingpoint/mybatis/mybatis-config.xml" />
+		<property name="dataSource" ref="BasicDataSourceclass" />
+	</bean>
 
 
-   
-   <!-- bean anotation 스캔 -->
-   <context:component-scan base-package="kr.pe.tippingpoint" />
-   <!-- 등록 페이지 연결 -->
-   <!-- <mvc:view-controller path="/tpProjectRegister.tp" view-name="tpProject/tpProjectRegister.tiles" /> 
-         컨트롤러로 연결해서 로그인 체크및 Proposal 체크-->
-   
-   <mvc:view-controller path="/tpAdminAccess.tp" view-name ="/WEB-INF/view/body/tpAdministrator/tpAdminAccess.jsp"/>
-   
-   <!-- 메인 페이지 연결 -->
-   <mvc:view-controller path="/main.tp" view-name="main.tiles" />
-   <!-- 회원가입 페이지 -->
-   <mvc:view-controller path="/tpfunder/registerForm.tp" view-name="tpFunder/registerForm.tiles"/>
-   <!-- 회원가입 성공페이지 -->
-   <mvc:view-controller path="/tpfunder/registerSuccess.tp" view-name="tpFunder/registerSuccess.tiles" />
-   <!-- 회원 수정페이지 -->
-   <mvc:view-controller path="/tpMyPage/modifyRegister.tp" view-name="tpMyPage/modifyRegister.tiles"/>
-   <!-- 로그인 페이지 -->
-   <mvc:view-controller path="/tpLogin/tpLoginPage.tp" view-name="tpLogin/tpLoginPage.tiles"/> 
-  	<!--HELP 페이지  -->
-   <mvc:view-controller path="/tpHelpPage.tp" view-name = "/tpHelpPage.tiles"/>
-   <mvc:view-controller path="/page1.tp" view-name="tpLogin/page1.tiles"/> <!-- test용  -->
-   <mvc:view-controller path="/page2.tp" view-name="tpLogin/page2.tiles"/><!-- test용  -->
-   
-    <!-- 결제 요청 페이지 -->
-   <mvc:view-controller path="/pay/payRequest.tp" view-name="tpPayment/payRequest.tiles"/>
-   <!-- 결제 요청결과 저장 페이지 -->
-   <mvc:view-controller path="/tpPayPgReturn.tp" view-name="tpPayment/payCardSuccess.tiles"/>
-   
-   <!-- 관리자 페이지 by 재혁 -->
-   <mvc:view-controller path="/tpAdminAccess.tp" view-name="tpAdministrator/tpAdminAccess.tiles"/>
-   
-   <!-- 관리자 페이지  --> 
-   <mvc:view-controller path="/admin/list.tp" view-name="administrator/admin_funderList.tiles"/>
-    <!-- 비밀번호 찾기 페이지 -->
-   <mvc:view-controller path="tpLogin/findPassword.tp" view-name="tpLogin/findPassword.tiles"/>
-   <!-- 게시물 작성 페이지 -->
-   <mvc:view-controller path="tpNotice/tpNoticeWriter.tp" view-name="tpNotice/tpNoticeWrite.tiles"/>
-   <!-- 아이디 찾기 페이지 -->
-   <mvc:view-controller path="tpLogin/findId.tp" view-name="tpLogin/findId.tiles"/>
-   
-   <!-- 에러... property -->
-   <bean class="org.springframework.context.support.ResourceBundleMessageSource" name="messageSource" p:basename="kr.pe.tippingpoint.exception.error_message"/>
-   
-   <!-- <인터셉터 설정 -->
-         <!--  <mvc:interceptors>
-          	<mvc:interceptor>
-              path : ANT 패턴
-                     * : 글자수 상관없이 모든 글자
-                     ? :   1글자
-                     **: 경로에 사용. 자신을포함한 모든 하위경로
-                     /**/login/**/* : 경로에 login만 들어가면 된다.
-            </mvc:interceptor>
-         </mvc:interceptors> -->
-         
-         
-          <mvc:interceptors>
-          	<!-- 로그인체크 인터셉터 -->
-          	<mvc:interceptor>
-               <mvc:mapping path="/tpProjectRegisterForm.tp"/>
-               <bean class="kr.pe.tippingpoint.interceptor.LoginCheckInterceptor" />
-            </mvc:interceptor>
-          	 <!-- 로그인페이지 , 체크 인터셉터 -->
-          	 <mvc:interceptor>
-               <mvc:mapping path="/tpLogin/tpLoginPage.tp"/>
-               <bean class="kr.pe.tippingpoint.interceptor.LoginPageInterceptor" />
-            </mvc:interceptor>
-            <!-- 회원가입 페이지 인터셉터 처리 -->
-            <mvc:interceptor>
-               <mvc:mapping path="/tpfunder/registerForm.tp"/>
-               <bean class="kr.pe.tippingpoint.interceptor.LoginPageInterceptor" />
-            </mvc:interceptor>
-            
-          	<!-- 관리자체크 인터셉터 -->
-          	<mvc:interceptor>
-               <mvc:mapping path="/**/tpAdministrator/**/*"/>
-               <bean class="kr.pe.tippingpoint.interceptor.AdminCheckInterceptor" />
-            </mvc:interceptor>
-            <!-- 관리자 로그인페이지 체크 인터셉터 -->
-            <mvc:interceptor>
-               <mvc:mapping path="/tpAdminLogin.tp"/>
-               <bean class="kr.pe.tippingpoint.interceptor.AdminLoginPageInterceptor" />
-            </mvc:interceptor>
-            
-            <!-- 프로젝트 등록 권한 확인 인터셉터 -->
-            <mvc:interceptor>
-               <mvc:mapping path="/tpProjectRegisterForm.tp"/>
-               <bean class="kr.pe.tippingpoint.interceptor.ProperserCheckInterceptor" />
-            </mvc:interceptor>
-         </mvc:interceptors>
-         
+	<!-- basic data source BEAN 객 -->
+	<bean name="BasicDataSourceclass" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE" />
+		<property name="username" value="tippingpoint" />
+		<property name="password" value="1592" />
+		<property name="maxTotal" value="50" />
+	</bean>
 
-   <!-- 프로젝트 관련 view 설정  -->
-   <!-- View Resolver 관련 설정 -->
-   <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
-      p:order="1" />
-   <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"
-      p:order="2"/>
-   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-      p:order="3" />
-   <!-- 원래 디폴트 값이지만 viewResolver를 하나라도 등록하면 bean으로 등록해주어야 사용가능하다. -->
-   
-   
-   
-   <!-- Tiles 설정 -->
-   <!-- TilesConfiurer bean 등록 : tiles 설정파일의 위치 등록 -->
-   <bean name="tilesConfigurer"
-      class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-      <property name="definitions">
-         <list>
-            <value>/WEB-INF/config/tiles/tiles-defs.xml</value>
-         </list>
-      </property>
-   </bean>
-   
-   
-   
-   
-   <!-- 파일 자원 관련 패스 설정 -->
-   <mvc:resources mapping="/resources/**" location="/resources/" />   
-   
-   <!-- 파일 업로드 -->
-   <context:component-scan base-package="spring.fileup.controller"></context:component-scan>
-   <bean id="multipartResolver"
-      class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
-   <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
-      p:order="1" />
-   <bean
-      class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-      p:order="2" />
- <!-- gmail -->
-    <bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
-        <property name="host" value="smtp.gmail.com" />
-        <property name="port" value="587" />
-        <property name="defaultEncoding" value="utf-8"/>
-        <property name="username" value="nagazam21@gmail.com" />
-        <property name="password" value="aa963857" />
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.starttls.enable">true</prop>
-                <prop key="mail.smtp.auth">true</prop>
-            </props>
-        </property>
-    </bean>
-    <bean id="email" class="kr.pe.tippingpoint.mail.Email">
-    </bean>
-    <bean id="emailSender" class="kr.pe.tippingpoint.mail.EmailSender">
-    </bean>
+	<!-- 88888888888888 -->
+	<mvc:annotation-driven>
+		<!-- 한글처리 -->
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter"
+				c:defaultCharset="UTF-8" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 88888888888888 -->
+
+
+
+	<!-- bean anotation 스캔 -->
+	<context:component-scan base-package="kr.pe.tippingpoint" />
+	<!-- 등록 페이지 연결 -->
+	<!-- <mvc:view-controller path="/tpProjectRegister.tp" view-name="tpProject/tpProjectRegister.tiles" 
+		/> 컨트롤러로 연결해서 로그인 체크및 Proposal 체크 -->
+
+	<mvc:view-controller path="/tpAdminAccess.tp"
+		view-name="/WEB-INF/view/body/tpAdministrator/tpAdminAccess.jsp" />
+
+	<!-- 메인 페이지 연결 -->
+	<mvc:view-controller path="/main.tp" view-name="main.tiles" />
+	<!-- 회원가입 페이지 -->
+	<mvc:view-controller path="/tpfunder/registerForm.tp"
+		view-name="tpFunder/registerForm.tiles" />
+	<!-- 회원가입 성공페이지 -->
+	<mvc:view-controller path="/tpfunder/registerSuccess.tp"
+		view-name="tpFunder/registerSuccess.tiles" />
+	<!-- 회원 수정페이지 -->
+	<mvc:view-controller path="/tpMyPage/modifyRegister.tp"
+		view-name="tpMyPage/modifyRegister.tiles" />
+	<!-- 로그인 페이지 -->
+	<mvc:view-controller path="/tpLogin/tpLoginPage.tp"
+		view-name="tpLogin/tpLoginPage.tiles" />
+	<!--HELP 페이지 -->
+	<mvc:view-controller path="/tpHelpPage.tp"
+		view-name="/tpHelpPage.tiles" />
+	<mvc:view-controller path="/page1.tp" view-name="tpLogin/page1.tiles" /> <!-- test용 -->
+	<mvc:view-controller path="/page2.tp" view-name="tpLogin/page2.tiles" /><!-- 
+		test용 -->
+
+	<!-- 결제 요청 페이지 -->
+	<mvc:view-controller path="/pay/payRequest.tp"
+		view-name="tpPayment/payRequest.tiles" />
+	<!-- 결제 요청결과 저장 페이지 -->
+	<mvc:view-controller path="/tpPayPgReturn.tp"
+		view-name="tpPayment/payCardSuccess.tiles" />
+
+	<!-- 관리자 페이지 by 재혁 -->
+	<mvc:view-controller path="/tpAdminAccess.tp"
+		view-name="tpAdministrator/tpAdminAccess.tiles" />
+
+	<!-- 관리자 페이지 -->
+	<mvc:view-controller path="/admin/list.tp"
+		view-name="administrator/admin_funderList.tiles" />
+	<!-- 비밀번호 찾기 페이지 -->
+	<mvc:view-controller path="tpLogin/findPassword.tp"
+		view-name="tpLogin/findPassword.tiles" />
+	<!-- 게시물 작성 페이지 -->
+	<mvc:view-controller path="tpNotice/tpNoticeWriter.tp"
+		view-name="tpNotice/tpNoticeWrite.tiles" />
+	<!-- 아이디 찾기 페이지 -->
+	<mvc:view-controller path="tpLogin/findId.tp"
+		view-name="tpLogin/findId.tiles" />
+	<!-- 관리자 메인 페이지 -->
+	<mvc:view-controller path="tpAdministrator/tpAdminMain.tp" view-name="tpAdministrator/tpAdminMain.tiles"/>
+
+	<!-- 에러... property -->
+	<bean class="org.springframework.context.support.ResourceBundleMessageSource"
+		name="messageSource" p:basename="kr.pe.tippingpoint.exception.error_message" />
+
+	<!-- <인터셉터 설정 -->
+	<!-- <mvc:interceptors> 
+			<mvc:interceptor>
+			 path : ANT 패턴
+			 * : 글자수 상관없이 모든 
+			 글자 ? : 1글자 
+			 **: 경로에 사용. 자신을포함한 모든 하위경로 /**/login/**/* : 경로에 login만 들어가면 된다. 
+		</mvc:interceptor> </mvc:interceptors> -->
+
+	<mvc:interceptors>
+		<!-- 로그인체크 인터셉터 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**/tpMyPage/**/*" />
+			<mvc:mapping path="/tpProjectRegisterForm.tp" />
+			<mvc:mapping path="/myPageMain.tp" />
+			<mvc:mapping path="/tpProposer.tp" />
+			<mvc:mapping path="/searchByWriterProject.tp" />
+			<bean class="kr.pe.tippingpoint.interceptor.LoginCheckInterceptor" />
+		</mvc:interceptor>
+		<!-- 로그인페이지 , 회원가입페이지 체크 인터셉터 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/tpLogin/tpLoginPage.tp" />
+			<mvc:mapping path="/tpfunder/registerForm.tp" />
+			<bean class="kr.pe.tippingpoint.interceptor.LoginPageInterceptor" />
+		</mvc:interceptor>
+
+		<!-- 관리자체크 인터셉터 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**/tpAdministrator/**/*" />
+			<mvc:mapping path="/tpAdminProjectBoard.tp" />
+			<mvc:mapping path="/tpAdminNoticeManager.tp" />
+			<mvc:mapping path="/tpNotice/tpNoticeWriter.tp" />
+			<mvc:mapping path="/tpAdminCheckAndCategoryMain.tp" />
+			<mvc:mapping path="/tpAdminCheckAndBankMain.tp" />
+			<mvc:mapping path="/findAllTpFunderList.tp" />
+			<mvc:mapping path="/**/modifyForm.tp" />
+			<mvc:mapping path="/adminFindTpNotice.tp" />
+			<bean class="kr.pe.tippingpoint.interceptor.AdminCheckInterceptor" />
+		</mvc:interceptor>
+		<!-- 관리자 로그인페이지 체크 인터셉터 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/tpAdminLogin.tp" />
+			<bean class="kr.pe.tippingpoint.interceptor.AdminLoginPageInterceptor" />
+		</mvc:interceptor>
+
+		<!-- 프로젝트 등록 권한 확인 인터셉터 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/tpProjectRegisterForm.tp" />
+			<bean class="kr.pe.tippingpoint.interceptor.ProperserCheckInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- post방식으로 이동시 캐시삭제 -->
+	<mvc:interceptors>
+		<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<property name="cacheSeconds" value="0" />
+			<property name="useExpiresHeader" value="true" />
+			<property name="useCacheControlHeader" value="true" />
+			<property name="useCacheControlNoStore" value="true" />
+		</bean>
+	</mvc:interceptors>
+
+	<!-- 프로젝트 관련 view 설정 -->
+	<!-- View Resolver 관련 설정 -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
+		p:order="1" />
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"
+		p:order="2" />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="3" />
+	<!-- 원래 디폴트 값이지만 viewResolver를 하나라도 등록하면 bean으로 등록해주어야 사용가능하다. -->
+
+
+
+	<!-- Tiles 설정 -->
+	<!-- TilesConfiurer bean 등록 : tiles 설정파일의 위치 등록 -->
+	<bean name="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/config/tiles/tiles-defs.xml</value>
+			</list>
+		</property>
+	</bean>
+
+
+
+
+	<!-- 파일 자원 관련 패스 설정 -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- 파일 업로드 -->
+	<context:component-scan base-package="spring.fileup.controller"></context:component-scan>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
+		p:order="1" />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="2" />
+	<!-- gmail -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="username" value="nagazam21@gmail.com" />
+		<property name="password" value="aa963857" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="email" class="kr.pe.tippingpoint.mail.Email">
+	</bean>
+	<bean id="emailSender" class="kr.pe.tippingpoint.mail.EmailSender">
+	</bean>
 
 </beans>

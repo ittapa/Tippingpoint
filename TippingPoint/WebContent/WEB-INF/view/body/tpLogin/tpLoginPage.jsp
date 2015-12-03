@@ -14,26 +14,36 @@ table.login {
 
 
 <script type="text/javascript">
-
 var unLogin = "<%=request.getAttribute("unLogin")%>";
-$(document).ready(function loginCheck(){
 	if(unLogin == "unLogin"){
 		alert("로그인이 필요한 페이지 입니다.")
 	}
-});
 
-</script>
-<script type="text/javascript">
+
 <%session.setAttribute("backpage", request.getHeader("referer"));%>
 var referrer = document.referrer;
 history.go(1)
+
+
 function loginSuccess(){
 			//location.href = document.referrer;
 			$("#form").submit();
 		}
-		$(document).ready(function loginCheck(){
+		
+$(document).ready(function(){//
+
+			$("#registerBtn").on("click", function(){
+				location.href="/TippingPoint/tpfunder/registerForm.tp"  // 페이지 이동...
+			});
+			
+			$("#idFindBtn").on("click", function(){
+				location.href="/TippingPoint/tpLogin/findId.tp"  // 페이지 이동...
+			});
+			$("#passwordFindBtn").on("click", function(){
+				location.href="/TippingPoint/tpLogin/findPassword.tp"  // 페이지 이동...
+			});
+			
 			$("#loginBtn").on("click", function(){
-				
 				var param = "tpfId" + "=" + $("#id").val() + "&" +"tpfPw" + "="+ $("#pw").val();
 				$.ajax({
 					"url" : "/TippingPoint/loginCheck.tp", //로그인 체크 컨트롤러
@@ -67,23 +77,8 @@ function loginSuccess(){
 		
 				});
 			});
-		});	
-		$(document).ready(function goRegister(){//
-			$("#registerBtn").on("click", function(){
-				location.href="/TippingPoint/tpfunder/registerForm.tp"  // 페이지 이동...
-			});
-		});
-		$(document).ready(function goRegister2(){//
-			$("#idFindBtn").on("click", function(){
-				location.href="/TippingPoint/tpLogin/findId.tp"  // 페이지 이동...
-			});
-		});
-
-		$(document).ready(function goRegister3(){//
-			$("#passwordFindBtn").on("click", function(){
-				location.href="/TippingPoint/tpLogin/findPassword.tp"  // 페이지 이동...
-			});
-		});
+});
+	
 		
 
 		

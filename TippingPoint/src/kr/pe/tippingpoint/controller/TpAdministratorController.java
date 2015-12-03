@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,29 +36,25 @@ public class TpAdministratorController {
 
 	@Autowired
 	private TpProjectService projectservice;
-
-	private String id = "admin";
-	private String pw = "admin";
-
 	// 관리자 로그인..
-	@RequestMapping("/tpAdminLogin")
-	public String tpAdminLogin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-		String adId = request.getParameter("adminId");
-		String adPd = request.getParameter("adminPw");
-
-		if (!id.equals(adId)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
+	@RequestMapping(value = "/tpAdminLogin", method = RequestMethod.POST)
+	public ModelAndView tpAdminLogin(HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		String adId = "admin";
+		String adPd = "admin";
+		if (!"admin".equals(adId)) {
+			System.out.println("아이디안맞음");
+			mav.setViewName("tpAdministrator/tpAdminAccess.tiles");
+			
 		}
-		if (!pw.equals(adPd)) {
-			return "tpAdministrator/tpAdminAccess.tiles";
+		if (!"admin".equals(adPd)) {
+			System.out.println("비밀번호 안맞음");
+			mav.setViewName("tpAdministrator/tpAdminAccess.tiles");
+			
 		}
-
-		session.setAttribute("adminId", id);
-		String adid = (String) session.getAttribute("adminId");
-		System.out.println(adid);
-
-		return "tpAdministrator/tpAdminMain.tiles";
-
+		session.setAttribute("adminId", adId);
+		mav.setViewName("tpAdministrator/tpAdminMain.tp");
+		return mav;
 	}
 
 	// 프로젝트 전체보기

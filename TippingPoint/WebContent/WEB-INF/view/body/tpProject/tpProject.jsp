@@ -66,7 +66,7 @@ div#tpProject_Contents .bottom {
 <div id="tpProject_Contents">
 	<div class=left>
 		<div class="mainImg">
-			<img src="${requestScope.polist.tppMainImg }" height="620"> <br />
+			<img src="${requestScope.polist.tppMainImg }" width="620"> <br />
 		</div>
 		<div>공유하기(구현할껏)</div>
 		<div>설명문 : ${requestScope.polist.tppProjectContent }</div>

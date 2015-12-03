@@ -331,7 +331,7 @@ table.register {
 		<tr>
 			<td>대표 이미지</td>
 			<td>
-			<img src ="${initParam.rootPath}/defaultImg/tpProjectDefault.png" alt = "기본이미지" width ="300"  height = "300" id = "imgView"><br>
+			<img src ="${initParam.rootPath}/defaultImg/tpProjectDefault.png" alt = "기본이미지"  id = "imgView"><br>
 				<div class="mainImgfileBox">
 					<label>
 						사진 업로드 <input type="file" name="upfile" id="upfile" onchange="imgChange(this);"><br>						

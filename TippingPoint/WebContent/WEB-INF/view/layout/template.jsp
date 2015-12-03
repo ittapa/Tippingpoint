@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
+	<script type="text/javascript" src = "${initParam.rootPath}/js/jquery.js"></script>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="TippingPoint is a cloud funding site!">

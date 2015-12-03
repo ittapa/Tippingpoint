@@ -6,12 +6,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
- <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
- 
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 	
-	<style type = "text/css">
+	
+<style type = "text/css">
 	.error{
 	color: red;
 	}
@@ -20,6 +20,15 @@
 
    <script type="text/javascript">
 	$(document).ready(function(){
+	 
+		if($("#errorCheck")){
+			 if($("#errorCheck").val() == "submitError"){
+				 alert("프로젝트 승인요청 실패");
+			 }else if( $("#errorCheck").val() == "saveError"){
+				 alert("프로젝트 저장요청 실패");
+			 }
+		}
+		
 	
 	
 	 var oEditors = [];
@@ -178,25 +187,51 @@
 			}
 		});
 	});
+	//날짜처리
 	
-	var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
-	$("#tppMainImgDelete").on("click", function(){
-		if(!$("#upfile").val()){
-			alert("추가된 이미지가 없습니다.");
-			return false;
-		}
-		
-		var imgconfimr = confirm("추가된 메인이미지를 삭제합니다.");
-		if(imgconfimr){
-			$("#upfile").val("");
-			document.getElementById('imgView').src=defaultImg;
-		}else{
-			return false
-		}
-	});
+	
+		// 메인이미지 초기화
+			var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+			$("#tppMainImgDelete").on("click", function(){
+				if(!$("#upfile").val()){
+					alert("추가된 이미지가 없습니다.");
+					return false;
+				}
+				var imgconfimr = confirm("추가된 메인이미지를 삭제합니다.");
+				if(imgconfimr){
+					$("#upfile").val("");
+					document.getElementById('imgView').src=defaultImg;
+				}else{
+					return false
+				}
+			
+			});		
+	
 	
 	}); //document.ready
 	
+		
+	function imgChange(evt) {
+		alert("대표 이미지를 업로드합니다.");
+		var tgt = evt.target || window.event.srcElement,
+   		 files = tgt.files;
+
+		    // 파일리더를 지원하는 경우
+		    if (FileReader && files && files.length) {
+		        var fr = new FileReader();
+		        fr.onload = function () {
+		            document.getElementById('imgView').src = fr.result;
+		        }
+		        fr.readAsDataURL(files[0]);
+		    }
+		
+		    // Not supported 아닌경우 아이프레임..ㅠㅠ
+		    else {
+		        // fallback -- perhaps submit the input to an iframe and temporarily store
+		        // them on the server until the user's session ends.
+		    }
+		} //imgChange function 종료
+
 </script>
 
 	<!-- 프로젝트 등록  -->
@@ -214,19 +249,7 @@
 
 		<input type = "hidden" value = "${requestScope.errorCheck }" id = "errorCheck"/>
 		
-		<script type="text/javascript">
-		if($("#errorCheck")){
-			 if($("#errorCheck").val() == "submitError"){
-				 alert("프로젝트 승인요청 실패");
-			 }else if( $("#errorCheck").val() == "saveError"){
-				 alert("프로젝트 저장요청 실패");
-			 }
-		}
-		
-	
-		</script>	
-			
-		<label>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }'></label>
+		<div>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }'></div>
 	    한 번 설정한	프로젝트ID는 변경이 불가합니다. 신중하게 정하시기 바랍니다.
 		<input type = "hidden" value = "X" name = "idCheck" id = "idCheck"/>
 		<input type = "button" value = "ID중복 체크" id = "tppIdCheck"/>
@@ -234,10 +257,10 @@
 		<br/>
 		<span class="error"><form:errors path = "tpProject.tppId" delimiter = " | "/></span>
 		<br /> <br/>
-			<label>프로젝트 제목 : <input type="text" name="tppTitle" value = '${requestScope.tpProject.tppTitle }'/></label>
+			<div>프로젝트 제목 : <input type="text" name="tppTitle" value = '${requestScope.tpProject.tppTitle }'/></div>
 			<span class="error"><form:errors path = "tpProject.tppTitle" delimiter = " | "/></span>
 			<br /><br/>
-			<label>카테고리 : 
+			<div>카테고리 : 
 			<select name="tppCategory">
 			<option  value= "null">카테고리를 선택하세요</option>
 			<c:choose>
@@ -257,74 +280,27 @@
 				</c:otherwise>
 			</c:choose>	
 			</select>
-			</label>
+			</div>
 			<span class="error"><form:errors path = "tpProject.tppCategory" delimiter = " | "/></span>
 
 			<br/>
 			<br/>
-			<script type="text/javascript">
-			//이미지 관련 삭제 및 호출
-			 
 	
-				//이미지 변경된 이미지 호출
-		
-			</script>
 			대표 이미지	<br>
-			<img src ="${initParam.rootPath}/defaultImg/tpProjectDefault.png" width ="300"  height = "300" id = "imgView">
+			<img src ="${initParam.rootPath}/defaultImg/tpProjectDefault.png" width ="300" id = "imgView">
 			<br/>
 			
 			<div class= "mainImagfileBox">
-				<label >
+				<div >
 					사진 업로드	<input type="file" name="upfile"  id = "upfile"  onchange ="imgChange(this);">
 					<br />대표이미지는 620 X 465px 이상을 권장합니다.
 			<br/>
-				</label>
+				</div>
 				<input type ="button" id = "tppMainImgDelete" value = "이미지 초기화">
 			</div>
 			<br/>
-			<br>
-			
-			<script type="text/javascript">
-			function imgChange(evt) {
-				alert("대표 이미지를 업로드합니다.");
-				var tgt = evt.target || window.event.srcElement,
-		   		 files = tgt.files;
-
-				    // 파일리더를 지원하는 경우
-				    if (FileReader && files && files.length) {
-				        var fr = new FileReader();
-				        fr.onload = function () {
-				            document.getElementById('imgView').src = fr.result;
-				        }
-				        fr.readAsDataURL(files[0]);
-				    }
-				
-				    // Not supported 아닌경우 아이프레임..ㅠㅠ
-				    else {
-				        // fallback -- perhaps submit the input to an iframe and temporarily store
-				        // them on the server until the user's session ends.
-				    }
-				} //imgChange function 종료
-			</script>
 			<br/>
-		 
-			<br/>
-	
-			 
-			  <script>
-				//날짜 깞 처리 
-			  $(function() {
-					    $("#date1, #date2").datepicker({
-					      changeMonth: true,
-					      changeYear: true,
-					      dateFormat : "yymmdd",
-					      yearRange : "1900:c+1"
-					    });
-					  });
-				
-			  </script>
-			
-			  
+	  
 			<p>프로젝트 시작일 :  <input type="text" id="date1" name="tppFundingStartDate"  readonly="readonly" value = '${requestScope.tpProject.tppFundingStartDate }'> 
 				<span class="error"><form:errors path = "tpProject.tppFundingStartDate" delimiter = " | "/></span>
 					
@@ -334,7 +310,7 @@
 				<span class="error"><form:errors path = "tpProject.tppFundingLastDate" delimiter = " | "/></span>
 				</p>
 			<br/> 
-			<label>목표 후원 금액 : <input type="number" name="tppTargetAmount" id = "tppTargetAmount" value = "${requestScope.tpProject.tppTargetAmount }" />
+			<div>목표 후원 금액 : <input type="number" name="tppTargetAmount" id = "tppTargetAmount" value = "${requestScope.tpProject.tppTargetAmount }" />
 			<br/>
 			<span class="error"><form:errors path = "tpProject.tppTargetAmount" delimiter = " | "/></span>
 		

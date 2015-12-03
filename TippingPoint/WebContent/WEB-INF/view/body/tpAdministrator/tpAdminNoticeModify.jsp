@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
 
 <script type="text/javascript" src="/TippingPoint/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+
     <script type="text/javascript">
         $(document).ready(function(){
         	
@@ -42,7 +43,7 @@
     	        
     	        }
     	 	});
-        });  	 
+        }); 
     </script>
 
 <body>
@@ -67,7 +68,10 @@
         </table>
          <input type ="hidden" name ="tpNoticeNum" value = "${requestScope.tpNotice.tpNoticeNum }">
         <input type="button" id="writeBtn" value="수정하기">
-        <a href="#this" class="btn" id="list" >목록으로</a>
     </form>
+    <br>
+    <form name = "noticeList" action="${initParam.rootPath }/tpAdminNoticeManager.tp">
+  	<input type="submit" value="목록으로">
+  	</form>
 </body>
 </html>
