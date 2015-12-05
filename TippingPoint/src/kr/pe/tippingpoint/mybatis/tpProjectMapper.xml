@@ -38,7 +38,13 @@
 
 				 from tpproject 
 	</sql>
-	
+		<sql id = "selectBoradProjectDB">
+		select tppId, tppTitle, tppWriter, tppWriteDate, tppTotalAmount,
+				 tppTargetAmount, tppFundingStartDate, tppFundingLastDate, 
+				 tppFunderNum, tppState, 	tppMainImg, tppCategory
+
+				 from tpproject 
+	</sql>
 	
 
 	<!-- 프로젝트 추가 쿼리문 -->
@@ -47,7 +53,7 @@
 												  #{tppWriteDate}, #{tppTotalAmount}, #{tppTargetAmount}, 
 												  #{tppFundingStartDate}, #{tppFundingLastDate}, #{tppFunderNum},
 		 										  #{tppState}, #{tppAdminMessage}, #{tppMainImg}, #{tppCategory})
-	</insert>
+	</insert>																	
 
 		
 	<!-- 전체프로젝트 조회 paging처리 select문 -->
@@ -152,17 +158,16 @@
 	
 	<!-- 프로젝트 검색하기 -->
 	<select id="serchProjectByKeyWord" parameterType ="string" resultMap="tpProject-resultmap">
-		<include refid="selectAllProjectDB"></include>
+		<include refid="selectBoradProjectDB"></include>
 			WHERE tppId like '%'||#{value}||'%'
 					AND tppState IN('O','E','X','Z') 
 			union
-		<include refid="selectAllProjectDB"></include>
+		<include refid="selectBoradProjectDB"></include>
 			WHERE tppTitle like '%'||#{value}||'%'
 			       AND tppState IN('O','E','X','Z') 
-			union
-		<include refid="selectAllProjectDB"></include>
-			WHERE tppProjectContent like '%'||#{value}||'%'
-					AND tppState IN('O','E','X','Z') 
+<!-- 		<include refid="selectAllProjectDB"></include>
+			WHERE tppProjectContent like '%'||#{value}||'%')
+					AND tppState IN('O','E','X','Z')  -->
 	</select>
 	
 	

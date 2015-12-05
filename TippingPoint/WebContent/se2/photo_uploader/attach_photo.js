@@ -331,7 +331,7 @@
      * @return
      */
     function html5Upload() {	
-    	alert("메롱 55577899 업데이터");
+    	
     	var tempFile, sUploadURL;
     	
     	sUploadURL= '/TippingPoint/fuh5.tp';	//upload URL

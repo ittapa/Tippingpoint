@@ -4,7 +4,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style type="text/css">
 th, tr{
+	view-align:middle;
 	text-align: center;
+	
 }
 </style>
 
@@ -65,10 +67,11 @@ th, tr{
 		등록하신 프로젝트가 없습니다.
 	</c:when>
 	<c:otherwise>
-		<div>총 등록한 프로젝트 수 : ${fn:length(requestScope.list) }</div>
-		<table>
+		<div>내 프로젝트 수 : ${fn:length(requestScope.list) }</div><br>
+		
+		<table class="table">
 			<tr>
-				<th>프로젝트 ID</th>
+				<th>프로젝트</th>
 				<th>제목</th>
 				<th>카테고리</th>
 				<th>작성/수정 날자</th>
@@ -79,10 +82,9 @@ th, tr{
 				<th></th>
 			</tr>
 			<c:forEach items="${requestScope.list }" var="tpProject">
-				<tr align="center">
-					<td><ahref="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">
-							<img src="${tpProject.tppMainImg }" width="62" ></a> <br />
-							<a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppId }</a>
+				<tr>
+					<td><a href="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">
+							<img src="${tpProject.tppMainImg }" width="100" ></a> <br />
 					</td>
 					<td>${tpProject.tppTitle }</td>
 					<td>${tpProject.tppCategory }</td>
@@ -115,37 +117,45 @@ th, tr{
 										펀딩마감
 									</c:when>
 
-						</c:choose></td>
+						</c:choose>
+						</td>
 					<td>${tpProject.tppAdminMessage }</td>
 					<td>
 
-						</form> <c:choose>
-							<c:when
-								test="${tpProject.tppState =='A' or tpProject.tppState == 'B' or tpProject.tppState == 'O' or tpProject.tppState == 'X'}">
-								<!-- 프로젝트 수정폼으로 이동 -->
-								<form action="${initParam.rootPath }/tpProjectModifyForm.tp">
-									<input type="hidden" name="tppId" value="${tpProject.tppId }">
-									<input type="submit" value="수정" />
-								</form>
-							</c:when>
+				
+							<form action="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">
+								<input type="hidden" name="tppId" value="${tpProject.tppId }">
+								<input type="submit" value="자세히 보기" class="btn btn-info">
+							</form>
+							<c:choose>
+							
+										<c:when test="${tpProject.tppState =='A' or tpProject.tppState == 'B'  or tpProject.tppState == 'X'}">
+											<!-- 프로젝트 수정폼으로 이동 -->
+											<form action="${initParam.rootPath }/tpProjectModifyForm.tp">
+												<input type="hidden" name="tppId" value="${tpProject.tppId }">
+												<input type="submit" value="수정" class="btn btn-warning" />
+											</form>
+										</c:when>
 
 
-							<c:when test="${tpProject.tppState =='O'}">
-								<!-- 		//펀딩종료하기-->
-								<form name="exit"
-									action="${initParam.rootPath }/tpProjectExit.tp"
-									id="tpProjectExit" method="post">
-									<input type="hidden" name="tppId" value="${tpProject.tppId }">
-									<input type="hidden" name="tppState" value="E"> <input
-										type="submit" value="펀딩 종료" id="exitButton">
-								</form>
-							</c:when>
+										<c:when test="${tpProject.tppState =='O'}">
+												<!-- 프로젝트 수정폼으로 이동 -->
+											<form action="${initParam.rootPath }/tpProjectModifyForm.tp">
+												<input type="hidden" name="tppId" value="${tpProject.tppId }">
+												<input type="submit" value="수정" class="btn btn-warning" />
+											</form>
+											<!-- 		//펀딩종료하기-->
+											<form name="exit"
+												action="${initParam.rootPath }/tpProjectExit.tp"
+												id="tpProjectExit" method="post">
+												<input type="hidden" name="tppId" value="${tpProject.tppId }">
+												<input type="hidden" name="tppState" value="E"> <input
+													type="submit" value="펀딩 종료" id="exitButton" class="btn btn-danger" >
+											</form>
+										</c:when>
 
 						</c:choose> <!-- 프로젝트로 이동 -->
-						<form
-							action="${initParam.rootPath }/tpProject.tp?tppId=${tpProject.tppId }">
-							<input type="hidden" name="tppId" value="${tpProject.tppId }">
-							<input type="submit" value="자세히 보기">
+				
 					</td>
 				</tr>
 

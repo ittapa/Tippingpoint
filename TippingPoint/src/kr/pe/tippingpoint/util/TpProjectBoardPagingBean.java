@@ -21,11 +21,11 @@ public class TpProjectBoardPagingBean {
 	/**
 	 * 한 페이지에 보여질 데이터(내용)개수
 	 */
-	public static int CONTENT_PER_PAGE =5;
+	public static int CONTENT_PER_PAGE =9;
 	/**
 	 * Page Group 내 Page 수.  페이지 그룹에 들어갈 페이지 개수
 	 */
-	public static int PAGE_PER_PAGEGROUP = 5;
+	public static int PAGE_PER_PAGEGROUP = 9;
 	
 	/**
 	 * 총 데이터(내용) 개수, 현재 페이지를 받아 member variable에 할당

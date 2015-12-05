@@ -3,6 +3,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- <title>Insert title here</title> -->
 
 	<style type = "text/css">
@@ -123,14 +126,14 @@ $(document).ready(function(){
 			dataType:"JSON",
 			beforeSend:function(){
 				if($("#tpfId").val().length < 6){
-					alert("id는 소문자, 숫자 혼용하여 6~12자 까지 가능합니다.");
+					alert("아이디는 소문자나 숫자만 6~12자 까지 입력가능합니다.");
 					$("#tpfId").focus();
 					return false;
 				}
 				for (i=0; i<$("#tpfId").val().length; i++ ){ //for문을 돌려서 아이디 첫글자부터 확인
 					ch=$("#tpfId").val().charAt(i)
 					if (!(ch>='0' && ch<='9') && !(ch>='a' && ch<='z')){ //대,소문자 확인
-						alert ("아이디는 소문자, 숫자만 입력가능합니다.")
+						alert ("아이디는 소문자나 숫자만 입력가능합니다.")
 					 	$("#tpfId").focus();
 					  	return false;
 					}
@@ -256,11 +259,11 @@ table.register {
 
 <spring:hasBindErrors name="tpFunder"/>
 <form action="${initParam.rootPath}/registerTpFunder.tp" method="post" name="tpFunder" enctype="multipart/form-data">
-	<table class="register">
+	<table class="table table-bordered">
 		<tr>
 			<td width="150px">ID</td>
 			<td><input type="text" name="tpfId" id="tpfId" maxlength="12" value="${requestScope.tpFunder.tpfId }">
-			<input type="button" value="중복확인" id="idcheck"/>&nbsp;&nbsp;아이디는 소문자, 숫자 혼용하여 6~12자 까지 가능
+			<input type="button" value="중복확인" id="idcheck" class="btn btn-default"/>&nbsp;&nbsp;아이디는 소문자나 숫자만 6~12자 까지 입력가능
 			<input type="hidden" name="id_hidden" value="N"/>
 			</td>
 		</tr>
@@ -304,7 +307,7 @@ table.register {
 		<tr>
 			<td>우편번호</td>
 			<td><input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" value="${requestScope.tpFunder.tpfZipcode }"> 
-				<input type="button" onclick="button()" value="우편번호 찾기">
+				<input type="button" onclick="button()" value="우편번호 찾기" class="btn btn-default">
 					<span class="error"><form:errors path="tpFunder.tpfZipcode" delimiter=" | "/></span>
 			</td>
 		</tr>
@@ -331,7 +334,7 @@ table.register {
 				<input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4"/>
 				-
 				<input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4"/>
-				<input type="button" value="중복확인" id="pncheck"/>
+				<input type="button" value="중복확인" id="pncheck" class="btn btn-default"/>
 				<input type="hidden" name="phoneNum_hidden" value="N"/>
 				<input type="hidden" name="tpfPhoneNum"/>
 			</td>
@@ -340,11 +343,11 @@ table.register {
 			<td>대표 이미지</td>
 			<td>
 			<img src ="${initParam.rootPath}/defaultImg/tpProfileDefault.png" alt = "기본이미지" width ="150"  height = "150" id = "imgView"><br>
-				<div class="mainImgfileBox">
+				<div class="uploadfile">
 					<label>
 						사진 업로드 <input type="file" name="upfile" id="upfile" onchange="imgChange(this);"><br>						
 					</label>
-					<input type="button" id="tpfMainImgDelete" value="이미지 초기화">
+					<input type="button" id="tpfMainImgDelete" value="이미지 초기화" class="btn btn-default">
 				</div>
 				<br>
 				대표이미지는 가로/세로 150px 이하를 권장합니다.
@@ -352,7 +355,7 @@ table.register {
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<input type="submit" value="등록" id="register">
+				<input type="submit" value="등록" id="register" class="btn btn-primary">
 			</td>
 		</tr>
 	</table>

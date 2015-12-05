@@ -38,21 +38,19 @@ public class TpAdministratorController {
 	private TpProjectService projectservice;
 	// 관리자 로그인..
 	@RequestMapping(value = "/tpAdminLogin", method = RequestMethod.POST)
-	public ModelAndView tpAdminLogin(HttpServletRequest request, HttpSession session) {
+	public ModelAndView tpAdminLogin(@RequestParam String adminId, @RequestParam String adminPw, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		String adId = "admin";
-		String adPd = "admin";
-		if (!"admin".equals(adId)) {
-			System.out.println("아이디안맞음");
+		if (!"admin".equals(adminId)) {
+			System.out.println("메롱2");
 			mav.setViewName("tpAdministrator/tpAdminAccess.tiles");
-			
+			return mav;
 		}
-		if (!"admin".equals(adPd)) {
-			System.out.println("비밀번호 안맞음");
+		if (!"admin".equals(adminPw)) {
+			System.out.println("메롱2");
 			mav.setViewName("tpAdministrator/tpAdminAccess.tiles");
-			
+			return mav;
 		}
-		session.setAttribute("adminId", adId);
+		session.setAttribute("adminId", adminId);
 		mav.setViewName("tpAdministrator/tpAdminMain.tp");
 		return mav;
 	}

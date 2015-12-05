@@ -5,16 +5,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
+<script src="//code.jquery.com/jquery-1.10.2.js"></script> 
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> 
+<script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script> 
 	
 	
 <style type = "text/css">
 	.error{
 	color: red;
 	}
+	
+	
 </style>
 
 
@@ -28,6 +30,17 @@
 				 alert("프로젝트 저장요청 실패");
 			 }
 		}
+		
+		
+		//날짜처리
+		  $(function() {
+			    $("#date1, #date2").datepicker({
+			      changeMonth: true,
+			      changeYear: true,
+			      dateFormat : "yymmdd",
+			      yearRange : "1900:c+1"
+			    });
+			  });
 		
 	
 	
@@ -187,8 +200,7 @@
 			}
 		});
 	});
-	//날짜처리
-	
+
 	
 		// 메인이미지 초기화
 			var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
@@ -234,6 +246,7 @@
 
 </script>
 
+<div class="col-xs-12">
 	<!-- 프로젝트 등록  -->
 
 	<P align="left">
@@ -242,17 +255,15 @@
 	
 
 	
-	
-	
 	<form action="submitTpProject.tp" method="post" id ="tpProjectForm"
 		enctype="multipart/form-data">
 
 		<input type = "hidden" value = "${requestScope.errorCheck }" id = "errorCheck"/>
 		
-		<div>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }'></div>
-	    한 번 설정한	프로젝트ID는 변경이 불가합니다. 신중하게 정하시기 바랍니다.
+		프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }'>
+	    <font size="2">한 번 설정한	프로젝트ID는 변경이 불가합니다. 신중하게 정하시기 바랍니다.</font>
 		<input type = "hidden" value = "X" name = "idCheck" id = "idCheck"/>
-		<input type = "button" value = "ID중복 체크" id = "tppIdCheck"/>
+		<input type = "button" value = "ID중복 체크" id = "tppIdCheck" class="btn btn-default"/>
 		
 		<br/>
 		<span class="error"><form:errors path = "tpProject.tppId" delimiter = " | "/></span>
@@ -296,7 +307,7 @@
 					<br />대표이미지는 620 X 465px 이상을 권장합니다.
 			<br/>
 				</div>
-				<input type ="button" id = "tppMainImgDelete" value = "이미지 초기화">
+				<input type ="button" id = "tppMainImgDelete" value = "이미지 초기화" class="btn btn-default">
 			</div>
 			<br/>
 			<br/>
@@ -331,7 +342,7 @@
 								디폴트값 a  승인요청b  승인요청 취소시 다시 a로  삭-->
 			<input type = "hidden" id = "tppState" name = "tppState"/>
 			
-			<input type="button" id="save" value="저장" /> 
-			<input type="button" id="projectSubmit" value="승인요청" />
+			<input type="button" id="save" value="저장" class="btn btn-info"/> 
+			<input type="button" id="projectSubmit" value="승인요청" class="btn btn-primary"/>
 	</form>
-
+</div>

@@ -5,10 +5,11 @@
 <%@ taglib prefix="form" uri= "http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+
  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
- 
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 	
 	<style type = "text/css">
@@ -132,10 +133,11 @@ $(document).ready(function(){
 	 //이미지 되돌리기
 	 var originImag =  '<%=((TpProject)request.getAttribute("tpProject")).getTppMainImg()%>';
 	 		$("#tppMainImgOrigin").on("click", function(){
+				alert("원래 이미지로 되돌립니다.");
 	 			$("#upfile").val("");
 				document.getElementById('imgView').src=originImag;
 				$("#tppMainImg").val(originImag);
-				alert($("#tppMainImg").val());
+				
 	 		});
 	 
 	 //메인이미지 삭제
@@ -151,7 +153,7 @@ $(document).ready(function(){
 					$("#upfile").val("");
 					document.getElementById('imgView').src=defaultImg;
 					$("#tppMainImg").val("default");
-					alert($("#tppMainImg").val());
+				
 				}else{
 					return false
 				}
@@ -198,17 +200,13 @@ $(document).ready(function(){
 
 		<input type = "hidden" value = "${requestScope.errorCheck }" id = "errorCheck"/>
 		
-		<script type="text/javascript">
-	
-		</script>	
+		<br>
+		<input type="hidden" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }' >
 			
-		<div>프로젝트 ID  : <input type="text" name="tppId" id = "tppId" value ='${requestScope.tpProject.tppId }' readonly="readonly"></div>
-<!-- 		<input type = "hidden" value = "X" name = "idCheck" id = "idCheck"/>
-		<input type = "button" value = "ID중복 체크" id = "tppIdCheck"/> ID는 한번 정한대로-->
-		
-		<br/>
+		<div>프로젝트 ID  :${requestScope.tpProject.tppId }</div>
 		<span class="error"><form:errors path = "tpProject.tppId" delimiter = " | "/></span>
-		<br /> <br/>
+		<br />
+		 <br/>
 			<div>프로젝트 제목 : <input type="text" name="tppTitle" value = '${requestScope.tpProject.tppTitle }'/></div>
 			<span class="error"><form:errors path = "tpProject.tppTitle" delimiter = " | "/></span>
 			<br /><br/>
@@ -238,36 +236,28 @@ $(document).ready(function(){
 			<br/>
 			<br/>
 			<div>
-			<img src ="${requestScope.tpProject.tppMainImg }" width="200" id = "imgView" name = "imgView"><br/>
+			<img src ="${requestScope.tpProject.tppMainImg }" width="300" id = "imgView" name = "imgView"><br/>
 			대표 이미지<br/>
 			<input type = "hidden" id = "tppMainImg" name = "tppMainImg" value = "${requestScope.tpProject.tppMainImg }" >
 			<div class= "mainImagfileBox">
 				<div >
 					사진 업로드	<input type="file" name="upfile"  id = "upfile"  onchange ="imgChange(this);">
-					<br />대표이미지는 620 X 465px 이상을 권장합니다.
-			<br/>
+					<font size = "2">대표이미지는 620 X 465px 이상을 권장합니다.</font>
+					<br />
 				</div>
 				<input type ="button" id = "tppMainImgDelete" value = "기본 이미지">
 				<input type ="button" id = "tppMainImgOrigin" value = "원래 이미지">
 			</div>
-			
-			 
-			 
-			  <script>
-				//날짜 깞 처리 
-	
-				
-			  </script>
-			
-			  
-			<p>프로젝트 시작일 :  <input type="text" id= '${requestScope.tpProject.tppState == "A"? "date1":"reject" }' name="tppFundingStartDate"  readonly="readonly" value = '${requestScope.tpProject.tppFundingStartDate }'> 
+			<br/>
+			  <br/>
+				프로젝트 시작일 :  <input type="text" id= '${requestScope.tpProject.tppState == "A"? "date1":"reject" }' name="tppFundingStartDate"  readonly="readonly" value = '${requestScope.tpProject.tppFundingStartDate }'> 
 				<span class="error"><form:errors path = "tpProject.tppFundingStartDate" delimiter = " | "/></span>
 					
 					<br/>
 					<br/>
 				프로젝트 마감일 : <input type="text" id="date2" name="tppFundingLastDate" id ="tppFundingLastDate" readonly="readonly" value = '${requestScope.tpProject.tppFundingLastDate }'/>
 				<span class="error"><form:errors path = "tpProject.tppFundingLastDate" delimiter = " | "/></span>
-				</p>
+				<br/>
 			<br/> 
 			<div>목표 후원 금액 : <input type="number" name="tppTargetAmount" id = "tppTargetAmount" value = "${requestScope.tpProject.tppTargetAmount }" />
 			<br/>
@@ -288,33 +278,33 @@ $(document).ready(function(){
 		
 			<!-- //승인요청 a:저장, b: 승인요청,o:승인완료, x승인거부 
 								디폴트값 a  승인요청b  승인요청 취소시 다시 a로  삭-->
-			${requestScope.tpProject.tppState }_지울것<br/>
-			<br>
+			
+			<br/>
 			프로젝트 현재 상태 :
 			<input type = "hidden" id = "tppState" name = "tppState" value = "${requestScope.tpProject.tppState }"/>
 			<c:choose>
 				<c:when test = "${requestScope.tpProject.tppState =='A' }">
 				저장<br/><br/>
-					<input type="button" id="save" value="저장" /> 
-					<input type="button" id="projectSubmit" value="승인요청" />
+					<input type="button" id="save" value="저장" class="btn btn-info"/> 
+					<input type="button" id="projectSubmit" value="승인요청" class="btn btn-primary"/>
 				</c:when>
 				
 				<c:when test = "${requestScope.tpProject.tppState =='B' }">
-				승인요청<br/>
-						<input type="button" id="projectSubmit" value="내용 수정" />
-						<input type="button" id="save" value="승인요청 취소" /><br/>
-						승인 요청취소 시 저장상태로 변경됩니다.
+				승인요청<br/><br/>
+						<input type="button" id="projectSubmit" value="내용 수정" class="btn btn-primary" />
+						<input type="button" id="save" value="승인요청 취소" class="btn btn-info" />
+						<font size ='2'>승인 요청취소 시 저장상태로 변경됩니다.</font>
 				</c:when>
 				
 				<c:when test = "${requestScope.tpProject.tppState =='O' }">
-				승인완료<bt/>
-						<input type="button" id="projectSubmit" value="내용 수정" />
+				승인완료<bt/><br/>
+						<input type="button" id="projectSubmit" value="내용 수정" class="btn btn-primary" />
 				</c:when>
 				
 				<c:when test = "${requestScope.tpProject.tppState =='X' }">
-				승인거부
-					<input type="button" id="save" value="저장" /> 
-					<input type="button" id="projectSubmit" value="재승인요청" />
+				승인거부<br/><br/>
+					<input type="button" id="save" value="저장" class="btn btn-info"/> 
+					<input type="button" id="projectSubmit" value="재승인요청" class="btn btn-primary" />
 				</c:when>
 				<c:when test = "${requestScope.tpProject.tppState =='E' or requestScope.tpProject.tppState =='Z'}">
 				펀딩종료

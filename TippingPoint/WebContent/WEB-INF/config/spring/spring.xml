@@ -150,7 +150,16 @@
 			<mvc:mapping path="/tpProjectRegisterForm.tp" />
 			<bean class="kr.pe.tippingpoint.interceptor.ProperserCheckInterceptor" />
 		</mvc:interceptor>
+		
+		<!-- 모든 페이지에 header단 현재페이지 네비 -->
+		<mvc:interceptor>
+			<mvc:mapping path = "/**/*"></mvc:mapping>
+			<bean class = "kr.pe.tippingpoint.interceptor.PagNavInterceptor"/>
+		</mvc:interceptor>
+		
 	</mvc:interceptors>
+	
+	
 	
 	<!-- post방식으로 이동시 캐시삭제 -->
 	<mvc:interceptors>

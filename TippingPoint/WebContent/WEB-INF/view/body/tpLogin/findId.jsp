@@ -70,12 +70,10 @@ $(document).ready(function loginCheck(){
 
 </script>
 <body>
-	<form name="form" id = "form" method="post" action ="${initParam.rootPath }/tpLogin/tpLoginPage.tp">
-
-		<table border="1">
-			<tr align="center">
-			<td>휴대폰번호</td>
-			<td>
+	<form name="form" id = "form" method="post" action ="${initParam.rootPath }/tpLogin/tpLoginPage.tp" class="form-horizontal">
+		<div class="form-group">
+			<label for="findPhoneNum" class="col-sm-2 control-label">휴대폰번호</label>
+			<div class="col-sm-10">
 				<select name="findPhoneNum1" id="findPhoneNum1">
 					<option value="010">010</option>
 					<option value="011">011</option>
@@ -85,22 +83,28 @@ $(document).ready(function loginCheck(){
 				-
 				<input type="text" name="findPhoneNum3" id="findPhoneNum3" maxlength="4"/>
 				<input type="hidden" name="findPhoneNum" id="findPhoneNum"/>
-			</td>
-		</tr>
-			<tr align="center">
-				<td>이메일 주소</td>
-				<td><input type="text" id="findEmail" name="findEmail" size="20" maxlength="20"></td>
-			</tr>
-			<tr align="center">
-				<td>생년월일</td>
-				<td><input type="text" id="findBirth" name="findBirth" size="20" maxlength="20"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center" height="30">
-					<input type="button" value="아이디 찾기" id="idFindBtn">
-				</td>
-			</tr>
-		</table>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="findEmail" class="col-sm-2 control-label">이메일 주소</label>
+			<div class="col-sm-10">
+				<input type="text" id="findEmail" name="findEmail" size="20" maxlength="20" placeholder="Email">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="findBirth" class="col-sm-2 control-label">생년월일</label>
+			<div class="col-sm-10">
+				<input type="text" id="findBirth" name="findBirth" size="20" readonly="readonly" placeholder="생년월일">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<input type="button" value="아이디 찾기" id="idFindBtn" class="btn btn-default">
+			</div>
+		</div>
 	</form> 
 </body>
 </html>

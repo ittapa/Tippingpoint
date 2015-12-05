@@ -9,8 +9,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
+<style type = "text/css">
+.Buttona{
+float: left;
+margin-left: auto;
+}
+#delete{
+clear: both;
+
+}
+</style>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 
 <script>
@@ -150,9 +163,10 @@ $(document).ready(function dropOut(){
          });
          $.btnDelete = $(document.createElement("input"));
          $.btnDelete.attr({
-             classname : "btnDelete",
+             class : "btn btn-danger",
              type : "button" ,
              value : "회원탈퇴하기",
+      
              
          }).on('click', function(){
         	var param = "dropOutId" + "=" + $("#dropId").val() + "&" +"dropOutPwd" + "="+ $("#dropPw").val();
@@ -203,7 +217,7 @@ $(document).ready(function dropOut(){
 <h2>회원정보수정</h2>
 <spring:hasBindErrors name="tpFunder"/>
 <form action="${initParam.rootPath }/funderModifyRegister.tp" method="post" name="tpFunder" enctype="multipart/form-data">
-<table border="1" style="width:700px">
+<table class="table table-bordered">
 	<input type="hidden" name="tpfId" id="tpfId" value="${requestScope.tpFunder.tpfId }">
    <tr>
       <td>이름</td>
@@ -253,7 +267,7 @@ $(document).ready(function dropOut(){
       <td>우편번호</td>
       <td>
       <input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" value="${requestScope.tpFunder.tpfZipcode }"> 
-      <input type="button" onclick="button()" value="우편번호 찾기">
+      <input type="button" onclick="button()" value="우편번호 찾기" class="btn btn-default">
       <form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
       </td>
    </tr>
@@ -280,27 +294,29 @@ $(document).ready(function dropOut(){
 					<label>
 						사진 업로드 <input type="file" name="upfile" id="upfile" onchange="imgChange(this);"><br>						
 					</label>
-					<input type="button" id="tpfMainImgDelete" value="기본 이미지">
-					<input type="button" id="tpfMainImgOrigin" value="원래 이미지">
+					<input type="button" id="tpfMainImgDelete" value="기본 이미지" class="btn btn-default">
+					<input type="button" id="tpfMainImgOrigin" value="원래 이미지" class="btn btn-default">
 				</div>
 				<br>
 				대표이미지는 가로/세로 150px 이하를 권장합니다.
    		</td>
    </tr>
-   <tr>
-      <td colspan="2" align="center">
-         <input type="submit" value="등록" id="modify">
-      </td>
-   </tr>
+   
+      
+       
+      
+  </form>
 </table>
-</form>
+	<div class = "Buttona"><input type="button" value="등록" id="modify" class="btn btn-primary">&nbsp;&nbsp;</div>
 
-<br>
+<div id="Button">
 <form id="form" action="${initParam.rootPath }/removeFunder.tp" method="post">
-	<input type="button" value="회원탈퇴" id="dropOutBtn">
-	<div id="delete">
-	</div>
+	<input type="button" value="회원탈퇴" id="dropOutBtn" class="btn btn-danger">
 </form>
 
+</div>
+
+<div id="delete"><br/>
+</div>
 </body>
 </html>
