@@ -12,38 +12,62 @@ div#tpProject_Title {
 	text-align: center;
 	height: 130px;
 }
-
+.tpProject_midle{
+	margin-left: auto;
+	margin-right:auto;
+	margin-top: 30px;
+	margin-bottom: :30px;
+}
 </style>
 
-<!-- 상단 영역 -->
-<div id="tpProject_Title">
-	<a href="">${requestScope.polist.tppTitle }</a>
+	<!-- 상단 영역 -->
+	<div id="tpProject_Title">
+		<a href="">${requestScope.polist.tppTitle }</a>
+	
+	</div>
+						<!-- 중간 영역  -->
+					
+	<div class="text-center">
+		                 
+		<a href="javascript:snsShare.shareFb()" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>                                
+		<a href="javascript:snsShare.shareGp()" class="btn btn-social-icon btn-google-plus"><i class="fa fa-google-plus"></i></a>                          
+		<a href="javascript:snsShare.shareTw()" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
+	</div>
 
-</div>
 
 <!-- 오른쪽영역 -->
 		<div id="row">
 		
 			<div class="col-xs-8 .col-md-8">
 				<div class="mainImg">
-					<img src="${requestScope.polist.tppMainImg }" width="620"> <br />
+					<img src="${requestScope.polist.tppMainImg }" width="620" class="img-responsive" style="padding-top: 5px"> <br />
 				</div>
-				<div>공유하기(구현할껏)</div>
-				<div>설명문 : ${requestScope.polist.tppProjectContent }</div>
+				
+				<div id ="tppProjectContent">${requestScope.polist.tppProjectContent }</div>
 			</div>
+			
+			<script>
+				$(function(){
+					$("#tppProjectContent").children("img").attr("class", "img-responsive");
+					
+					/* .addclass("img-responsive") */
+				});
+			
+			</script>
 	
 	<!-- 왼쪽 영역 -->
 	
 			<div class= "col-xs-4 .col-md-4">
 				<div>
-					<br /> 목표 ${requestScope.polist.tppTargetAmount } 원 중
-					${requestScope.polist.tppTotalAmount / requestScope.polist.tppTargetAmount *100 }%모임 <br/>
-						<br /><font size='80'>${requestScope.polist.tppTotalAmount }</font> 원
+					<br /> 목표금액 ${requestScope.polist.tppTargetAmount } 원 중<br/>
+					<font size='70'>${requestScope.polist.tppTotalAmount / requestScope.polist.tppTargetAmount +((requestScope.polist.tppTotalAmount / requestScope.polist.tppTargetAmount %1>0.5)?(1-(requestScope.polist.tppTotalAmount / requestScope.polist.tppTargetAmount %1))%1:-(requestScope.polist.tppTotalAmount / requestScope.polist.tppTargetAmount %1))}</font>
+				% 달성 <br/>
+						<br /><font size='70'>${requestScope.polist.tppTotalAmount }</font> 원
 						<br />
 						<br /> 남은시간<br/>
-						<font size='80'>${requestScope.remindTime }</font> 일 <br/><br />
+						<font size='70'>${requestScope.remindTime }</font> 일 <br/><br />
 					후원자<br />
-					<font size='80'> ${requestScope.polist.tppFunderNum }</font>명 <br/><br/>
+					<font size='70'> ${requestScope.polist.tppFunderNum }</font>명 <br/><br/>
 				</div>
 				<div>
 					<c:choose>
@@ -71,7 +95,7 @@ div#tpProject_Title {
 						</c:when>
 						
 						<c:otherwise>
-							Funding이 종료 되었거나 활성화되지 않았습니다.
+							FUNDING이 종료 되었거나 활성화되지 않았습니다.
 						</c:otherwise>
 						
 					</c:choose>
@@ -80,15 +104,16 @@ div#tpProject_Title {
 
 				<div>
 						<br /> 프로젝트 크리에이터<br /> 
-						<img	src="${requestScope.tppWriter.tpfProfileImg }"
-								 width="100"> <br />${requestScope.tppWriter.tpfId }
-																/ ${requestScope.tppWriter.tpfName } <br /> H.P
-									${requestScope.tppWriter.tpfPhoneNum }
+						<img	src="${requestScope.tppWriter.tpfProfileImg }" width="100"> 
+						<br />
+						${requestScope.tppWriter.tpfId }
+						<br/>
+						작성자 : ${requestScope.tppWriter.tpfName } 
+						<br /> 
+						H.P : ${requestScope.tppWriter.tpfPhoneNum }
 				</div>
-				<br />
-
 				<div>작성일자 : ${requestScope.polist.tppWriteDate}</div>
-				<br /> <br /> <br />
+				<br/>
 				<div>펀딩 횟 수 : ${requestScope.polist.tppFunderNum}</div>
 				<div>펀딩 기간 : ${requestScope.polist.tppFundingStartDate } ~ ${requestScope.polist.tppFundingLastDate}</div>
 				<br />
@@ -97,7 +122,6 @@ div#tpProject_Title {
 	
 	</div>
 	<div class="bottom"></div>
-
 
 <script>
 function chkPayFrm(payFrm){	

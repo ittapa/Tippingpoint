@@ -9,8 +9,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
+<style type = "text/css">
+.Buttona{
+float: left;
+margin-left: auto;
+}
+#delete{
+clear: both;
+
+}
+</style>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 
 <script>
@@ -72,16 +85,10 @@ function checkPwd(){ //비밀번호 확인
 $(document).ready(function() {
    $("#modify").on("click",function(){
       tpfunder = document.tpFunder;
-      if(tpfunder.tpfPhoneNum2.value.length<3 || tpfunder.tpfPhoneNum3.value.length<4){
-         alert("핸드폰번호를 입력하세요");
-         $("#tpfPhoneNum2").focus();
-         return false;
-      }
-      else if(tpfunder.tpfPassword.value != tpfunder.passwordConfirm.value){
+      if(tpfunder.tpfPassword.value != tpfunder.passwordConfirm.value){
 			alert("비밀번호를 확인하세요");
 			return false;
 	  }
-      tpfunder.tpfPhoneNum.value = tpfunder.tpfPhoneNum1.value+"-"+tpfunder.tpfPhoneNum2.value+"-"+tpfunder.tpfPhoneNum3.value;
       tpfunder.submit();
    });
 });
@@ -90,7 +97,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 //이미지 관련 삭제 및 호출
 $(document).ready(function() {
-	var defaultImg = "/TippingPoint/defaultImg/tpProjectDefault.png"
+	var defaultImg = "/TippingPoint/defaultImg/tpProfileDefault.png"
 	$("#tpfMainImgDelete").on("click", function(){
 		var imgconfirm = confirm("기본이미지로 변경합니다.");
 		if(imgconfirm){
@@ -156,9 +163,10 @@ $(document).ready(function dropOut(){
          });
          $.btnDelete = $(document.createElement("input"));
          $.btnDelete.attr({
-             classname : "btnDelete",
+             class : "btn btn-danger",
              type : "button" ,
              value : "회원탈퇴하기",
+      
              
          }).on('click', function(){
         	var param = "dropOutId" + "=" + $("#dropId").val() + "&" +"dropOutPwd" + "="+ $("#dropPw").val();
@@ -209,7 +217,7 @@ $(document).ready(function dropOut(){
 <h2>회원정보수정</h2>
 <spring:hasBindErrors name="tpFunder"/>
 <form action="${initParam.rootPath }/funderModifyRegister.tp" method="post" name="tpFunder" enctype="multipart/form-data">
-<table border="1" style="width:700px">
+<table class="table table-bordered">
 	<input type="hidden" name="tpfId" id="tpfId" value="${requestScope.tpFunder.tpfId }">
    <tr>
       <td>이름</td>
@@ -223,7 +231,7 @@ $(document).ready(function dropOut(){
       <td>비밀번호</td>
       <td>
          <input type="password" id="tpfPassword" name="tpfPassword" size="20" value="${requestScope.tpFunder.tpfPassword }">
-         <span class="error"><form:errors path="tpFunder.tpfPassword" delimiter=" | "/></span>
+         <form:errors path="tpFunder.tpfPassword" delimiter=" | "/>
       </td>
    </tr>
    <tr>
@@ -241,7 +249,7 @@ $(document).ready(function dropOut(){
       </td>
    </tr>
    <tr>
-      <td>휴대폰번호</td>
+       <td>휴대폰번호</td>
       <td>
 
          <select name="tpfPhoneNum1">
@@ -249,9 +257,9 @@ $(document).ready(function dropOut(){
             <option value="011">011</option>
          </select>
          -
-         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" value="${requestScope.tpfPhoneNum2 }">
-         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" value="${requestScope.tpfPhoneNum3 }">
-         
+         <input type="text" name="tpfPhoneNum2" id="tpfPhoneNum2" maxlength="4" value="${requestScope.tpfPhoneNum2 }" readonly="readonly">
+         -
+         <input type="text" name="tpfPhoneNum3" id="tpfPhoneNum3" maxlength="4" value="${requestScope.tpfPhoneNum3 }" readonly="readonly">
          <input type="hidden" name="tpfPhoneNum"/>
       </td>
    </tr>
@@ -259,7 +267,7 @@ $(document).ready(function dropOut(){
       <td>우편번호</td>
       <td>
       <input type="text" readonly="readonly" name="tpfZipcode" id="tpfZipcode" placeholder="우편번호" value="${requestScope.tpFunder.tpfZipcode }"> 
-      <input type="button" onclick="button()" value="우편번호 찾기">
+      <input type="button" onclick="button()" value="우편번호 찾기" class="btn btn-default">
       <form:errors path="tpFunder.tpfZipcode" delimiter=" | "/>
       </td>
    </tr>
@@ -280,33 +288,35 @@ $(document).ready(function dropOut(){
    <tr>
    		<td>대표 이미지</td>
    		<td>
-   		<img src ="${requestScope.tpFunder.tpfProfileImg}" width ="300"  height = "300" id = "imgView" name="imgView"><br>
+   		<img src ="${requestScope.tpFunder.tpfProfileImg}" width ="150"  height = "150" id = "imgView" name="imgView"><br>
    		<input type="hidden" id="tpfProfileImg" name="tpfProfileImg" value="${requestScope.tpFunder.tpfProfileImg }">
    		<div class="mainImgfileBox">
 					<label>
 						사진 업로드 <input type="file" name="upfile" id="upfile" onchange="imgChange(this);"><br>						
 					</label>
-					<input type="button" id="tpfMainImgDelete" value="기본 이미지">
-					<input type="button" id="tpfMainImgOrigin" value="원래 이미지">
+					<input type="button" id="tpfMainImgDelete" value="기본 이미지" class="btn btn-default">
+					<input type="button" id="tpfMainImgOrigin" value="원래 이미지" class="btn btn-default">
 				</div>
 				<br>
-				대표이미지는 가로/세로 300px 이하를 권장합니다.
+				대표이미지는 가로/세로 150px 이하를 권장합니다.
    		</td>
    </tr>
-   <tr>
-      <td colspan="2" align="center">
-         <input type="submit" value="등록" id="modify">
-      </td>
-   </tr>
+   
+      
+       
+      
+  </form>
 </table>
-</form>
+	<div class = "Buttona"><input type="button" value="등록" id="modify" class="btn btn-primary">&nbsp;&nbsp;</div>
 
-<br>
+<div id="Button">
 <form id="form" action="${initParam.rootPath }/removeFunder.tp" method="post">
-	<input type="button" value="회원탈퇴" id="dropOutBtn">
-	<div id="delete">
-	</div>
+	<input type="button" value="회원탈퇴" id="dropOutBtn" class="btn btn-danger">
 </form>
 
+</div>
+
+<div id="delete"><br/>
+</div>
 </body>
 </html>

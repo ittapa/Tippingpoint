@@ -9,7 +9,7 @@
 		등록된 회원이 없습니다.
 	</c:when>
 	<c:otherwise>
-		<table style="width:500px" border="1">
+		<table class="table table-bordered">
 			<tr>
 				<th>회원 ID</th>
 				<th>회원 이름</th>
@@ -76,4 +76,4 @@
 
 <br/>
 
-<a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>
+<a href="/TippingPoint/adminCheckAndMain.tp" class="btn btn-default" role="button">관리자 메인 페이지로 이동</a>

@@ -1,9 +1,15 @@
+<%@page import="kr.pe.tippingpoint.vo.TpProject"%>
+<%@page import="java.nio.charset.CodingErrorAction"%>
+<%@page import="org.apache.catalina.util.URLEncoder"%>
+<%@page import="java.net.URL"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String strCurrentUrl = request.getScheme() + "://" + request.getServerName() 
-			+ ((request.getServerPort() != 80) ? ":" : "") + request.getServerPort() + request.getContextPath() + "/"; 
-%>
+
+
+
+		
+
+
 <!--small footer start -->
 	<footer class="footer-small">
 		<div class="container">
@@ -25,11 +31,11 @@
 					<div class="copyright">
 						<p>&copy; Copyright - TippingPoint.
 						<c:if test="${sessionScope.adminId != null}">									
-							&nbsp;<a href="tpAdministrator/tpAdminMain.tp">관리자 PAGE</a>
-							&nbsp;<a href="${initParam.rootPath}/logout.tp">관리자 로그아웃</a>
+							&nbsp;<a href="${initParam.rootPath}/tpAdministrator/tpAdminMain.tp">ADMIN PAGE</a>
+							&nbsp;<a href="${initParam.rootPath}/logout.tp">ADMIN LOGOUT</a>
 						</c:if>
 						<c:if test="${sessionScope.adminId == null}">
-							&nbsp;<a href="${initParam.rootPath}/tpAdminAccess.tp">관리자 로그인</a>
+							&nbsp;<a href="${initParam.rootPath}/tpAdminAccess.tp">ADMIN LOGIN</a>
 						</c:if>
 						</p>
 					</div>
@@ -40,7 +46,6 @@
 	<!--small footer end-->
 
 	<!-- js placed at the end of the document so the pages load faster -->
-	<%-- <script src="${initParam.rootPath}/js/jquery.min.js"></script> --%>
 	<script src="${initParam.rootPath}/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${initParam.rootPath}/js/hover-dropdown.js"></script>
 	<script type="text/javascript" src="${initParam.rootPath}/assets/bxslider/jquery.bxslider.js"></script>
@@ -50,7 +55,23 @@
 	<!--common script for all pages-->
 	<script src="${initParam.rootPath}/js/common-scripts.js"></script>
 	<script src="${initParam.rootPath}/js/wow.min.js"></script>
+	
+<%String strCurrentUrl = request.getScheme() + "://tippingpoint.pe.kr" +request.getAttribute("url");%>
+	
+		<c:choose>
+			<c:when test="${not empty requestScope.polist }" >
+				<%strCurrentUrl = request.getScheme() + "://tippingpoint.pe.kr" +request.getAttribute("url")+"?tppId="+
+			((TpProject)request.getAttribute("polist")).getTppId();%>
+			</c:when>
+		</c:choose>
+	
 	<script>
+	   	
+	    var orginUrl = "<%=strCurrentUrl%>";
+	    var encodeUrl = encodeURIComponent(orginUrl);
+	    
+	
+		
 		wow = new WOW({
 			boxClass : 'wow', // default
 			animateClass : 'animated', // default
@@ -58,19 +79,20 @@
 		// default
 		})
 		wow.init();
-		
+
 		var snsShare = {
-			shareFb : function(){ //페이스북
-				    window.open("https://www.facebook.com/sharer/sharer.php?u=<%=strCurrentUrl%>", "sharer","toolbar=0,status=0,width=626,height=436");
-			},
-			shareTw : function(){ // 트위터
-			    //https://twitter.com/intent/tweet?text=TEXT&url=PAGE_URL
-			    window.open("https://twitter.com/intent/tweet?text="+jQuery("#og_title").attr("content")+"&url=<%=strCurrentUrl%>", "_blank","toolbar=0,status=0,width=626,height=436");
-			},
-			shareGp : function(){ // 구글 플러스
-				window.open("https://plus.google.com/share?url=<%=strCurrentUrl%>", "sharer","toolbar=0,status=0,width=626,height=436");
-			}				
-		};
+				shareFb : function(){ //페이스북
+				
+					    window.open("http://www.facebook.com/sharer/sharer.php?u="+encodeUrl, 'shareOn2', "width=600, height=500, scrollbars=no");
+				},
+				shareTw : function(){ // 트위터
+				    //https://twitter.com/intent/tweet?text=TEXT&url=PAGE_URL
+				    window.open("https://twitter.com/intent/tweet?text="+jQuery("#og_title").attr("content")+"&url=<%=strCurrentUrl%>", "_blank","toolbar=0,status=0,width=626,height=436");
+				},
+				shareGp : function(){ // 구글 플러스
+					window.open("https://plus.google.com/share?url=<%=strCurrentUrl%>", "sharer","toolbar=0,status=0,width=626,height=436");
+				}				
+			};
 	</script>
 
 

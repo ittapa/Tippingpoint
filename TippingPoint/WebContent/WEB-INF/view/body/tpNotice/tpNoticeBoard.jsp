@@ -9,37 +9,36 @@
 </head>
 <body>
 
-		<P ><!-- align="center" -->
-			<FONT size="5"><B>공지사항 목록</B></FONT>
-		</P>
-	
-
-	<c:choose>
-		<c:when test="${fn:length(requestScope.list)==0 }">
-		등록된 글이 없습니다.
-		</c:when>
-		<c:otherwise>
-			<table style="width: 500px" border="1" >
-				<tr>
-					<th>번호</th>
-					<th>작성일</th>
-					<th>제목</th>
-				</tr>
-				<c:forEach items="${requestScope.list }" var="tpNotice">
-					<tr>
-						<td>${tpNotice.tpNoticeNum }</td>
-						<td><a href="${initParam.rootPath }/findTpNotice.tp?tpNoticeNum=${tpNotice.tpNoticeNum }">${tpNotice.tpNoticeTitle }</a></td>
-						<td>${tpNotice.tpNoticeDate }</td>
-						
-					<tr>
-				</c:forEach>
-				<tr>
-					<td colspan="3">총 게시글수 : ${fn:length(requestScope.list) }</td>
-				</tr>
-			</table>
-		</c:otherwise>
-	</c:choose>
-	
+      <P ><!-- align="center" -->
+         <FONT size="5"><B>공지사항 목록</B></FONT>
+      </P>
+   
+ <c:choose>
+      <c:when test="${fn:length(requestScope.list)==0 }">
+      등록된 글이 없습니다.
+      </c:when>
+      <c:otherwise>
+         <table class="table">
+            <tr>
+               <th>번호</th>
+               <th>제목</th>
+               <th>작성일</th>
+            </tr>
+            <c:forEach items="${requestScope.list }" var="tpNotice">
+               <tr>
+                  <td>${tpNotice.tpNoticeNum }</td>
+                  <td><a href="${initParam.rootPath }/findTpNotice.tp?tpNoticeNum=${tpNotice.tpNoticeNum }">${tpNotice.tpNoticeTitle }</a></td>
+                  <td>${tpNotice.tpNoticeDate }</td>
+                  
+               <tr>
+            </c:forEach>
+            <tr>
+               <td colspan="3">총 게시글수 : ${fn:length(requestScope.list) }</td>
+            </tr>
+         </table>
+      </c:otherwise>
+   </c:choose>
+   
 	<nav>
 		<ul class="pagination">
 	<!-- Paging 처리 -->
@@ -86,8 +85,7 @@
 	 	</c:otherwise>
 	 </c:choose>
 		</ul>
-	</nav>	
-
+	</nav>
 
 
 </body>

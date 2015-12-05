@@ -3,7 +3,7 @@
 <!-- 프로젝트 등록  -->
 
    	<P ><!-- align="center" -->
-			<FONT size="5"><B>관리자 메인 페이지</B></FONT>
+			<FONT size="5"><B>카테고리 관리하기</B></FONT>
 	</P>
    <a href="${initParam.rootPath}/catrgoryController.tp?controll=add">프로젝트 카테고리 추가하기</a>
    <br/>

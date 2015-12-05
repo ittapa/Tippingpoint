@@ -16,27 +16,25 @@ public class TpFunderValidator implements Validator {
 	
 	@Override
 	//등록/수정 공통 체크.
-	public void validate(Object target, Errors errors) {
-		
-		if(!supports(target.getClass())){
-			errors.reject("notsupport","에러");
-			return;
+		public void validate(Object target, Errors errors) {
+			
+			if(!supports(target.getClass())){
+				errors.reject("notsupport","에러");
+				return;
+			}
+			
+			TpFunder tpfunder = (TpFunder)target;
+			
+			if(tpfunder.getTpfPassword()==null || tpfunder.getTpfPassword().trim().length() < 8){
+				errors.rejectValue("tpfPassword", "pass", new Object[]{"비밀번호"}, " ");
+			}
+			
+			
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfName", "requried", new Object[]{"이름"}, "필수입력사항입니다.");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfEmail", "requried", new Object[]{"이메일"}, "필수입력사항입니다.");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfZipcode", "required", new Object[]{"우편번호"}, "필수입력사항입니다.");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfAddress", "required", new Object[]{"주소"}, "필수입력사항입니다.");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfAddressD", "required", new Object[]{"상세주소"}, "필수입력사항입니다.");
 		}
-		
-		TpFunder tpfunder = (TpFunder)target;
-		
-		if(tpfunder.getTpfId()==null || tpfunder.getTpfId().trim().length() < 2){
-			errors.rejectValue("tpfId", "required", new Object[]{"ID"}, "ID를 넣으세요");
-		}if(tpfunder.getTpfPassword()==null || tpfunder.getTpfPassword().trim().length() < 8){
-			errors.rejectValue("tpfPassword", "required", new Object[]{"비밀번호"}, "패스워드를 넣으세요");
-		}
-		
-		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfName", "requried", new Object[]{"이름"}, "필수입력사항입니다.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfEmail", "requried", new Object[]{"이메일"}, "필수입력사항입니다.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfZipcode", "required", new Object[]{"우편번호"}, "필수입력사항입니다.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfAddress", "required", new Object[]{"주소"}, "필수입력사항입니다.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tpfAddressD", "required", new Object[]{"상세주소"}, "필수입력사항입니다.");
-	}
 	
 }

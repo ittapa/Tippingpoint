@@ -26,7 +26,7 @@ $(document).ready(function goRegister2(){//
 		등록된 글이 없습니다.
 		</c:when>
 		<c:otherwise>
-			<table style="width: 500px" border="1" >
+			<table class="table">
 				<tr>
 					<th>번호</th>
 					<th>작성일</th>
@@ -89,6 +89,6 @@ $(document).ready(function goRegister2(){//
 	 	</c:otherwise>
 	 </c:choose>
 	 <br>
-	<input type="button" id="writeBtn" value="글쓰기">
+	<input type="button" id="writeBtn" value="글쓰기" class="btn btn-default">
 </body>
 </html>

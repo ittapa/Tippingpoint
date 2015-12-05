@@ -1,44 +1,46 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8 ">
-<title>Insert title here</title>
-</head>
-<body>
+
+<style>
+th, tr{
+vertical-align: middle;
+
+}
+
+</style>
 <!-- 게시판 목록 게시판 -->
 	
 		<P ><!-- align="center" -->
 			<FONT size="5"><B>프로젝트 목록</B></FONT>
 		</P>
 
+<ul class="nav nav-tabs">
+				<li role="presentation"><a href="/TippingPoint/tpAdminProjectBoard.tp">모두보기</a></li>
+				<li role="presentation"><a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=A">저장된 프로젝트</a></li>
+				<li role="presentation"><a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=B">승인요청 프로젝트</a></li>
+				<li role="presentation"><a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=X">승인거부 프로젝트</a></li>
+				<li role="presentation"><a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=O">승인완료 프로젝트</a></li>
+				<li role="presentation"><a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=E">펀딩종료 프로젝트</a></li>
+				<li role="presentation"><a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=Z">펀딩마감 프로젝트</a></li>
+</ul>
 
-				<a href="/TippingPoint/tpAdminProjectBoard.tp">모두보기</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=B">저장된 프로젝트</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=A">승인요청 프로젝트</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=X">승인거부 프로젝트</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=O">승인완료 프로젝트</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=E">펀딩종료 프로젝트</a><br>
-				<a href="/TippingPoint/tpAdminCategoryProjectBoard.tp?check=Z">펀딩마감 프로젝트</a><br>
-					<div>총 게시글수 : ${fn:length(requestScope.list) }</div>
+								
+				
 	<c:choose>
 		<c:when test="${fn:length(requestScope.list)==0 }">
 		등록된 글이 없습니다.
 		</c:when>
 		<c:otherwise>
-				<table>
+				<table class="table">
 						<tr>
 							<th>프로젝트 ID</th>
 							<th>프로젝트 제목</th>
-							<th> 프로젝트 작성자</th>
+							<th>프로젝트 작성자</th>
 							<th>프로젝트 카테고리</th>
 							<th>작성/수정 날자</th>
-							<th>펀딩 된 금액</th>
-							<th>목표 펀딩 금액</th>
-							<th>펀딩 시작일</th>
-							<th>펀딩 마감일</th>
+							<th>펀딩 된 금액 / 목표 금액</th>
+							<th>펀딩 기간</th>
 							<th>프로젝트 상태</th>
 							<th>관리자 메시지</th>
 							<th></th>
@@ -48,16 +50,13 @@
 				
 		
 					<tr>
-							<td><a href="${initParam.rootPath }/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="150" height="1500"></a>
-									<br/><a href="${initParam.rootPath }/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }">${tpProject.tppId }</a></td>
+							<td><a href="${initParam.rootPath }/tpAdminFindTpProject.tp?tppId=${tpProject.tppId }"><img src="${tpProject.tppMainImg }"  width="80" ></a></td>
 							<td>${tpProject.tppTitle }</td>
 							<td>${tpProject.tppWriter }</td>
 							<td>${tpProject.tppCategory }</td>
 							<td>${tpProject.tppWriteDate }</td>
-							<td>${tpProject.tppTotalAmount }</td>
-							<td>${tpProject.tppTargetAmount }</td>
-							<td>${tpProject.tppFundingStartDate }</td>
-							<td>${tpProject.tppFundingLastDate }</td>
+							<td>${tpProject.tppTotalAmount } / ${tpProject.tppTargetAmount }</td>
+							<td>${tpProject.tppFundingStartDate } ~ ${tpProject.tppFundingLastDate }</td>
 							<td>
 								<c:choose>
 									<c:when test="${tpProject.tppState =='A'}">
@@ -88,13 +87,16 @@
 							</td>
 							<td>${tpProject.tppAdminMessage }</td>
 							<td>
-							
+								<c:if test ="${tpProject.tppState != 'A' or tpProject.tppState != 'B'}" >
+								<a href = "${initParam.rootPath }/_____?tppId=${tpProject.tppId }"" class="btn btn-primary">펀딩 내역 조회[미구현]</a>
+								</c:if>
+								
 								<c:choose>
 									<c:when test="${tpProject.tppState == 'O'}">
 										<form name = tpProjectExit action="/TippingPoint/tpAdminProjectStateConvert.tp" method="post">
 				       						<input type = "hidden" name ="tppId" value = '${tpProject.tppId }'>
 				      						<input type = "hidden" name = "tppState" value = "E">
-				     						<input type="submit" value="프로젝트종료">
+				     						<input type="submit" value="프로젝트종료" class="btn btn-danger">
 			   							</form>
 									</c:when>
 									
@@ -102,7 +104,8 @@
 										<form name = tpProjectExit action="/TippingPoint/tpAdminProjectStateConvert.tp" method="post">
 				       						<input type = "hidden" name ="tppId" value = '${tpProject.tppId }'>
 				      						<input type = "hidden" name = "tppState" value = "Z">
-				     						<input type="submit" value="프로젝트마감">
+				     						<input type="submit" value="프로젝트마감" class="btn btn-danger">
+				     						
 			   							</form>
 	   								</c:when>
 	   								
@@ -110,8 +113,7 @@
 	   								
 	   								</c:otherwise>
 								</c:choose>
-	   							<a href = "${initParam.rootPath }/_____?tppId=${tpProject.tppId }"">펀딩 내역 조회[미구현]</a>
-
+	   							
 	   						</td>
 					</tr>
 				</c:forEach>
@@ -159,10 +161,8 @@
 	 		▶
 	 	</c:otherwise>
 	 </c:choose>
-	 
 
 
-<br/>
-<a href="/TippingPoint/adminCheckAndMain.tp">관리자 메인 페이지로 이동</a>
-</body>
-</html>
+	<br/>
+	<br/>
+	<a href="/TippingPoint/adminCheckAndMain.tp" class="btn btn-info" role="button">관리자 메인 페이지로 이동</a>

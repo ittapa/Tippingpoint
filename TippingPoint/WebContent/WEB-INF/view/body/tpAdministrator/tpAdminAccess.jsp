@@ -19,22 +19,29 @@
    
 </script>
 
+		
+     <div class="login-bg">
+        <div class="container">
+            <div class="form-wrapper">
+            <form name = "tp1" action="/TippingPoint/tpAdminLogin.tp" method="post" onsubmit="return check();"
+					 	class="form-signin wow fadeInUp" >
+        
+            <h2 class="form-signin-heading">ADMIN ACCESS</h2>
+            <div class="login-wrap">
+                <input type="text" class="form-control" placeholder="User ID" autofocus name = "adminId" maxlength="20">
+                <input type="password" class="form-control" placeholder="Password" name = "adminPw" maxlength="15" >
+        
+                <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
+               
+               
+    
+            </div>
 
-<!-- 프로젝트 등록  -->
+          </form>
+          </div>
+        </div>
+    </div>
 
-   	<P ><!-- align="center" -->
-			<FONT size="5"><B>관리자 로그인 페이지</B></FONT>
-		</P>
-   
-   <form name = "tp1" action="/TippingPoint/tpAdminLogin.tp" method="post" onsubmit="return check();">
-  
-      <label>아이디 : <input type = "text" name = "adminId" /></label><p>
-      <label>비밀번호: <input type = "password" name = "adminPw"/></label><p>
-   
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type = "submit" value = "로그인">
-   </form>
 
   
 </html>

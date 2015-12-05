@@ -6,6 +6,7 @@
 <head>
 
 	<script type="text/javascript" src = "${initParam.rootPath}/js/jquery.js"></script>
+
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="TippingPoint is a cloud funding site!">
@@ -14,19 +15,23 @@
 	
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="TippingPoint" />
-	<meta property="og:url" content="<%=request.getScheme() + "://" + request.getServerName() + ((request.getServerPort() != 80) ? ":" : "") + request.getServerPort() + request.getContextPath() + "/"%>" />
-<c:choose>
-<c:when test="not empty ${requestScope.ogTitle}">
-	<meta property="og:title" id="og_title" content="${requestScope.ogTitle}" />
-	<meta property="og:description" id="${requestScope.ogDescription}" content="" />
-	<meta property="og:image" id="${requestScope.ogImage}" content="" />
-</c:when>
-<c:otherwise>
-	<meta property="og:title" content="Tippoing Point" />
-	<meta property="og:description" content="티핑 포인트!" />
-	<meta property="og:image" content="https://fbcdn-photos-h-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-0/p526x296/12239489_112859812414625_165558607748774912_n.jpg?oh=6e027fd597778b14a9f82ba16511a58d&oe=56AF9E94&__gda__=1459245757_f6e1c1e33d67e01011fcff0817bf01dd" />
-</c:otherwise>
-</c:choose>
+	<meta property="og:url" content="<%= "http://tippingpoint.pe.kr"+request.getAttribute("url")%>" /> 
+		
+		<c:choose>
+			<c:when test="${not empty requestScope.polist }" >
+				<meta property="og:title" id="og_title" content="${requestScope.polist.tppTitle }" />
+				<meta property="og:description" id="og_description" content="${requestScope.polist.tppWriter }님의 ${requestScope.polist.tppTitle } 프로젝트 펀딩기간이 ${requestScope.remindTime } 일 남았습니다.  " />
+				<meta property="og:image" id="og_image" content="<%= request.getScheme() + "://tippingpoint.pe.kr"%>${requestScope.polist.tppMainImg }" />
+			</c:when>
+		<c:otherwise>
+		
+			<meta property="og:title" id="og_title" content="Tippoing Point" />
+			<meta property="og:description" content="티핑 포인트!" />
+			<meta property="og:image" content="
+			<%= request.getScheme() + "://tippingpoint.pe.kr"+ request.getContextPath()%>/defaultImg/tpPBdefaultImg.png"/>
+	
+		</c:otherwise>
+		</c:choose>
 
 <link rel="apple-touch-icon" sizes="57x57" href="${initParam.rootPath}/images/favicons/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="${initParam.rootPath}/images/favicons/apple-icon-60x60.png">
@@ -65,6 +70,8 @@
 	<link href="${initParam.rootPath}/css/style.css" rel="stylesheet">
 	<link href="${initParam.rootPath}/css/style-responsive.css" rel="stylesheet" />
 	
+	<link rel="stylesheet" href="${initParam.rootPath}/css/magnific-popup.css">
+		
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
 	<!--[if lt IE 9]>
 	<script src="${initParam.rootPath}/js/html5shiv.js"></script>

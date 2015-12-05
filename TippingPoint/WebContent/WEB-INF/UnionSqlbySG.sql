@@ -62,21 +62,20 @@ create table tpProposer (
 );
 			
 create table tpproject(
-	tppId varchar2(100) primary key,
-	tppTitle varchar2(200) not null,
-	tppProjectContent long not null,
-	tppWriter varchar2(100) not null,
-	tppWriteDate number(20) not null,
-	tppTotalAmount number(30) default(0),
-	tppTargetAmount number(30) not null, 
-	tppFundingStartDate varchar2(10) not null,
-	tppFundingLastDate varchar2(10) not null,
-	tppFunderNum number(20) default(0),
-	tppState varchar2(4) default('a'),
-	tppAdminMessage varchar2(200),
-	tppMainImg varchar2(100) not null,
-	tppCategory varchar2(20) not null
-	
+tppId varchar2(100) primary key,
+tppTitle varchar2(200) not null,
+tppProjectContent long not null,
+tppWriter varchar2(100) not null,
+tppWriteDate number(20) not null,
+tppTotalAmount number(30) default(0),
+tppTargetAmount number(30) not null, 
+tppFundingStartDate varchar2(10) not null,
+tppFundingLastDate varchar2(10) not null,
+tppFunderNum number(20) default(0),
+tppState varchar2(4) default('a'),
+tppAdminMessage varchar2(200),
+tppMainImg varchar2(100) not null,
+tppCategory varchar2(20) not null	
 );
 
 
