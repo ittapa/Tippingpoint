@@ -6,11 +6,11 @@
 	<li>주문번호: ${requestScope.LGD_OID}</li>
 	<li>결제금액: ${requestScope.LGD_AMOUNT}</li>
 </ul>
- 
-${requestScope.retMsg}
+<a href = "${initParam.rootPath }/defaultImg/tpFundingSuccessImg.png">
+<%-- ${requestScope.retMsg} --%>
 
 <hr/>
-
+<%-- 
 <table>
 <c:forEach items="${request}" var="r">
 	<tr>
@@ -18,4 +18,4 @@ ${requestScope.retMsg}
 		<td>${r.value}</td>
 	</tr>
 </c:forEach>
-</table>
+</table> --%>

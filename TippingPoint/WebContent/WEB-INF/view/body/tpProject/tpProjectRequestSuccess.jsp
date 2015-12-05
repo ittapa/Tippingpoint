@@ -4,5 +4,6 @@
 	<P ><!-- align="center" -->
 			<FONT size="5"><B>프로젝트 승인요청이 완료되었습니다.</B></FONT>
 		</P>
+		<a href = "${initParam.rootPath }/defaultImg/tpSuccessImg.png">
 </body>
 </html>
