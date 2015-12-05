@@ -388,14 +388,14 @@
 		
 		var snsShare = {
 				shareFb : function(){ //페이스북
-					    window.open("https://www.facebook.com/sharer/sharer.php?u=<%=strCurrentUrl%>", "sharer","toolbar=0,status=0,width=626,height=436");
+					    window.open("https://www.facebook.com/sharer/sharer.php?u=<%//=strCurrentUrl%>", "sharer","toolbar=0,status=0,width=626,height=436");
 				},
 				shareTw : function(){ // 트위터
 				    //https://twitter.com/intent/tweet?text=TEXT&url=PAGE_URL
-				    window.open("https://twitter.com/intent/tweet?text="+jQuery("#og_title").attr("content")+"&url=<%=strCurrentUrl%>", "_blank","toolbar=0,status=0,width=626,height=436");
+				    window.open("https://twitter.com/intent/tweet?text="+jQuery("#og_title").attr("content")+"&url=<%//=strCurrentUrl%>", "_blank","toolbar=0,status=0,width=626,height=436");
 				},
 				shareGb : function(){ // 구글 플러스
-					window.open("https://plus.google.com/share?url=<%=strCurrentUrl%>", "sharer","toolbar=0,status=0,width=626,height=436");
+					window.open("https://plus.google.com/share?url=<%//=strCurrentUrl%>", "sharer","toolbar=0,status=0,width=626,height=436");
 				}				
 			};
 	</script>

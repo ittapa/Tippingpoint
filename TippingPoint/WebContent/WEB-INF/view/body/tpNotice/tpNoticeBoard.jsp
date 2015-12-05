@@ -40,7 +40,8 @@
 		</c:otherwise>
 	</c:choose>
 	
-	
+	<nav>
+		<ul class="pagination">
 	<!-- Paging 처리 -->
 	<!-- 
 		1. 이전 페이지 그룹으로 이동
@@ -48,38 +49,44 @@
 	 -->
 	 <c:choose>
 	 	<c:when test="${requestScope.pagingBean.previousPageGroup }">
-	 		<a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}">◀</a>
+	 	<li>
+	 		<a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${requestScope.pagingBean.startPageOfPageGroup-1}" aria-label="Previous"><span aria-hidden="true">◀</span></a>
+	 	</li>
 	 	</c:when>
 	 	<c:otherwise>
-	 	◀
+	 	<li class="disabled">
+	 	<span aria-hidden="true">◀</span>
+	 	</li>
 	 	</c:otherwise>
 	 </c:choose>
-	 
 	 <!-- Page Group내의 page들 링크처리
 	 		- PageGroup의 시작/끝 페이지번호 - 반복문처리
 	  -->
 	 <c:forEach begin="${requestScope.pagingBean.startPageOfPageGroup}" end="${requestScope.pagingBean.endPageOfPageGroup}" var="page">
 	 		<c:choose>
 	 			<c:when test="${page == requestScope.pagingBean.currentPage }">
-	 				[${page}]&nbsp;
+	 				<li class="active"><a href="javascript:void(0)">${page}</a></li>
 	 			</c:when>
 			<c:otherwise>
-	 			<a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${page }">${page }</a>&nbsp;&nbsp;
+	 			<li><a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${page }">${page }</a></li>
 	 		</c:otherwise>
 	 		</c:choose>
 	 </c:forEach>
-	 
 	 <!-- Paging 처리2 -->
 	  <c:choose>
 	 	<c:when test="${requestScope.pagingBean.nextPageGroup }">
-	 		<a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}">▶</a>
+		<li>
+	 		<a href="${initParam.rootPath }/tpAdminProjectBoard.tp?pageNo=${requestScope.pagingBean.endPageOfPageGroup+1}" aria-label="Next"><span aria-hidden="true">▶</span></a>
+	 	</li>
 	 	</c:when>
 	 	<c:otherwise>
-	 		▶
+	 	<li class="disabled">
+	 		<span aria-hidden="true">▶</span>
+	 	</li>
 	 	</c:otherwise>
 	 </c:choose>
-	 
-		
+		</ul>
+	</nav>	
 
 
 

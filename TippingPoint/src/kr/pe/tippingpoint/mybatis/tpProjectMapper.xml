@@ -243,5 +243,61 @@
 		 where tppid = #{tppId}
 	</update>
 	
+	<!-- Timothy Lee 20151203 -->
+	
+	 
+	<!-- 모금 금액 증가, 후원 카운트 증가 -->
+	<update id="addFndrNumAndTotalAmount" parameterType="tpProject">
+		UPDATE TPPROJECT
+		SET tppTotalAmount = (
+			SELECT nvl(tppTotalAmount, 0) + #{tppTotalAmount}
+			FROM TPPROJECT 
+			WHERE tppId = #{tppId}
+			), 
+			tppFunderNum = (
+				SELECT nvl(tppFunderNum, 0) + 1
+				FROM TPPROJECT 
+				WHERE tppId = #{tppId}
+			)
+		WHERE tppId = #{tppId}
+	</update>
+	<!--// 모금 금액 증가, 후원 카운트 증가 -->
+	 
+	<!-- 모금 금액 감소, 후원 카운트 감소 -->
+	<!-- sign(컬럼명) - 양수: 1 / 0 : 0 / 음수: -1 -->
+	<!--
+		CASE
+			When 조건식 Then 수행할 내용
+			Else 기타 수행할 내용
+		END
+	 -->
+	<update id="minusFndrNumAndTotalAmount" parameterType="tpProject">
+		UPDATE tpProject
+		SET tppTotalAmount = (
+		    CASE sign(tppTotalAmount)
+		        WHEN 1 THEN
+		        (
+		            SELECT nvl(tppTotalAmount, 0) - #{tppTotalAmount}
+						FROM TPPROJECT 
+						WHERE tppId = #{tppId}
+		        )
+		        ELSE 0
+		    END
+			), 
+			TPPFUNDERNUM = (
+			    CASE sign(TPPFUNDERNUM)
+			        WHEN 1 THEN
+			        (
+			            SELECT nvl(tppFunderNum, 1) - 1
+							FROM TPPROJECT 
+							WHERE tppId = #{tppId}
+			        )
+			        ELSE 0
+			    END
+			)
+		WHERE  tppid=#{tppId}
+	</update>
+	<!--// 모금 금액 감소, 후원 카운트 감소 -->
+	<!--// Timothy Lee 20151203 -->
 	 
 </mapper>

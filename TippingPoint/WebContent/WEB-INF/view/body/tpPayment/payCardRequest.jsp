@@ -189,7 +189,7 @@ function payment_return() {
 
 <form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="${initParam.rootPath}/tpPayCardRet.tp">
 
-<input type="text" name="test111" value="test111"/>
+<!-- <input type="text" name="test111" value="test111"/> -->
 
 <ul>
 	<li>프로젝트 명: ${tppTitle}</li>

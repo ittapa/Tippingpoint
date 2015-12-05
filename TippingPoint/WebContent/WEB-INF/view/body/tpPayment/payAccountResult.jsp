@@ -19,3 +19,14 @@ ${requestScope.retMsg}
 	</tr>
 </c:forEach>
 </table>
+<%-- <ul>
+	<li>${requestScope.m_szResCode}</li>
+	<li>${requestScope.m_szResMsg}</li>
+	<li>${requestScope.LGD_TID}</li>
+	<li>${requestScope.LGD_MID}</li>
+	<li>${requestScope.LGD_OID}</li>
+	<li>${requestScope.LGD_AMOUNT}</li>
+	<li>${requestScope.LGD_RESPCODE}</li>
+	<li>${requestScope.LGD_RESPMSG}</li>
+	<li>${requestScope.tppId}</li>
+</ul> --%>

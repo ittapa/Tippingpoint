@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tpAccountPaymentMapper">
+	<insert id="insertAccountPayment">
+		<selectKey keyProperty="tpAid" resultType="_int" order="BEFORE">
+			SELECT SEQ_TPACCOUNTPAYMENT_NUM.NEXTVAL FROM DUAL;
+		</selectKey>
+		Insert into TPACCOUNTPAYMENT(tpAid, tpaAmount, tpaReBank, tpaReUserName, tpaReBankAccount, tpaAccDateTime)
+		values(#{tpAid}, #{tpaAmount}, #{tpaReBank}, #{tpaReUserName}, #{tpaReBankAccount}, #{tpaAccDateTime})
+	</insert>
+</mapper>

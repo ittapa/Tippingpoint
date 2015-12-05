@@ -30,4 +30,20 @@ public interface TpProjectService {
 	Map selectCategoryProject(int pageNo, String tppCategory);
 	
 	void updateTpProject(TpProject tpproject);
+	
+	
+	
+	/**
+	 * 프로젝트 후원 처리 
+	 * @param tpProject : TpProject
+	 */
+	public void addFunderNumAndTotalAmount(TpProject tpProject);
+
+	/**
+	 * 프로젝트 후원 철회 처리
+	 * @param tpProject : TpProject
+	 */
+	public void minusFunderNumAndTotalAmount(TpProject tpProject);
+	
+	
 }

@@ -141,4 +141,20 @@ public class TpProjectServiceImpl implements TpProjectService {
 		dao.updateTpProjectById(tpproject);
 	}
 
+	/**
+	 * 프로젝트 후원 처리: 프로젝트 모금 금액 및 프로젝트 후원 카운트 증가
+	 * @param tpProject : TpProject
+	 */
+	public void addFunderNumAndTotalAmount(TpProject tpProject){
+		dao.addFndrNumAndTotalAmount(tpProject);
+	}
+
+	/**
+	 * 프로젝트 후원 철회 처리: 프로젝트 모금 금액 및 프로젝트 후원 카운트 감소
+	 * @param tpProject : TpProject
+	 */
+	public void minusFunderNumAndTotalAmount(TpProject tpProject){
+		dao.minusFndrNumAndTotalAmount(tpProject);
+	}
+	
 }

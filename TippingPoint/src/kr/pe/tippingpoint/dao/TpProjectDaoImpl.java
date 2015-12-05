@@ -140,7 +140,18 @@ public class TpProjectDaoImpl implements TpProjectDao{
 	public int adminCheckCountProject(String check) {
 		return session.selectOne("tpProjectMapper.adminCheckCountProject",check);
 	}
+
 	
 	
+	@Override
+	public int addFndrNumAndTotalAmount(TpProject tpproject) {
+		return session.update("tpProjectMapper.addFndrNumAndTotalAmount", tpproject);
+	}
+
+
+	@Override
+	public int minusFndrNumAndTotalAmount(TpProject tpproject) {
+		return session.update("tpProjectMapper.minusFndrNumAndTotalAmount", tpproject);
+	}
 	
 }

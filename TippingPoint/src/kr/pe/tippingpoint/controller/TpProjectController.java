@@ -166,7 +166,9 @@ public class TpProjectController {
 			
 
 			System.out.println("-----------------------------------------------");
-			System.out.println(tpvo);
+			System.out.println(tpvo.getTppMainImg());
+			
+			
 			//비즈니스 로직 처리하기 서비스
 			service.registerTpProject(tpvo);
 		

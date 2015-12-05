@@ -11,15 +11,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.pe.tippingpoint.service.TpAccountPaymentService;
 import kr.pe.tippingpoint.service.TpFunderAccountAccessService;
 import kr.pe.tippingpoint.service.TpPaymentService;
 import kr.pe.tippingpoint.service.TpProjectService;
 import kr.pe.tippingpoint.vo.TPProjectFundingList;
+import kr.pe.tippingpoint.vo.TpAccountPayment;
 import kr.pe.tippingpoint.vo.TpCardPayment;
 import kr.pe.tippingpoint.vo.TpFunder;
+import kr.pe.tippingpoint.vo.TpProject;
 import lgdacom.XPayClient.XPayClient;
 
 /**
@@ -38,6 +42,8 @@ public class tpPaymentController {
 	private TpProjectService tpProjectService;
 	@Autowired
 	TpPaymentService tpPaymentService;
+	@Autowired
+	TpAccountPaymentService tpAccountPaymentService; 
 
 	/**
 	 * 카드 / 현금 결제 요청 페이지 핸들러
@@ -58,7 +64,7 @@ public class tpPaymentController {
 		
 
 		// TODO: 세션 처리되는 페이지 통합시 테스트 코드 삭제		
-		session.setAttribute("userLoginInfo", "asdfasdf");
+//		session.setAttribute("userLoginInfo", "asdfasdf");
 		
 		// FIXME: 회원이 없는 경우 예외처리
 		String tpfId = (String)session.getAttribute("userLoginInfo");
@@ -134,7 +140,7 @@ public class tpPaymentController {
 	// 결제후 처리(DB처리 포함)
 	@RequestMapping("tpPayPgReturn.tp")
 //	public String payCardRet(@RequestParam HttpServletRequest request, HttpSession session, ModelMap model){
-	public String payCardRet(TPProjectFundingList tpProjectFundingList, TpCardPayment tpCardPayment, HttpServletRequest request, HttpSession session, ModelMap model){
+	public String payCardRet(TpProject tpproject, TPProjectFundingList tpProjectFundingList, TpCardPayment tpCardPayment, HttpServletRequest request, HttpSession session, ModelMap model){
 
 		// 아래 항목들 DI로 옮기지 마세요.
 	    String CST_PLATFORM                 = request.getParameter("CST_PLATFORM");
@@ -242,6 +248,7 @@ public class tpPaymentController {
 				model.addAttribute("LGD_AMOUNT", xpay.Response("LGD_AMOUNT",0));
 				model.addAttribute("LGD_RESPCODE", xpay.Response("LGD_RESPCODE",0));
 				model.addAttribute("LGD_RESPMSG", xpay.Response("LGD_RESPMSG",0));
+				model.addAttribute("tppId", (String)session.getAttribute("tppId"));
 				
 				// xpay 응답결과 -> VO담기
 				tpCardPayment.setTpLgdRespcode(xpay.m_szResCode);
@@ -265,13 +272,16 @@ public class tpPaymentController {
 				tpCardPayment.setTpCAmount(Integer.valueOf(xpay.Response("LGD_AMOUNT",0)));
 								
 				
+				// Service단 처리
 				tpPaymentService.insertCardPaymentAndProjectFundingList(tpProjectFundingList, tpCardPayment
 						, (String)session.getAttribute("userLoginInfo"), (String)session.getAttribute("tppId"), "c", "o");
 				
-
-				// Service단 처리
-				System.out.println("결제 Serivce(DB)처리 단");
 				
+				tpproject.setTppId((String)session.getAttribute("tppId")); // 프로젝트 ID(상품ID)
+				tpproject.setTppTotalAmount(Integer.valueOf(xpay.Response("LGD_AMOUNT",0)));// 주문(후원) 금액
+								
+				tpProjectService.addFunderNumAndTotalAmount(tpproject);
+						
 
 				// 최종결제요청 결과 성공 DB처리 실패시 Rollback 처리
 				boolean isDBOK = true; // DB처리 실패시 false로 변경해 주세요.
@@ -295,7 +305,6 @@ public class tpPaymentController {
 
 			} else {
 				// 최종결제요청 결과 실패 DB처리
-//				System.out.println("최종결제요청 결과 실패 DB처리하시기 바랍니다.<br>");
 				// XXX: 결제가 안되었으므로 rollback할 것이 없다.
 				
 				errMsg += "최종결제요청 결과 실패";
@@ -347,4 +356,39 @@ public class tpPaymentController {
 		return "tpPayment/payCardSuccess.tiles";
 	}
 	
+	/**
+	 * 현금 계좌이체 요청 내용 표시
+	 * @param tppTitle
+	 * @param tpAmount
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("payAccountRequest.tp")
+	public String payAccountRequest(@RequestParam String tppId,@RequestParam String tppTitle, @RequestParam int tpAmount, HttpSession session, ModelMap model){
+		
+		model.put("tppTitle", tppTitle);
+		model.put("tppId", tppId);
+		model.put("tpAmount", tpAmount);
+		
+		return "tpPayment/payAccountRequest.tiles";
+	}
+	
+	/**
+	 * 현금 계좌이체 요청 처리
+	 * @return
+	 */
+	@RequestMapping("payAccountRequestSave.tp")
+	public String payAccountProcess(@ModelAttribute TpAccountPayment tpAccountPayment, @RequestParam String tppId, TpProject tpproject, TPProjectFundingList tpProjectFundingList, HttpSession session){
+		
+		
+		// 현금 계좌이체 DB저장하기 위해 VO일부 세팅
+		tpProjectFundingList.setTpPid(tppId);
+		tpProjectFundingList.setTpFid((String)session.getAttribute("userLoginInfo"));
+		
+		tpPaymentService.insertAccountPaymentAndProjectFundingList(tpProjectFundingList, tpAccountPayment);
+		
+		
+		return "tpPayment/payAccountResult.tiles";
+	}
 }

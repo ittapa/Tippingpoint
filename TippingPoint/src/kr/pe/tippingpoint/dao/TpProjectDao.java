@@ -48,5 +48,21 @@ public interface TpProjectDao {
 
 	public int adminCheckCountProject(String check);
 	
+		
+	/**
+	 * @author Timothy Lee
+	 * 모금 금액 증가, 후원 수 증가(update)
+	 * @param tpproject : TpProject 사용필드 - tpproject.tppTotalAmount, tpproject.tppId
+	 * @return resultCount : int
+	 */
+	public int addFndrNumAndTotalAmount(TpProject tpproject);
 	
+
+	/**
+	 * @author Timothy Lee
+	 * 모금 금액 감소, 후원 수 감소(update)
+	 * @param tpproject : TpProject 사용필드 - tpproject.tppTotalAmount, tpproject.tppId
+	 * @return resultCount : int
+	 */
+	public int minusFndrNumAndTotalAmount(TpProject tpproject);
 }
