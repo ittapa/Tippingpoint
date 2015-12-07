@@ -44,32 +44,19 @@
         });  	 
     </script>
 
-<body>
-    <form id="form" method="post" action ="${initParam.rootPath }/noticeWrite.tp">
-        <table class="board_view">
-            <colgroup>
-                <col width="15%">
-                <col width="*"/>
-            </colgroup>
-            <caption>게시글 작성</caption>
-            <tbody>
-                <tr>
-                    <th scope="row">제목</th>
-                    <td><input type="text" id="tpNoticeTitle" name="tpNoticeTitle" class="wdp_90"></input></td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="view_text">
-                        			<textarea rows="20" cols="100" title="내용" id="tpNoticeContents" name="tpNoticeContents" style="width: 766px; height: 412px; display: none;"></textarea>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-         
-        <input type="button" id="writeBtn" value="작성하기">
-    </form>
+
+<div class="row">
+	<div>
+		<span>게시글 작성</span>
+		<form id="form" method="post" action ="${initParam.rootPath }/noticeWrite.tp">
+		<input type="text" id="tpNoticeTitle" name="tpNoticeTitle" class="wdp_90" placeholder="제목"/>
+		<textarea rows="20" cols="100" title="내용" id="tpNoticeContents" name="tpNoticeContents" style="width: 766px; height: 412px; display: none;"></textarea>
+		 
+			<input type="button" id="writeBtn" value="작성하기">
+	    </form>
     <br>
     <form name = "noticeList" action="${initParam.rootPath }/tpAdminNoticeManager.tp">
-  	<input type="submit" value="목록으로">
+	  	<input type="submit" value="목록으로">
   	</form>
-</body>
-</html>
+	</div>
+</div>
