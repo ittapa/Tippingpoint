@@ -215,8 +215,8 @@
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
 		<property name="defaultEncoding" value="utf-8" />
-		<property name="username" value="nagazam21@gmail.com" />
-		<property name="password" value="aa963857" />
+		<property name="username" value="메롱메롱메롱원래_이메일" />
+		<property name="password" value="메롱메롱" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.starttls.enable">true</prop>
