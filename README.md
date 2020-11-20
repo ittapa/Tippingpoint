@@ -3,8 +3,9 @@
 - 훈련기관 : 한국소프트웨어기술진흥협회
 - 훈련기간 : 2015년 07월 07일 ~ 2015년 12월 18일(960시간)
 - 증빙서류   
-![](./img/KOSTA_ev.jpg =300x) 
-![](./img/KOSTA_ev2.jpg =300x)
+![](./img/KOSTA_ev.jpg)
+![](./img/KOSTA_ev2.jpg)
+<src
 
 # Tippingpoint
 
@@ -17,4 +18,5 @@ KOSTA 101기, 최종 프로젝트 결과물
 
 - 역할: 팀장
 - 프로젝트 최우수상 수상.   
-![](./img/KOSTA_p_a.jpg =300x)
+![](./img/KOSTA_p_a.jpg )
+<img src="./img/KOSTA_p_a.jpg" width="300"> 
