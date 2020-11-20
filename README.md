@@ -3,26 +3,24 @@
 - 훈련기관 : 한국소프트웨어기술진흥협회
 - 훈련기간 : 2015년 07월 07일 ~ 2015년 12월 18일(960시간)
 - 증빙서류   
-<<<<<<< HEAD
-![](./img/KOSTA_ev.jpg)
-![](./img/KOSTA_ev2.jpg)
-<src
-=======
-<img src = "./img/KOSTA_ev.jpg">
-![](./img/KOSTA_ev.jpg){: width="100" height="100"} 
-![](./img/KOSTA_ev2.jpg){: width="100" height="100"}
->>>>>>> 1c1291f45473333db46e4ba7acebd39afd654c36
 
-# Tippingpoint
+![](./img/01.png)
 
-KOSTA 101기, 최종 프로젝트 결과물
+
+# 프로젝트
+- KOSTA 101기, 최종 프로젝트 결과물
 - 클라우드 펀딩 사이트.
+- 사용 기술
+    + server: centos6
+    + db: oracle
+    + java, spring framework, mybtis
+    + html, js, css, jquery
+    
 - 프로젝트 설계요약
-![](./img/tippingpoint_summary.png=300x)
-
+![](./img/tippingpoint_summary.png)
 
 
 - 역할: 팀장
 - 프로젝트 최우수상 수상.   
-![](./img/KOSTA_p_a.jpg )
+![](./img/02.jpg )
 
