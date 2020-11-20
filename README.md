@@ -19,4 +19,4 @@ KOSTA 101기, 최종 프로젝트 결과물
 - 역할: 팀장
 - 프로젝트 최우수상 수상.   
 ![](./img/KOSTA_p_a.jpg )
-<img src="./img/KOSTA_p_a.jpg" width="300"> 
+
