@@ -11,7 +11,7 @@
 KOSTA 101기, 최종 프로젝트 결과물
 - 클라우드 펀딩 사이트.
 - 프로젝트 설계요약
-![tippingpoint_summary](./img/tippingpoint_summary.png =300x)
+![](./img/tippingpoint_summary.png=300x)
 
 
 
