@@ -4,8 +4,8 @@
 - 훈련기간 : 2015년 07월 07일 ~ 2015년 12월 18일(960시간)
 - 증빙서류   
 <img src = "./img/KOSTA_ev.jpg">
-![]("./img/KOSTA_ev.jpg" =300x) 
-![](./img/KOSTA_ev2.jpg =300x)
+![](./img/KOSTA_ev.jpg){: width="100" height="100"} 
+![](./img/KOSTA_ev2.jpg){: width="100" height="100"}
 
 # Tippingpoint
 
